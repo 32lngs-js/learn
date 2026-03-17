@@ -28,5 +28,11 @@
     "title": "Claude Code Mastery",
     "description": "From first prompt to autonomous workflows. Learn the mental models, tools, and patterns of thought to make Claude Code work for any problem you face.",
     "color": "#f97316"
+  },
+  {
+    "id": "system-design",
+    "title": "System Design Mastery",
+    "description": "From single-server apps to planet-scale distributed systems. Build the mental models and design instincts that separate senior engineers from everyone else.",
+    "color": "#0ea5e9"
   }
 ]

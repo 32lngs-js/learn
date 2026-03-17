@@ -44,6 +44,12 @@ export function Header() {
           >
             Curriculum
           </Link>
+          <Link
+            href="/interview"
+            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
+            Interview Me
+          </Link>
           {user && (
             <Link
               href="/dashboard"
