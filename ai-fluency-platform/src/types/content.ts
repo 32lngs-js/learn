@@ -50,6 +50,7 @@ export type ContentBlock =
       vignette?: string;
       problems: PracticeProblem[];
     }
+  | { type: "pixelAgentTeam" }
   | {
       type: "providerContent";
       context?: string;

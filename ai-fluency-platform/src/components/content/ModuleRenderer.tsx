@@ -12,6 +12,7 @@ import { KeyTakeaway } from "@/components/learning/KeyTakeaway";
 import { ProviderContent } from "@/components/learning/ProviderContent";
 import { ProviderToggle } from "@/components/learning/ProviderToggle";
 import { PracticeSet } from "@/components/learning/PracticeSet";
+import { PixelAgentTeam } from "@/components/learning/PixelAgentTeam";
 import { ModuleChat } from "@/components/learning/ModuleChat";
 import { ProgressBar } from "@/components/progress/ProgressBar";
 import { ModuleComplete } from "@/components/progress/ModuleComplete";
@@ -217,6 +218,9 @@ export function ModuleRenderer({
                 />
               );
             }
+
+            case "pixelAgentTeam":
+              return <PixelAgentTeam key={i} />;
 
             case "connectPrompt":
               return <ConnectPrompt key={i} prompt={block.prompt} />;
