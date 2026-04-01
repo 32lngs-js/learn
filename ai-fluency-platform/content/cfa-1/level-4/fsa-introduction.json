@@ -118,5 +118,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Analyzing Income Statements**, where you'll learn how revenue and expenses are recognized and how to calculate profitability margins. The framework and filing knowledge from this module provide the foundation \u2014 you'll now dig into the specific numbers that drive investment analysis."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What are the three main financial statements?",
+      "options": [
+        "Income statement, balance sheet, and cash flow statement",
+        "Tax return, audit report, and budget",
+        "Revenue report, expense report, and equity report"
+      ],
+      "correctIndex": 0,
+      "explanation": "The three core financial statements are the income statement, balance sheet (statement of financial position), and cash flow statement.",
+      "encourageCorrect": "Exactly! These three statements together paint a complete financial picture.",
+      "encourageIncorrect": "The three main financial statements are the income statement, balance sheet, and cash flow statement."
+    },
+    {
+      "question": "What is the role of an independent auditor?",
+      "options": [
+        "To prepare the financial statements",
+        "To provide an opinion on whether the financial statements are fairly presented",
+        "To set accounting standards"
+      ],
+      "correctIndex": 1,
+      "explanation": "Auditors express an opinion on whether the financial statements are fairly presented in accordance with the applicable accounting framework.",
+      "encourageCorrect": "That's right! Auditors provide assurance, not preparation.",
+      "encourageIncorrect": "An independent auditor provides an opinion on whether the financial statements are fairly presented. The company prepares the statements; the auditor verifies them."
+    }
   ]
 }

@@ -104,5 +104,31 @@
       "type": "connectPrompt",
       "prompt": "You have completed the **Alternative Investments** section. Next is **Portfolio Management**, beginning with Economics and Investment Markets. You will see how macroeconomic factors \u2014 the same ones that drive commodity prices, real estate values, and hedge fund opportunities \u2014 systematically affect portfolio construction and asset allocation decisions."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "A long/short equity hedge fund strategy involves:",
+      "options": [
+        "Only buying stocks",
+        "Buying undervalued stocks and short selling overvalued stocks",
+        "Only trading derivatives"
+      ],
+      "correctIndex": 1,
+      "explanation": "Long/short equity goes long stocks expected to rise and short stocks expected to fall, attempting to profit from both directions.",
+      "encourageCorrect": "That's the classic hedge fund approach! Long the winners, short the losers.",
+      "encourageIncorrect": "Long/short equity buys stocks expected to rise (long) and sells borrowed shares of stocks expected to fall (short). It profits from selection skill in both directions."
+    },
+    {
+      "question": "An event-driven hedge fund strategy focuses on:",
+      "options": [
+        "Macroeconomic trends",
+        "Corporate events like mergers, bankruptcies, and restructurings",
+        "High-frequency trading"
+      ],
+      "correctIndex": 1,
+      "explanation": "Event-driven strategies profit from pricing inefficiencies around corporate events such as mergers (merger arbitrage), spin-offs, or distressed situations.",
+      "encourageCorrect": "Correct! Corporate events create the opportunities these funds seek.",
+      "encourageIncorrect": "Event-driven strategies exploit pricing around corporate events: mergers, acquisitions, bankruptcies, restructurings, and other special situations."
+    }
   ]
 }

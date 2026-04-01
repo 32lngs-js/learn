@@ -38,5 +38,31 @@
       "type": "connectPrompt",
       "prompt": "You can now read what Claude Code is doing. The next module explains the invisible constraint behind everything: the context window. Understanding this single concept will prevent the most common frustration new users experience."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Which tool call indicates Claude is in the 'Gather' phase of the loop?",
+      "options": [
+        "Edit",
+        "Write",
+        "Read or Grep"
+      ],
+      "correctIndex": 2,
+      "explanation": "Read and Grep are gathering tools — Claude uses them to collect information before taking action.",
+      "encourageCorrect": "That's right! Read and Grep are how Claude gathers information.",
+      "encourageIncorrect": "Read and Grep are gather-phase tools — Claude uses them to understand the situation before acting."
+    },
+    {
+      "question": "What keyboard shortcut stops Claude mid-action?",
+      "options": [
+        "Ctrl+C",
+        "Esc",
+        "Ctrl+Z"
+      ],
+      "correctIndex": 1,
+      "explanation": "Pressing Esc stops Claude immediately — it's your emergency brake.",
+      "encourageCorrect": "Exactly! Esc is your emergency brake to stop Claude at any time.",
+      "encourageIncorrect": "The correct shortcut is Esc — it stops Claude immediately during any action."
+    }
   ]
 }

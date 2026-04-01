@@ -1,0 +1,98 @@
+{
+  "meta": {
+    "title": "6.4 Checkpoint",
+    "description": "Put your real-world skills to the test — trace a bug report to the right file in a realistic project structure.",
+    "level": "level-6",
+    "slug": "checkpoint",
+    "order": 4,
+    "isCheckpoint": true,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "markdown",
+      "content": "## Checkpoint: Navigate the Real World\n\nHere is a realistic project structure. Use it to answer the questions that follow.\n\n```\necommerce-app/\n├── node_modules/\n├── public/\n│   ├── favicon.ico\n│   └── logo.png\n├── src/\n│   ├── components/\n│   │   ├── Header.jsx\n│   │   ├── Footer.jsx\n│   │   ├── ProductCard.jsx\n│   │   ├── CartIcon.jsx\n│   │   └── SearchBar.vue\n│   ├── pages/\n│   │   ├── Home.jsx\n│   │   ├── ProductDetail.jsx\n│   │   ├── Cart.jsx\n│   │   ├── Checkout.jsx\n│   │   └── Login.jsx\n│   ├── styles/\n│   │   ├── global.css\n│   │   └── responsive.css\n│   ├── utils/\n│   │   └── api.js\n│   ├── App.jsx\n│   └── main.jsx\n├── .env\n├── .env.example\n├── .eslintrc.js\n├── .gitignore\n├── package.json\n├── tsconfig.json\n├── vite.config.js\n└── README.md\n```\n\n**Bug report:** \"The product prices show as $0.00 on the product listing page. They were working fine on staging but are wrong on production.\"\n\nUse what you have learned about project structure, frameworks, environment variables, and API calls to trace this problem."
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "Before looking at the answers: where would you start investigating this bug? Which file(s) would you open first, and what would you look for?",
+      "answer": "A strong approach: (1) Prices display on product cards, so open src/components/ProductCard.jsx to see how prices are rendered. (2) Since it works on staging but not production, check the .env file — a missing or wrong API_URL could mean production is fetching from the wrong server. (3) Check src/utils/api.js to see where product data is fetched from. The root cause is likely an environment variable difference between staging and production, since the code is the same in both places."
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "The project has a file called SearchBar.vue in the components folder, but every other component is a .jsx file. What does this tell you about the project?",
+      "answer": "The .jsx files indicate this is primarily a React project, but the .vue file means at least one component was built with Vue. This sometimes happens in larger projects that are migrating between frameworks, or when a team integrates a third-party Vue component. It is unusual but not unheard of — the key takeaway is that file extensions tell you which framework a specific file uses."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Real-World Navigation",
+      "problems": [
+        {
+          "id": "wf6-10",
+          "question": "The project has 15 files in the root directory. How many of them would you need to look at to figure out which framework this project uses?",
+          "options": [
+            "A) Just one — check package.json and look at the dependencies",
+            "B) At least five — you need to read each config file to understand the project",
+            "C) All of them — every file contributes to understanding the framework"
+          ],
+          "correctAnswer": "A",
+          "explanation": "package.json lists all the project's dependencies. If you see \"react\" in the dependencies, it is a React project. If you see \"vue\", it is Vue. You do not need to read config files to answer this question — one file gives you the answer.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "wf6-11",
+          "question": "A user reports that the checkout page crashes with a blank screen. You open src/pages/Checkout.jsx and see this at the top:\n\n```jsx\nimport { useState } from 'react';\n\nfunction Checkout() {\n  const [cart, setCart] = useState(null);\n  \n  return (\n    <div className=\"checkout\">\n      <h1>Checkout</h1>\n      <p>Total: ${cart.items.length} items</p>\n    </div>\n  );\n}\n```\n\nWhat is the most likely cause of the crash?",
+          "options": [
+            "A) The className should be class — this is causing the page to break",
+            "B) The cart starts as null, and the code tries to read cart.items before any data has loaded — you cannot read properties of null",
+            "C) The import statement is wrong — useState is not a real function"
+          ],
+          "correctAnswer": "B",
+          "explanation": "The cart is initialized as null (useState(null)), but the return statement tries to access cart.items.length immediately. Since cart is null, trying to read .items on null causes a crash. This is a very common bug pattern — the code tries to use data before it has loaded. className is correct React syntax, and useState is a real React function.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "wf6-12",
+          "question": "Look at this code from src/utils/api.js:\n\n```javascript\nconst BASE_URL = process.env.VITE_API_URL;\n\nexport async function getProducts() {\n  const response = await fetch(BASE_URL + '/products');\n  return response.json();\n}\n```\n\nProducts load fine on staging but return empty on production. What should you check?",
+          "options": [
+            "A) The .env file on the production server — VITE_API_URL might be missing or pointing to the wrong server",
+            "B) The fetch function — it might be broken in the production browser",
+            "C) The export keyword — it might not work in production mode"
+          ],
+          "correctAnswer": "A",
+          "explanation": "When the same code works in one environment but not another, the first thing to check is environment variables. The API URL comes from process.env.VITE_API_URL, which is set in the .env file. If the production .env is missing this value or points to the wrong server, the API call will fail or return no data. The fetch function and export keyword work the same everywhere.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "wf6-13",
+          "question": "A designer says: \"The sidebar disappears on tablet screens.\" Which file would you check first?\n\n```\nsrc/\n├── components/\n│   └── Sidebar.jsx\n├── styles/\n│   ├── global.css\n│   └── responsive.css\n```",
+          "options": [
+            "A) src/styles/responsive.css — responsive layout issues are about CSS breakpoints",
+            "B) src/components/Sidebar.jsx — the component must be broken",
+            "C) package.json — a missing dependency might cause the sidebar to vanish"
+          ],
+          "correctAnswer": "A",
+          "explanation": "The sidebar disappearing at a specific screen size is a responsive design issue. That means the problem is in the CSS, specifically in a @media query breakpoint. The file called responsive.css is the obvious first place to look. The component file defines what the sidebar contains, but the visibility at different screen sizes is controlled by CSS.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "wf6-14",
+          "question": "You see this in a React component:\n\n```jsx\n{isLoggedIn ? <Dashboard /> : <LoginPage />}\n```\n\nWhat does this code do?",
+          "options": [
+            "A) It shows the Dashboard if the user is logged in, otherwise it shows the LoginPage",
+            "B) It logs the user in and then loads the Dashboard",
+            "C) It shows both the Dashboard and the LoginPage at the same time"
+          ],
+          "correctAnswer": "A",
+          "explanation": "This is a ternary operator — a shorthand if/else. The pattern is: condition ? (if true) : (if false). So if isLoggedIn is true, it renders the Dashboard component. If false, it renders LoginPage. This is a classic authentication pattern — protected routes that redirect to login when the user is not authenticated.",
+          "difficulty": "basic"
+        }
+      ]
+    },
+    {
+      "type": "tryItYourself",
+      "title": "Go to github.com/vercel/next.js (or any large open-source project). Look at the repository's top-level folder structure. Can you identify: (1) where the source code lives, (2) which folders contain the files that matter for how the product looks and behaves, and (3) which files and folders are config/tooling that you could safely ignore?",
+      "solution": "In most large open-source projects, the source code lives in src/ or packages/. Files that matter for product behavior are in folders like components/, pages/, app/, or views/. Config and tooling files include things like tsconfig.json, .eslintrc, jest.config.js, turbo.json, and the entire node_modules/ folder. The README.md and CONTRIBUTING.md files can help orient you, but for content changes, go straight to the source folders."
+    }
+  ]
+}

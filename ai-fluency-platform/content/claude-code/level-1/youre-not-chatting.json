@@ -47,5 +47,43 @@
       "type": "connectPrompt",
       "prompt": "Now that you understand what Claude Code is, the next module covers how to install it and start your first session. If you already have Claude Code installed, feel free to skim 1.2 and jump to 1.3, where you will learn to read Claude's 'body language' — the visual cues that tell you what the loop is doing."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is the three-phase loop that Claude Code runs?",
+      "options": [
+        "Read, Write, Delete",
+        "Gather, Act, Verify",
+        "Ask, Answer, Repeat"
+      ],
+      "correctIndex": 1,
+      "explanation": "Claude Code operates in a gather-act-verify loop, taking real actions rather than just generating text.",
+      "encourageCorrect": "You've got it! The gather-act-verify loop is the foundation of how Claude Code works.",
+      "encourageIncorrect": "The correct answer is Gather, Act, Verify. Claude gathers information, takes action, then checks its work."
+    },
+    {
+      "question": "How is Claude Code different from a chatbot?",
+      "options": [
+        "It generates longer text",
+        "It takes real actions like reading files and running commands",
+        "It has a nicer interface"
+      ],
+      "correctIndex": 1,
+      "explanation": "Claude Code is an autonomous agent that takes actions (reads files, edits documents, runs commands) rather than just generating text.",
+      "encourageCorrect": "Spot on! Claude Code is an agent that takes real actions, not just a text generator.",
+      "encourageIncorrect": "The key difference is that Claude Code takes real actions — reading files, editing documents, and running commands — rather than just generating text."
+    },
+    {
+      "question": "A single prompt to Claude Code might trigger how many tool calls for a moderately complex task?",
+      "options": [
+        "Always exactly 1",
+        "Roughly 10-30+",
+        "Never more than 3"
+      ],
+      "correctIndex": 1,
+      "explanation": "A single prompt can trigger dozens of tool calls as Claude gathers information, acts, and verifies its work.",
+      "encourageCorrect": "Right! The agentic loop can run for many steps from a single prompt.",
+      "encourageIncorrect": "A single prompt can actually trigger 10-30+ tool calls as Claude works through the gather-act-verify loop."
+    }
   ]
 }

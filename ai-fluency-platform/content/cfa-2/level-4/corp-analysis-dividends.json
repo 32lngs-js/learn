@@ -106,5 +106,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **ESG Considerations in Corporate Finance**, where you'll learn how environmental, social, and governance factors are integrated into investment analysis and corporate decision-making \u2014 including how ESG performance can affect a company's cost of capital and dividend sustainability."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "A company's dividend payout ratio is the percentage of:",
+      "options": [
+        "Revenue paid as dividends",
+        "Net income paid as dividends",
+        "Total assets paid as dividends"
+      ],
+      "correctIndex": 1,
+      "explanation": "Dividend payout ratio = Dividends / Net income. It shows what fraction of earnings is distributed to shareholders.",
+      "encourageCorrect": "That's right! Payout ratio measures what share of earnings goes to dividends.",
+      "encourageIncorrect": "The payout ratio equals dividends divided by net income. It tells you what portion of earnings is distributed to shareholders."
+    },
+    {
+      "question": "Share repurchases (buybacks) are often preferred over dividends because:",
+      "options": [
+        "They always increase the stock price",
+        "They offer tax advantages and flexibility compared to dividends",
+        "They are required by regulators"
+      ],
+      "correctIndex": 1,
+      "explanation": "Buybacks offer tax flexibility (capital gains vs ordinary income treatment) and are not an ongoing commitment like dividends.",
+      "encourageCorrect": "Correct! Buybacks are more flexible and often more tax-efficient.",
+      "encourageIncorrect": "Buybacks offer tax advantages (capital gains vs dividend income) and flexibility \u2014 companies aren't committed to repeat them like regular dividends."
+    }
   ]
 }

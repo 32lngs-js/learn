@@ -63,5 +63,31 @@
         "What organizational challenges arise when different teams own different models in a multi-model pipeline?"
       ]
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What are the three main roles in a multi-AI system architecture?",
+      "options": [
+        "Input, processing, output",
+        "Router, specialist, and evaluator",
+        "Training, inference, deployment"
+      ],
+      "correctIndex": 1,
+      "explanation": "Routers classify requests cheaply, specialists handle specific domains with precision, and evaluators catch errors before they reach users.",
+      "encourageCorrect": "That's right! This separation of concerns allows each model to be optimized for its specific role.",
+      "encourageIncorrect": "The three roles are: routers (classify requests cheaply), specialists (handle domains precisely), and evaluators (catch errors before they reach users)."
+    },
+    {
+      "question": "Why use a separate evaluator model instead of asking the specialist to evaluate its own output?",
+      "options": [
+        "Because evaluators are cheaper",
+        "Because models are poor at detecting their own errors -- the same reasoning that produced the error will defend it",
+        "Because specialists can't generate text"
+      ],
+      "correctIndex": 1,
+      "explanation": "Self-evaluation fails because the same reasoning process that produced an error tends to defend it. A separate evaluator brings independent analysis.",
+      "encourageCorrect": "Great insight! It's the same reason code review works -- the author has blind spots the reviewer doesn't.",
+      "encourageIncorrect": "Models are poor at catching their own mistakes -- the same reasoning that produced an error will often defend it. A separate evaluator brings a fresh perspective."
+    }
   ]
 }

@@ -137,5 +137,43 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Statistical Measures of Asset Returns**, where you will learn to describe the distribution of investment returns using measures of central tendency, dispersion, and shape. The returns you learned to calculate here become the data you will analyze statistically."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is the value of a perpetuity that pays $100 per year if the discount rate is 5%?",
+      "options": [
+        "$500",
+        "$2,000",
+        "$5,000"
+      ],
+      "correctIndex": 1,
+      "explanation": "Perpetuity value = Payment / Rate = $100 / 0.05 = $2,000.",
+      "encourageCorrect": "Perfect! PV = PMT / r is one of the most elegant formulas in finance.",
+      "encourageIncorrect": "A perpetuity's value is simply Payment divided by Rate: $100 / 0.05 = $2,000."
+    },
+    {
+      "question": "If a bank offers 8% interest compounded quarterly, the effective annual rate (EAR) is:",
+      "options": [
+        "Exactly 8%",
+        "Less than 8%",
+        "Greater than 8%"
+      ],
+      "correctIndex": 2,
+      "explanation": "Compounding more frequently than annually means you earn interest on interest within the year, making the EAR higher than the stated rate.",
+      "encourageCorrect": "Right! More frequent compounding always pushes the EAR above the stated rate.",
+      "encourageIncorrect": "When interest compounds more than once per year, the EAR exceeds the stated rate because you earn interest on interest within the year."
+    },
+    {
+      "question": "A project should be accepted if its NPV is:",
+      "options": [
+        "Negative",
+        "Zero",
+        "Positive"
+      ],
+      "correctIndex": 2,
+      "explanation": "A positive NPV means the project's present value of cash inflows exceeds its cost, creating value for the firm.",
+      "encourageCorrect": "That's the rule! Positive NPV means the project adds value.",
+      "encourageIncorrect": "Accept projects with positive NPV \u2014 it means the project returns more than its cost when all cash flows are discounted."
+    }
   ]
 }

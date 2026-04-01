@@ -118,5 +118,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Markets for Government Issuers**, examining Treasury bills, notes, bonds, TIPS, agency bonds, and municipal securities \u2014 the other major segment of the fixed-income universe."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Investment-grade corporate bonds have credit ratings of:",
+      "options": [
+        "BBB-/Baa3 or higher",
+        "BB+/Ba1 or higher",
+        "Any rating as long as they pay a coupon"
+      ],
+      "correctIndex": 0,
+      "explanation": "Investment grade means BBB- (S&P/Fitch) or Baa3 (Moody's) and above. Below that is high-yield (junk) territory.",
+      "encourageCorrect": "That's the line! BBB-/Baa3 is the boundary between investment grade and high yield.",
+      "encourageIncorrect": "Investment grade is BBB-/Baa3 or higher. Anything rated BB+/Ba1 or below is considered high-yield (speculative grade)."
+    },
+    {
+      "question": "A secured bond differs from an unsecured bond in that:",
+      "options": [
+        "Secured bonds never default",
+        "Secured bonds are backed by specific collateral assets",
+        "Secured bonds always pay higher coupons"
+      ],
+      "correctIndex": 1,
+      "explanation": "Secured bonds are backed by specific assets (real estate, equipment) that bondholders can claim in default. Unsecured bonds rely only on the issuer's general creditworthiness.",
+      "encourageCorrect": "Right! Collateral backing is the key distinction.",
+      "encourageIncorrect": "Secured bonds are backed by specific collateral that bondholders can claim in default. Unsecured (debenture) bonds have no specific asset backing."
+    }
   ]
 }

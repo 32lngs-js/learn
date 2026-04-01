@@ -104,5 +104,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Portfolio Planning and Construction**, where you will learn to write an Investment Policy Statement (IPS) \u2014 the formal document that translates investor needs into actionable investment guidelines. Everything you learned about investor types and objectives feeds directly into the IPS framework."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "The portfolio management process includes which steps?",
+      "options": [
+        "Planning, execution, and feedback",
+        "Buy, hold, and sell",
+        "Research, trade, and report"
+      ],
+      "correctIndex": 0,
+      "explanation": "The process has three phases: planning (set objectives and policies), execution (build and implement the portfolio), and feedback (monitor and rebalance).",
+      "encourageCorrect": "Well done! Plan, execute, and get feedback \u2014 then repeat.",
+      "encourageIncorrect": "The portfolio management process has three phases: planning (set objectives), execution (construct the portfolio), and feedback (monitor and rebalance)."
+    },
+    {
+      "question": "An Investment Policy Statement (IPS) documents:",
+      "options": [
+        "Specific stock picks for the portfolio",
+        "The client's objectives, constraints, and investment guidelines",
+        "The portfolio manager's compensation"
+      ],
+      "correctIndex": 1,
+      "explanation": "The IPS captures return objectives, risk tolerance, time horizon, liquidity needs, tax situation, legal constraints, and unique circumstances.",
+      "encourageCorrect": "Exactly! The IPS is the roadmap for the entire investment process.",
+      "encourageIncorrect": "The IPS documents the client's return objectives, risk tolerance, time horizon, liquidity needs, tax constraints, and other guidelines."
+    }
   ]
 }

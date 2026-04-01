@@ -100,5 +100,31 @@
       "type": "connectPrompt",
       "prompt": "Next, we cover **Active Equity Portfolio Construction** -- the practical challenge of translating alpha signals into an actual portfolio. How do you size positions, manage factor exposures, and balance tracking error against expected alpha?"
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "A value investing strategy typically looks for stocks with:",
+      "options": [
+        "High P/E ratios and rapid growth",
+        "Low P/E, low P/B, or high dividend yields relative to the market",
+        "Only technology companies"
+      ],
+      "correctIndex": 1,
+      "explanation": "Value investing seeks stocks that appear underpriced based on valuation metrics \u2014 low multiples or high yields relative to fundamentals.",
+      "encourageCorrect": "That's the value approach! Buy cheap relative to fundamentals.",
+      "encourageIncorrect": "Value strategies seek stocks trading at low valuations (low P/E, low P/B, high dividend yield) relative to the market or their peers."
+    },
+    {
+      "question": "A momentum strategy buys stocks that have:",
+      "options": [
+        "Fallen the most recently",
+        "Risen the most recently, expecting the trend to continue",
+        "The lowest volatility"
+      ],
+      "correctIndex": 1,
+      "explanation": "Momentum invests in recent winners and avoids/shorts recent losers, based on the empirical observation that trends tend to persist over intermediate horizons.",
+      "encourageCorrect": "Right! Momentum rides the trend \u2014 winners tend to keep winning for a while.",
+      "encourageIncorrect": "Momentum strategies buy recent winners and sell recent losers, based on the tendency for price trends to persist over intermediate periods."
+    }
   ]
 }

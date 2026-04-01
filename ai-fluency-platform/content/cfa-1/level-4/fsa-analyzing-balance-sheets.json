@@ -104,5 +104,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Cash Flow Statement I**, where you'll learn the direct and indirect methods and how to classify cash flows as operating, investing, or financing. The balance sheet changes you just studied drive the adjustments in the indirect method \u2014 increases in current assets reduce operating cash flow, while increases in current liabilities increase it."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "The accounting equation states:",
+      "options": [
+        "Assets = Liabilities + Equity",
+        "Assets = Revenue - Expenses",
+        "Equity = Assets + Liabilities"
+      ],
+      "correctIndex": 0,
+      "explanation": "Assets = Liabilities + Equity is the fundamental accounting equation. The balance sheet must always balance.",
+      "encourageCorrect": "The cornerstone of accounting! Assets always equal liabilities plus equity.",
+      "encourageIncorrect": "The accounting equation is Assets = Liabilities + Equity. Every balance sheet must satisfy this equation."
+    },
+    {
+      "question": "Current assets are those expected to be converted to cash within:",
+      "options": [
+        "One month",
+        "One year (or one operating cycle)",
+        "Five years"
+      ],
+      "correctIndex": 1,
+      "explanation": "Current assets are expected to be converted to cash, sold, or consumed within one year or one operating cycle, whichever is longer.",
+      "encourageCorrect": "Right! One year or one operating cycle is the dividing line between current and non-current.",
+      "encourageIncorrect": "Current assets are those expected to be converted to cash within one year or one operating cycle, whichever is longer."
+    }
   ]
 }

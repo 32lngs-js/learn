@@ -1,0 +1,98 @@
+{
+  "meta": {
+    "title": "2.2 Passing Props Down",
+    "description": "How parent components hand data to child components.",
+    "level": "level-2",
+    "slug": "passing-props-down",
+    "order": 2,
+    "isCheckpoint": false,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "predictPrompt",
+      "prompt": "Imagine a page that shows a user's name in three different places: the header, a welcome message, and a sidebar. The name comes from a database. Before reading this module, write down your guess: how does the name get from one place at the top of the app to three different components scattered across the page?"
+    },
+    {
+      "type": "markdown",
+      "content": "## Data flows in one direction\n\nReact has a fundamental rule: **data flows downward**. A parent component passes data to its children through props. Children never pass data back up to their parents directly. This is called **one-way data flow** or **unidirectional data flow**, and it is the single most important concept for understanding how React apps work.\n\nHere is a concrete example:\n\n```jsx\nfunction App() {\n  const currentUser = {\n    name: \"Jordan Rivera\",\n    email: \"jordan@example.com\",\n    role: \"Product Manager\",\n  };\n\n  return (\n    <div className=\"app\">\n      <Header userName={currentUser.name} />\n      <Dashboard user={currentUser} />\n      <Footer />\n    </div>\n  );\n}\n```\n\nThe `App` component owns the user data. It passes `currentUser.name` to `Header` and the entire `currentUser` object to `Dashboard`. `Footer` does not receive any user data -- it does not need it.\n\nNow let us look at what `Header` does with its prop:\n\n```jsx\nfunction Header({ userName }) {\n  return (\n    <header className=\"site-header\">\n      <h1>My App</h1>\n      <span className=\"user-greeting\">Welcome, {userName}</span>\n    </header>\n  );\n}\n```\n\n`Header` receives `userName` and displays it. It does not know where the name came from. It does not know about `currentUser.email` or `currentUser.role`. It only knows about the one prop it was given.\n\n### Tracing data through multiple levels\n\nIn real apps, data often passes through several levels of components. Here is a three-level example:\n\n```jsx\n// Level 1: App owns the data\nfunction App() {\n  const user = { name: \"Sarah\", plan: \"Pro\", tasksCompleted: 47 };\n\n  return (\n    <div>\n      <Dashboard user={user} />\n    </div>\n  );\n}\n\n// Level 2: Dashboard receives user and passes parts of it down\nfunction Dashboard({ user }) {\n  return (\n    <div className=\"dashboard\">\n      <WelcomeMessage name={user.name} plan={user.plan} />\n      <StatsPanel count={user.tasksCompleted} />\n    </div>\n  );\n}\n\n// Level 3: WelcomeMessage uses the data\nfunction WelcomeMessage({ name, plan }) {\n  return (\n    <div className=\"welcome\">\n      <h2>Hello, {name}</h2>\n      <p>Your current plan: {plan}</p>\n    </div>\n  );\n}\n\n// Level 3: StatsPanel uses the data\nfunction StatsPanel({ count }) {\n  return (\n    <div className=\"stats\">\n      <p>Tasks completed: {count}</p>\n    </div>\n  );\n}\n```\n\nTrace the data flow:\n1. `App` has the user object `{ name: \"Sarah\", plan: \"Pro\", tasksCompleted: 47 }`\n2. `App` passes the entire object to `Dashboard` as the `user` prop\n3. `Dashboard` unpacks the object and passes `user.name` and `user.plan` to `WelcomeMessage`, and `user.tasksCompleted` to `StatsPanel`\n4. `WelcomeMessage` displays the name and plan. `StatsPanel` displays the count.\n\nThe user sees: **Hello, Sarah**, **Your current plan: Pro**, and **Tasks completed: 47**.\n\nNotice how each component only receives the data it needs. `WelcomeMessage` does not know about `tasksCompleted`. `StatsPanel` does not know about `name` or `plan`. This is intentional -- it keeps each component focused.\n\n### Prop drilling: when it gets messy\n\nSometimes data needs to pass through components that do not use it, just to reach a deeply nested child. This is called **prop drilling**, and it looks like this:\n\n```jsx\nfunction App() {\n  const theme = \"dark\";\n\n  return <Layout theme={theme} />;\n}\n\nfunction Layout({ theme }) {\n  // Layout does not use theme -- it just passes it through\n  return (\n    <div className=\"layout\">\n      <Sidebar theme={theme} />\n      <MainContent />\n    </div>\n  );\n}\n\nfunction Sidebar({ theme }) {\n  // Sidebar does not use theme either -- passes it through again\n  return (\n    <aside>\n      <NavMenu theme={theme} />\n    </aside>\n  );\n}\n\nfunction NavMenu({ theme }) {\n  // NavMenu finally uses the theme\n  return (\n    <nav className={`nav-menu nav-${theme}`}>\n      <a href=\"/home\">Home</a>\n      <a href=\"/settings\">Settings</a>\n    </nav>\n  );\n}\n```\n\nThe `theme` prop passes through four levels: `App` -> `Layout` -> `Sidebar` -> `NavMenu`. Only `NavMenu` actually uses it. `Layout` and `Sidebar` are just passing it along.\n\nThis is called prop drilling because you are \"drilling\" the prop through layers of components. It works, but it has downsides:\n\n- Every component in the chain has to declare and forward the prop\n- If you rename the prop, you have to update every component in the chain\n- It clutters components with props they do not use\n\nProp drilling is not a bug -- it is a code smell. When you see a prop passing through three or more levels without being used, that is a sign the codebase might benefit from a different pattern (you will learn about `useContext` in Level 3 as an alternative).\n\n### Reading where data comes from\n\nWhen you see a value displayed in a component and want to know where it comes from, work backwards:\n\n1. **Find the value in the JSX.** Example: `<h2>{name}</h2>`\n2. **Check if it is defined in the logic zone.** Is there a `const name = ...` above the return? If so, trace that value.\n3. **Check if it is a prop.** Is `name` in the function parameter? If so, the value comes from the parent.\n4. **Find the parent.** Look at the imports and search the codebase for where this component is used. The parent's code will show what value is passed for `name`.\n\nThis backward tracing is the most important debugging skill in React. When something displays the wrong value, the answer is somewhere in this chain.\n\n### A realistic multi-component example\n\nHere is a simplified e-commerce scenario:\n\n```jsx\nfunction ProductPage() {\n  const product = {\n    name: \"Running Shoes\",\n    price: 89.99,\n    description: \"Lightweight and comfortable for daily runs.\",\n    inStock: true,\n    reviews: 142,\n  };\n\n  return (\n    <div className=\"product-page\">\n      <ProductHeader name={product.name} reviewCount={product.reviews} />\n      <ProductDetails\n        description={product.description}\n        price={product.price}\n        inStock={product.inStock}\n      />\n    </div>\n  );\n}\n\nfunction ProductHeader({ name, reviewCount }) {\n  return (\n    <div className=\"product-header\">\n      <h1>{name}</h1>\n      <span>{reviewCount} reviews</span>\n    </div>\n  );\n}\n\nfunction ProductDetails({ description, price, inStock }) {\n  return (\n    <div className=\"product-details\">\n      <p>{description}</p>\n      <p className=\"price\">${price}</p>\n      <p className={inStock ? \"in-stock\" : \"out-of-stock\"}>\n        {inStock ? \"In Stock\" : \"Out of Stock\"}\n      </p>\n    </div>\n  );\n}\n```\n\nNotice how `ProductPage` splits its data across two child components. `ProductHeader` gets the name and review count. `ProductDetails` gets the description, price, and stock status. Neither child has access to data it does not need.\n\nIf you wanted to know why the product page shows \"89.99\" as the price, you would trace backward: `ProductDetails` displays `{price}` -> `price` is a prop -> `ProductPage` passes `price={product.price}` -> `product.price` is `89.99`."
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "In the ProductPage example above, if you changed `product.price` from 89.99 to 99.99 in the ProductPage component, what would change on screen?",
+      "answer": "The price displayed in ProductDetails would change from '$89.99' to '$99.99'. The data flows from ProductPage (where it is defined) through the price prop to ProductDetails (where it is displayed). Nothing else would change -- ProductHeader does not receive the price prop, so it is unaffected. This illustrates one-way data flow: change the source, and every component that receives that data updates."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Tracing Data Flow",
+      "problems": [
+        {
+          "id": "rl2-2-1",
+          "question": "What does the user see when this renders?\n\n```jsx\nfunction App() {\n  const title = \"Q4 Report\";\n  return <PageHeader label={title} />;\n}\n\nfunction PageHeader({ label }) {\n  return <h1>{label}</h1>;\n}\n```",
+          "options": [
+            "A) A heading that says 'Q4 Report'",
+            "B) A heading that says 'title'",
+            "C) A heading that says 'label'"
+          ],
+          "correctAnswer": "A",
+          "explanation": "Trace the data: App defines title as 'Q4 Report'. It passes title to PageHeader as the label prop. PageHeader displays {label}, which is the value of the label prop: 'Q4 Report'. The prop name (label) and the variable name (title) are different, but the value ('Q4 Report') is what matters.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "rl2-2-2",
+          "question": "In this code, which component is prop drilling (passing a prop through without using it)?\n\n```jsx\nfunction App() {\n  return <Layout username=\"Casey\" />;\n}\n\nfunction Layout({ username }) {\n  return (\n    <div>\n      <Sidebar username={username} />\n      <main>Content here</main>\n    </div>\n  );\n}\n\nfunction Sidebar({ username }) {\n  return (\n    <aside>\n      <p>Logged in as: {username}</p>\n    </aside>\n  );\n}\n```",
+          "options": [
+            "A) App is prop drilling because it passes username without defining it from a database",
+            "B) Layout is prop drilling because it receives username and passes it to Sidebar without using it in its own JSX",
+            "C) There is no prop drilling here -- every component uses the username prop"
+          ],
+          "correctAnswer": "B",
+          "explanation": "Layout receives the username prop but never displays it in its own JSX. It only passes it through to Sidebar. This is prop drilling: Layout is a middleman. If you look at Layout's return, username does not appear in any of its own markup -- it just forwards it. Sidebar actually uses the value by displaying it in a paragraph.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "rl2-2-3",
+          "question": "The OrderConfirmation component shows the wrong total. Where would you look to find the bug?\n\n```jsx\nfunction CheckoutFlow() {\n  const order = {\n    items: [\"Widget A\", \"Widget B\"],\n    subtotal: 59.98,\n    tax: 4.80,\n    total: 64.78,\n  };\n\n  return (\n    <div>\n      <OrderSummary subtotal={order.subtotal} tax={order.tax} />\n      <OrderConfirmation amount={order.subtotal} />\n    </div>\n  );\n}\n\nfunction OrderConfirmation({ amount }) {\n  return <p>Your total: ${amount}</p>;\n}\n```",
+          "options": [
+            "A) The bug is in OrderConfirmation -- it should calculate the total itself",
+            "B) The bug is in CheckoutFlow -- it passes order.subtotal instead of order.total to OrderConfirmation",
+            "C) The bug is in OrderSummary -- it is stealing the total from OrderConfirmation"
+          ],
+          "correctAnswer": "B",
+          "explanation": "Trace backward from the problem: OrderConfirmation displays {amount}. The amount prop receives order.subtotal (59.98), not order.total (64.78). The fix is in CheckoutFlow: change amount={order.subtotal} to amount={order.total}. The bug is at the point where data is passed, not where it is displayed. This is the most common pattern for data-related bugs in React.",
+          "difficulty": "advanced"
+        }
+      ]
+    },
+    {
+      "type": "explainBack",
+      "prompt": "Explain one-way data flow in React. If a component displays the wrong value, describe the steps you would take to trace where the value comes from and find the bug."
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "Data flows one direction in React: parent to child through props. To find where a value comes from, trace backward from the JSX through the props to the parent. Prop drilling (passing props through components that do not use them) is a code smell but not a bug. Most data-related bugs are found at the point where props are passed, not where they are displayed."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "You now know how data flows from parent to child. But components do not just display data -- they also make decisions about what to show. The next module covers conditional rendering: how components decide to show one thing or another based on the data they receive."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "In React, which direction does data flow?",
+      "options": ["Child to parent", "Parent to child (downward)", "Sideways between sibling components"],
+      "correctIndex": 1,
+      "explanation": "React uses one-way data flow: data flows downward from parent to child through props. Children never pass data back up directly.",
+      "encourageCorrect": "Exactly! One-way data flow -- always downward from parent to child -- is a core React principle.",
+      "encourageIncorrect": "Important concept here: data in React always flows downward, from parent to child through props. This is called one-way data flow."
+    },
+    {
+      "question": "What is 'prop drilling'?",
+      "options": ["A tool for debugging props in React DevTools", "Passing props through intermediate components that don't use them, just to reach a deeply nested child", "A way to delete unused props from a component"],
+      "correctIndex": 1,
+      "explanation": "Prop drilling is when a prop passes through multiple components that don't need it, just to get it to a component further down the tree.",
+      "encourageCorrect": "Right on! Prop drilling works but gets messy -- you'll learn about useContext later as an alternative.",
+      "encourageIncorrect": "Prop drilling means passing data through components that don't use it, just to reach a deeply nested child. It works, but it's a code smell."
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+{
+  "meta": {
+    "title": "6.2 React DevTools",
+    "description": "The Components tab and Profiler tab are your X-ray vision into any React app.",
+    "level": "level-6",
+    "slug": "react-devtools",
+    "order": 2,
+    "isCheckpoint": false,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "predictPrompt",
+      "prompt": "When a component shows the wrong data on screen, how would you figure out whether the problem is in the component itself or in the data being passed to it? Is there a way to see what props and state a component has right now, in real time?"
+    },
+    {
+      "type": "markdown",
+      "content": "## React DevTools\n\nEvery browser has built-in developer tools (right-click, Inspect). You have probably seen the Elements tab (HTML structure), the Console tab (errors and logs), and maybe the Network tab (API calls). React DevTools adds two new tabs specifically for React: **Components** and **Profiler**.\n\nThese tabs give you X-ray vision into any React app. You can see every component, its current props and state, and exactly what re-renders when you interact with the page.\n\n### Installing React DevTools\n\nReact DevTools is a free browser extension:\n\n- **Chrome:** Search for \"React Developer Tools\" in the Chrome Web Store\n- **Firefox:** Search for \"React Developer Tools\" in Firefox Add-ons\n- **Edge:** Available in the Edge Add-ons store\n\nOnce installed, open any React website and look for two new tabs in your developer tools: **Components** and **Profiler**. If the website uses React, these tabs will be active.\n\n### The Components Tab\n\nThe Components tab shows the **component tree** -- every React component on the page, nested just like they are in the code:\n\n```\nApp\n  Layout\n    Header\n      Logo\n      Navigation\n        NavLink (to=\"/\")\n        NavLink (to=\"/dashboard\")\n        NavLink (to=\"/settings\")\n    Main\n      DashboardPage\n        MetricsGrid\n          MetricCard (title=\"Revenue\")\n          MetricCard (title=\"Users\")\n          MetricCard (title=\"Conversion\")\n        RecentActivity\n          ActivityItem\n          ActivityItem\n          ActivityItem\n    Footer\n```\n\nThis tree is incredibly useful. It shows you:\n- **The structure of the page** -- which components are inside which\n- **How many times a component appears** -- three `MetricCard` components, three `ActivityItem` components\n- **The props each component received** -- you can see `title=\"Revenue\"` right in the tree\n\n### Inspecting a Component\n\nWhen you click on any component in the tree, the right panel shows its current **props** and **state**:\n\n```\nMetricCard\n  Props:\n    title: \"Revenue\"\n    value: 142500\n    change: 12.5\n    trend: \"up\"\n  State:\n    isExpanded: false\n  Hooks:\n    useState: false\n```\n\nThis is live data. If the component re-renders with new props, you see the new values immediately. This is how you answer the question: \"Is the component receiving the right data?\"\n\nImagine a MetricCard shows \"$0\" when it should show \"$142,500\". You click on it in DevTools and see `value: 0`. Now you know: the component is rendering correctly -- it is showing whatever value it receives. The problem is upstream. The parent is passing `0` instead of `142500`. You follow the trail up the component tree.\n\nOr maybe you click on it and see `value: 142500`. Now you know: the component IS receiving the right data but is not displaying it correctly. The problem is inside the component.\n\n### The Search Feature\n\nThe Components tab has a search bar at the top. Type a component name and it filters the tree. If you know the component that is misbehaving, search for it directly instead of scrolling through the entire tree.\n\n### Highlight Updates\n\nReact DevTools has a powerful feature: **Highlight updates when components render.** Enable it from the DevTools settings (gear icon). When turned on, components flash with a colored border every time they re-render:\n\n- **Blue/green flash** -- a normal re-render\n- **Yellow/orange flash** -- a frequent re-render (potentially a performance issue)\n- **Red flash** -- the component is re-rendering very frequently (likely a problem)\n\nThis is extremely useful for spotting performance issues. If you click a button and the entire page flashes, that means everything is re-rendering -- which is usually unnecessary and slow.\n\n### The Profiler Tab\n\nThe Profiler tab records a performance profile of your React app. It answers the question: **what rendered, how long did it take, and why did it render?**\n\nTo use it:\n1. Click the record button (blue circle)\n2. Interact with the app (click buttons, navigate, type in forms)\n3. Click stop\n4. Review the results\n\nThe Profiler shows a flame chart where each bar is a component render:\n\n```\nCommit 1 (click \"Add to Cart\" button):\n  App                    0.2ms\n    ProductPage          0.1ms\n      ProductDetail      0.0ms (did not render)\n      CartSidebar        2.1ms\n        CartItem         0.5ms\n        CartItem         0.5ms\n        CartItem         0.5ms  (new)\n        CartTotal        0.3ms\n```\n\nThis tells you that when the user clicked \"Add to Cart\":\n- `CartSidebar` took the longest (2.1ms total)\n- Three `CartItem` components rendered, one of which was new\n- `ProductDetail` did not re-render (good -- it did not need to)\n- `CartTotal` re-rendered to show the updated total\n\nWhen you click on a component in the Profiler, it tells you **why it rendered**:\n- \"The parent component rendered\"\n- \"Props changed: items\"\n- \"State changed: isOpen\"\n- \"Context changed\"\n\nThis is invaluable for debugging performance problems. If a component re-renders and the reason is \"the parent component rendered\" but its props did not actually change, that is an unnecessary re-render that could be optimized.\n\n### Practical Scenarios\n\n**Scenario 1: The form shows the wrong default value**\n\nA settings form shows \"English\" as the language, but the user's preference is \"Spanish.\"\n\n1. Open React DevTools Components tab\n2. Search for the settings form component\n3. Check its props: is `defaultLanguage` set to \"English\" or \"Spanish\"?\n4. If the prop says \"Spanish\" but the form shows \"English\" -- the component has a bug\n5. If the prop says \"English\" -- the problem is upstream, in whatever provides the user's preference\n\n**Scenario 2: The button click does nothing**\n\nA \"Save\" button appears to do nothing when clicked.\n\n1. Open the Components tab and find the button component\n2. Check its props: does it have an `onClick` handler? Is `disabled` set to `true`?\n3. If `onClick` is `undefined` -- the parent forgot to pass the handler\n4. If `disabled` is `true` -- the button is disabled (maybe a loading state stuck on)\n5. Check the Console tab for errors -- maybe the handler runs but crashes\n\n**Scenario 3: The page is slow**\n\n1. Open the Profiler tab and record\n2. Interact with the slow part of the app\n3. Stop recording and look at what re-rendered\n4. Look for components that rendered unnecessarily or took a long time\n5. Click on the slow components to see why they rendered\n\n### DevTools and the Network Tab\n\nReact DevTools works best alongside the browser's **Network tab**. The Network tab shows every HTTP request the app makes:\n\n- API calls (fetch/XHR)\n- Response status codes (200 OK, 404 Not Found, 500 Server Error)\n- Response data (click a request to see what the server returned)\n- Timing (how long each request took)\n\nIf a component shows wrong data, check both:\n1. **Network tab:** Did the API return the right data?\n2. **Components tab:** Did the component receive and render that data correctly?\n\nThis combination lets you isolate whether the problem is on the server side (bad data from the API) or the client side (the component is not handling the data correctly).\n\n### You Do Not Need to Fix the Bug\n\nRemember: your goal is not to write the fix. Your goal is to gather information and describe the problem precisely. React DevTools gives you the ability to say:\n\n- \"The UserCard component is receiving `name: undefined` as a prop. The parent component, UserList, has the user data in its state, but it is passing `user.fullName` instead of `user.name`.\"\n- \"The CartTotal component re-renders 47 times when the page loads. Each re-render is triggered by a context change. The cart context is updating too frequently.\"\n- \"The API returns the correct data (I checked the Network tab), but the component's state still shows the old value. The useEffect that fetches data might not be running when the userId prop changes.\"\n\nThat level of precision is what makes the difference between a bug report that takes five minutes to fix and one that takes five hours."
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "You click on a component in React DevTools and see that its `value` prop is `undefined`, but it should be a number. What does this tell you about where the bug is?",
+      "answer": "The bug is upstream -- in the parent component that passes the `value` prop. The component itself is rendering correctly based on what it receives. You need to trace the prop back to the parent to find where the correct value was lost."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Using React DevTools",
+      "problems": [
+        {
+          "id": "rl6-2-1",
+          "question": "A user reports that their profile page shows \"Hello, undefined!\" instead of their name. You open React DevTools and click on the `ProfileHeader` component. You see:\n\n```\nProfileHeader\n  Props:\n    user: { id: 42, email: \"alice@example.com\" }\n```\n\nWhat is the likely problem?",
+          "options": [
+            "A) The ProfileHeader component has a rendering bug",
+            "B) The `user` object is missing the `name` property -- whoever loaded the user data from the API did not include the name field, or the API did not return it",
+            "C) React DevTools is showing incorrect data"
+          ],
+          "correctAnswer": "B",
+          "explanation": "The user object has `id` and `email` but no `name` property. The component is probably rendering `user.name` which evaluates to `undefined`. The bug is in the data -- either the API is not returning the name field, or the data transformation upstream is dropping it. You would check the Network tab to see what the API actually returned.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "rl6-2-2",
+          "question": "You enable \"Highlight updates\" in React DevTools and type a single character in a search box. You notice the entire page flashes -- every component re-renders on every keystroke. The search component looks like this:\n\n```typescript\nfunction App() {\n  const [searchQuery, setSearchQuery] = useState('');\n\n  return (\n    <div>\n      <SearchBar value={searchQuery} onChange={setSearchQuery} />\n      <NavigationMenu />\n      <ProductList />\n      <Footer />\n    </div>\n  );\n}\n```\n\nWhy does everything re-render?",
+          "options": [
+            "A) The SearchBar component has a bug",
+            "B) The `searchQuery` state lives in the App component. When it changes on every keystroke, App re-renders, and since NavigationMenu, ProductList, and Footer are children of App, they all re-render too.",
+            "C) The Footer component is causing the re-renders"
+          ],
+          "correctAnswer": "B",
+          "explanation": "State changes cause the component that owns the state to re-render, along with all of its children. Since `searchQuery` state is in App (the top-level component), every keystroke re-renders the entire page. The fix would be to move the search state into the SearchBar component, or use React.memo on the child components to prevent unnecessary re-renders.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "rl6-2-3",
+          "question": "You are debugging a checkout form that is not submitting. You use React DevTools and the Network tab to investigate. You find:\n\n- Components tab: The form component's state shows `isSubmitting: true` and `error: null`\n- Network tab: There is a POST request to `/api/orders` with status `201 Created` and a valid response\n- The page still shows a loading spinner\n\nWhat would you tell the developer?",
+          "options": [
+            "A) The API is returning an error",
+            "B) The form submission succeeded (201 response), but the component's `isSubmitting` state was never set back to `false` after the API call completed -- the success handler is likely missing or has a bug",
+            "C) The network request never completed"
+          ],
+          "correctAnswer": "B",
+          "explanation": "The API call succeeded (201 Created). But `isSubmitting` is stuck on `true`, which is why the spinner still shows. The `.then()` handler after the fetch call either is not running, has an error, or is not calling `setIsSubmitting(false)`. You would tell the developer: \"The API call succeeds but isSubmitting never gets set back to false. Check the promise chain after the fetch -- the success handler might have an error or might be missing the state update.\"",
+          "difficulty": "advanced"
+        }
+      ]
+    },
+    {
+      "type": "explainBack",
+      "prompt": "Describe the difference between what you can learn from the React DevTools Components tab versus the browser's Network tab. When would you use each one?"
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "React DevTools lets you see the component tree, inspect live props and state, and identify what re-renders and why. Combined with the browser's Network tab for API calls, you can isolate any bug to either the data source (API), the data flow (props), or the component logic (state and rendering)."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "Install React DevTools right now if you have not already. Then visit any website built with React (Twitter, Facebook, Airbnb, or many modern web apps). Open the Components tab and explore the component tree. You will see the building blocks of the entire interface laid out in front of you."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What does the Components tab in React DevTools show you?",
+      "options": ["The CSS styles for each element", "The component tree with live props and state for each component", "The list of npm packages in the project"],
+      "correctIndex": 1,
+      "explanation": "The Components tab shows every React component on the page in a tree structure. Clicking any component reveals its current props, state, and hook values in real time.",
+      "encourageCorrect": "That's it! The Components tab is your X-ray vision into the component tree.",
+      "encourageIncorrect": "The Components tab shows the full component tree and lets you inspect live props and state for any component. It is one of the most useful debugging tools."
+    },
+    {
+      "question": "If you click a component in DevTools and see that a prop has the wrong value, where is the bug likely located?",
+      "options": ["In the component itself", "In the parent component that passes the prop", "In the browser's CSS engine"],
+      "correctIndex": 1,
+      "explanation": "If a component receives a wrong prop value, the bug is upstream -- in whatever parent component is passing that prop. The component itself is just rendering what it was given.",
+      "encourageCorrect": "Great thinking! Wrong prop = look upstream at the parent that passed it.",
+      "encourageIncorrect": "When a prop has the wrong value, the problem is in the parent component that passes it. The receiving component is just displaying what it was given."
+    }
+  ]
+}

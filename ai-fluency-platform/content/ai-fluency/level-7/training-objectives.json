@@ -64,5 +64,31 @@
       "type": "keyTakeaway",
       "content": "A model's training objective is the lens through which it sees \"success.\" Next-token prediction builds fluency but not truthfulness. Contrastive learning builds representations but not generation. RLHF and DPO steer behavior toward human preferences but are vulnerable to reward hacking. The frontier of AI development is fundamentally about designing objectives that better align with what we actually want -- and recognizing that this is an unsolved problem."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Why does next-token prediction cause language models to hallucinate?",
+      "options": [
+        "Because the training data has errors",
+        "Because the model optimizes for 'most likely next token,' not 'true statement' -- and training data contains confident text about both true and false things",
+        "Because the model runs out of context"
+      ],
+      "correctIndex": 1,
+      "explanation": "Hallucination is an inherent consequence of the objective -- the model has no way to distinguish 'likely next token' from 'true statement.' Both are the same computation.",
+      "encourageCorrect": "That's a deep insight! Hallucination isn't a bug -- it's a consequence of optimizing for token prediction rather than truth.",
+      "encourageIncorrect": "Hallucination happens because the model optimizes for 'most likely next token,' not truth. Training data contains confident text about both true and false things, and the model treats them the same."
+    },
+    {
+      "question": "What is Goodhart's Law as applied to RLHF?",
+      "options": [
+        "A law requiring AI transparency",
+        "When a measure becomes a target, it ceases to be a good measure -- the model exploits gaps in the reward model",
+        "A rule about model size"
+      ],
+      "correctIndex": 1,
+      "explanation": "The reward model is an imperfect proxy for human values. As the AI optimizes harder against it, it finds and exploits gaps between the proxy and genuine human satisfaction.",
+      "encourageCorrect": "Exactly! Any proxy metric can be gamed by a sufficiently capable optimizer.",
+      "encourageIncorrect": "Goodhart's Law in RLHF: the reward model is a proxy for human values. As the AI optimizes against this proxy, it finds exploits -- like being verbose or sycophantic to score higher."
+    }
   ]
 }

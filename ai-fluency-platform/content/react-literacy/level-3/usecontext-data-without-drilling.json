@@ -1,0 +1,109 @@
+{
+  "meta": {
+    "title": "3.4 useContext: Data Without Drilling",
+    "description": "Some data needs to be available everywhere. useContext is React's way of sharing it.",
+    "level": "level-3",
+    "slug": "usecontext-data-without-drilling",
+    "order": 4,
+    "isCheckpoint": false,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "predictPrompt",
+      "prompt": "Think about a web app with a dark mode toggle in the settings page. Every single component in the app -- buttons, cards, headers, footers -- needs to know whether dark mode is on. How do you think that information gets to every component? Do you think the parent passes a `darkMode` prop through every single level of nesting?"
+    },
+    {
+      "type": "markdown",
+      "content": "## The problem: prop drilling\n\nIn Level 2, you learned that data flows from parent to child through props. That works great for direct parent-child relationships. But what about data that needs to reach components deep in the tree?\n\nImagine you have an app with this structure:\n\n```\nApp\n  \u2514\u2500 Layout\n       \u2514\u2500 Sidebar\n       |    \u2514\u2500 UserAvatar   <-- needs to know the logged-in user\n       \u2514\u2500 MainContent\n            \u2514\u2500 Header\n            |    \u2514\u2500 UserMenu  <-- needs to know the logged-in user\n            \u2514\u2500 Dashboard\n                 \u2514\u2500 WelcomeMessage  <-- needs to know the logged-in user\n```\n\nThe logged-in user is known at the `App` level. To get it to `UserAvatar`, you would need to pass it as a prop through `App` -> `Layout` -> `Sidebar` -> `UserAvatar`. To get it to `WelcomeMessage`, you need `App` -> `Layout` -> `MainContent` -> `Dashboard` -> `WelcomeMessage`.\n\n`Layout`, `Sidebar`, `MainContent`, and `Dashboard` all have to accept and forward a `user` prop even though they do not use it themselves. They are just passing it along.\n\nThis is called **prop drilling** -- passing data through intermediate components that do not need it, just to get it to the components that do. It is tedious, error-prone, and clutters the code.\n\n### An analogy\n\nImagine you are at a concert and you need to pass a message to someone ten rows away. You tap the person next to you, whisper the message, and they whisper it to the next person, and so on through ten people who do not care about the message. That is prop drilling.\n\nContext is like having a loudspeaker. You announce the message once, and anyone who needs it can hear it directly.\n\n## useContext: the solution\n\nReact's Context system lets you share data with any component in the tree without passing it through every level. It has three pieces:\n\n### Piece 1: Create the context\n\n```jsx\nconst ThemeContext = createContext('light');\n```\n\nThis creates a context object with a default value. You typically see this at the top of a file or in its own file. The default value (`'light'`) is used only if a component reads the context but there is no provider above it in the tree.\n\n### Piece 2: Provide the value\n\n```jsx\nfunction App() {\n  const [theme, setTheme] = useState('light');\n\n  return (\n    <ThemeContext.Provider value={theme}>\n      <Layout />\n    </ThemeContext.Provider>\n  );\n}\n```\n\nThe `<ThemeContext.Provider>` wraps a section of the component tree and makes `theme` available to every component inside it. Any descendant -- no matter how deeply nested -- can read this value.\n\nNotice that `Layout` does not receive `theme` as a prop. It does not need to know about it. Only the components that actually need the theme will read it.\n\n### Piece 3: Consume the value\n\n```jsx\nfunction UserMenu() {\n  const theme = useContext(ThemeContext);\n\n  return (\n    <div className={theme === 'dark' ? 'menu-dark' : 'menu-light'}>\n      <p>Settings</p>\n    </div>\n  );\n}\n```\n\n`useContext(ThemeContext)` reads the current value from the nearest `ThemeContext.Provider` above this component in the tree. If `theme` is `'dark'`, this component gets `'dark'`. If the provider's value changes, this component re-renders with the new value.\n\n### The three pieces together\n\n```jsx\n// 1. Create (usually in a separate file)\nconst ThemeContext = createContext('light');\n\n// 2. Provide (usually near the top of the app)\nfunction App() {\n  const [theme, setTheme] = useState('light');\n  return (\n    <ThemeContext.Provider value={theme}>\n      <Layout />\n    </ThemeContext.Provider>\n  );\n}\n\n// 3. Consume (anywhere in the tree)\nfunction AnyDeeplyNestedComponent() {\n  const theme = useContext(ThemeContext);\n  // Now this component has access to the theme\n  // without anyone passing it as a prop\n}\n```\n\n## What context is used for\n\nContext is not used for everything. It is used for data that many components across the tree need. The three most common uses are:\n\n### 1. Theme (dark mode / light mode)\n\n```jsx\nconst ThemeContext = createContext('light');\n\n// In any component:\nconst theme = useContext(ThemeContext);\n// theme is 'light' or 'dark'\n```\n\nWhen you see `useContext(ThemeContext)`, you know the component is reading the current theme to style itself.\n\n### 2. Authentication (logged-in user)\n\n```jsx\nconst AuthContext = createContext(null);\n\n// In any component:\nconst user = useContext(AuthContext);\n// user is null (not logged in) or { name: 'Alice', ... }\n```\n\nWhen you see `useContext(AuthContext)`, you know the component needs to know who is logged in -- maybe to show the user's name, hide admin features, or redirect to a login page.\n\n### 3. Language / Locale\n\n```jsx\nconst LanguageContext = createContext('en');\n\n// In any component:\nconst language = useContext(LanguageContext);\n// language is 'en', 'es', 'fr', etc.\n```\n\nWhen you see `useContext(LanguageContext)`, you know the component adapts its text based on the selected language.\n\n### Recognizing context in code you are reading\n\nYou will often encounter context without seeing all three pieces in the same file. Here is what to look for:\n\n**If you see `useContext(SomethingContext)`** -- this component is reading shared data. The name of the context (`ThemeContext`, `AuthContext`, `CartContext`) tells you what data it is reading. You do not need to find the provider to understand the component -- just know that the value comes from somewhere higher up in the tree.\n\n**If you see `<SomethingContext.Provider value={...}>`** -- this component is making data available to its children. Everything nested inside the Provider tags can access this value.\n\n**If you see `createContext`** -- this is the definition. It is just setting up the context object. The default value argument is a fallback.\n\n## Context vs. props: when to use which\n\n| Props | Context |\n| :-- | :-- |\n| Data for one specific child | Data for many components across the tree |\n| Changes from parent to parent | Same value shared everywhere |\n| Explicit -- you can see the data flow | Implicit -- the data appears \"magically\" |\n| Simple | Adds indirection |\n\nProps are still the default way to pass data. Context is for the special cases where data is truly global: theme, auth, language, shopping cart.\n\n## A realistic example\n\nHere is a common pattern -- an auth context that provides the logged-in user throughout the app:\n\n```jsx\nconst AuthContext = createContext(null);\n\nfunction AuthProvider({ children }) {\n  const [user, setUser] = useState(null);\n\n  useEffect(() => {\n    // Check if user is logged in when app starts\n    fetch('/api/me')\n      .then(res => res.json())\n      .then(data => setUser(data))\n      .catch(() => setUser(null));\n  }, []);\n\n  return (\n    <AuthContext.Provider value={{ user, setUser }}>\n      {children}\n    </AuthContext.Provider>\n  );\n}\n\n// Usage in App:\nfunction App() {\n  return (\n    <AuthProvider>\n      <Header />\n      <MainContent />\n      <Footer />\n    </AuthProvider>\n  );\n}\n\n// Any component can now read the user:\nfunction Header() {\n  const { user } = useContext(AuthContext);\n  return (\n    <header>\n      {user ? `Welcome, ${user.name}` : 'Please log in'}\n    </header>\n  );\n}\n```\n\nNotice a few things:\n- `AuthProvider` is a custom component that wraps the Provider and manages the state\n- The provider's value is an object with both `user` and `setUser` -- so consumers can both read and update the user\n- `Header` uses `useContext(AuthContext)` and destructures to get `user`\n- `Header` does not receive `user` as a prop -- it reads it from context\n\n## Your reading strategy for useContext\n\n1. **See `useContext(XyzContext)`** -- this component reads shared data\n2. **Read the context name** -- it tells you what kind of data (theme, auth, language, cart)\n3. **Read the variable name** -- it tells you what specific value is being used\n4. **You do not need to find the provider** -- the context name is enough to understand what the component is doing"
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "If a component uses `useContext(ThemeContext)` to get the current theme, does it also need to receive theme as a prop from its parent?",
+      "answer": "No. That is the whole point of context -- it replaces the need for the parent to pass the data as a prop. The component reads the theme directly from the nearest ThemeContext.Provider above it in the tree, bypassing all intermediate components. If a component uses useContext for a value, it does not need that value as a prop."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Reading useContext",
+      "problems": [
+        {
+          "id": "rl3-4-1",
+          "question": "What does this component display when the user is logged in as Alice?\n\n```jsx\nfunction ProfileBadge() {\n  const { user } = useContext(AuthContext);\n\n  if (!user) return null;\n\n  return (\n    <div className=\"badge\">\n      <img src={user.avatar} alt={user.name} />\n      <span>{user.name}</span>\n    </div>\n  );\n}\n```",
+          "options": [
+            "A) An avatar image and the text \"Alice\"",
+            "B) Nothing -- the component returns null",
+            "C) An error because user is not passed as a prop",
+            "D) The badge div but with no image or name"
+          ],
+          "correctAnswer": "A",
+          "explanation": "The component reads the `user` from AuthContext. Since the user is logged in as Alice, `user` is not null, so the component renders the badge with Alice's avatar and name. The `if (!user) return null` line means the badge is hidden when no one is logged in. No prop is needed because context provides the data.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "rl3-4-2",
+          "question": "A junior developer asks: \"Why is the button always light-colored even though I turned on dark mode?\" What is the problem?\n\n```jsx\nfunction App() {\n  const [theme, setTheme] = useState('light');\n  return (\n    <ThemeContext.Provider value={theme}>\n      <Settings onThemeChange={setTheme} />\n      <MainContent />\n    </ThemeContext.Provider>\n  );\n}\n\nfunction ActionButton({ label, onClick }) {\n  return (\n    <button className=\"btn-light\" onClick={onClick}>\n      {label}\n    </button>\n  );\n}\n```",
+          "options": [
+            "A) ActionButton never reads the theme from context -- it always uses the hardcoded class `btn-light`. It should use `useContext(ThemeContext)` and set the className based on the theme value.",
+            "B) The ThemeContext.Provider is in the wrong location.",
+            "C) The setTheme function does not work.",
+            "D) ActionButton needs theme as a prop."
+          ],
+          "correctAnswer": "A",
+          "explanation": "The ActionButton component has a hardcoded className of `btn-light`. It never calls `useContext(ThemeContext)` to read the current theme. Even though the theme context exists and is correctly provided at the App level, this particular component ignores it. The fix is to add `const theme = useContext(ThemeContext)` and use it in the className: `className={theme === 'dark' ? 'btn-dark' : 'btn-light'}`.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "rl3-4-3",
+          "question": "You are reviewing AI-generated code. The client says \"the shopping cart count in the header does not update when I add items from the product page.\" Both components use CartContext. What would you tell the AI?\n\n```jsx\nfunction CartProvider({ children }) {\n  const [items, setItems] = useState([]);\n  return (\n    <CartContext.Provider value={{ items }}>\n      {children}\n    </CartContext.Provider>\n  );\n}\n\nfunction Header() {\n  const { items } = useContext(CartContext);\n  return <span>Cart ({items.length})</span>;\n}\n\nfunction ProductPage({ product }) {\n  const { items } = useContext(CartContext);\n\n  function addToCart() {\n    items.push(product);\n  }\n\n  return (\n    <button onClick={addToCart}>Add to Cart</button>\n  );\n}\n```",
+          "options": [
+            "A) Two bugs: (1) The CartProvider does not include `setItems` in the context value, so consumers cannot update the cart. (2) ProductPage mutates the array with `items.push` instead of using a setter function.",
+            "B) The CartProvider should use useReducer instead of useState.",
+            "C) The Header component needs to subscribe to changes separately.",
+            "D) The product page should import setItems directly from the provider file."
+          ],
+          "correctAnswer": "A",
+          "explanation": "The provider only passes `{ items }` but not the setter function. ProductPage has no way to properly update the cart. Even worse, it tries to mutate the array directly with `items.push(product)`, which React will not detect. The fix: (1) Change the provider value to `{ items, setItems }`. (2) Change ProductPage to destructure `setItems` and use `setItems(prev => [...prev, product])`. You would tell the AI: \"Include setItems in the CartContext.Provider value, and update addToCart to use setItems with a functional update instead of mutating the array with push.\"",
+          "difficulty": "advanced"
+        }
+      ]
+    },
+    {
+      "type": "explainBack",
+      "prompt": "Explain the prop drilling problem in your own words. Then describe the three pieces of React Context (create, provide, consume) and how they solve it. What are the three most common things you see shared through context?"
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "Context solves prop drilling by letting any component read shared data without it being passed through every intermediate parent. The three pieces are createContext, Provider, and useContext. When you see useContext in code, the context name tells you what data is being shared -- theme, auth, language, or some other app-wide value."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "Think about the web apps you use. What data is the same across every page -- your login status, your preferred language, the color theme? All of that is likely managed through context. When you see useContext in code, you now know: this component is reading something shared across the whole app."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What problem does useContext solve?",
+      "options": ["It makes components render faster", "It lets components read shared data without prop drilling through every intermediate parent", "It replaces useState for managing local state"],
+      "correctIndex": 1,
+      "explanation": "useContext lets any component in the tree read shared data directly from a Provider, without the data being passed as props through every level in between.",
+      "encourageCorrect": "Exactly! Context is like a loudspeaker -- announce the data once and any component can hear it directly.",
+      "encourageIncorrect": "useContext solves prop drilling. Instead of passing data through every intermediate component, any descendant can read the value directly from the Provider."
+    },
+    {
+      "question": "What are the three pieces of the React Context system?",
+      "options": ["useState, useEffect, useContext", "createContext, Provider, useContext", "import, export, render"],
+      "correctIndex": 1,
+      "explanation": "The three pieces are: createContext (define it), Provider (supply the value), and useContext (read the value in any descendant component).",
+      "encourageCorrect": "Great recall! Create it, provide it, consume it -- those are the three steps of Context.",
+      "encourageIncorrect": "The three pieces are createContext (to define it), Provider (to supply the value to the tree), and useContext (to read the value from any nested component)."
+    },
+    {
+      "question": "Which of these is a common use case for React Context?",
+      "options": ["Passing a single prop from a parent to one child", "Sharing theme, authentication, or language data across many components", "Sorting a list of items alphabetically"],
+      "correctIndex": 1,
+      "explanation": "Context is best for data that many components throughout the app need, like the current theme, logged-in user, or selected language.",
+      "encourageCorrect": "Right! Theme, auth, and language are the classic trio of context use cases.",
+      "encourageIncorrect": "Context shines when data is needed widely across the app -- things like dark mode, who's logged in, or the chosen language. For single parent-child data, props are still the way to go."
+    }
+  ]
+}

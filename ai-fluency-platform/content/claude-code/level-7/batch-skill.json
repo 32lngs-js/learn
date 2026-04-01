@@ -43,5 +43,31 @@
       "type": "connectPrompt",
       "prompt": "Batch mode runs inside an interactive session. But what if you want Claude to run without any interaction at all — as part of a script, a cron job, or an automated pipeline? That is non-interactive mode, and it unlocks a completely different category of use."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Why is instruction quality especially important for batch operations?",
+      "options": [
+        "Batch mode costs more per file",
+        "A vague instruction is amplified across all targets — 40 vague edits vs 40 perfect ones",
+        "Batch mode doesn't support detailed instructions"
+      ],
+      "correctIndex": 1,
+      "explanation": "Batch mode amplifies your instruction for better or worse. A precise instruction across 40 files gives 40 perfect results; a vague one gives 40 problems.",
+      "encourageCorrect": "Exactly! Precision matters exponentially in batch operations.",
+      "encourageIncorrect": "Batch mode amplifies your instruction — a precise one gives 40 perfect results, while a vague one creates 40 problems."
+    },
+    {
+      "question": "What should you do before running a batch operation on many files?",
+      "options": [
+        "Back up your entire computer",
+        "Test the instruction on 2-3 files first",
+        "Read every file manually"
+      ],
+      "correctIndex": 1,
+      "explanation": "Always dry-run on a few files first. Confirm the result matches expectations, then batch the rest.",
+      "encourageCorrect": "Smart practice! A dry run catches issues before they multiply.",
+      "encourageIncorrect": "Always test on 2-3 files first — confirm the result is right before applying to all files."
+    }
   ]
 }

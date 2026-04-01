@@ -43,5 +43,31 @@
       "type": "connectPrompt",
       "prompt": "Compaction is one way to manage a full context window. The next module covers a more drastic but often more effective approach: `/clear` — throwing away context entirely and starting fresh."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "When is the best time to run /compact?",
+      "options": [
+        "At the very start of a session",
+        "At phase transitions — when you finish one type of work and start another",
+        "Only when you get a warning"
+      ],
+      "correctIndex": 1,
+      "explanation": "Compact strategically at phase transitions — this clears the old phase's context while preserving key decisions for the next phase.",
+      "encourageCorrect": "Smart timing! Phase transitions are the natural moment to compact.",
+      "encourageIncorrect": "The best time is at phase transitions — like when you finish research and start writing. This clears old context while keeping the conclusions."
+    },
+    {
+      "question": "What is the purpose of a 'Compact Instructions' section in CLAUDE.md?",
+      "options": [
+        "It makes CLAUDE.md shorter",
+        "It guides what information survives compaction",
+        "It prevents compaction from happening"
+      ],
+      "correctIndex": 1,
+      "explanation": "The Compact Instructions section tells Claude what to prioritize when summarizing — it's your insurance policy for long sessions.",
+      "encourageCorrect": "That's it! It's your insurance policy for preserving important context.",
+      "encourageIncorrect": "Compact Instructions guide what Claude preserves during compaction — like telling it to keep key decisions and current tasks."
+    }
   ]
 }

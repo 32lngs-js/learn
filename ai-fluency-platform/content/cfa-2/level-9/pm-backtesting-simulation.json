@@ -104,5 +104,31 @@
       "type": "connectPrompt",
       "prompt": "You have completed the **Portfolio Management** section. The final section covers **Ethics**, where you will apply the CFA Code and Standards to complex real-world scenarios. Ethical judgment is especially critical in areas like backtesting (presenting fair results), risk management (transparent reporting), and portfolio construction (fiduciary duty)."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Look-ahead bias in backtesting occurs when:",
+      "options": [
+        "The test period is too short",
+        "The backtest uses information that would not have been available at the time of the simulated decisions",
+        "The portfolio is too concentrated"
+      ],
+      "correctIndex": 1,
+      "explanation": "Look-ahead bias uses future information in past decisions, making the strategy appear better than it would have been in real time.",
+      "encourageCorrect": "Right! Using information you wouldn't have had is a major backtesting pitfall.",
+      "encourageIncorrect": "Look-ahead bias means the backtest uses information that wasn't available at the time. It makes strategies look unrealistically good."
+    },
+    {
+      "question": "Survivorship bias in backtesting tends to:",
+      "options": [
+        "Understate historical returns",
+        "Overstate historical returns because failed securities are excluded",
+        "Have no effect on results"
+      ],
+      "correctIndex": 1,
+      "explanation": "If the backtest universe only includes stocks that survived to the present, it misses delisted/bankrupt stocks, overstating historical performance.",
+      "encourageCorrect": "That's the bias! Leaving out the losers makes everything look better.",
+      "encourageIncorrect": "Survivorship bias inflates returns by excluding securities that failed or were delisted. The surviving stocks naturally performed better."
+    }
   ]
 }

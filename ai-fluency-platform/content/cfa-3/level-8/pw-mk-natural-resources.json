@@ -100,5 +100,31 @@
       "type": "connectPrompt",
       "prompt": "Next, we explore **Special Situations** investing -- event-driven strategies across private markets including distressed debt, turnaround investing, and capital structure arbitrage."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Investing in timberland offers the unique advantage of:",
+      "options": [
+        "Daily liquidity",
+        "Biological growth \u2014 trees keep growing regardless of market conditions, acting as a natural store of value",
+        "Guaranteed high returns"
+      ],
+      "correctIndex": 1,
+      "explanation": "Timber grows physically over time, adding volume and value regardless of economic conditions. Harvesting can be timed to favorable markets.",
+      "encourageCorrect": "That's the unique property! Trees keep growing even when markets are down.",
+      "encourageIncorrect": "Timberland benefits from biological growth \u2014 trees add volume and value naturally. Owners can also time harvests to favorable price conditions."
+    },
+    {
+      "question": "Farmland's return comes from:",
+      "options": [
+        "Only appreciation in land value",
+        "Both crop income (yield) and land value appreciation",
+        "Government subsidies only"
+      ],
+      "correctIndex": 1,
+      "explanation": "Farmland returns combine annual crop income (or rental income from leasing the land) with long-term appreciation in land values.",
+      "encourageCorrect": "Right! Income plus appreciation, similar to real estate.",
+      "encourageIncorrect": "Farmland returns have two components: annual crop income (or lease payments) and long-term appreciation in land value."
+    }
   ]
 }

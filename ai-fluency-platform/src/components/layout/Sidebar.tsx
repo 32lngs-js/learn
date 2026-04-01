@@ -14,6 +14,8 @@ import cfa2Curriculum from "../../../content/cfa-2/curriculum.json";
 import cfa3Curriculum from "../../../content/cfa-3/curriculum.json";
 import claudeCodeCurriculum from "../../../content/claude-code/curriculum.json";
 import systemDesignCurriculum from "../../../content/system-design/curriculum.json";
+import webFundamentalsCurriculum from "../../../content/web-fundamentals/curriculum.json";
+import reactLiteracyCurriculum from "../../../content/react-literacy/curriculum.json";
 import coursesData from "../../../content/courses.json";
 import type { CourseInfo } from "@/types/content";
 
@@ -25,6 +27,8 @@ const curricula: Record<string, CurriculumData> = {
   "cfa-3": cfa3Curriculum as CurriculumData,
   "claude-code": claudeCodeCurriculum as CurriculumData,
   "system-design": systemDesignCurriculum as CurriculumData,
+  "web-fundamentals": webFundamentalsCurriculum as CurriculumData,
+  "react-literacy": reactLiteracyCurriculum as CurriculumData,
 };
 
 function getLevelOrder(curriculum: CurriculumData): string[] {

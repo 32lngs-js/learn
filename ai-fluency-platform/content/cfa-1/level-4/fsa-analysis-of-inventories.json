@@ -118,5 +118,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Analysis of Long-Term Assets**, where you'll learn about capitalizing versus expensing, depreciation methods, and impairment. Just as inventory methods affect COGS, capitalization and depreciation choices affect how costs flow through the income statement over time."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "During rising prices, which inventory method reports higher cost of goods sold?",
+      "options": [
+        "FIFO",
+        "LIFO",
+        "They report the same COGS"
+      ],
+      "correctIndex": 1,
+      "explanation": "LIFO (Last-In, First-Out) assigns the most recent (higher) costs to COGS during inflation, resulting in higher COGS and lower net income.",
+      "encourageCorrect": "Exactly! LIFO uses the newest, higher costs for COGS during inflation.",
+      "encourageIncorrect": "During rising prices, LIFO reports higher COGS because it uses the most recent (higher-priced) inventory first."
+    },
+    {
+      "question": "Under IFRS, is LIFO inventory accounting permitted?",
+      "options": [
+        "Yes, always",
+        "No, IFRS does not allow LIFO",
+        "Only for certain industries"
+      ],
+      "correctIndex": 1,
+      "explanation": "IFRS prohibits LIFO. Only FIFO and weighted average cost methods are allowed under IFRS.",
+      "encourageCorrect": "That's a key distinction! LIFO is allowed under US GAAP but not under IFRS.",
+      "encourageIncorrect": "IFRS does not allow LIFO \u2014 only FIFO and weighted average cost are permitted. This is a common US GAAP vs IFRS difference."
+    }
   ]
 }

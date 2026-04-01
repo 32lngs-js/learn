@@ -1,0 +1,106 @@
+{
+  "meta": {
+    "title": "2.3 Showing and Hiding",
+    "description": "Components decide what to show based on the data they receive.",
+    "level": "level-2",
+    "slug": "showing-and-hiding",
+    "order": 3,
+    "isCheckpoint": false,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "predictPrompt",
+      "prompt": "Think about a login page. Before you log in, it shows a 'Sign In' button. After you log in, it shows your name and a 'Sign Out' button. The page does not reload -- the same component is deciding what to display. Before reading this module, write down your guess: how does a React component decide to show one thing versus another?"
+    },
+    {
+      "type": "markdown",
+      "content": "## Conditional rendering: show this or that\n\nIn HTML, what you write is what appears. In React, components can **decide** what to show based on data. This is called conditional rendering, and it uses two JavaScript patterns you will see everywhere in React codebases.\n\n### Pattern 1: The ternary operator\n\nThe ternary operator is a one-line if/else. The syntax is:\n\n```\ncondition ? valueIfTrue : valueIfFalse\n```\n\nIn React, it looks like this:\n\n```jsx\nfunction LoginStatus({ isLoggedIn, userName }) {\n  return (\n    <div className=\"auth-status\">\n      {isLoggedIn ? (\n        <span>Welcome back, {userName}</span>\n      ) : (\n        <span>Please sign in</span>\n      )}\n    </div>\n  );\n}\n```\n\nRead it as: \"If `isLoggedIn` is true, show 'Welcome back, [name]'. Otherwise, show 'Please sign in.'\"\n\nWhen used as `<LoginStatus isLoggedIn={true} userName=\"Alex\" />`, the user sees: **Welcome back, Alex**.\nWhen used as `<LoginStatus isLoggedIn={false} userName=\"Alex\" />`, the user sees: **Please sign in**.\n\nThe ternary is the most common conditional pattern in React because it fits naturally inside JSX curly braces. Here are more examples:\n\n```jsx\n// Show different text\n<p>{items.length > 0 ? `${items.length} results` : \"No results found\"}</p>\n\n// Show different components\n{isPremium ? <PremiumBadge /> : <FreeBadge />}\n\n// Show different CSS classes\n<button className={isActive ? \"btn btn-primary\" : \"btn btn-secondary\"}>\n  {isActive ? \"Active\" : \"Inactive\"}\n</button>\n```\n\nThe ternary always has two branches: the true case and the false case. Both branches must produce something (text, JSX, or `null` to show nothing).\n\n### Pattern 2: The `&&` (AND) short-circuit\n\nSometimes you want to show something or show nothing -- there is no \"else\" case. For this, React developers use the `&&` operator:\n\n```jsx\nfunction UserProfile({ name, isAdmin }) {\n  return (\n    <div className=\"profile\">\n      <h2>{name}</h2>\n      {isAdmin && <span className=\"admin-badge\">Admin</span>}\n    </div>\n  );\n}\n```\n\nRead `{isAdmin && <span>Admin</span>}` as: \"If isAdmin is true, show the Admin badge. Otherwise, show nothing.\"\n\nThis works because of how JavaScript evaluates `&&`. If the left side is false, JavaScript stops and returns nothing (which React renders as blank space). If the left side is true, JavaScript returns the right side (the JSX).\n\nCommon uses of the `&&` pattern:\n\n```jsx\n// Show a section only for admins\n{isAdmin && <AdminPanel />}\n\n// Show an error message only when there is an error\n{error && <p className=\"error\">{error}</p>}\n\n// Show a loading indicator\n{isLoading && <Spinner />}\n\n// Show a notification count only when there are notifications\n{notifications.length > 0 && (\n  <span className=\"badge\">{notifications.length}</span>\n)}\n```\n\n### The `&&` gotcha: zero renders as text\n\nThere is one important trap with `&&` that catches even experienced developers:\n\n```jsx\nfunction ItemCount({ count }) {\n  return (\n    <div>\n      {count && <p>You have {count} items</p>}\n    </div>\n  );\n}\n```\n\nWhen `count` is 5, this shows: **You have 5 items**. Good.\nWhen `count` is 0, you might expect it to show nothing. Instead, it shows: **0**.\n\nWhy? In JavaScript, `0` is \"falsy,\" so `&&` returns the left side (`0`). React renders `0` as the text \"0\" because it is a valid number. The fix is to explicitly check for the condition:\n\n```jsx\n// Fix: explicitly check for > 0\n{count > 0 && <p>You have {count} items</p>}\n```\n\nThis is a common bug in React code and a common mistake in AI-generated code. When you see `{someNumber && ...}`, check whether the number could be zero.\n\n### Conditional CSS classes\n\nConditional rendering is not just about showing and hiding elements -- it is also used to change how things look:\n\n```jsx\nfunction Tab({ label, isActive }) {\n  return (\n    <button className={isActive ? \"tab active\" : \"tab\"}>\n      {label}\n    </button>\n  );\n}\n```\n\nWhen `isActive` is true, the button gets the classes \"tab active\". When false, just \"tab\". This is how React components change their appearance based on state or props -- by swapping CSS classes.\n\nYou will also see the template literal style:\n\n```jsx\n<div className={`card ${isHighlighted ? \"highlighted\" : \"\"}`}>\n```\n\nThis always applies the \"card\" class and conditionally adds \"highlighted\".\n\n### A realistic example: notification center\n\nHere is a component that combines multiple conditional rendering patterns:\n\n```jsx\nfunction NotificationCenter({ notifications, isOpen }) {\n  const unreadCount = notifications.filter(n => !n.read).length;\n\n  return (\n    <div className=\"notification-center\">\n      <button className=\"notification-bell\">\n        Notifications\n        {unreadCount > 0 && (\n          <span className=\"badge\">{unreadCount}</span>\n        )}\n      </button>\n\n      {isOpen && (\n        <div className=\"notification-panel\">\n          {notifications.length > 0 ? (\n            <ul>\n              {notifications.map(n => (\n                <li key={n.id} className={n.read ? \"read\" : \"unread\"}>\n                  {n.message}\n                </li>\n              ))}\n            </ul>\n          ) : (\n            <p className=\"empty\">No notifications</p>\n          )}\n        </div>\n      )}\n    </div>\n  );\n}\n```\n\nLet us read each conditional:\n\n1. `{unreadCount > 0 && <span className=\"badge\">{unreadCount}</span>}` -- Show the count badge only when there are unread notifications. Uses `> 0` to avoid the zero gotcha.\n\n2. `{isOpen && <div className=\"notification-panel\">...}` -- Show the notification panel only when isOpen is true.\n\n3. `{notifications.length > 0 ? <ul>... : <p>No notifications</p>}` -- If there are notifications, show them as a list. Otherwise, show an empty state message.\n\n4. `className={n.read ? \"read\" : \"unread\"}` -- Apply different CSS classes based on whether each notification has been read.\n\nNotice how conditions nest: the panel only shows when open, and inside the panel, the content changes based on whether there are notifications. This is typical of real React code."
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "What does this render when `count` is 0?\n\n```jsx\n<div>\n  {count && <p>You have items in your cart</p>}\n  {count > 0 ? <p>{count} items</p> : <p>Cart is empty</p>}\n</div>\n```",
+      "answer": "The first line renders the text '0' because of the && gotcha -- count is 0 (falsy), so && returns 0, and React renders 0 as text. The second line renders 'Cart is empty' because 0 > 0 is false, so the ternary takes the false branch. The user sees '0' followed by 'Cart is empty', which is a confusing display. The first line should be {count > 0 && <p>You have items in your cart</p>} to fix the bug."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Conditional Rendering",
+      "problems": [
+        {
+          "id": "rl2-3-1",
+          "question": "What does this component show when `role` is \"admin\"?\n\n```jsx\nfunction NavBar({ role }) {\n  return (\n    <nav>\n      <a href=\"/home\">Home</a>\n      <a href=\"/profile\">Profile</a>\n      {role === \"admin\" && <a href=\"/admin\">Admin Panel</a>}\n    </nav>\n  );\n}\n```",
+          "options": [
+            "A) Home, Profile, and Admin Panel links",
+            "B) Only the Admin Panel link",
+            "C) Home and Profile links only"
+          ],
+          "correctAnswer": "A",
+          "explanation": "The Home and Profile links always render -- they are not inside any conditional. The Admin Panel link is wrapped in {role === 'admin' && ...}, and since role is 'admin', the condition is true and the link renders. All three links appear.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "rl2-3-2",
+          "question": "What does this render when `status` is \"loading\"?\n\n```jsx\nfunction StatusDisplay({ status, data }) {\n  return (\n    <div>\n      {status === \"loading\" ? (\n        <p>Loading...</p>\n      ) : status === \"error\" ? (\n        <p>Something went wrong</p>\n      ) : (\n        <p>Result: {data}</p>\n      )}\n    </div>\n  );\n}\n```",
+          "options": [
+            "A) 'Loading...'",
+            "B) 'Something went wrong'",
+            "C) 'Result: ' followed by the data value"
+          ],
+          "correctAnswer": "A",
+          "explanation": "This is a chained ternary -- nested ternaries that act like if/else if/else. The first check is status === 'loading', which is true, so it renders 'Loading...' and stops. The error and data branches are never evaluated. Chained ternaries read like: if loading, show loading; else if error, show error; else show the result.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "rl2-3-3",
+          "question": "This component has the `&&` zero gotcha. What does the user see when `messageCount` is 0?\n\n```jsx\nfunction Inbox({ messageCount }) {\n  return (\n    <div className=\"inbox\">\n      <h2>Inbox</h2>\n      {messageCount && (\n        <span className=\"count\">{messageCount} new messages</span>\n      )}\n    </div>\n  );\n}\n```",
+          "options": [
+            "A) Just the heading 'Inbox' with no count shown",
+            "B) The heading 'Inbox' followed by the text '0' (without 'new messages')",
+            "C) The heading 'Inbox' followed by '0 new messages'"
+          ],
+          "correctAnswer": "B",
+          "explanation": "When messageCount is 0, the && operator short-circuits and returns the left side (0). React renders the number 0 as the text '0'. The span with 'new messages' never renders because && stopped at the falsy value. The user sees an unexpected '0' on the page. The fix: {messageCount > 0 && <span>...</span>}.",
+          "difficulty": "advanced"
+        }
+      ]
+    },
+    {
+      "type": "explainBack",
+      "prompt": "Explain the difference between the ternary operator and the && pattern in React. When would you use each one? Describe the zero gotcha with && and how you would fix it."
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "React uses two patterns for conditional rendering: the ternary (condition ? A : B) for show-this-or-that, and && (condition && element) for show-or-hide. Watch out for the zero gotcha: {0 && <Something />} renders '0' instead of nothing. Always use an explicit boolean check like {count > 0 && ...} when the condition might be zero."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "Conditional rendering handles showing one thing or another. But what about showing a whole list of things? When you have an array of data -- products, users, messages -- React has a specific pattern for turning that array into a list of components. That is the .map() pattern, covered in Module 2.4."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What does the ternary operator (condition ? A : B) do in JSX?",
+      "options": ["It loops through a list of items", "It shows A if the condition is true, or B if the condition is false", "It hides both A and B from the page"],
+      "correctIndex": 1,
+      "explanation": "The ternary operator is a one-line if/else: if the condition is true, render A; if false, render B.",
+      "encourageCorrect": "You've got it! The ternary is the most common conditional pattern in React.",
+      "encourageIncorrect": "The ternary works like a compact if/else: condition ? showThisIfTrue : showThisIfFalse. It always picks one branch or the other."
+    },
+    {
+      "question": "What is the '&& zero gotcha' in React?",
+      "options": ["Using && with a string always crashes", "When the left side of && is the number 0, React renders '0' as text instead of showing nothing", "The && operator does not work inside JSX"],
+      "correctIndex": 1,
+      "explanation": "When you write {count && <Something />} and count is 0, React renders the text '0' on screen instead of nothing, because 0 is a valid renderable value.",
+      "encourageCorrect": "Nice recall! The zero gotcha catches even experienced developers. Using count > 0 && ... is the safe fix.",
+      "encourageIncorrect": "Tricky one! When the left side of && is 0, React shows '0' as text. The fix is to use an explicit check like {count > 0 && ...} instead."
+    },
+    {
+      "question": "When would you use the && pattern instead of a ternary?",
+      "options": ["When you want to show one thing OR another thing", "When you want to show something OR show nothing (no else case)", "When you need to loop through an array"],
+      "correctIndex": 1,
+      "explanation": "The && pattern is for show-or-hide: show this element if the condition is true, otherwise render nothing. The ternary is for show-this-or-that when you have two alternatives.",
+      "encourageCorrect": "Exactly right! && is perfect for the 'show or hide' case where there's no alternative to display.",
+      "encourageIncorrect": "The && pattern is for when you want to show something or nothing at all. If you need two branches (show A or show B), use a ternary instead."
+    }
+  ]
+}

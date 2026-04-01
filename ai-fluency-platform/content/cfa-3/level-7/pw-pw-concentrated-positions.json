@@ -100,5 +100,31 @@
       "type": "connectPrompt",
       "prompt": "Next, we cover **Risk Management for Individuals** -- including insurance products that protect against mortality, longevity, disability, and liability risks. These tools complement the investment strategies for concentrated positions by protecting against non-market risks."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "A concentrated stock position creates risk because:",
+      "options": [
+        "All stocks are equally risky",
+        "A single holding represents a large share of wealth, exposing the client to company-specific risk",
+        "Concentrated positions always outperform diversified ones"
+      ],
+      "correctIndex": 1,
+      "explanation": "A concentrated position lacks diversification \u2014 if that one stock declines significantly, a large portion of the client's wealth is at risk.",
+      "encourageCorrect": "That's the core risk! Too many eggs in one basket.",
+      "encourageIncorrect": "A concentrated position exposes the client to significant company-specific risk. If the stock drops substantially, a large portion of wealth is destroyed."
+    },
+    {
+      "question": "An exchange fund allows a client to diversify a concentrated position by:",
+      "options": [
+        "Selling the stock and buying a mutual fund",
+        "Contributing the concentrated stock to a partnership where it is pooled with other investors' stocks",
+        "Using futures to hedge the position"
+      ],
+      "correctIndex": 1,
+      "explanation": "In an exchange fund, multiple investors contribute different concentrated positions to a partnership. Each receives a diversified interest without triggering a sale.",
+      "encourageCorrect": "Clever structure! Diversify without selling \u2014 and deferring the tax hit.",
+      "encourageIncorrect": "An exchange fund lets multiple investors contribute their concentrated stocks to a partnership, receiving a diversified interest without triggering a taxable sale."
+    }
   ]
 }

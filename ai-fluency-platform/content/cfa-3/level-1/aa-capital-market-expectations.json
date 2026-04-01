@@ -108,5 +108,31 @@
       "type": "connectPrompt",
       "prompt": "Next, we'll explore **Forecasting Returns** in detail, building on the framework here to develop specific return expectations for equities (Grinold-Kroner), fixed income, real estate, and other asset classes \u2014 the quantitative inputs that feed directly into your asset allocation optimization."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Capital market expectations (CMEs) provide estimates of:",
+      "options": [
+        "Exact future returns for each asset class",
+        "Expected returns, risks, and correlations for major asset classes",
+        "Only the risk-free rate"
+      ],
+      "correctIndex": 1,
+      "explanation": "CMEs are forward-looking estimates of return, risk, and correlation for asset classes. They drive the asset allocation process.",
+      "encourageCorrect": "Correct! CMEs are the inputs that drive the entire asset allocation decision.",
+      "encourageIncorrect": "Capital market expectations estimate expected returns, volatilities, and correlations for asset classes. They are inputs to asset allocation models."
+    },
+    {
+      "question": "A limitation of using historical data to form capital market expectations is:",
+      "options": [
+        "Historical data is always accurate",
+        "Past conditions may not repeat, leading to unreliable forward-looking estimates",
+        "It doesn't require any assumptions"
+      ],
+      "correctIndex": 1,
+      "explanation": "Historical data reflects the past, which may differ from future conditions due to structural changes in the economy, markets, or regulations.",
+      "encourageCorrect": "Right! The past doesn't always predict the future, especially after structural changes.",
+      "encourageIncorrect": "Historical data may not represent future conditions. Structural changes (regulation, technology, demographics) can make past patterns unreliable."
+    }
   ]
 }

@@ -43,5 +43,31 @@
       "type": "connectPrompt",
       "prompt": "Research, writing, and data work all follow the four-phase pattern. The next module applies it to a universal challenge: debugging. When something is broken — whether it is code, a formula, a process, or a document — the four-phase workflow becomes a diagnostic tool."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is the cardinal rule of data work with Claude Code?",
+      "options": [
+        "Always use Plan Mode",
+        "Never modify the original — save transformed data to a new file",
+        "Only work with CSV files"
+      ],
+      "correctIndex": 1,
+      "explanation": "Always keep the original file unchanged. Save transformed data to a new file for verification and rollback.",
+      "encourageCorrect": "That's the cardinal rule! Always preserve the original.",
+      "encourageIncorrect": "Never modify the original — always save transformed data to a new file. This gives you a rollback path and makes verification possible."
+    },
+    {
+      "question": "Why is the explore phase 'non-negotiable' for data work?",
+      "options": [
+        "It saves tokens",
+        "You must understand data before changing it — otherwise you can't tell if changes are correct",
+        "Claude requires it"
+      ],
+      "correctIndex": 1,
+      "explanation": "If you don't understand the data before changing it, you can't tell whether the changes are correct. A wrong number looks the same as a right one.",
+      "encourageCorrect": "Critical insight! You need understanding to verify correctness.",
+      "encourageIncorrect": "You must understand data before changing it — without that understanding, you can't verify whether a transformed value is correct or wrong."
+    }
   ]
 }

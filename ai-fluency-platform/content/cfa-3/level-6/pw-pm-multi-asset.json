@@ -100,5 +100,31 @@
       "type": "connectPrompt",
       "prompt": "Next, we examine **Private Wealth Management** from the portfolio management perspective -- how these multi-asset concepts apply to individual investors with unique tax, estate, and behavioral considerations."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "The primary advantage of a multi-asset portfolio is:",
+      "options": [
+        "It eliminates all risk",
+        "Diversification across asset classes with different return drivers",
+        "It always outperforms single-asset portfolios"
+      ],
+      "correctIndex": 1,
+      "explanation": "Multi-asset portfolios combine different asset classes (equities, bonds, alternatives, etc.) to benefit from diversification across uncorrelated return streams.",
+      "encourageCorrect": "That's the core benefit! Different asset classes with different drivers improve diversification.",
+      "encourageIncorrect": "Multi-asset portfolios benefit from diversification across asset classes with different return drivers, potentially improving the risk-return tradeoff."
+    },
+    {
+      "question": "Risk budgeting in a multi-asset portfolio involves:",
+      "options": [
+        "Setting a maximum dollar loss for the portfolio",
+        "Allocating the portfolio's total risk budget across asset classes and strategies",
+        "Investing equal amounts in each asset class"
+      ],
+      "correctIndex": 1,
+      "explanation": "Risk budgeting distributes the total allowable risk across asset classes based on where risk-taking is expected to be most rewarded.",
+      "encourageCorrect": "Correct! Allocate risk where you expect to be best compensated for it.",
+      "encourageIncorrect": "Risk budgeting allocates the portfolio's total risk across asset classes and strategies, focusing risk-taking where it's expected to be most rewarded."
+    }
   ]
 }

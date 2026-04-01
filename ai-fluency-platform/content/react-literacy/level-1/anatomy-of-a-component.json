@@ -1,0 +1,106 @@
+{
+  "meta": {
+    "title": "1.2 Anatomy of a Component",
+    "description": "Every component follows the same pattern: data in, markup out.",
+    "level": "level-1",
+    "slug": "anatomy-of-a-component",
+    "order": 2,
+    "isCheckpoint": false,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "predictPrompt",
+      "prompt": "You know that JSX is the markup language React uses. But where does the JSX live? Before reading this module, write down your best guess: what does the overall structure of a React component file look like?"
+    },
+    {
+      "type": "markdown",
+      "content": "## A component is just a function\n\nThis is the single most important concept in React literacy: **a component is a JavaScript function that returns JSX**. That is it. No magic, no complex framework machinery -- just a function.\n\nHere is the simplest possible React component:\n\n```jsx\nfunction Greeting() {\n  return <h1>Hello, world</h1>;\n}\n```\n\nThis function is named `Greeting`. It takes no inputs. It returns a single piece of JSX -- an `<h1>` tag. When React renders this component, the user sees a heading that says \"Hello, world.\"\n\nEvery React component you will ever encounter follows this same pattern, no matter how complex:\n\n1. A function with a **capitalized name**\n2. Some **logic and data preparation** (optional)\n3. A **return statement** containing JSX\n\nLet us look at a more realistic example:\n\n```jsx\nfunction UserProfile() {\n  const name = \"Sarah Chen\";\n  const role = \"Product Manager\";\n  const joinDate = \"March 2023\";\n  const isActive = true;\n\n  return (\n    <div className=\"profile-card\">\n      <h2>{name}</h2>\n      <p className=\"role\">{role}</p>\n      <p>Joined: {joinDate}</p>\n      <span className={isActive ? \"badge active\" : \"badge inactive\"}>\n        {isActive ? \"Active\" : \"Inactive\"}\n      </span>\n    </div>\n  );\n}\n```\n\n### The two zones of a component\n\nEvery component has two distinct zones, and learning to see the boundary between them is one of the most useful reading skills you can develop:\n\n**Zone 1: Above the return -- logic and data preparation**\n\nEverything above the `return` statement is JavaScript. This is where the component gathers data, performs calculations, sets up variables, and makes decisions. None of this is visible to the user directly.\n\n```jsx\nfunction InvoiceSummary() {\n  // --- ZONE 1: Logic and data prep ---\n  const subtotal = 149.99;\n  const taxRate = 0.08;\n  const tax = subtotal * taxRate;\n  const total = subtotal + tax;\n  const formattedTotal = total.toFixed(2);\n\n  // --- ZONE 2: What the user sees ---\n  return (\n    <div className=\"invoice\">\n      <p>Subtotal: ${subtotal}</p>\n      <p>Tax: ${tax.toFixed(2)}</p>\n      <p className=\"total\">Total: ${formattedTotal}</p>\n    </div>\n  );\n}\n```\n\nIn Zone 1, the component calculates the tax and total. In Zone 2, it displays those values. The user never sees the calculations -- they only see the final numbers inserted into the JSX.\n\nThis split is consistent across every React component. When you are trying to understand what a component does, start by scanning the return statement to see what it displays, then look above the return to see where the data comes from.\n\n**Zone 2: Inside the return -- what the user sees**\n\nThe `return (...)` contains the JSX that becomes the visible UI. Parentheses after `return` are common when the JSX spans multiple lines -- they are just a JavaScript grouping mechanism and do not change what is rendered.\n\n### The function name IS the component name\n\nReact has one strict rule about component names: **they must start with a capital letter**. This is how React tells the difference between a custom component and a regular HTML element:\n\n```jsx\n// Capital letter = React component\n<UserProfile />\n<NavBar />\n<ShoppingCart />\n\n// Lowercase = HTML element\n<div>\n<p>\n<button>\n```\n\nWhen you see `<UserProfile />` in JSX, you know that somewhere in the codebase there is a function called `UserProfile` that returns JSX. When you see `<div>`, you know that is a plain HTML element.\n\nThe function name becomes the tag name. If the function is called `Sidebar`, you use it as `<Sidebar />`. If it is called `PaymentForm`, you use it as `<PaymentForm />`.\n\n### Arrow functions: same thing, different syntax\n\nYou will see components written in two styles. They are functionally identical:\n\n```jsx\n// Style 1: Function declaration\nfunction Welcome() {\n  return <h1>Welcome</h1>;\n}\n\n// Style 2: Arrow function\nconst Welcome = () => {\n  return <h1>Welcome</h1>;\n};\n```\n\nBoth create a component called `Welcome` that returns the same JSX. The arrow function syntax (`const Name = () => { ... }`) is more common in modern React codebases, but both work the same way. Do not let the different syntax confuse you -- look for the return statement and the JSX inside it.\n\n### `export default`: making a component available\n\nAt the bottom of most React files, you will see one of these lines:\n\n```jsx\nexport default UserProfile;\n```\n\nOr the export might be combined with the function definition:\n\n```jsx\nexport default function UserProfile() {\n  return <h1>Sarah Chen</h1>;\n}\n```\n\n`export default` means: \"This is the main thing this file provides. Other files can import and use it.\" Without this line, the component exists in its file but nothing else can use it.\n\nWhen you see `export default`, you are looking at the component that represents this file. A file might define helper functions or variables above it, but the `export default` marks the component that other parts of the app will actually render.\n\n### Reading a complete component file\n\nHere is what a complete, realistic component file looks like:\n\n```jsx\nimport React from \"react\";\n\nfunction TeamMember({ name, title, avatarUrl, isLead }) {\n  const displayTitle = isLead ? `${title} (Team Lead)` : title;\n\n  return (\n    <div className=\"team-member\">\n      <img src={avatarUrl} alt={name} className=\"avatar\" />\n      <div className=\"info\">\n        <h3>{name}</h3>\n        <p className=\"title\">{displayTitle}</p>\n      </div>\n    </div>\n  );\n}\n\nexport default TeamMember;\n```\n\nReading this top to bottom:\n\n1. **Import** -- the file imports React (needed for JSX to work)\n2. **Function definition** -- `TeamMember` is the component name, and it receives data through `{ name, title, avatarUrl, isLead }` (these are called props -- you will learn about them in Level 2)\n3. **Logic zone** -- `displayTitle` is calculated based on whether `isLead` is true\n4. **Return zone** -- the JSX that renders an avatar image, a name, and a title\n5. **Export** -- `export default TeamMember` makes this component available to the rest of the app\n\nYou do not need to understand every detail yet. The point is to see the structure: import, function, logic, return, export. Every React component follows this pattern."
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "Look at this component. What does the user see on screen?\n\n```jsx\nfunction PriceTag() {\n  const basePrice = 50;\n  const discount = 0.2;\n  const finalPrice = basePrice * (1 - discount);\n\n  return (\n    <div className=\"price-tag\">\n      <p className=\"original\">${basePrice}</p>\n      <p className=\"sale\">${finalPrice}</p>\n    </div>\n  );\n}\n```",
+      "answer": "The user sees two lines of text: '$50' and '$40'. The calculations (basePrice, discount, finalPrice) happen in the logic zone above the return and are invisible to the user. Only the values inserted into the JSX via curly braces appear on screen. The className attributes apply CSS styling but are not visible as text."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Reading Component Structure",
+      "problems": [
+        {
+          "id": "rl1-2-1",
+          "question": "What does this component render?\n\n```jsx\nfunction StatusBadge() {\n  const status = \"active\";\n  const count = 12;\n\n  return (\n    <span className=\"badge\">\n      {status}: {count} items\n    </span>\n  );\n}\n\nexport default StatusBadge;\n```",
+          "options": [
+            "A) A span that says 'active: 12 items'",
+            "B) A span that says 'status: count items'",
+            "C) A span that says '{status}: {count} items'"
+          ],
+          "correctAnswer": "A",
+          "explanation": "The variables status ('active') and count (12) are defined in the logic zone above the return. Inside the JSX, {status} is replaced with 'active' and {count} is replaced with 12. The colon and the word 'items' are literal text. The className 'badge' is a CSS class and does not appear in the visible output.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "rl1-2-2",
+          "question": "In this component, which line separates the logic zone from the markup zone?\n\n```jsx\nconst OrderSummary = () => {\n  const items = 3;\n  const shipping = items > 2 ? \"Free\" : \"$5.99\";\n  const message = `You have ${items} items`;\n\n  return (\n    <div>\n      <p>{message}</p>\n      <p>Shipping: {shipping}</p>\n    </div>\n  );\n};\n```",
+          "options": [
+            "A) The line 'const OrderSummary = () => {' -- everything after that is markup",
+            "B) The line 'return (' -- everything above is logic, everything inside is markup",
+            "C) The line 'const message = ...' -- that is the last piece of logic"
+          ],
+          "correctAnswer": "B",
+          "explanation": "The return statement is always the boundary. Above it: variable declarations, calculations, and conditional logic (items, shipping, message). Inside it: the JSX that the user sees. The arrow function syntax (const OrderSummary = () => { ... }) is just a different way to write a function -- it does not change the logic/markup split.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "rl1-2-3",
+          "question": "What does `export default` do in a React file?\n\n```jsx\nfunction DashboardHeader() {\n  return <h1>Dashboard</h1>;\n}\n\nfunction helperFunction() {\n  // some internal logic\n}\n\nexport default DashboardHeader;\n```",
+          "options": [
+            "A) It makes DashboardHeader the main component that other files can import and use",
+            "B) It deletes the helperFunction so only DashboardHeader exists",
+            "C) It sends the component to the server so it can be rendered"
+          ],
+          "correctAnswer": "A",
+          "explanation": "export default marks DashboardHeader as the primary export of this file. Other files can import it with 'import DashboardHeader from ./DashboardHeader'. The helperFunction still exists in this file but is not exported -- it can only be used internally. export default does not involve servers or deletion.",
+          "difficulty": "basic"
+        }
+      ]
+    },
+    {
+      "type": "explainBack",
+      "prompt": "Describe the structure of a React component in your own words. What are the two zones, and what goes in each one? Why does the function name need to start with a capital letter?"
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "A React component is a function with a capitalized name that returns JSX. Everything above the return is logic and data preparation (invisible to the user). Everything inside the return is what the user sees. export default makes the component available to the rest of the app."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "You now know that a component is a function that returns JSX, and that components have capitalized names. But what happens when one component uses another component inside its return statement? That is composition -- and it is how entire pages are built. Module 1.3 shows you how."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is a React component?",
+      "options": ["A CSS file that styles the page", "A function that returns JSX", "An HTML template"],
+      "correctIndex": 1,
+      "explanation": "A React component is a JavaScript function that returns JSX -- the markup that describes what the user sees.",
+      "encourageCorrect": "Spot on! A function that returns JSX -- that's the whole idea behind React components.",
+      "encourageIncorrect": "Not quite -- a React component is simply a function that returns JSX. Everything else builds on top of that core concept."
+    },
+    {
+      "question": "What does 'export default' do at the bottom of a React file?",
+      "options": ["It deletes all other functions in the file", "It makes the component available for other files to import and use", "It runs the component immediately when the app starts"],
+      "correctIndex": 1,
+      "explanation": "export default marks the main component in the file so other files can import it and render it.",
+      "encourageCorrect": "That's it! export default is how components become available to the rest of the app.",
+      "encourageIncorrect": "Almost! export default simply makes the component importable by other files -- it's how one component becomes usable in another."
+    },
+    {
+      "question": "In a React component, what is the 'logic zone'?",
+      "options": ["Everything inside the return statement", "Everything above the return statement where variables and calculations live", "The import statements at the top of the file"],
+      "correctIndex": 1,
+      "explanation": "The logic zone is everything above the return statement -- variable declarations, calculations, and data preparation. The user never sees this directly.",
+      "encourageCorrect": "Great job! The logic zone is where all the behind-the-scenes work happens before the JSX takes over.",
+      "encourageIncorrect": "Not this time -- the logic zone is everything above the return statement. That's where variables, calculations, and data prep happen before the markup."
+    }
+  ]
+}

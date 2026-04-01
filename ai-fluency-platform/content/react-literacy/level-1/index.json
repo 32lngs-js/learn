@@ -1,0 +1,29 @@
+{
+  "meta": {
+    "title": "Level 1: The Component",
+    "description": "Every React app is built from components. Learn to see the building blocks.",
+    "level": "level-1",
+    "slug": "index",
+    "order": 0,
+    "isCheckpoint": false,
+    "isIndex": true
+  },
+  "blocks": [
+    {
+      "type": "markdown",
+      "content": "## Welcome to Level 1\n\nYou have opened a React file before -- maybe in a pull request, a codebase tour, or a screen share with a developer -- and seen something that looked like HTML but was not quite HTML. Angle brackets, curly braces, capitalized tag names that do not exist in any HTML reference. It felt like a foreign language written in a familiar alphabet.\n\nThis level fixes that. By the end of Level 1, you will be able to look at any React file and answer three questions:\n\n1. **What does this component show the user?**\n2. **Where does the logic end and the markup begin?**\n3. **Which parts of this page are custom components and which are plain HTML?**\n\n### What you will learn\n\n| Module | Topic | Core Idea |\n| :-- | :-- | :-- |\n| 1.1 | JSX Is HTML-Plus | The markup syntax React uses -- HTML with a few extra tricks |\n| 1.2 | Anatomy of a Component | A component is a function that returns what the user sees |\n| 1.3 | Components Inside Components | Pages are built by nesting components like building blocks |\n| 1.4 | Checkpoint | Test your ability to read React components |\n\n### The core idea\n\nEvery React app is made of **components** -- small, self-contained pieces of UI. A button is a component. A navigation bar is a component. A user profile card is a component. The entire page is a component that contains other components.\n\nWhen you look at a React file, you are looking at one component. It defines one piece of the interface. Once you learn to see this structure, React code stops being a wall of text and starts being a blueprint you can read."
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "A React app is a tree of components -- small functions that each return a piece of the user interface. Learning to read one component at a time is the key to reading any React codebase."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "As you work through Level 1, pay attention to the moment when JSX stops looking like confusing code and starts looking like a description of a page. That shift is the goal."
+    },
+    {
+      "type": "markdown",
+      "content": "### Ready?\n\nStart with [Module 1.1: JSX Is HTML-Plus](/react-literacy/level-1/jsx-is-html-plus/) to learn the markup language that every React component uses."
+    }
+  ]
+}

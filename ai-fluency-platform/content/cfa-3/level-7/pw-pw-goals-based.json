@@ -100,5 +100,31 @@
       "type": "connectPrompt",
       "prompt": "The final module in the Private Wealth Pathway covers **Client Management** -- the soft skills of behavioral finance, communication, and multi-generational wealth management that make the difference between a technically correct plan and one that actually gets implemented."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Goals-based wealth management differs from traditional approaches because it:",
+      "options": [
+        "Ignores risk entirely",
+        "Allocates assets to specific goals (each with its own time horizon and priority) rather than optimizing one overall portfolio",
+        "Only invests in bonds"
+      ],
+      "correctIndex": 1,
+      "explanation": "Goals-based planning creates separate mental 'buckets' for each goal (essentials, desires, aspirations), each with an appropriate asset allocation.",
+      "encourageCorrect": "That's the goals-based framework! Match assets to specific goals.",
+      "encourageIncorrect": "Goals-based planning allocates assets to specific goals (retirement income, education, legacy) with different time horizons and risk profiles, rather than treating the portfolio as one pool."
+    },
+    {
+      "question": "In a goals-based framework, essential goals should be funded with:",
+      "options": [
+        "High-risk, high-return investments",
+        "Low-risk assets that provide high probability of meeting the goal",
+        "Alternative investments"
+      ],
+      "correctIndex": 1,
+      "explanation": "Essential goals (basic living expenses, required income) need high certainty of funding, so they should be matched with low-risk, reliable assets.",
+      "encourageCorrect": "Right! Essential goals get the safest funding \u2014 you can't afford to miss them.",
+      "encourageIncorrect": "Essential goals require high certainty, so they should be funded with low-risk assets. Aspirational goals can use higher-risk investments."
+    }
   ]
 }

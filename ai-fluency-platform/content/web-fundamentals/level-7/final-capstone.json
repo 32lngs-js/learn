@@ -1,0 +1,147 @@
+{
+  "meta": {
+    "title": "7.3 Final Capstone",
+    "description": "Debug a complete webpage with 5 intentional bugs, prove your skills across HTML, CSS, and JavaScript, and reflect on your growth.",
+    "level": "level-7",
+    "slug": "final-capstone",
+    "order": 3,
+    "isCheckpoint": true,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "markdown",
+      "content": "## Final Capstone: Debug a Complete Webpage\n\nBelow is a complete small business landing page — HTML, CSS, and JavaScript all in one file. It looks like a real page a contractor might deliver or that AI might generate.\n\nBut it has **5 intentional bugs** — problems that span HTML, CSS, and JavaScript. Your job is to read the code, understand what each section does, and find the issues.\n\nTake your time. Read it section by section, just like you have practiced throughout this course.\n\n```html\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width\">\n  <title>Greenleaf Landscaping</title>\n  <style>\n    * { margin: 0; padding: 0; box-sizing: border-box; }\n    body { font-family: Arial, sans-serif; color: #333; }\n\n    /* Navigation */\n    .nav { background: #2d5016; padding: 16px 24px; display: flex;\n           justify-content: space-between; align-items: center; }\n    .nav a { color: white; text-decoration: none; margin-left: 20px; }\n    .nav .logo { font-size: 20px; font-weight: bold; color: white; }\n    .mobile-menu { display: none; cursor: pointer; color: white;\n                   font-size: 24px; background: none; border: none; }\n\n    /* Hero Section */\n    .hero { background: #4a7c23; color: white; text-align: center;\n            padding: 80px 24px; }\n    .hero h1 { font-size: 42px; margin-bottom: 16px; }\n    .hero p { font-size: 18px; margin-bottom: 24px; }\n    .hero .cta { background: white; color: #2d5016; padding: 14px 32px;\n                 border: none; border-radius: 6px; font-size: 16px;\n                 cursor: pointer; }\n\n    /* Features */\n    .features { padding: 60px 24px; display: flex; gap: 32px;\n                justify-content: center; }\n    .feature-card { text-align: center; max-width: 280px; }\n    .feature-card h3 { color: #2d5016; margin: 12px 0 8px; }\n\n    /* Contact Form */\n    .contact { background: #f5f5f5; padding: 60px 24px;\n               text-align: center; }\n    .contact h2 { margin-bottom: 24px; }\n    .contact form { max-width: 400px; margin: 0 auto; }\n    .contact input, .contact textarea {\n      width: 100%; padding: 12px; margin-bottom: 12px;\n      border: 1px solid #ccc; border-radius: 4px;\n      font-size: 14px; }\n    .contact textarea { height: 120px; resize: vertical; }\n    .contact button { background: #2d5016; color: white; padding: 12px 32px;\n                      border: none; border-radius: 6px; font-size: 16px;\n                      cursor: pointer; }\n    div.contact button { background: #999; }\n\n    /* Footer */\n    footer { background: #1a1a1a; color: white; text-align: center;\n             padding: 24px; font-size: 14px; }\n\n    /* Responsive — missing mobile breakpoint */\n  </style>\n</head>\n<body>\n\n  <!-- Navigation -->\n  <nav class=\"nav\">\n    <span class=\"logo\">Greenleaf Landscaping</span>\n    <button class=\"mobile-menu\" onclick=\"toggleMenu()\">☰</button>\n    <div class=\"nav-links\">\n      <a href=\"#features\">Services</a>\n      <a href=\"#contact\">Contact</a>\n      <a href=\"#about\">About</a>\n    </div>\n  </nav>\n\n  <!-- Hero Section -->\n  <section class=\"hero\">\n    <h1>Transform Your Outdoor Space</h1>\n    <p>Professional landscaping services for homes and businesses.</p>\n    <button class=\"cta\" onclick=\"scrollToSection('contact-form')\">Get a Free Quote</button>\n  </section>\n\n  <!-- Features -->\n  <section class=\"features\" id=\"features\">\n    <div class=\"feature-card\">\n      <img src=\"images/design-icon.png\" width=\"64\" height=\"64\">\n      <h3>Custom Design</h3>\n      <p>Tailored landscape plans that match your vision and budget.</p>\n    </div>\n    <div class=\"feature-card\">\n      <img src=\"images/maintenance-icon.png\" width=\"64\" height=\"64\" alt=\"Maintenance icon\">\n      <h3>Maintenance</h3>\n      <p>Weekly and monthly care to keep your property looking its best.</p>\n    </div>\n    <div class=\"feature-card\">\n      <img src=\"images/irrigation-icon.png\" width=\"64\" height=\"64\" alt=\"Irrigation icon\">\n      <h3>Irrigation</h3>\n      <p>Smart watering systems that save water and keep your lawn green.</p>\n    </div>\n  </section>\n\n  <!-- Contact Form -->\n  <section class=\"contact\" id=\"contact\">\n    <h2>Request a Free Quote</h2>\n    <form id=\"contact-form\">\n      <input type=\"text\" placeholder=\"Your Name\" required>\n      <input type=\"text\" placeholder=\"Your Email\" required>\n      <textarea placeholder=\"Tell us about your project\"></textarea>\n      <button type=\"submit\">Send Request</button>\n    </form>\n  </section>\n\n  <!-- Footer -->\n  <footer>\n    <p>&copy; 2025 Greenleaf Landscaping. All rights reserved.</p>\n  </footer>\n\n  <script>\n    // Mobile menu toggle\n    function toggleMenu() {\n      const navLinks = document.querySelector('.nav-links');\n      navLinks.classList.toggle('active');\n    }\n\n    // Scroll to section\n    function scrollToSection(sectionId) {\n      const section = document.querySelector('#' + sectionId);\n      section.scrollIntoView({ behavior: 'smooth' });\n    }\n\n    // Form validation\n    document.querySelector('#contact-form').addEventListener('submit', function(e) {\n      e.preventDefault();\n      const name = this.querySelector('input[placeholder=\"Your Name\"]').value;\n      const email = this.querySelector('input[placeholder=\"Your Email\"]').value;\n\n      if (name.length > 0 || email.length > 0) {\n        alert('Thank you! We will be in touch soon.');\n        this.reset();\n      } else {\n        alert('Please fill in all required fields.');\n      }\n    });\n  </script>\n\n</body>\n</html>\n```\n\n## The 5 Bugs\n\nBefore we quiz you, here is a summary of the areas to examine:\n\n1. **Accessibility** — Check the `<img>` tags. Are they all properly accessible?\n2. **CSS specificity** — Look at the contact section's submit button styling. Is the green color actually being applied?\n3. **JavaScript logic** — Read the form validation carefully. Does the condition actually require *both* fields to be filled in?\n4. **JavaScript selector** — The \"Get a Free Quote\" button calls `scrollToSection('contact-form')`. Does that ID exist on the section the user expects to scroll to?\n5. **Responsive design** — Check the viewport meta tag and look for media queries. Is this page ready for mobile screens?"
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "Look at the three <img> tags in the features section. On a scale of 1-5, how confident are you that you can identify the accessibility issue?",
+      "answer": "The first <img> tag (design-icon.png) is missing the alt attribute entirely. The other two images have alt attributes. Screen readers need alt text on every image to describe the content to visually impaired users. This is one of the most common accessibility issues in real code."
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "Look at the CSS for the contact form's button. There are two rules that target it. On a scale of 1-5, how confident are you that you can determine which color the button will actually be?",
+      "answer": "The button will be gray (#999), not green (#2d5016). The rule `div.contact button` is more specific than `.contact button` because it includes the element type `div`. In CSS, higher specificity wins regardless of source order. This is a CSS specificity bug — the gray color overrides the green."
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "Read the form validation JavaScript. The condition is `if (name.length > 0 || email.length > 0)`. On a scale of 1-5, how confident are you that you understand why this is a bug?",
+      "answer": "The condition uses || (OR) instead of && (AND). With OR, the form is considered valid if EITHER the name OR the email is filled in — not both. A user could leave the email completely empty and the form would still show the success message. Changing || to && would require both fields to have content."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Bug Hunt",
+      "problems": [
+        {
+          "id": "wf7-3-1",
+          "question": "Which `<img>` tag has an accessibility problem, and what is missing?\n\n```html\n<img src=\"images/design-icon.png\" width=\"64\" height=\"64\">\n<img src=\"images/maintenance-icon.png\" width=\"64\" height=\"64\" alt=\"Maintenance icon\">\n<img src=\"images/irrigation-icon.png\" width=\"64\" height=\"64\" alt=\"Irrigation icon\">\n```",
+          "options": [
+            "A) The first image is missing the alt attribute, which screen readers need to describe the image",
+            "B) All three images are missing the title attribute, which is required for accessibility",
+            "C) The second and third images have alt text that is too short to be useful"
+          ],
+          "correctAnswer": "A",
+          "explanation": "The first <img> tag has no alt attribute at all. The alt attribute provides alternative text for screen readers and for situations where the image cannot load. The other two images correctly include alt attributes. Adding alt=\"Custom design icon\" (or similar) to the first image would fix this.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "wf7-3-2",
+          "question": "The contact form's submit button is supposed to be green (#2d5016), but it appears gray. Why?\n\n```css\n.contact button { background: #2d5016; color: white; ... }\ndiv.contact button { background: #999; }\n```",
+          "options": [
+            "A) The second rule uses div.contact, which has higher CSS specificity than .contact alone, so the gray color wins",
+            "B) The second rule comes later in the file, and in CSS the last rule always wins regardless of specificity",
+            "C) The div prefix makes the rule apply only to buttons inside div elements, and sections are not divs"
+          ],
+          "correctAnswer": "A",
+          "explanation": "CSS specificity determines which rule wins when multiple rules target the same element. The selector div.contact button includes an element type (div) plus a class, giving it higher specificity than .contact button (just a class). Even though the green rule appears first, the gray rule's higher specificity overrides it. Removing the div prefix from the second rule or increasing the specificity of the first rule would fix this.",
+          "difficulty": "advanced"
+        },
+        {
+          "id": "wf7-3-3",
+          "question": "The form validation has a logic bug. What is wrong with this condition?\n\n```javascript\nif (name.length > 0 || email.length > 0) {\n  alert('Thank you! We will be in touch soon.');\n}\n```",
+          "options": [
+            "A) It uses || (OR) instead of && (AND), so the form succeeds if only one field is filled in",
+            "B) It should check name.length >= 1 instead of name.length > 0",
+            "C) The .length property does not work on form input values in JavaScript"
+          ],
+          "correctAnswer": "A",
+          "explanation": "The || operator means OR — the condition is true if EITHER name has content OR email has content. This means a user can submit the form with just a name and no email (or vice versa). Changing || to && (AND) would require BOTH fields to have content before showing the success message.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "wf7-3-4",
+          "question": "The hero's \"Get a Free Quote\" button calls `scrollToSection('contact-form')`, which looks for an element with `id=\"contact-form\"`. Will this scroll to the contact section?\n\n```html\n<section class=\"contact\" id=\"contact\">\n  <h2>Request a Free Quote</h2>\n  <form id=\"contact-form\">\n```",
+          "options": [
+            "A) No — it scrolls to the <form> element, not the <section>. The user sees the form without the heading above it.",
+            "B) Yes — it correctly scrolls to the contact section because the form is inside it",
+            "C) No — the scrollToSection function is broken and will throw a JavaScript error"
+          ],
+          "correctAnswer": "A",
+          "explanation": "The function looks for #contact-form, which is the id on the <form> element, not the <section>. The section has id=\"contact\". So the page scrolls directly to the form, skipping the \"Request a Free Quote\" heading above it. To scroll to the full section including the heading, the function should use 'contact' instead of 'contact-form'.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "wf7-3-5",
+          "question": "What is the responsive design issue with this page?\n\n```html\n<meta name=\"viewport\" content=\"width=device-width\">\n```\n\n```css\n/* Responsive — missing mobile breakpoint */\n```",
+          "options": [
+            "A) The viewport meta tag is missing initial-scale=1.0, and there are no media queries to adjust the layout for small screens",
+            "B) The page uses flexbox, which does not work on mobile browsers",
+            "C) The CSS file needs to be loaded separately for mobile devices using a different <link> tag"
+          ],
+          "correctAnswer": "A",
+          "explanation": "The viewport meta tag should include initial-scale=1.0 for consistent mobile rendering. More importantly, there are no @media queries at all — the three-column features section will not stack on small screens, the navigation will not collapse to a mobile menu, and text sizes will not adjust. The mobile-menu button exists in the HTML but has display: none with no media query to show it on small screens.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "wf7-3-6",
+          "question": "If you were using AI to fix this page, which prompt would be most effective for fixing the CSS specificity bug?",
+          "options": [
+            "A) \"The submit button color is wrong, please fix it\"",
+            "B) \"The .contact button should be green (#2d5016) but the div.contact button rule has higher specificity and overrides it with gray. Remove the div prefix from that selector.\"",
+            "C) \"Change all the colors on the page to match the brand guidelines\""
+          ],
+          "correctAnswer": "B",
+          "explanation": "This prompt uses precise code vocabulary: it names the specific selectors, identifies the specificity conflict, states the expected vs actual color, and gives a clear fix. This is exactly the kind of precise, informed prompt that code literacy enables — and it will get a correct fix on the first try.",
+          "difficulty": "advanced"
+        },
+        {
+          "id": "wf7-3-7",
+          "question": "The email input uses `type=\"text\"` instead of `type=\"email\"`. What practical difference does this make?",
+          "options": [
+            "A) No difference — both accept any text input from the user",
+            "B) type=\"email\" triggers browser-level format validation and shows a specialized keyboard on mobile devices",
+            "C) type=\"text\" prevents the form from submitting, while type=\"email\" allows it"
+          ],
+          "correctAnswer": "B",
+          "explanation": "When an input has type=\"email\", the browser automatically checks that the entered text looks like a valid email address (contains @ and a domain). On mobile devices, it also shows a keyboard with the @ symbol readily available. With type=\"text\", the browser accepts any input without format checking.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "wf7-3-8",
+          "question": "You want to verify all 5 bug fixes are working correctly. What is the best approach?",
+          "options": [
+            "A) Read through the code one more time and mentally check each fix",
+            "B) Open the page in a browser, use DevTools to inspect the button color and test the form, run a screen reader or accessibility checker for alt text, and resize the window to test responsive behavior",
+            "C) Ask AI to review the code and confirm all bugs are fixed"
+          ],
+          "correctAnswer": "B",
+          "explanation": "DevTools is the most reliable way to verify fixes in context. You can inspect the computed styles to confirm the button color, submit the form with one empty field to test the validation logic, use an accessibility checker for the alt text, and resize the browser to test responsive behavior. Reading code and using AI can help, but testing in the browser is the definitive check.",
+          "difficulty": "advanced"
+        }
+      ]
+    },
+    {
+      "type": "tryItYourself",
+      "title": "Take a real webpage from your work — your company site, a product page, an internal tool — and open DevTools (F12 or right-click > Inspect). Identify 3 things you now understand that you would not have before this course. Write down what you found: a semantic element, a CSS property, a JavaScript event listener, a responsive breakpoint — anything.",
+      "solution": "You might have found a <nav> wrapping the site navigation and understood what it is for. Maybe you saw a media query in the CSS that changes the layout at 768px. Or you spotted an event listener on a form's submit button. The specifics depend on the page — what matters is that you could look at real production code and understand meaningful parts of it."
+    },
+    {
+      "type": "explainBack",
+      "prompt": "Explain to a colleague who has not taken this course what 'code literacy' means and why it matters now that AI can write most code. Include a concrete example of how code literacy changes the way you work with AI-generated code."
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "You did it. You started this course unable to read code, and now you can examine a complete webpage — HTML structure, CSS styling, JavaScript behavior — and find real bugs across all three languages. You can inspect pages with DevTools, communicate about code with precision, direct AI with the right vocabulary, and make informed decisions about technology in your role. That is code literacy, and it is a skill that will only become more valuable as AI writes more of the world's code. The people who can read, verify, and direct that code will always be in demand."
+    }
+  ]
+}

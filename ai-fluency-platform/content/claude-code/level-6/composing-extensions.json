@@ -43,5 +43,31 @@
       "type": "connectPrompt",
       "prompt": "You have the complete toolkit for building your personal Claude Code workshop. The checkpoint ahead will challenge you to build a working composed workflow — a skill and a hook working together to solve a real problem. Review your notes from this level and pick the workflow you want to build."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is the 'Orchestrator Pattern' in composing extensions?",
+      "options": [
+        "A hook that blocks all actions",
+        "A skill that coordinates agents and MCP tools in sequence",
+        "A special permission mode"
+      ],
+      "correctIndex": 1,
+      "explanation": "In the Orchestrator Pattern, a skill acts as coordinator, calling agents and MCP tools in sequence to complete a workflow.",
+      "encourageCorrect": "That's the pattern! Skills orchestrate, agents and tools do the work.",
+      "encourageIncorrect": "The Orchestrator Pattern has a skill coordinating the workflow — calling agents for focused tasks and MCP tools for external data."
+    },
+    {
+      "question": "What is the recommended approach to building your extension ecosystem?",
+      "options": [
+        "Build everything at once",
+        "Start with one skill, add pieces incrementally",
+        "Only use MCP connections"
+      ],
+      "correctIndex": 1,
+      "explanation": "Build incrementally — each piece increases the value of every other piece through the compounding effect.",
+      "encourageCorrect": "Exactly! Start small and let the system grow naturally.",
+      "encourageIncorrect": "Build incrementally — start with one skill, add one hook, connect one service. Each piece increases the value of the others."
+    }
   ]
 }

@@ -118,5 +118,31 @@
       "type": "connectPrompt",
       "prompt": "The next module is the **Economics Checkpoint** \u2014 a comprehensive assessment covering all Economics topics from market structures through exchange rate calculations. Review the key formulas and concepts from each module before proceeding."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "In a quote of USD/EUR = 1.10, which currency is the base currency?",
+      "options": [
+        "USD",
+        "EUR",
+        "Neither \u2014 it depends on context"
+      ],
+      "correctIndex": 1,
+      "explanation": "In the convention 'price currency/base currency,' EUR is the base currency and USD is the price currency. It takes 1.10 USD to buy 1 EUR.",
+      "encourageCorrect": "Right! The denominator (EUR) is the base, and it takes 1.10 USD to buy one euro.",
+      "encourageIncorrect": "In USD/EUR = 1.10, EUR is the base currency. It means 1 EUR costs 1.10 USD. The format is price/base."
+    },
+    {
+      "question": "A cross rate is used when:",
+      "options": [
+        "Both currencies are quoted against a common third currency",
+        "One currency is pegged to gold",
+        "The exchange rate is fixed by a government"
+      ],
+      "correctIndex": 0,
+      "explanation": "Cross rates derive the exchange rate between two currencies using their individual rates against a common third currency (usually USD).",
+      "encourageCorrect": "That's it! Cross rates use a common third currency to find the rate between two others.",
+      "encourageIncorrect": "A cross rate calculates the exchange rate between two currencies using each one's rate against a common third currency, typically the USD."
+    }
   ]
 }

@@ -1,0 +1,109 @@
+{
+  "meta": {
+    "title": "3.3 useEffect: When Things Happen",
+    "description": "useEffect runs code at specific moments -- when the component appears, when data changes, or when it disappears.",
+    "level": "level-3",
+    "slug": "useeffect-when-things-happen",
+    "order": 3,
+    "isCheckpoint": false,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "predictPrompt",
+      "prompt": "When you visit a webpage that shows your profile, the page has to fetch your data from a server. But a React component is just a function that returns JSX. Where do you think that fetch request goes? It cannot go in the return statement because that is just markup. Take a guess."
+    },
+    {
+      "type": "markdown",
+      "content": "## The most important module in this course\n\nThat is not an exaggeration. `useEffect` bugs are the single most common category of React bugs, the most common mistakes AI makes when generating React code, and the concept that causes the most confusion. If you leave this course understanding one thing deeply, make it useEffect.\n\nThe good news: for reading code, you only need to understand three patterns.\n\n## What useEffect does\n\nA React component is a function that returns JSX -- it describes what the user sees. But sometimes a component needs to **do** something beyond rendering: fetch data from a server, set up a timer, update the document title, listen for window resizing.\n\nThese are called **side effects** -- things that happen beyond just showing markup on the screen.\n\n`useEffect` is React's way of saying: \"After you render, also do this other thing.\"\n\n```jsx\nuseEffect(() => {\n  // This code runs AFTER the component renders\n  document.title = `You have ${count} messages`;\n}, [count]);\n```\n\n### The anatomy of useEffect\n\nEvery useEffect has two parts:\n\n1. **The effect function** -- the code to run (first argument)\n2. **The dependency array** -- when to run it (second argument)\n\n```jsx\nuseEffect(\n  () => { /* what to do */ },   // Part 1: the effect\n  [dependency1, dependency2]      // Part 2: when to do it\n);\n```\n\nThe dependency array is the key to reading useEffect. It tells you **when** the effect runs.\n\n## The three patterns\n\n### Pattern 1: Run once on mount -- `[]`\n\n```jsx\nuseEffect(() => {\n  fetchUserProfile();\n}, []);\n```\n\nAn empty dependency array `[]` means: \"Run this effect once, when the component first appears on screen.\" In React terminology, this is called **mounting**.\n\nThis is the most common pattern. You will see it used for:\n- Fetching initial data from an API\n- Setting up event listeners\n- Initializing third-party libraries\n- Logging that a page was viewed\n\nWhen you see `useEffect(() => {...}, [])`, read it as: **\"When this component first appears, do this.\"**\n\n### Pattern 2: Run when something changes -- `[dep]`\n\n```jsx\nuseEffect(() => {\n  fetchUser(userId);\n}, [userId]);\n```\n\nA dependency array with values means: \"Run this effect when the component first appears AND whenever any of these values change.\"\n\nIn this example, the effect runs:\n1. When the component first mounts\n2. Every time `userId` changes to a different value\n\nCommon uses:\n- Re-fetching data when a filter changes\n- Updating the page title when a value changes\n- Syncing state with local storage\n\nWhen you see `useEffect(() => {...}, [userId])`, read it as: **\"Whenever userId changes, do this.\"**\n\nYou can have multiple dependencies:\n\n```jsx\nuseEffect(() => {\n  searchProducts(query, category);\n}, [query, category]);\n```\n\nThis runs whenever `query` OR `category` changes.\n\n### Pattern 3: Run after every render -- no array\n\n```jsx\nuseEffect(() => {\n  console.log('Component rendered');\n});\n```\n\nNo dependency array at all means: \"Run this effect after every single render.\" This is almost always a mistake. If the effect does something that causes a state change (which triggers a re-render, which runs the effect again, which triggers another state change...), you get an **infinite loop**.\n\n**When you see a useEffect with no dependency array, treat it as a red flag.** It is occasionally intentional, but more often it is a bug -- especially in AI-generated code.\n\n### The cheat sheet\n\n| Dependency array | When the effect runs | Common use |\n| :-- | :-- | :-- |\n| `[]` | Once, when the component first appears | Initial data fetch, setup |\n| `[value]` | On mount + whenever `value` changes | Re-fetch when filter/id changes |\n| `[a, b]` | On mount + whenever `a` or `b` changes | Re-fetch when any dependency changes |\n| *(missing)* | After every single render | Usually a bug |\n\n## The infinite loop -- React's most common bug\n\nThis is so important it gets its own section. Here is the classic infinite loop:\n\n```jsx\nfunction UserProfile({ userId }) {\n  const [user, setUser] = useState(null);\n\n  // BUG: infinite loop!\n  useEffect(() => {\n    fetch(`/api/users/${userId}`)\n      .then(res => res.json())\n      .then(data => setUser(data));\n  }); // <-- Missing dependency array!\n\n  return <div>{user ? user.name : 'Loading...'}</div>;\n}\n```\n\nWhat happens:\n1. Component renders. Effect runs (no dependency array = runs every render).\n2. Effect fetches data. When the data arrives, it calls `setUser(data)`.\n3. `setUser` triggers a re-render.\n4. Component re-renders. Effect runs again (still no dependency array).\n5. Effect fetches data again. Calls `setUser` again.\n6. Another re-render. Another fetch. Forever.\n\nThe fix is adding a dependency array:\n\n```jsx\nuseEffect(() => {\n  fetch(`/api/users/${userId}`)\n    .then(res => res.json())\n    .then(data => setUser(data));\n}, [userId]); // <-- Now it only runs when userId changes\n```\n\nThis is the number one bug you will encounter when reviewing AI-generated React code. The AI forgets the dependency array, or puts the wrong things in it. When someone reports \"the page keeps loading forever\" or \"the browser tab freezes,\" check the useEffect dependency arrays first.\n\n## Cleanup functions\n\nSometimes an effect sets something up that needs to be torn down. A timer that should stop. An event listener that should be removed. A WebSocket connection that should close.\n\nThe effect function can **return** a cleanup function:\n\n```jsx\nuseEffect(() => {\n  const timer = setInterval(() => {\n    setSeconds(prev => prev + 1);\n  }, 1000);\n\n  return () => {\n    clearInterval(timer);  // This runs when the component is removed\n  };\n}, []);\n```\n\nThe cleanup function runs:\n- When the component is **removed** from the screen (unmounting)\n- **Before** the effect re-runs (if dependencies changed)\n\nWhen you see `return () => {...}` inside a useEffect, read it as: **\"When this component leaves or before this effect re-runs, do this cleanup.\"**\n\nCommon cleanup patterns:\n\n```jsx\n// Clearing a timer\nreturn () => clearInterval(timer);\n\n// Removing an event listener\nreturn () => window.removeEventListener('resize', handleResize);\n\n// Closing a connection\nreturn () => websocket.close();\n\n// Cancelling a subscription\nreturn () => subscription.unsubscribe();\n```\n\nMissing cleanup functions are another common source of bugs. If you see a useEffect that sets up a timer or event listener but has no return statement, that is a potential memory leak.\n\n## A real-world example\n\nHere is a realistic component that uses useEffect to fetch user data:\n\n```jsx\nfunction UserProfile({ userId }) {\n  const [user, setUser] = useState(null);\n  const [loading, setLoading] = useState(true);\n  const [error, setError] = useState(null);\n\n  useEffect(() => {\n    setLoading(true);\n    setError(null);\n\n    fetch(`/api/users/${userId}`)\n      .then(res => {\n        if (!res.ok) throw new Error('Failed to fetch');\n        return res.json();\n      })\n      .then(data => {\n        setUser(data);\n        setLoading(false);\n      })\n      .catch(err => {\n        setError(err.message);\n        setLoading(false);\n      });\n  }, [userId]);\n\n  if (loading) return <Spinner />;\n  if (error) return <ErrorMessage message={error} />;\n  return <ProfileCard user={user} />;\n}\n```\n\nReading this component:\n1. **State**: Three pieces -- `user` (null until fetched), `loading` (true to start), `error` (null unless something goes wrong).\n2. **Effect**: Runs when `userId` changes. Sets loading to true, clears any previous error, then fetches data.\n3. **Rendering**: Shows a spinner while loading, an error message if something went wrong, or the profile card with the data.\n\nThis loading/error/success pattern is so common in React that you will see it in almost every component that fetches data. We will explore it in depth in Level 4.\n\n## Your reading strategy for useEffect\n\n1. **Find the dependency array** -- this tells you when the effect runs\n2. **Read the effect body** -- this tells you what it does\n3. **Check for a cleanup function** -- `return () => {...}` at the end\n4. **Ask: could this cause an infinite loop?** -- Does the effect update state that is not in the dependency array, or is the dependency array missing entirely?"
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "If a useEffect has `[userId]` as its dependency array, and the user clicks a button that changes the theme color (but not the userId), will the effect run?",
+      "answer": "No. The effect only runs when the values in its dependency array change. Changing the theme color does not change `userId`, so the effect does not re-run. This is the whole point of the dependency array -- it gives you precise control over when the effect fires."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Reading useEffect",
+      "problems": [
+        {
+          "id": "rl3-3-1",
+          "question": "When does the code inside this useEffect run?\n\n```jsx\nuseEffect(() => {\n  document.title = `${unreadCount} new messages`;\n}, [unreadCount]);\n```",
+          "options": [
+            "A) Once when the component first appears, and again whenever `unreadCount` changes",
+            "B) Only once when the component first appears",
+            "C) After every single render",
+            "D) Only when the user clicks something"
+          ],
+          "correctAnswer": "A",
+          "explanation": "The dependency array `[unreadCount]` means the effect runs on mount (first render) and whenever `unreadCount` changes to a new value. It does not run on every render -- only when the specific dependency changes. This is Pattern 2: run when something changes.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "rl3-3-2",
+          "question": "A user reports that the app freezes their browser tab. Which line is causing the infinite loop?\n\n```jsx\nfunction SearchResults({ query }) {\n  const [results, setResults] = useState([]);\n  const [filter, setFilter] = useState('all');\n\n  useEffect(() => {\n    fetch(`/api/search?q=${query}&filter=${filter}`)\n      .then(res => res.json())\n      .then(data => setResults(data));\n  });\n\n  return (\n    <div>\n      <select value={filter} onChange={e => setFilter(e.target.value)}>\n        <option value=\"all\">All</option>\n        <option value=\"recent\">Recent</option>\n      </select>\n      <ResultsList items={results} />\n    </div>\n  );\n}\n```",
+          "options": [
+            "A) The useEffect has no dependency array, so it runs after every render. `setResults` triggers a re-render, which runs the effect again, causing an infinite fetch loop.",
+            "B) The select element's onChange causes infinite re-renders.",
+            "C) The fetch URL is malformed.",
+            "D) ResultsList is re-rendering too many times."
+          ],
+          "correctAnswer": "A",
+          "explanation": "The useEffect is missing its dependency array. It runs after every render, calls `setResults(data)` which triggers a re-render, which runs the effect again. The fix is to add a dependency array: `}, [query, filter]);` so it only re-fetches when the search query or filter actually changes.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "rl3-3-3",
+          "question": "You are reviewing AI-generated code. The client says \"when I switch between chat rooms, I see messages from the old room mixed in with the new room.\" What is the bug and what would you tell the AI?\n\n```jsx\nfunction ChatRoom({ roomId }) {\n  const [messages, setMessages] = useState([]);\n\n  useEffect(() => {\n    const connection = connectToRoom(roomId);\n    connection.onMessage((msg) => {\n      setMessages(prev => [...prev, msg]);\n    });\n  }, [roomId]);\n\n  return (\n    <div>\n      {messages.map(msg => (\n        <p key={msg.id}>{msg.text}</p>\n      ))}\n    </div>\n  );\n}\n```",
+          "options": [
+            "A) The useEffect creates a new connection when roomId changes but never closes the old one. It needs a cleanup function: `return () => connection.disconnect();`. Also, the messages array should be reset when the room changes.",
+            "B) The setMessages call is wrong -- it should not use a functional update.",
+            "C) The dependency array should be empty so it only connects once.",
+            "D) The key prop on the messages is incorrect."
+          ],
+          "correctAnswer": "A",
+          "explanation": "Two issues: (1) When roomId changes, the effect runs again and connects to the new room, but the old connection is never closed. Messages from the old room keep arriving and get added to the list. The fix is a cleanup function: `return () => connection.disconnect();` (2) The messages array accumulates across rooms. It should be cleared when the room changes, either by resetting state or by adding a separate effect. You would tell the AI: \"Add a cleanup function to disconnect from the old room when roomId changes, and clear the messages array when switching rooms.\"",
+          "difficulty": "advanced"
+        }
+      ]
+    },
+    {
+      "type": "explainBack",
+      "prompt": "Explain the three dependency array patterns for useEffect: empty array, array with values, and no array. For each one, describe when the effect runs and give a one-sentence example of when you would use it. Then explain why a missing dependency array can cause an infinite loop."
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "useEffect runs code after the component renders. The dependency array controls when: `[]` means once on mount, `[value]` means when value changes, and no array means every render (usually a bug). A missing dependency array is the number one cause of infinite loops in React. When reviewing React code, always check useEffect dependency arrays first."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "The next time you see a loading spinner that never goes away, or a page that makes your browser fan spin up, think about useEffect. An infinite loop from a missing dependency array is the most likely cause. This one piece of knowledge will let you diagnose a huge category of React bugs."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What does an empty dependency array [] mean in useEffect?",
+      "options": ["The effect runs after every single render", "The effect runs once when the component first appears on screen", "The effect never runs"],
+      "correctIndex": 1,
+      "explanation": "An empty dependency array [] tells React to run the effect only once, when the component first mounts (appears on screen).",
+      "encourageCorrect": "That's right! Empty array means 'run once on mount' -- the most common useEffect pattern.",
+      "encourageIncorrect": "An empty array [] means the effect runs just once, when the component first appears. No dependencies means nothing to watch for changes."
+    },
+    {
+      "question": "What usually causes an infinite loop in a React component?",
+      "options": ["Using too many useState calls", "A useEffect with no dependency array that updates state, triggering endless re-renders", "Having more than one useEffect in a component"],
+      "correctIndex": 1,
+      "explanation": "A useEffect without a dependency array runs after every render. If it calls a setter like setData(), that triggers another render, which runs the effect again, forever.",
+      "encourageCorrect": "Spot on! Missing dependency arrays are the number one cause of infinite loops in React.",
+      "encourageIncorrect": "The classic infinite loop: a useEffect with no dependency array calls a state setter, which re-renders, which runs the effect again, and so on forever. Adding the right dependency array fixes it."
+    },
+    {
+      "question": "What does a cleanup function (return () => {...}) inside useEffect do?",
+      "options": ["It runs the effect a second time for safety", "It tears down what the effect set up, like clearing timers or removing event listeners", "It prevents the effect from ever running"],
+      "correctIndex": 1,
+      "explanation": "The cleanup function runs when the component is removed from the screen or before the effect re-runs. It's used to clear timers, close connections, and remove listeners.",
+      "encourageCorrect": "Well done! Cleanup functions prevent memory leaks by tearing down what the effect set up.",
+      "encourageIncorrect": "A cleanup function handles teardown -- clearing timers, closing connections, removing listeners. It runs when the component unmounts or before the effect re-runs."
+    }
+  ]
+}

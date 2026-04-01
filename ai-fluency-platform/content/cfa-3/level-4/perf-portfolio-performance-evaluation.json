@@ -104,5 +104,31 @@
       "type": "connectPrompt",
       "prompt": "Next, we cover **Investment Manager Selection** \u2014 the due diligence process for hiring, evaluating, and terminating investment managers, including style analysis and continuation policies."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "The Brinson attribution model decomposes active return into:",
+      "options": [
+        "Alpha and beta",
+        "Allocation effect and selection effect (and interaction)",
+        "Gross return and net return"
+      ],
+      "correctIndex": 1,
+      "explanation": "Brinson attribution separates value added into allocation (choosing sector weights) and selection (choosing securities within sectors), plus an interaction term.",
+      "encourageCorrect": "Right! Was it good sector bets or good stock picks? Brinson tells you.",
+      "encourageIncorrect": "Brinson attribution breaks active return into: allocation effect (sector weighting decisions), selection effect (security picks within sectors), and interaction."
+    },
+    {
+      "question": "Risk-adjusted return measures like the Sharpe ratio are important because:",
+      "options": [
+        "Higher raw returns are always better",
+        "They allow comparison of managers with different risk levels on a level playing field",
+        "They eliminate all risk"
+      ],
+      "correctIndex": 1,
+      "explanation": "Raw returns don't account for the risk taken. Risk-adjusted measures level the playing field so you can compare managers who take different amounts of risk.",
+      "encourageCorrect": "Exactly! Risk-adjusted measures let you compare apples to apples.",
+      "encourageIncorrect": "Risk-adjusted measures like the Sharpe ratio let you compare managers fairly by accounting for the different levels of risk they take to generate returns."
+    }
   ]
 }

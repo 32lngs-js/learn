@@ -1,0 +1,107 @@
+{
+  "meta": {
+    "title": "3.2 Events and Interaction",
+    "description": "Understand how clicks, typing, and form submissions are wired up with event listeners \u2014 and why interactive features break.",
+    "level": "level-3",
+    "slug": "events-and-interaction",
+    "order": 2,
+    "isCheckpoint": false,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "predictPrompt",
+      "prompt": "You click a 'Submit' button on a form and nothing happens \u2014 no error, no loading spinner, just nothing. What do you think could cause a button to completely ignore your click?"
+    },
+    {
+      "type": "markdown",
+      "content": "## How JavaScript Listens for Actions\n\nJavaScript does not run constantly. Most of the time, it is sitting quietly, **waiting for something to happen**. When it does, that \"something\" is called an **event**.\n\nHere is the fundamental pattern:\n\n```javascript\nlet button = document.getElementById('submit-btn');\nbutton.addEventListener('click', handleSubmit);\n```\n\nReading this aloud:\n1. \"Find the element with id `submit-btn` and call it `button`.\"\n2. \"When someone clicks `button`, run the function called `handleSubmit`.\"\n\nThat is it. Every interactive feature on the web \u2014 every button, every form, every dropdown \u2014 follows this same pattern: **find an element, listen for an event, run a function**.\n\n---\n\n## Common Events\n\nYou do not need to memorize these, but recognizing them will help you read code:\n\n| Event | When it fires | Real-world example |\n| :-- | :-- | :-- |\n| `click` | User clicks an element | \"Add to cart\" button |\n| `submit` | User submits a form | Contact form, search bar |\n| `input` | User types in a text field | Live search suggestions |\n| `change` | User changes a dropdown or checkbox | Filtering product results |\n| `mouseover` | User hovers over an element | Tooltip or preview popup |\n| `keydown` | User presses a key | Keyboard shortcuts |\n\nThe event name tells you *when* the code runs. The function name usually tells you *what* it does.\n\n---\n\n## Event Handlers: The Response\n\nThe function that runs when an event happens is called an **event handler**. It is just a regular function \u2014 the only special thing about it is that it is connected to an event.\n\n```javascript\nfunction handleSubmit() {\n  let email = document.getElementById('email').value;\n  alert('Thanks! We will contact you at ' + email);\n}\n```\n\nReading this: \"When the form is submitted, get the value the user typed into the email field, then show a pop-up thanking them with their email address.\"\n\n---\n\n## Why Buttons Do Nothing: The Three Usual Suspects\n\nWhen an interactive feature is broken and nothing happens, it is almost always one of these three problems:\n\n### Suspect 1: The listener is missing\n```javascript\n// The function exists...\nfunction handleSubmit() {\n  alert('Form submitted!');\n}\n// ...but nobody told the button to use it!\n// Missing: button.addEventListener('click', handleSubmit);\n```\nThe recipe is written, but nobody is watching for the order. The waiter never showed up for their shift.\n\n### Suspect 2: The ID has a typo\n```javascript\n// HTML says:\n// <button id=\"submit-btn\">Submit</button>\n\n// But JavaScript says:\nlet button = document.getElementById('sumbit-btn'); // Typo!\nbutton.addEventListener('click', handleSubmit);\n```\nJavaScript is looking for `sumbit-btn` but the button is actually called `submit-btn`. The element is never found, so the listener is never attached.\n\n### Suspect 3: The function does not exist\n```javascript\nlet button = document.getElementById('submit-btn');\nbutton.addEventListener('click', handleSubmit);\n// But handleSubmit was never defined anywhere!\n```\nThe button is found, the listener is attached, but when the click happens, JavaScript looks for a function called `handleSubmit` and cannot find it. This one usually produces an error in the console.\n\n---\n\n## Inline Event Handlers (The Old Way)\n\nYou will sometimes see events wired up directly in the HTML:\n\n```html\n<button onclick=\"handleSubmit()\">Submit</button>\n```\n\nThis is an older approach. It does the same thing as `addEventListener` \u2014 when clicked, run `handleSubmit` \u2014 but it mixes HTML and JavaScript together. Modern code uses `addEventListener`, but you will still encounter `onclick` in older codebases and many website builders."
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "If you saw `button.addEventListener('click', toggleMenu);` in code, could you explain what it does and what the two important pieces of information are?",
+      "answer": "It tells the browser: when this button is clicked, run the function called toggleMenu. The two key pieces are the event type ('click' \u2014 when it fires) and the handler function (toggleMenu \u2014 what it does)."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Events and Debugging Interactions",
+      "problems": [
+        {
+          "id": "wf3-4",
+          "question": "A developer writes this code, but clicking the button does nothing. What is wrong?\n\n```javascript\nfunction handleSubmit() {\n  alert('Form submitted!');\n}\n\nlet btn = document.getElementById('submit-btn');\nbtn.addEventListener('click', handleSumbit);\n```",
+          "options": [
+            "A) The function is defined but the addEventListener references `handleSumbit` (typo) instead of `handleSubmit`",
+            "B) The `alert` function is broken and needs to be replaced with `console.log`",
+            "C) The `click` event does not work on buttons \u2014 it should be `press`"
+          ],
+          "correctAnswer": "A",
+          "explanation": "Look carefully at the spelling: the function is called `handleSubmit` but the event listener references `handleSumbit` \u2014 the 'b' and 'i' are swapped. JavaScript looks for a function called `handleSumbit`, cannot find it, and the click does nothing. Typos like this are one of the most common causes of broken interactions.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "wf3-5",
+          "question": "What does this code do?\n\n```javascript\nlet input = document.getElementById('search');\nlet counter = document.getElementById('char-count');\n\ninput.addEventListener('input', function() {\n  counter.textContent = input.value.length + ' characters';\n});\n```",
+          "options": [
+            "A) It counts the total characters on the page and displays them",
+            "B) Every time the user types in the search field, it updates a character counter to show how many characters have been typed",
+            "C) It limits the search field to a certain number of characters"
+          ],
+          "correctAnswer": "B",
+          "explanation": "Reading line by line: find the search input, find the character count display. Every time the user types (`input` event), update the counter to show how many characters are in the input field. This is the classic 'X characters remaining' pattern you see on forms with character limits.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "wf3-6",
+          "question": "A toggle button should show and hide a sidebar. It works the first time (sidebar appears), but clicking again does nothing. Which code has this problem?\n\n```javascript\nlet sidebar = document.getElementById('sidebar');\nlet toggleBtn = document.getElementById('toggle');\n\ntoggleBtn.addEventListener('click', function() {\n  sidebar.style.display = 'block';\n});\n```",
+          "options": [
+            "A) The code only sets the sidebar to `block` (visible) \u2014 it never sets it back to `none` (hidden), so it can only show, not hide",
+            "B) The `click` event only fires once by default and needs to be refreshed",
+            "C) The sidebar element does not have the right CSS to be toggled"
+          ],
+          "correctAnswer": "A",
+          "explanation": "The event listener fires every click, but it always does the same thing: set display to 'block'. It never checks whether the sidebar is currently visible and sets it back to 'none'. A working toggle would check the current state and switch between the two. The click event fires every time \u2014 there is no single-fire limit.",
+          "difficulty": "intermediate"
+        }
+      ]
+    },
+    {
+      "type": "tryItYourself",
+      "title": "Right-click any button on a website you use regularly. Choose 'Inspect' to open DevTools. In the Elements panel, look for 'onclick' attributes in the HTML or look at the Event Listeners tab in the side panel. Can you find the name of the function that runs when the button is clicked?",
+      "solution": "You should be able to see either an onclick attribute directly in the HTML (e.g., onclick=\"addToCart()\") or, in the Event Listeners tab, a click event with a handler function name. The function name usually hints at what the button does \u2014 handleSubmit, toggleMenu, addToCart, etc."
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "Every interactive feature follows the same pattern: find an element, listen for an event, run a function. When something does not work, check three things: Is the listener attached? Is the element ID spelled correctly? Does the handler function exist? These three suspects explain the vast majority of 'button does nothing' bugs."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "You now know how events connect user actions to code. But when things go wrong, how do you actually see what happened? Module 3.3 will introduce your most powerful debugging tool: the browser console."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "The JavaScript pattern for making a button interactive is:",
+      "options": [
+        "Add CSS hover styles",
+        "Find the element, listen for an event, run a function",
+        "Add an onclick attribute to the HTML only"
+      ],
+      "correctIndex": 1,
+      "explanation": "Every interactive feature follows: find the element (querySelector), attach an event listener (addEventListener), and define the function to run.",
+      "encourageCorrect": "That's the three-step pattern! Find, listen, run.",
+      "encourageIncorrect": "Interactive JavaScript follows three steps: find the element, listen for an event (like 'click'), and run a function when the event happens."
+    },
+    {
+      "question": "In the code button.addEventListener('click', toggleMenu), the two key pieces are:",
+      "options": [
+        "The button color and the menu size",
+        "The event type ('click') and the function to run (toggleMenu)",
+        "The HTML and the CSS"
+      ],
+      "correctIndex": 1,
+      "explanation": "addEventListener takes two arguments: what event to listen for ('click') and what function to run when that event occurs (toggleMenu).",
+      "encourageCorrect": "Right! Event type and handler function \u2014 those are the two key pieces.",
+      "encourageIncorrect": "addEventListener takes two main arguments: the event type ('click', 'submit', etc.) and the handler function to run when the event occurs."
+    }
+  ]
+}

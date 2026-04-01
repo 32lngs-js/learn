@@ -1,0 +1,109 @@
+{
+  "meta": {
+    "title": "4.4 Common Async Patterns",
+    "description": "Loading states, error boundaries, and the patterns that handle things that take time.",
+    "level": "level-4",
+    "slug": "common-async-patterns",
+    "order": 4,
+    "isCheckpoint": false,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "predictPrompt",
+      "prompt": "When you use a social media app and \"like\" a post, the heart icon turns red instantly -- before the server has confirmed it. If you had to wait for the server every time, likes would feel sluggish. How do you think the app makes it feel instant? And what happens if the server actually fails?"
+    },
+    {
+      "type": "markdown",
+      "content": "## Things that take time\n\nIn Level 4 so far, you have seen data fetching, form submission, and navigation. All of these involve **asynchronous operations** -- things that take time and may succeed or fail. This module covers the patterns that handle that uncertainty gracefully.\n\nYou do not need to implement these patterns. You need to recognize them when reading code and understand what they do for the user experience.\n\n## Loading state patterns\n\nYou already know the basic loading pattern: show a spinner while data loads. But there are several variations you will encounter in real codebases.\n\n### Spinners\n\nThe simplest loading indicator. The entire content area is replaced with a spinning icon:\n\n```jsx\nif (loading) return <Spinner />;\n```\n\nGood for: initial page loads, short waits. Bad for: it destroys the existing layout while loading.\n\n### Skeleton screens\n\nPlaceholder shapes that mimic the layout of the content:\n\n```jsx\nfunction UserCard({ userId }) {\n  const [user, setUser] = useState(null);\n  const [loading, setLoading] = useState(true);\n\n  useEffect(() => {\n    fetch(`/api/users/${userId}`)\n      .then(res => res.json())\n      .then(data => {\n        setUser(data);\n        setLoading(false);\n      });\n  }, [userId]);\n\n  if (loading) {\n    return (\n      <div className=\"user-card\">\n        <div className=\"skeleton skeleton-avatar\" />\n        <div className=\"skeleton skeleton-text\" />\n        <div className=\"skeleton skeleton-text short\" />\n      </div>\n    );\n  }\n\n  return (\n    <div className=\"user-card\">\n      <img src={user.avatar} alt={user.name} />\n      <h3>{user.name}</h3>\n      <p>{user.bio}</p>\n    </div>\n  );\n}\n```\n\nThe skeleton has the same shape as the loaded content -- a placeholder rectangle where the avatar will be, grey bars where the text will be. This feels faster because the layout does not jump around when data arrives.\n\nWhen you see `className=\"skeleton\"` or similar in loading states, you are looking at a skeleton screen.\n\n### Inline loading\n\nInstead of replacing the whole content, just disable the interactive element:\n\n```jsx\n<button disabled={isSubmitting} onClick={handleSave}>\n  {isSubmitting ? 'Saving...' : 'Save Changes'}\n</button>\n```\n\nThis keeps the page intact and only changes the button. Common for form submissions, toggles, and actions that affect one element.\n\n## Error handling patterns\n\n### try/catch in async functions\n\nYou saw this in Module 4.1. Inside an async function, `try/catch` handles errors:\n\n```jsx\nasync function loadData() {\n  try {\n    const res = await fetch('/api/data');\n    if (!res.ok) throw new Error(`HTTP ${res.status}`);\n    const data = await res.json();\n    setData(data);\n  } catch (err) {\n    setError(err.message);\n  } finally {\n    setLoading(false);\n  }\n}\n```\n\n- **try** -- the code that might fail\n- **catch** -- what to do when it fails\n- **finally** -- code that runs regardless of success or failure (great for setting `loading` to false)\n\n### Error boundaries\n\nSome errors happen during rendering -- a component tries to read a property of `null`, or a child component crashes. Regular try/catch cannot catch rendering errors because they happen inside React's render cycle.\n\nReact provides **error boundaries** for this:\n\n```jsx\nfunction App() {\n  return (\n    <ErrorBoundary fallback={<p>Something went wrong.</p>}>\n      <Dashboard />\n    </ErrorBoundary>\n  );\n}\n```\n\nAn error boundary is a component that wraps other components. If anything inside it crashes during rendering, the error boundary catches the error and shows the fallback UI instead of crashing the entire app.\n\nWhen you see `<ErrorBoundary>` in code, you know: this is a safety net. If the children crash, the fallback appears instead of a white screen.\n\nError boundaries are often placed:\n- Around the entire app (so the whole app does not go blank)\n- Around specific sections (so one broken widget does not take down the page)\n\n### Error states in the UI\n\nDifferent levels of error severity call for different UI treatments:\n\n```jsx\n// Full-page error\nif (error) return <ErrorPage message={error} onRetry={refetch} />;\n\n// Inline error banner\n{error && <div className=\"error-banner\">{error}</div>}\n\n// Toast notification\nuseEffect(() => {\n  if (error) showToast({ type: 'error', message: error });\n}, [error]);\n```\n\n## Debouncing: waiting for the user to stop\n\nWhen a search input fetches results on every keystroke, it fires a request for \"h\", then \"he\", then \"hel\", then \"hell\", then \"hello\" -- five requests when the user only wanted results for \"hello\".\n\n**Debouncing** waits until the user stops typing before making the request:\n\n```jsx\nfunction SearchWithDebounce() {\n  const [query, setQuery] = useState('');\n  const [debouncedQuery, setDebouncedQuery] = useState('');\n  const [results, setResults] = useState([]);\n\n  // Debounce: wait 300ms after last keystroke\n  useEffect(() => {\n    const timer = setTimeout(() => {\n      setDebouncedQuery(query);\n    }, 300);\n\n    return () => clearTimeout(timer);\n  }, [query]);\n\n  // Fetch only when debounced query changes\n  useEffect(() => {\n    if (!debouncedQuery) return;\n    fetch(`/api/search?q=${debouncedQuery}`)\n      .then(res => res.json())\n      .then(data => setResults(data));\n  }, [debouncedQuery]);\n\n  return (\n    <div>\n      <input value={query} onChange={e => setQuery(e.target.value)} />\n      {results.map(r => <div key={r.id}>{r.name}</div>)}\n    </div>\n  );\n}\n```\n\nThe debounce logic:\n1. Every time `query` changes, a 300ms timer starts.\n2. If `query` changes again before 300ms, the old timer is cleared (the cleanup function) and a new one starts.\n3. When 300ms passes without changes, `debouncedQuery` updates.\n4. The second useEffect fetches results for the debounced value.\n\nThis means typing \"hello\" quickly fires zero requests until the user pauses for 300ms, then fires one request for \"hello\".\n\nYou might also see this wrapped in a custom hook:\n\n```jsx\nconst debouncedQuery = useDebounce(query, 300);\n```\n\nWhen you see `useDebounce` or `setTimeout` with `clearTimeout` in a cleanup function, you are looking at debouncing.\n\n## Optimistic updates: updating before the server confirms\n\nRemember the \"like\" button from the prediction prompt? That is an **optimistic update** -- the UI updates immediately, assuming the server will succeed. If the server fails, the update is rolled back.\n\n```jsx\nfunction LikeButton({ postId, initialLiked }) {\n  const [liked, setLiked] = useState(initialLiked);\n\n  async function handleLike() {\n    const previousLiked = liked;\n    setLiked(!liked);  // Optimistic: update UI immediately\n\n    try {\n      await fetch(`/api/posts/${postId}/like`, {\n        method: liked ? 'DELETE' : 'POST',\n      });\n    } catch (err) {\n      setLiked(previousLiked);  // Rollback on failure\n    }\n  }\n\n  return (\n    <button onClick={handleLike}>\n      {liked ? 'Unlike' : 'Like'}\n    </button>\n  );\n}\n```\n\nThe pattern:\n1. Save the current state (`previousLiked`)\n2. Update the UI immediately (`setLiked(!liked)`)\n3. Send the request to the server\n4. If the request fails, revert to the saved state\n\nThis makes the UI feel instant. The user does not wait for the server. You will see this pattern for:\n- Like/unlike buttons\n- Toggle switches\n- Adding items to a list\n- Reordering items\n\nWhen you see a state update **before** a fetch call (and a rollback in the catch), you are looking at an optimistic update.\n\n## Retry patterns\n\nSometimes fetches fail due to network hiccups. A retry pattern automatically tries again:\n\n```jsx\nfunction DataLoader({ url }) {\n  const [data, setData] = useState(null);\n  const [error, setError] = useState(null);\n  const [retryCount, setRetryCount] = useState(0);\n\n  useEffect(() => {\n    fetch(url)\n      .then(res => res.json())\n      .then(data => setData(data))\n      .catch(err => setError(err.message));\n  }, [url, retryCount]);\n\n  if (error) {\n    return (\n      <div>\n        <p>Failed to load: {error}</p>\n        <button onClick={() => setRetryCount(prev => prev + 1)}>\n          Try Again\n        </button>\n      </div>\n    );\n  }\n\n  // ... loading and success states\n}\n```\n\nThe trick: `retryCount` is in the dependency array. Clicking \"Try Again\" increments it, which triggers the useEffect to re-run the fetch. The count itself is not used in the fetch -- it is just a way to force the effect to run again.\n\n## Pattern recognition summary\n\n| Pattern | What to look for | What it does |\n| :-- | :-- | :-- |\n| Skeleton screen | `className=\"skeleton\"` in loading state | Placeholder shapes while loading |\n| Debouncing | `setTimeout` + `clearTimeout` in useEffect cleanup, or `useDebounce` | Waits until typing stops before acting |\n| Optimistic update | State update before fetch, rollback in catch | UI updates instantly, reverts on failure |\n| Error boundary | `<ErrorBoundary>` wrapping components | Catches render errors, shows fallback |\n| Retry | Button that increments a counter in the dependency array | Lets user retry a failed fetch |\n| Inline loading | `disabled={isSubmitting}` on buttons | Prevents double-clicks during async ops |"
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "If an optimistic update changes the UI immediately but the server request fails, what happens to the UI?",
+      "answer": "It reverts. The pattern saves the previous state before the optimistic update, then restores it in the catch block if the server fails. The user might briefly see the liked state, then see it flip back to unliked when the error is caught. Some implementations also show a toast or error message explaining that the action failed."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Common Async Patterns",
+      "problems": [
+        {
+          "id": "rl4-4-1",
+          "question": "What pattern is this component using, and why?\n\n```jsx\nfunction SearchInput({ onSearch }) {\n  const [query, setQuery] = useState('');\n\n  useEffect(() => {\n    const timer = setTimeout(() => {\n      if (query) onSearch(query);\n    }, 500);\n\n    return () => clearTimeout(timer);\n  }, [query, onSearch]);\n\n  return (\n    <input\n      value={query}\n      onChange={e => setQuery(e.target.value)}\n      placeholder=\"Search...\"\n    />\n  );\n}\n```",
+          "options": [
+            "A) Debouncing -- it waits 500ms after the user stops typing before calling onSearch, preventing a request on every keystroke.",
+            "B) Throttling -- it limits onSearch to once every 500ms.",
+            "C) Polling -- it calls onSearch every 500ms regardless.",
+            "D) Optimistic updating -- it updates the search results before the server responds."
+          ],
+          "correctAnswer": "A",
+          "explanation": "This is the debounce pattern. The useEffect sets a 500ms timer whenever `query` changes. The cleanup function (`return () => clearTimeout(timer)`) cancels the previous timer if `query` changes again before 500ms. So if the user types 'hello' quickly, only one call to `onSearch('hello')` fires -- 500ms after the last keystroke.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "rl4-4-2",
+          "question": "Identify the pattern used in this component and explain the purpose of `previousState`:\n\n```jsx\nfunction TodoItem({ todo, onToggle }) {\n  const [completed, setCompleted] = useState(todo.completed);\n\n  async function handleToggle() {\n    const previousState = completed;\n    setCompleted(!completed);\n\n    try {\n      await fetch(`/api/todos/${todo.id}`, {\n        method: 'PATCH',\n        headers: { 'Content-Type': 'application/json' },\n        body: JSON.stringify({ completed: !completed }),\n      });\n    } catch (err) {\n      setCompleted(previousState);\n      alert('Failed to update. Please try again.');\n    }\n  }\n\n  return (\n    <label>\n      <input\n        type=\"checkbox\"\n        checked={completed}\n        onChange={handleToggle}\n      />\n      {todo.text}\n    </label>\n  );\n}\n```",
+          "options": [
+            "A) Optimistic update. `previousState` saves the value before the UI change so it can be restored if the server request fails. The checkbox toggles instantly without waiting for the server.",
+            "B) Debouncing. `previousState` prevents multiple rapid toggles.",
+            "C) Error boundary. `previousState` is the fallback state.",
+            "D) Retry pattern. `previousState` is used to retry the request."
+          ],
+          "correctAnswer": "A",
+          "explanation": "This is an optimistic update. The checkbox state changes immediately (`setCompleted(!completed)`) before the fetch completes. `previousState` stores the old value. If the fetch fails, `setCompleted(previousState)` reverts the checkbox and an alert notifies the user. This makes the toggle feel instant -- the user does not wait for a server round trip to see the checkbox change.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "rl4-4-3",
+          "question": "You are reviewing AI-generated code. The client says \"the search fires too many requests and sometimes shows results for a previous search term.\" What two patterns are missing from this code, and what would you tell the AI?\n\n```jsx\nfunction ProductSearch() {\n  const [query, setQuery] = useState('');\n  const [results, setResults] = useState([]);\n  const [loading, setLoading] = useState(false);\n\n  useEffect(() => {\n    if (!query) {\n      setResults([]);\n      return;\n    }\n    setLoading(true);\n    fetch(`/api/search?q=${query}`)\n      .then(res => res.json())\n      .then(data => {\n        setResults(data);\n        setLoading(false);\n      });\n  }, [query]);\n\n  return (\n    <div>\n      <input value={query} onChange={e => setQuery(e.target.value)} />\n      {loading && <Spinner />}\n      {results.map(r => <ProductCard key={r.id} product={r} />)}\n    </div>\n  );\n}\n```",
+          "options": [
+            "A) Missing debouncing (fires a request on every keystroke) and missing cleanup/abort (old requests can resolve after newer ones, showing stale results). Tell the AI to add debouncing with a 300ms delay and abort previous requests when a new one starts.",
+            "B) Missing error handling and missing pagination.",
+            "C) The useEffect dependency array is wrong.",
+            "D) The component needs useReducer instead of useState."
+          ],
+          "correctAnswer": "A",
+          "explanation": "Two issues: (1) No debouncing -- typing 'hello' fires 5 requests (h, he, hel, hell, hello). (2) No request cancellation -- if the 'hel' request returns slower than the 'hello' request, the results for 'hel' overwrite the results for 'hello' (a race condition). The fix: add debouncing (setTimeout + clearTimeout pattern or useDebounce hook) and use an AbortController or a boolean flag in the cleanup to ignore stale responses. You would tell the AI: \"Add debouncing to wait 300ms before searching, and use an AbortController to cancel previous requests when a new search starts.\"",
+          "difficulty": "advanced"
+        }
+      ]
+    },
+    {
+      "type": "explainBack",
+      "prompt": "Pick three of the async patterns from this module (skeleton screens, debouncing, optimistic updates, error boundaries, retry) and explain each one: what problem it solves, how you recognize it in code, and when you would use it."
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "Async patterns handle the messy reality of things that take time: skeleton screens prevent layout jump, debouncing reduces unnecessary requests, optimistic updates make the UI feel instant, error boundaries prevent blank pages, and retry patterns give users a way to recover from failures. You do not need to implement these -- just recognize them when reading code."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "You have now completed all the teaching modules of Level 4. Think about the web apps you use: the loading spinners (tri-state pattern), the instant likes (optimistic updates), the search that waits for you to finish typing (debouncing), and the forms that do not refresh the page (preventDefault). You understand all of these now. Head to the checkpoint to test your knowledge."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What does debouncing do in a search input?",
+      "options": ["It sends a request on every keystroke", "It waits until the user stops typing before sending a request", "It cancels all requests after the first one"],
+      "correctIndex": 1,
+      "explanation": "Debouncing delays the action until the user stops typing for a set time (e.g., 300ms). This avoids firing a request for every single keystroke.",
+      "encourageCorrect": "Right on! Debouncing is a simple but powerful optimization for search inputs.",
+      "encourageIncorrect": "Debouncing waits for a pause in typing before acting. Instead of firing 5 requests for 'hello', it waits and fires just 1 request after the user stops."
+    },
+    {
+      "question": "In an optimistic update, when does the UI change?",
+      "options": ["After the server confirms the action succeeded", "Immediately, before the server responds", "Only if the server returns an error"],
+      "correctIndex": 1,
+      "explanation": "An optimistic update changes the UI immediately, assuming the server will succeed. If the server fails, the change is rolled back to the previous state.",
+      "encourageCorrect": "Exactly! That instant feedback is what makes likes and toggles feel so responsive.",
+      "encourageIncorrect": "With optimistic updates, the UI updates right away -- before the server responds. If the server fails, the UI reverts. This makes interactions feel instant."
+    },
+    {
+      "question": "What does an ErrorBoundary component do?",
+      "options": ["It prevents all JavaScript errors", "It catches rendering errors in its children and shows a fallback UI instead of crashing the app", "It retries failed API calls automatically"],
+      "correctIndex": 1,
+      "explanation": "An ErrorBoundary wraps components and catches errors during rendering. Instead of the entire app going blank, the boundary shows a fallback UI like 'Something went wrong.'",
+      "encourageCorrect": "Well done! Error boundaries are safety nets that keep one crash from taking down the whole page.",
+      "encourageIncorrect": "An ErrorBoundary catches rendering crashes in its children and displays a fallback UI. It does not prevent errors -- it handles them gracefully."
+    }
+  ]
+}

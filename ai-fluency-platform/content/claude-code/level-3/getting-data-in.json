@@ -43,5 +43,31 @@
       "type": "connectPrompt",
       "prompt": "Getting data in is half the equation. The next module covers getting results out — copying output, exporting conversations, structured output formats, and using print mode for quick answers that feed into other tools."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What command expands Claude Code's file access beyond the current directory?",
+      "options": [
+        "/expand",
+        "/add-dir",
+        "/include"
+      ],
+      "correctIndex": 1,
+      "explanation": "Use /add-dir to add another directory to Claude's scope so it can access files there.",
+      "encourageCorrect": "That's the one! /add-dir expands Claude's reach to other directories.",
+      "encourageIncorrect": "Use /add-dir followed by a path to give Claude access to files in another directory."
+    },
+    {
+      "question": "When is the best approach to NOT manually provide files to Claude?",
+      "options": [
+        "Never — always provide files manually",
+        "When Claude wouldn't know where to look",
+        "When you want Claude to search for relevant files itself"
+      ],
+      "correctIndex": 2,
+      "explanation": "Sometimes the best approach is to describe what you need and let Claude use Glob and Grep to find the files itself.",
+      "encourageCorrect": "Right! Sometimes letting Claude search is more thorough than selecting files yourself.",
+      "encourageIncorrect": "When you're not sure which files are relevant, just describe what you need and let Claude search — it might find files you wouldn't have thought of."
+    }
   ]
 }

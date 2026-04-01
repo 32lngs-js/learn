@@ -43,5 +43,31 @@
       "type": "connectPrompt",
       "prompt": "So far, all of Level 7 has assumed you are working from your computer. But what about when you are on mobile, working remotely, or want to hand off a session to someone else? The next module covers working from anywhere."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "When should you use the SDK instead of the CLI?",
+      "options": [
+        "For all tasks",
+        "When you need conditional logic, dynamic prompts, or custom applications",
+        "When the CLI is too slow"
+      ],
+      "correctIndex": 1,
+      "explanation": "Use the SDK when CLI scripts are not enough — for conditional workflows, streaming, dynamic prompts, or embedding Claude in custom apps.",
+      "encourageCorrect": "Right! The SDK is for when you need programmatic control beyond what scripts offer.",
+      "encourageIncorrect": "The SDK is for when you need programmatic control — conditional workflows, dynamic prompts, streaming, or custom apps. The CLI handles most other cases."
+    },
+    {
+      "question": "What is the 'abstraction ladder' concept?",
+      "options": [
+        "A way to organize code",
+        "Levels of control from skills (least) to SDK (most), each adding complexity",
+        "A debugging technique"
+      ],
+      "correctIndex": 1,
+      "explanation": "The abstraction ladder goes from skills/hooks (simplest) through CLI interactive, CLI -p, up to the SDK (most control, most complexity).",
+      "encourageCorrect": "That's the ladder! Start at the bottom and only climb when needed.",
+      "encourageIncorrect": "The abstraction ladder ranges from skills (simplest) to SDK (most complex). Start simple and only move up when you hit a limitation."
+    }
   ]
 }

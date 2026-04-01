@@ -42,5 +42,31 @@
       "type": "connectPrompt",
       "prompt": "Knowing when and how to use Claude is one side of mastery. The other side is equally important: knowing when NOT to use it. That uncomfortable but essential topic is next."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is the 'pattern underneath all patterns' according to this lesson?",
+      "options": [
+        "Always use Plan Mode",
+        "Treat Claude as a capable but fallible colleague and design collaboration accordingly",
+        "Memorize all slash commands"
+      ],
+      "correctIndex": 1,
+      "explanation": "If you distill everything to one principle: treat Claude as a capable but fallible colleague, and design your collaboration accordingly.",
+      "encourageCorrect": "That's the meta-principle! Everything else flows from it.",
+      "encourageIncorrect": "The deepest principle: treat Claude as a capable but fallible colleague — brief clearly, check work, give more responsibility as trust builds."
+    },
+    {
+      "question": "Which of the five expert instincts involves spending more time on prompts?",
+      "options": [
+        "Watch the budget",
+        "Front-load clarity",
+        "Build for reuse"
+      ],
+      "correctIndex": 1,
+      "explanation": "Front-load clarity: experts spend more time on the prompt — not more words, but more precision. Two minutes of quality saves ten minutes of steering.",
+      "encourageCorrect": "Exactly! Precision upfront saves time downstream.",
+      "encourageIncorrect": "Front-load clarity means investing in prompt precision — two minutes of briefing quality saves ten minutes of steering."
+    }
   ]
 }

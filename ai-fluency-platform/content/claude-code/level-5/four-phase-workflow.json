@@ -47,5 +47,31 @@
       "type": "connectPrompt",
       "prompt": "The four-phase workflow works great for tasks that fit in a single session. But what about tasks that are too big? The next module covers scoping — how to break large asks into phases Claude can actually handle."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What are the four phases of the canonical workflow?",
+      "options": [
+        "Read, Write, Test, Deploy",
+        "Explore, Plan, Implement, Verify",
+        "Draft, Edit, Review, Publish"
+      ],
+      "correctIndex": 1,
+      "explanation": "The four-phase workflow: Explore (understand), Plan (decide approach), Implement (execute), Verify (confirm correctness).",
+      "encourageCorrect": "That's the pattern! It works for any non-trivial task.",
+      "encourageIncorrect": "The four phases are Explore, Plan, Implement, Verify — and the planning phase is where the biggest leverage is."
+    },
+    {
+      "question": "Which phase do most users skip, leading to wasted time?",
+      "options": [
+        "Verify",
+        "Explore and Plan",
+        "Implement"
+      ],
+      "correctIndex": 1,
+      "explanation": "Most users skip Explore and Plan, jumping straight to implementation — this is the most common cause of wasted time and context.",
+      "encourageCorrect": "Right! Five minutes of planning saves thirty minutes of rework.",
+      "encourageIncorrect": "Most users skip the Explore and Plan phases, which leads to rework. Five minutes of planning regularly saves thirty minutes."
+    }
   ]
 }

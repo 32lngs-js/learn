@@ -43,5 +43,31 @@
       "type": "connectPrompt",
       "prompt": "Skills give you custom commands. Hooks give you automatic reactions. Agents give you specialized workers. The last building block is connecting to the outside world — external services and tools that Claude Code cannot access natively. That is MCP, and it is next."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Why does restricting an agent's tools actually make it better?",
+      "options": [
+        "It saves money",
+        "Constraints provide focus — a specialist does one thing well",
+        "It runs faster"
+      ],
+      "correctIndex": 1,
+      "explanation": "Constraints are not limitations — they are focus. A reviewer that can only read is a reviewer you can trust to only review.",
+      "encourageCorrect": "That's the insight! Constraints equal focus.",
+      "encourageIncorrect": "Restricting tools provides focus — a specialized agent with a clear role does one thing reliably, unlike a generalist trying to do everything."
+    },
+    {
+      "question": "Where do custom agent files live?",
+      "options": [
+        ".claude/skills/",
+        ".claude/agents/",
+        ".claude/workers/"
+      ],
+      "correctIndex": 1,
+      "explanation": "Custom agents are Markdown files with YAML frontmatter stored in the .claude/agents/ directory.",
+      "encourageCorrect": "Right! Agents get their own directory alongside skills.",
+      "encourageIncorrect": "Custom agents live in .claude/agents/ — each one is a Markdown file with YAML frontmatter defining the role and tools."
+    }
   ]
 }

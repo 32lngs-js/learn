@@ -21,10 +21,10 @@
       "type": "providerContent",
       "context": "### Structured Output in Your Tool\n\nEach tool handles structured output differently at the API level:",
       "providers": {
-        "claude-code": "Claude Code supports structured output through **tool use** — you define a tool with a JSON schema, and Claude returns data matching that schema exactly. In the API, this provides reliable structured output because the model's response is constrained to valid tool-call arguments. Claude also supports a **JSON mode** that forces the response to be valid JSON.\n\nIn the CLI, Claude naturally produces structured output when asked. A prompt like `claude --print \"list the exported functions in src/utils.ts as a JSON array with name and line number\"` will produce clean JSON output that you can pipe into other tools: `claude --print \"...\" | jq '.[] | .name'`. The `--print` flag is especially useful here because it outputs only the response text without the interactive UI, making it easy to integrate Claude's structured output into shell scripts and automation pipelines.",
-        "codex": "Codex offers the most robust structured output guarantees through OpenAI's **Structured Outputs** feature. When you provide a JSON schema, the API guarantees that the response will be valid JSON matching your schema exactly — no trailing commas, no missing fields, no extra text. This is deterministic enforcement, not probabilistic prompting.\n\n**Function calling** provides another path to structured output: define functions with typed parameters, and the model returns arguments matching those types. This is the foundation of tool use in agentic systems. In the Codex CLI, you can request JSON output directly, and **JSON mode** ensures the response is always valid parseable JSON. For production systems where invalid JSON would cause failures, Codex's deterministic structured output is a significant advantage over prompt-level techniques alone.",
-        "cline": "Structured output support in Cline depends on which model backend you have configured. If you are using **OpenAI-compatible endpoints**, you get access to JSON mode and function calling for guaranteed structured output. If you are using Claude models, tool use provides schema-constrained output.\n\nIn practice, Cline handles the parsing and display of structured output in the VS Code UI. When Claude or GPT returns JSON, Cline can format it readably in the chat panel. For code generation tasks, structured output is less relevant because Cline writes directly to your files — the \"structure\" is the code itself. Where structured output matters most in Cline is when you are extracting data from codebases (listing endpoints, cataloging dependencies, mapping file relationships) and want the results in a format you can process further.",
-        "gemini": "Gemini supports structured output through **JSON mode** and a **response schema** parameter in the API. JSON mode ensures the model returns valid JSON, while the response schema parameter lets you define the exact structure — field names, types, nesting — that the response must match. This provides deterministic enforcement similar to OpenAI's Structured Outputs.\n\nA unique strength of Gemini's structured output is that it works with **multimodal inputs**. You can pass an image and a JSON schema, and Gemini will extract structured data from the image in the format you specified. For example, extracting product information from a screenshot into a typed JSON object. In the Gemini CLI, requesting structured output follows the same prompt techniques covered in this module, with the added confidence that API-level schema enforcement can guarantee validity when needed."
+        "claude-code": "Claude Code supports structured output through **tool use** \u2014 you define a tool with a JSON schema, and Claude returns data matching that schema exactly. In the API, this provides reliable structured output because the model's response is constrained to valid tool-call arguments. Claude also supports a **JSON mode** that forces the response to be valid JSON.\n\nIn the CLI, Claude naturally produces structured output when asked. A prompt like `claude --print \"list the exported functions in src/utils.ts as a JSON array with name and line number\"` will produce clean JSON output that you can pipe into other tools: `claude --print \"...\" | jq '.[] | .name'`. The `--print` flag is especially useful here because it outputs only the response text without the interactive UI, making it easy to integrate Claude's structured output into shell scripts and automation pipelines.",
+        "codex": "Codex offers the most robust structured output guarantees through OpenAI's **Structured Outputs** feature. When you provide a JSON schema, the API guarantees that the response will be valid JSON matching your schema exactly \u2014 no trailing commas, no missing fields, no extra text. This is deterministic enforcement, not probabilistic prompting.\n\n**Function calling** provides another path to structured output: define functions with typed parameters, and the model returns arguments matching those types. This is the foundation of tool use in agentic systems. In the Codex CLI, you can request JSON output directly, and **JSON mode** ensures the response is always valid parseable JSON. For production systems where invalid JSON would cause failures, Codex's deterministic structured output is a significant advantage over prompt-level techniques alone.",
+        "cline": "Structured output support in Cline depends on which model backend you have configured. If you are using **OpenAI-compatible endpoints**, you get access to JSON mode and function calling for guaranteed structured output. If you are using Claude models, tool use provides schema-constrained output.\n\nIn practice, Cline handles the parsing and display of structured output in the VS Code UI. When Claude or GPT returns JSON, Cline can format it readably in the chat panel. For code generation tasks, structured output is less relevant because Cline writes directly to your files \u2014 the \"structure\" is the code itself. Where structured output matters most in Cline is when you are extracting data from codebases (listing endpoints, cataloging dependencies, mapping file relationships) and want the results in a format you can process further.",
+        "gemini": "Gemini supports structured output through **JSON mode** and a **response schema** parameter in the API. JSON mode ensures the model returns valid JSON, while the response schema parameter lets you define the exact structure \u2014 field names, types, nesting \u2014 that the response must match. This provides deterministic enforcement similar to OpenAI's Structured Outputs.\n\nA unique strength of Gemini's structured output is that it works with **multimodal inputs**. You can pass an image and a JSON schema, and Gemini will extract structured data from the image in the format you specified. For example, extracting product information from a screenshot into a typed JSON object. In the Gemini CLI, requesting structured output follows the same prompt techniques covered in this module, with the added confidence that API-level schema enforcement can guarantee validity when needed."
       }
     },
     {
@@ -60,6 +60,32 @@
     {
       "type": "connectPrompt",
       "prompt": "Structured output lets you feed AI results into other tools. But what if the AI could use those tools directly? In Module 2.9, you will learn about agentic loops -- the pattern that lets AI models take actions, observe results, and reason about what to do next."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "If you ask a model for JSON output through a prompt, will it always produce valid JSON?",
+      "options": [
+        "Yes, models always follow format instructions",
+        "No, prompt-level requests are probabilistic and may fail 5-10% of the time",
+        "Only if you specify the exact schema"
+      ],
+      "correctIndex": 1,
+      "explanation": "Prompt-level JSON requests work about 90-95% of the time but can fail with added text, trailing commas, or other issues. Production systems need API-level enforcement.",
+      "encourageCorrect": "Right! For production systems, you'll need deterministic API enforcement -- prompt-level requests aren't guaranteed.",
+      "encourageIncorrect": "Prompt-level JSON requests are probabilistic -- they work about 90-95% of the time but can produce invalid output. Production systems need API-level enforcement."
+    },
+    {
+      "question": "Why does structured output matter for automation?",
+      "options": [
+        "It makes the output look better",
+        "It enables feeding AI output into spreadsheets, databases, scripts, and other tools",
+        "It reduces the model's processing time"
+      ],
+      "correctIndex": 1,
+      "explanation": "Structured output bridges the gap between conversational AI and practical workflows, enabling you to chain AI into larger automated systems.",
+      "encourageCorrect": "Exactly! Structured output is what makes AI useful in automated pipelines, not just chat.",
+      "encourageIncorrect": "Structured output lets you feed AI results into other tools like spreadsheets, databases, and scripts -- it's the bridge between chat and automation."
     }
   ]
 }

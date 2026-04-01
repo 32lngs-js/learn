@@ -100,5 +100,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Pricing Forward Contracts** in detail \u2014 applying the cost of carry framework to equity forwards (with and without dividends), FX forwards (covered interest rate parity), and fixed-income forwards."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "The law of one price states that:",
+      "options": [
+        "All assets should have the same price",
+        "Two assets with identical cash flows must have the same price in the absence of arbitrage",
+        "Prices are always correct"
+      ],
+      "correctIndex": 1,
+      "explanation": "If two assets produce the same cash flows in all states of the world, they must have the same price \u2014 otherwise an arbitrage opportunity exists.",
+      "encourageCorrect": "That's the foundation of derivatives pricing! Same cash flows = same price.",
+      "encourageIncorrect": "The law of one price says assets with identical cash flows must have the same price. If they don't, arbitrageurs will exploit the difference until prices converge."
+    },
+    {
+      "question": "Replication in derivatives means:",
+      "options": [
+        "Copying another trader's strategy",
+        "Constructing a portfolio that produces the same payoff as the derivative",
+        "Issuing multiple copies of the same contract"
+      ],
+      "correctIndex": 1,
+      "explanation": "Replication builds a portfolio of other instruments (like stocks and bonds) that exactly matches the derivative's payoff, helping determine its fair price.",
+      "encourageCorrect": "Exactly! If you can replicate the payoff, you can price the derivative.",
+      "encourageIncorrect": "Replication means building a portfolio that produces the same cash flows as the derivative. This is how we determine the derivative's fair value."
+    }
   ]
 }

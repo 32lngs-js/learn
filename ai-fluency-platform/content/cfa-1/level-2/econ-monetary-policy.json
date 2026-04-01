@@ -118,5 +118,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Introduction to Geopolitics** \u2014 how political risks, sanctions, and international conflicts affect financial markets. You'll see how geopolitical events can override the carefully planned monetary and fiscal policies we've been studying, forcing central banks and governments to respond to external shocks."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is the primary tool central banks use to implement monetary policy?",
+      "options": [
+        "Tax rates",
+        "Policy interest rates (such as the federal funds rate)",
+        "Government spending levels"
+      ],
+      "correctIndex": 1,
+      "explanation": "Central banks set short-term policy interest rates to influence borrowing costs, spending, and inflation throughout the economy.",
+      "encourageCorrect": "That's it! Policy interest rates are the central banker's main lever.",
+      "encourageIncorrect": "Central banks use policy interest rates (like the fed funds rate) as their primary tool. Taxes and spending are fiscal policy, not monetary."
+    },
+    {
+      "question": "Contractionary monetary policy is designed to:",
+      "options": [
+        "Stimulate economic growth",
+        "Reduce inflation by raising interest rates",
+        "Increase the money supply"
+      ],
+      "correctIndex": 1,
+      "explanation": "Contractionary policy raises rates to cool an overheating economy and bring inflation down.",
+      "encourageCorrect": "Correct! Raising rates slows borrowing and spending, which reduces inflationary pressure.",
+      "encourageIncorrect": "Contractionary monetary policy raises interest rates to fight inflation. Higher rates discourage borrowing and slow economic activity."
+    }
   ]
 }

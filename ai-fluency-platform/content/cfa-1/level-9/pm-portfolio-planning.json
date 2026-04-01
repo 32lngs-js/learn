@@ -118,5 +118,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Behavioral Biases**, which explores the psychological errors that cause investors to deviate from the rational framework outlined in the IPS. Understanding biases helps explain why clients (and portfolio managers) often make suboptimal decisions \u2014 and how to mitigate these tendencies."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "The two key components of an investment objective are:",
+      "options": [
+        "Growth and income",
+        "Return objective and risk tolerance",
+        "Alpha and beta targets"
+      ],
+      "correctIndex": 1,
+      "explanation": "Investment objectives specify both a desired return and an acceptable level of risk. These two must be consistent with each other.",
+      "encourageCorrect": "That's right! Return and risk must be defined together.",
+      "encourageIncorrect": "Investment objectives have two parts: the return objective (what you need to earn) and the risk tolerance (how much volatility you can accept)."
+    },
+    {
+      "question": "Which of the following is an investment constraint?",
+      "options": [
+        "Expected return",
+        "Time horizon",
+        "Alpha generation"
+      ],
+      "correctIndex": 1,
+      "explanation": "Constraints include time horizon, liquidity needs, tax considerations, legal/regulatory requirements, and unique circumstances.",
+      "encourageCorrect": "Right! Time horizon is one of the key constraints alongside liquidity, taxes, and legal factors.",
+      "encourageIncorrect": "Time horizon is an investment constraint. Other constraints include liquidity needs, tax considerations, legal requirements, and unique circumstances."
+    }
   ]
 }

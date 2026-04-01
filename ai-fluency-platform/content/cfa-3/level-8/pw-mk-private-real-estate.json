@@ -100,5 +100,31 @@
       "type": "connectPrompt",
       "prompt": "Next, we examine **Infrastructure** investing -- similar to real estate in its tangible asset base and income characteristics, but with unique features like regulated returns, inflation linkage, and essential-service demand profiles."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Net operating income (NOI) in real estate is calculated as:",
+      "options": [
+        "Rental revenue minus all expenses including debt service",
+        "Rental revenue minus operating expenses but before debt service and income taxes",
+        "Total property value minus the mortgage"
+      ],
+      "correctIndex": 1,
+      "explanation": "NOI = Rental income - Operating expenses (before financing costs and taxes). It measures property-level profitability.",
+      "encourageCorrect": "Correct! NOI is the property-level income before financing and taxes.",
+      "encourageIncorrect": "NOI = Rental income minus operating expenses (before debt service and taxes). It's the fundamental measure of a property's income-producing ability."
+    },
+    {
+      "question": "A lower cap rate on a property generally indicates:",
+      "options": [
+        "Higher risk and lower value",
+        "Lower perceived risk and higher property value relative to income",
+        "The property is distressed"
+      ],
+      "correctIndex": 1,
+      "explanation": "Lower cap rates imply investors accept a lower yield, reflecting perceived lower risk or higher growth expectations. The property is valued more highly per dollar of NOI.",
+      "encourageCorrect": "Right! Lower cap rate means investors accept less yield because they perceive less risk.",
+      "encourageIncorrect": "A lower cap rate means investors are willing to accept a lower yield, usually because the property is viewed as lower risk or has higher growth potential."
+    }
   ]
 }

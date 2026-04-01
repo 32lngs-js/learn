@@ -106,5 +106,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Mergers and Acquisitions**, where ESG considerations increasingly play a role \u2014 from due diligence on environmental liabilities to governance concerns about takeover defenses and management entrenchment."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "ESG integration in investment analysis means:",
+      "options": [
+        "Only investing in green energy companies",
+        "Systematically including environmental, social, and governance factors in investment decisions",
+        "Excluding all companies with any ESG issues"
+      ],
+      "correctIndex": 1,
+      "explanation": "ESG integration considers material ESG factors alongside traditional financial analysis. It doesn't require excluding any companies.",
+      "encourageCorrect": "Right! Integration means considering ESG factors in analysis, not necessarily excluding companies.",
+      "encourageIncorrect": "ESG integration means systematically considering ESG factors alongside financial analysis. It's different from exclusionary screening."
+    },
+    {
+      "question": "A materiality assessment in ESG helps determine:",
+      "options": [
+        "Which ESG factors are most financially relevant for a specific industry",
+        "The company's stock price target",
+        "Whether the company should be excluded from investment"
+      ],
+      "correctIndex": 0,
+      "explanation": "Not all ESG issues matter equally for every industry. Materiality identifies which ESG factors most affect financial performance in a specific sector.",
+      "encourageCorrect": "Exactly! What's material for a mining company differs from what's material for a tech firm.",
+      "encourageIncorrect": "Materiality assessment identifies which ESG factors are most financially significant for a particular industry. Different sectors have different material ESG issues."
+    }
   ]
 }

@@ -118,5 +118,31 @@
       "type": "connectPrompt",
       "prompt": "You have now completed the Portfolio Management section of CFA Level I. The next step is the **Portfolio Management Checkpoint**, which will test your understanding across all PM topics \u2014 from risk-return tradeoffs and CAPM, through the IPS and behavioral biases, to risk management tools. Review the key formulas before proceeding."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What does Value at Risk (VaR) estimate?",
+      "options": [
+        "The expected return of a portfolio",
+        "The maximum loss expected over a given period at a given confidence level",
+        "The exact amount a portfolio will lose"
+      ],
+      "correctIndex": 1,
+      "explanation": "VaR estimates the maximum loss that should not be exceeded with a specified probability over a given time horizon (e.g., 5% chance of losing more than $1M in a day).",
+      "encourageCorrect": "That's the VaR concept! Maximum expected loss at a given confidence level.",
+      "encourageIncorrect": "VaR estimates the maximum loss over a specified period at a given confidence level. For example, a 1-day 95% VaR of $1M means there's a 5% chance of losing more than $1M."
+    },
+    {
+      "question": "Risk management is best described as:",
+      "options": [
+        "Eliminating all risk from a portfolio",
+        "Identifying, measuring, and managing risk exposures to achieve objectives",
+        "Avoiding all risky investments"
+      ],
+      "correctIndex": 1,
+      "explanation": "Risk management doesn't eliminate risk \u2014 it identifies, measures, and manages risk to ensure it aligns with the investor's objectives and tolerance.",
+      "encourageCorrect": "Correct! Manage risk, don't eliminate it. Risk is necessary for return.",
+      "encourageIncorrect": "Risk management is about identifying, measuring, and managing risks \u2014 not eliminating them. Some risk is necessary to achieve investment returns."
+    }
   ]
 }

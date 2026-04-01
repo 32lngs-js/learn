@@ -43,5 +43,31 @@
       "type": "connectPrompt",
       "prompt": "You now know all four building blocks: skills (custom commands), hooks (automatic reactions), custom agents (specialized workers), and MCP (external connections). The next module shows how these pieces compose together into something greater than the sum of their parts."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What does MCP stand for and what does it do?",
+      "options": [
+        "Model Configuration Protocol — configures AI models",
+        "Model Context Protocol — connects Claude to external services",
+        "Multi-Channel Processing — processes multiple inputs"
+      ],
+      "correctIndex": 1,
+      "explanation": "MCP (Model Context Protocol) gives Claude Code a standard way to connect to external services like GitHub, Slack, and databases.",
+      "encourageCorrect": "That's it! MCP is Claude's bridge to external services.",
+      "encourageIncorrect": "MCP stands for Model Context Protocol — it connects Claude Code to external services like GitHub, Slack, email, and databases."
+    },
+    {
+      "question": "Where are MCP connections configured?",
+      "options": [
+        "In CLAUDE.md",
+        "In .mcp.json files",
+        "In the terminal settings"
+      ],
+      "correctIndex": 1,
+      "explanation": "MCP connections are configured in .mcp.json files — either in the project root (shared) or ~/.mcp.json (personal).",
+      "encourageCorrect": "Correct! .mcp.json is the configuration file for external connections.",
+      "encourageIncorrect": "MCP connections go in .mcp.json — in the project root for team-shared connections, or ~/.mcp.json for personal ones."
+    }
   ]
 }

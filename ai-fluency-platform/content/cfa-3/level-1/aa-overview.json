@@ -100,5 +100,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Principles of Asset Allocation** \u2014 the quantitative methods used to implement these approaches, including MVO, Black-Litterman, risk budgeting, and Monte Carlo simulation."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Asset allocation is considered the most important investment decision because:",
+      "options": [
+        "It determines which individual stocks to buy",
+        "It explains the largest portion of portfolio return variation across investors",
+        "It eliminates all risk"
+      ],
+      "correctIndex": 1,
+      "explanation": "Research shows that asset allocation (the mix of stocks, bonds, alternatives) explains the majority of return differences across portfolios.",
+      "encourageCorrect": "Right! The asset mix drives most of the variation in portfolio results.",
+      "encourageIncorrect": "Asset allocation explains the largest portion of return variation across investors. It's the most impactful decision in portfolio management."
+    },
+    {
+      "question": "The three main approaches to asset allocation are:",
+      "options": [
+        "Top-down, bottom-up, and indexing",
+        "Asset-only, liability-relative, and goals-based",
+        "Growth, value, and momentum"
+      ],
+      "correctIndex": 1,
+      "explanation": "Asset-only focuses on risk/return of assets. Liability-relative matches assets to obligations. Goals-based allocates to specific client goals.",
+      "encourageCorrect": "Well done! Three approaches for different investor needs.",
+      "encourageIncorrect": "The three approaches: asset-only (optimize risk/return), liability-relative (fund future obligations), and goals-based (match assets to specific goals)."
+    }
   ]
 }

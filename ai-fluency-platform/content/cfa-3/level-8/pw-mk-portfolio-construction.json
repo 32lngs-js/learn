@@ -100,5 +100,31 @@
       "type": "connectPrompt",
       "prompt": "This completes the Private Markets Pathway content modules. The checkpoint ahead will test your integrated understanding across private equity, private debt, real estate, infrastructure, natural resources, special situations, and portfolio construction."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "The 'denominator effect' in alternative investments refers to:",
+      "options": [
+        "Increasing the number of funds in a portfolio",
+        "A decline in public market values causing the illiquid allocation to appear larger than intended",
+        "The effect of management fees on returns"
+      ],
+      "correctIndex": 1,
+      "explanation": "When public equities fall sharply, the total portfolio (denominator) shrinks, making the unchanged private asset allocation appear oversized as a percentage.",
+      "encourageCorrect": "That's the denominator effect! Public markets shrink, making illiquid allocations look bigger.",
+      "encourageIncorrect": "The denominator effect occurs when public market declines shrink the total portfolio, making the unchanged private allocation appear overweight."
+    },
+    {
+      "question": "Portfolio construction with alternatives must account for:",
+      "options": [
+        "Only expected returns",
+        "Illiquidity, long lock-up periods, capital call timing, and stale pricing",
+        "The same factors as public equity portfolios"
+      ],
+      "correctIndex": 1,
+      "explanation": "Alternatives bring unique constraints: illiquidity, unpredictable capital calls, long lock-ups, and stale/smoothed pricing that complicates risk measurement.",
+      "encourageCorrect": "Exactly! Alternatives require special treatment in portfolio construction.",
+      "encourageIncorrect": "Building portfolios with alternatives requires addressing illiquidity, lock-ups, unpredictable capital calls, and the smoothed pricing that understates true risk."
+    }
   ]
 }

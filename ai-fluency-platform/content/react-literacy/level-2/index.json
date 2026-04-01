@@ -1,0 +1,29 @@
+{
+  "meta": {
+    "title": "Level 2: The Data Flow",
+    "description": "Data flows downward through props. Learn to trace the flow.",
+    "level": "level-2",
+    "slug": "index",
+    "order": 0,
+    "isCheckpoint": false,
+    "isIndex": true
+  },
+  "blocks": [
+    {
+      "type": "markdown",
+      "content": "## Welcome to Level 2\n\nIn Level 1, you learned to read individual components -- functions that return JSX. But components do not live in isolation. A page is a tree of components, and data flows through that tree like water flowing downhill.\n\nThe mechanism is simple: **props**. A parent component passes data to a child component through props. The child reads the data and uses it to decide what to render. Data always flows in one direction -- from parent to child, never the other way around.\n\nThis level teaches you to trace that flow. When a component shows the wrong name, the wrong number, or the wrong state, the answer is almost always in the props -- either the wrong value was passed, or the right value was never passed at all.\n\n### What you will learn\n\n| Module | Topic | Core Idea |\n| :-- | :-- | :-- |\n| 2.1 | Props Are Arguments | Components receive data the same way functions receive arguments |\n| 2.2 | Passing Props Down | How parent components hand data to child components |\n| 2.3 | Showing and Hiding | Components decide what to show based on conditions |\n| 2.4 | Rendering Lists | How `.map()` turns an array of data into a list of components |\n| 2.5 | Checkpoint | Trace data flow through a multi-component page |\n\n### The core idea\n\nReact's data flow is **one-directional**. Parent components control what child components display by passing props. If you want to understand why something appears on screen, look at the props being passed to that component. If you want to understand where those props come from, look at the parent."
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "Data in React flows one direction: parent to child, through props. To understand what a component displays, trace the props it receives back to the parent that provides them."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "As you work through Level 2, practice the skill of tracing data. When you see a value rendered on screen, ask: where did this value come from? Follow it upward through the component tree."
+    },
+    {
+      "type": "markdown",
+      "content": "### Ready?\n\nStart with [Module 2.1: Props Are Arguments](/react-literacy/level-2/props-are-arguments/) to learn how components receive and use data."
+    }
+  ]
+}

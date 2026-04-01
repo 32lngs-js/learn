@@ -99,5 +99,31 @@
       "type": "connectPrompt",
       "prompt": "Next, we apply these standards to **complex constructed-response scenarios** \u2014 the essay-style ethical challenges that are a hallmark of the Level III exam."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Standard III(C) Suitability requires that recommendations:",
+      "options": [
+        "Match the analyst's personal investment preferences",
+        "Be appropriate for the specific client's financial situation, objectives, and constraints",
+        "Only include the highest-returning investments"
+      ],
+      "correctIndex": 1,
+      "explanation": "Suitability means recommendations must fit the individual client \u2014 considering their goals, risk tolerance, time horizon, and circumstances.",
+      "encourageCorrect": "That's the suitability requirement! Every recommendation must fit the client.",
+      "encourageIncorrect": "Suitability requires that each recommendation be appropriate for the specific client's objectives, constraints, and financial situation."
+    },
+    {
+      "question": "Standard IV(C) Responsibilities of Supervisors requires that managers:",
+      "options": [
+        "Only focus on their own compliance",
+        "Establish and enforce compliance procedures for those they supervise",
+        "Delegate all compliance to the legal department"
+      ],
+      "correctIndex": 1,
+      "explanation": "Supervisors must make reasonable efforts to prevent and detect violations by those under their authority, including establishing compliance procedures.",
+      "encourageCorrect": "Right! Supervisors are responsible for compliance within their teams.",
+      "encourageIncorrect": "Supervisors must establish compliance procedures and make reasonable efforts to detect and prevent violations by those they supervise."
+    }
   ]
 }

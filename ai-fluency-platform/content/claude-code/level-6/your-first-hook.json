@@ -42,5 +42,31 @@
       "type": "connectPrompt",
       "prompt": "You have built custom commands (skills) and automatic reactions (hooks). Next, we explore custom subagents — specialized AI workers with specific roles and restrictions. Think of them as employees you hire for particular jobs."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Where are hooks configured?",
+      "options": [
+        "In CLAUDE.md",
+        "In .claude/settings.json",
+        "In a hooks.yaml file"
+      ],
+      "correctIndex": 1,
+      "explanation": "Hooks are configured in .claude/settings.json (project level) or ~/.claude/settings.json (user level).",
+      "encourageCorrect": "That's where they live! Same settings file as other Claude config.",
+      "encourageIncorrect": "Hooks go in .claude/settings.json for project scope or ~/.claude/settings.json for user scope."
+    },
+    {
+      "question": "What is the most common debugging issue with hooks?",
+      "options": [
+        "They run too slowly",
+        "Nested quoting in JSON strings containing shell commands",
+        "They only work on macOS"
+      ],
+      "correctIndex": 1,
+      "explanation": "Hook commands are JSON strings containing shell commands — the nested quoting gets painful. Consider writing a separate script instead.",
+      "encourageCorrect": "The quoting is indeed tricky! Writing a separate script is a good workaround.",
+      "encourageIncorrect": "The most common issue is nested quoting — hook commands are JSON strings with shell commands inside. A cleaner approach is to reference a separate script file."
+    }
   ]
 }

@@ -34,5 +34,17 @@
     "title": "System Design Mastery",
     "description": "From single-server apps to planet-scale distributed systems. Build the mental models and design instincts that separate senior engineers from everyone else.",
     "color": "#0ea5e9"
+  },
+  {
+    "id": "web-fundamentals",
+    "title": "Web Fundamentals",
+    "description": "Code literacy for the AI age. Learn to read, understand, and troubleshoot HTML, CSS, and JavaScript — not to write code from scratch, but to verify what AI writes for you.",
+    "color": "#e11d48"
+  },
+  {
+    "id": "react-literacy",
+    "title": "React Literacy",
+    "description": "Code literacy for the React era. Learn to read, navigate, and troubleshoot React applications — not to become a React developer, but to review what AI builds for you.",
+    "color": "#0ea5e9"
   }
 ]

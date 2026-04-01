@@ -118,5 +118,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Equity Valuation Concepts and Basic Tools**, where you'll use the forecasts you've built to determine what a stock is actually worth. The dividend discount model and price multiples translate financial projections into specific price targets."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "When forecasting a company's revenue, an analyst should consider:",
+      "options": [
+        "Only historical growth rates",
+        "Industry growth, competitive position, and company-specific drivers",
+        "Just the CEO's guidance"
+      ],
+      "correctIndex": 1,
+      "explanation": "Good revenue forecasts incorporate industry trends, competitive dynamics, and company-specific factors \u2014 not just past trends.",
+      "encourageCorrect": "Well done! A thorough forecast considers multiple sources of information.",
+      "encourageIncorrect": "Revenue forecasting should combine industry growth, competitive position, and company-specific drivers \u2014 not rely on any single source."
+    },
+    {
+      "question": "What is the purpose of sensitivity analysis in company forecasting?",
+      "options": [
+        "To find the single correct forecast",
+        "To understand how changes in key assumptions affect the valuation",
+        "To eliminate all uncertainty from the model"
+      ],
+      "correctIndex": 1,
+      "explanation": "Sensitivity analysis shows how different assumptions (revenue growth, margins, etc.) impact the final valuation, highlighting which inputs matter most.",
+      "encourageCorrect": "Exactly! Sensitivity analysis reveals which assumptions drive the most value.",
+      "encourageIncorrect": "Sensitivity analysis shows how changing key assumptions affects the output. It doesn't eliminate uncertainty but helps you understand which inputs matter most."
+    }
   ]
 }

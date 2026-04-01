@@ -118,5 +118,31 @@
       "type": "connectPrompt",
       "prompt": "Working capital focuses on short-term operational decisions. The next module shifts to **Capital Investments and Capital Allocation** \u2014 how companies evaluate and select long-term investment projects using NPV, IRR, and other capital budgeting techniques."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Working capital is defined as:",
+      "options": [
+        "Total assets minus total liabilities",
+        "Current assets minus current liabilities",
+        "Cash minus short-term debt"
+      ],
+      "correctIndex": 1,
+      "explanation": "Working capital = current assets - current liabilities. It measures a firm's short-term liquidity and ability to meet near-term obligations.",
+      "encourageCorrect": "Perfect! Current assets minus current liabilities \u2014 a key measure of short-term health.",
+      "encourageIncorrect": "Working capital equals current assets minus current liabilities. It measures whether the firm can cover its short-term obligations."
+    },
+    {
+      "question": "The current ratio measures:",
+      "options": [
+        "Long-term solvency",
+        "A firm's ability to pay short-term obligations with current assets",
+        "Profitability relative to sales"
+      ],
+      "correctIndex": 1,
+      "explanation": "Current ratio = current assets / current liabilities. A ratio above 1 means the firm has more current assets than current liabilities.",
+      "encourageCorrect": "Right! It's the quick check for short-term liquidity.",
+      "encourageIncorrect": "The current ratio (current assets / current liabilities) measures whether a firm can cover its short-term obligations. Above 1 is generally healthy."
+    }
   ]
 }

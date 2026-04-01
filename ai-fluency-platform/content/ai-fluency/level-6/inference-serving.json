@@ -59,5 +59,31 @@
       "type": "keyTakeaway",
       "content": "Inference serving is where model quality meets economic constraints. Mastering quantization, batching, caching, and routing strategies allows you to serve high-quality AI experiences at a fraction of the naive cost and latency."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What does quantization do in inference serving?",
+      "options": [
+        "It makes models more accurate",
+        "It reduces weight precision (e.g., from 16-bit to 4-bit) to serve models faster and cheaper",
+        "It increases the context window size"
+      ],
+      "correctIndex": 1,
+      "explanation": "Quantization reduces weight precision, making models smaller and faster to serve with only modest quality tradeoffs for most tasks.",
+      "encourageCorrect": "Right! Quantization is a key tool for making inference economically viable at scale.",
+      "encourageIncorrect": "Quantization reduces weight precision (like FP16 to INT4), making models smaller and faster -- a critical optimization for serving at scale."
+    },
+    {
+      "question": "Why do aggressively quantized models struggle with complex mathematical reasoning?",
+      "options": [
+        "Because math requires more memory",
+        "Because small quantization errors compound across multiple reasoning steps",
+        "Because math tokens are harder to generate"
+      ],
+      "correctIndex": 1,
+      "explanation": "Multi-step reasoning depends on subtle weight interactions where small rounding errors accumulate, potentially changing the selected token at critical decision points.",
+      "encourageCorrect": "Great insight! Error compounding across reasoning steps is the key limitation of aggressive quantization.",
+      "encourageIncorrect": "Quantization errors are small individually, but they compound across the multiple steps of mathematical reasoning, potentially changing the output at critical decision points."
+    }
   ]
 }

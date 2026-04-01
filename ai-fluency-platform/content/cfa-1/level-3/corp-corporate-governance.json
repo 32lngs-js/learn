@@ -118,5 +118,31 @@
       "type": "connectPrompt",
       "prompt": "Governance provides the framework for corporate decision-making. The next module examines a critical operational decision: **Working Capital and Liquidity** \u2014 how companies manage their short-term assets and liabilities to ensure they can meet day-to-day obligations while maximizing efficiency."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is the agency problem in corporate governance?",
+      "options": [
+        "Conflicts between managers and shareholders because managers may act in their own interest",
+        "Disagreements between different shareholders",
+        "Competition between firms in the same industry"
+      ],
+      "correctIndex": 0,
+      "explanation": "The agency problem arises because managers (agents) may prioritize their own interests over those of shareholders (principals).",
+      "encourageCorrect": "That's the core issue! Managers might not always act in shareholders' best interest.",
+      "encourageIncorrect": "The agency problem is the conflict between managers (agents) and shareholders (principals). Managers may act in their own interest rather than shareholders'."
+    },
+    {
+      "question": "What is the role of a board of directors?",
+      "options": [
+        "To manage day-to-day operations",
+        "To oversee management on behalf of shareholders",
+        "To set the company's stock price"
+      ],
+      "correctIndex": 1,
+      "explanation": "The board of directors represents shareholders and oversees management to ensure the company is run in shareholders' interests.",
+      "encourageCorrect": "Exactly! The board monitors management on behalf of the owners.",
+      "encourageIncorrect": "The board of directors oversees management on behalf of shareholders. Management handles day-to-day operations, not the board."
+    }
   ]
 }

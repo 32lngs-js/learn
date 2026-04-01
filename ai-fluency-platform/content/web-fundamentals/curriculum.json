@@ -1,0 +1,411 @@
+{
+  "levels": [
+    {
+      "level": 1,
+      "title": "The Page",
+      "subtitle": "What you are actually looking at",
+      "color": "#3b82f6",
+      "description": "Every website is a document made of nested tags. This level teaches you to look at HTML and see structure — not intimidating code. You will learn to read any webpage's skeleton and know what each piece does.",
+      "moduleCount": 5
+    },
+    {
+      "level": 2,
+      "title": "The Look",
+      "subtitle": "How CSS controls what you see",
+      "color": "#8b5cf6",
+      "description": "HTML is the structure. CSS is the paint, the layout, the typography, the spacing. This level teaches you to read CSS and understand why things look the way they do — and why they sometimes look wrong.",
+      "moduleCount": 6
+    },
+    {
+      "level": 3,
+      "title": "The Behavior",
+      "subtitle": "What JavaScript does (and doesn't do)",
+      "color": "#06b6d4",
+      "description": "JavaScript makes pages interactive — click handlers, form validation, dynamic content. This level does not teach you to write JavaScript. It teaches you to read it well enough to understand what it does, spot common bugs, and know what to ask AI to change.",
+      "moduleCount": 6
+    },
+    {
+      "level": 4,
+      "title": "The Full Picture",
+      "subtitle": "How HTML, CSS, and JS work together",
+      "color": "#f97316",
+      "description": "Real webpages are not HTML or CSS or JS in isolation. They are all three working together. This level shows how they connect and teaches you to trace a user interaction from click to visual change.",
+      "moduleCount": 5
+    },
+    {
+      "level": 5,
+      "title": "The Conversation",
+      "subtitle": "Working with AI on web code",
+      "color": "#ef4444",
+      "description": "You now know enough to have a productive conversation with AI about web code. This level teaches you to prompt AI effectively for web tasks, verify its output, and iterate when something is wrong.",
+      "moduleCount": 5
+    },
+    {
+      "level": 6,
+      "title": "The Real World",
+      "subtitle": "Patterns you will actually encounter",
+      "color": "#10b981",
+      "description": "Real web projects use frameworks, build tools, and patterns you will see but do not need to master. This level gives you enough context to navigate real-world codebases without getting lost.",
+      "moduleCount": 5
+    },
+    {
+      "level": 7,
+      "title": "The Confidence",
+      "subtitle": "Putting it all together",
+      "color": "#6366f1",
+      "description": "You are not a developer, and you do not need to be. But you can now read code, spot bugs, have informed conversations with developers and AI, and verify that things work. This level solidifies that confidence with real-world scenarios.",
+      "moduleCount": 4
+    }
+  ],
+  "modules": {
+    "root": [
+      {
+        "title": "Getting Started",
+        "description": "What this course is, who it's for, and the philosophy behind code literacy in the age of AI.",
+        "level": "root",
+        "slug": "getting-started",
+        "order": 0,
+        "isCheckpoint": false,
+        "isIndex": false
+      }
+    ],
+    "level-1": [
+      {
+        "title": "Level 1: The Page",
+        "description": "Every website starts as a structured document. Learn to see the skeleton.",
+        "level": "level-1",
+        "slug": "index",
+        "order": 0,
+        "isCheckpoint": false,
+        "isIndex": true
+      },
+      {
+        "title": "1.1 What Is a Webpage, Really?",
+        "description": "A webpage is a text file with labels. Open the hood and see for yourself.",
+        "level": "level-1",
+        "slug": "what-is-a-webpage",
+        "order": 1,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "1.2 The Anatomy of a Page",
+        "description": "Head, body, headers, footers, nav, main — the standard blueprint every website follows.",
+        "level": "level-1",
+        "slug": "anatomy-of-a-page",
+        "order": 2,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "1.3 Links, Images, and Lists",
+        "description": "The most common HTML elements you will encounter — and how to spot when they are broken.",
+        "level": "level-1",
+        "slug": "links-images-lists",
+        "order": 3,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "1.4 Checkpoint",
+        "description": "Prove you can read HTML and identify what it does — and what is wrong with it.",
+        "level": "level-1",
+        "slug": "checkpoint",
+        "order": 4,
+        "isCheckpoint": true,
+        "isIndex": false
+      }
+    ],
+    "level-2": [
+      {
+        "title": "Level 2: The Look",
+        "description": "CSS controls everything visual. Learn to read it, not write it.",
+        "level": "level-2",
+        "slug": "index",
+        "order": 0,
+        "isCheckpoint": false,
+        "isIndex": true
+      },
+      {
+        "title": "2.1 CSS Is Just Instructions",
+        "description": "Selectors pick the target. Properties describe the change. That is all CSS does.",
+        "level": "level-2",
+        "slug": "css-is-instructions",
+        "order": 1,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "2.2 The Box Model",
+        "description": "Every element on a webpage is a box. Margin, border, padding, content — the four layers.",
+        "level": "level-2",
+        "slug": "the-box-model",
+        "order": 2,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "2.3 Layout and Positioning",
+        "description": "Flexbox, grid, and why things end up where they are on the page.",
+        "level": "level-2",
+        "slug": "layout-and-positioning",
+        "order": 3,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "2.4 Reading Real CSS",
+        "description": "Media queries, hover states, transitions — decoding CSS you will actually encounter.",
+        "level": "level-2",
+        "slug": "reading-real-css",
+        "order": 4,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "2.5 Checkpoint",
+        "description": "Debug CSS problems by reading the code and identifying what went wrong.",
+        "level": "level-2",
+        "slug": "checkpoint",
+        "order": 5,
+        "isCheckpoint": true,
+        "isIndex": false
+      }
+    ],
+    "level-3": [
+      {
+        "title": "Level 3: The Behavior",
+        "description": "JavaScript makes pages respond to users. Learn to read it, not write it.",
+        "level": "level-3",
+        "slug": "index",
+        "order": 0,
+        "isCheckpoint": false,
+        "isIndex": true
+      },
+      {
+        "title": "3.1 What JavaScript Actually Does",
+        "description": "JavaScript responds to events, changes the page, and talks to servers. That is the whole job.",
+        "level": "level-3",
+        "slug": "what-js-does",
+        "order": 1,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "3.2 Events and Interaction",
+        "description": "Clicks, submits, hovers, key presses — how JavaScript knows a user did something.",
+        "level": "level-3",
+        "slug": "events-and-interaction",
+        "order": 2,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "3.3 The Console Is Your Friend",
+        "description": "The browser console shows you errors, lets you inspect values, and is the single best debugging tool.",
+        "level": "level-3",
+        "slug": "the-console-is-your-friend",
+        "order": 3,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "3.4 Reading Real JavaScript",
+        "description": "Walk through actual JavaScript — form validation, API calls, dynamic content.",
+        "level": "level-3",
+        "slug": "reading-real-javascript",
+        "order": 4,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "3.5 Checkpoint",
+        "description": "Read JavaScript code, explain what it does, and find the bugs.",
+        "level": "level-3",
+        "slug": "checkpoint",
+        "order": 5,
+        "isCheckpoint": true,
+        "isIndex": false
+      }
+    ],
+    "level-4": [
+      {
+        "title": "Level 4: The Full Picture",
+        "description": "HTML, CSS, and JS work together. Learn to trace interactions across all three.",
+        "level": "level-4",
+        "slug": "index",
+        "order": 0,
+        "isCheckpoint": false,
+        "isIndex": true
+      },
+      {
+        "title": "4.1 The Three Layers",
+        "description": "HTML is structure, CSS is presentation, JS is behavior. They connect through selectors and the DOM.",
+        "level": "level-4",
+        "slug": "the-three-layers",
+        "order": 1,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "4.2 DevTools for Non-Developers",
+        "description": "The browser inspector is the most powerful tool you already have. Learn the three panels that matter.",
+        "level": "level-4",
+        "slug": "devtools-for-non-developers",
+        "order": 2,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "4.3 Tracing a Bug",
+        "description": "A structured approach to figuring out why something is broken on a webpage.",
+        "level": "level-4",
+        "slug": "tracing-a-bug",
+        "order": 3,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "4.4 Checkpoint",
+        "description": "Given a broken webpage, diagnose and explain multiple issues across HTML, CSS, and JavaScript.",
+        "level": "level-4",
+        "slug": "checkpoint",
+        "order": 4,
+        "isCheckpoint": true,
+        "isIndex": false
+      }
+    ],
+    "level-5": [
+      {
+        "title": "Level 5: The Conversation",
+        "description": "Use your code literacy to collaborate effectively with AI on web code.",
+        "level": "level-5",
+        "slug": "index",
+        "order": 0,
+        "isCheckpoint": false,
+        "isIndex": true
+      },
+      {
+        "title": "5.1 Prompting for Web Code",
+        "description": "How to describe what you want in terms AI can act on — using the vocabulary you now have.",
+        "level": "level-5",
+        "slug": "prompting-for-web-code",
+        "order": 1,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "5.2 Verifying AI Output",
+        "description": "AI-generated code looks confident. Here is how to check if it actually works.",
+        "level": "level-5",
+        "slug": "verifying-ai-output",
+        "order": 2,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "5.3 Iterating and Fixing",
+        "description": "When AI output is not right, how to describe the problem precisely enough to get a fix.",
+        "level": "level-5",
+        "slug": "iterating-and-fixing",
+        "order": 3,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "5.4 Checkpoint",
+        "description": "Review AI-generated code for a landing page, identify issues, and write prompts to fix them.",
+        "level": "level-5",
+        "slug": "checkpoint",
+        "order": 4,
+        "isCheckpoint": true,
+        "isIndex": false
+      }
+    ],
+    "level-6": [
+      {
+        "title": "Level 6: The Real World",
+        "description": "Real projects use frameworks and build tools. Learn to recognize them, not master them.",
+        "level": "level-6",
+        "slug": "index",
+        "order": 0,
+        "isCheckpoint": false,
+        "isIndex": true
+      },
+      {
+        "title": "6.1 Frameworks and Components",
+        "description": "React, Vue, Next.js — what they are, why they exist, and what their code looks like.",
+        "level": "level-6",
+        "slug": "frameworks-and-components",
+        "order": 1,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "6.2 Reading a Project",
+        "description": "Folder structures, package.json, config files — navigating a real web project without getting lost.",
+        "level": "level-6",
+        "slug": "reading-a-project",
+        "order": 2,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "6.3 Common Patterns You'll See",
+        "description": "APIs, environment variables, responsive design, forms — recurring patterns in every web project.",
+        "level": "level-6",
+        "slug": "common-patterns",
+        "order": 3,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "6.4 Checkpoint",
+        "description": "Navigate a realistic project structure, identify what files to change, and communicate with AI about a real codebase.",
+        "level": "level-6",
+        "slug": "checkpoint",
+        "order": 4,
+        "isCheckpoint": true,
+        "isIndex": false
+      }
+    ],
+    "level-7": [
+      {
+        "title": "Level 7: The Confidence",
+        "description": "Solidify your code literacy with real-world scenarios and a comprehensive capstone.",
+        "level": "level-7",
+        "slug": "index",
+        "order": 0,
+        "isCheckpoint": false,
+        "isIndex": true
+      },
+      {
+        "title": "7.1 The Literacy Mindset",
+        "description": "You do not need to memorize syntax. You need to know what questions to ask.",
+        "level": "level-7",
+        "slug": "the-literacy-mindset",
+        "order": 1,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "7.2 Real Scenarios",
+        "description": "Eight realistic situations where code literacy makes you more effective at your actual job.",
+        "level": "level-7",
+        "slug": "real-scenarios",
+        "order": 2,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "7.3 Final Capstone",
+        "description": "A comprehensive exercise covering HTML reading, CSS debugging, JS troubleshooting, and AI collaboration.",
+        "level": "level-7",
+        "slug": "final-capstone",
+        "order": 3,
+        "isCheckpoint": true,
+        "isIndex": false
+      }
+    ]
+  }
+}

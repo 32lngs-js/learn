@@ -38,5 +38,31 @@
       "type": "connectPrompt",
       "prompt": "You have completed your first real collaboration with Claude Code. The checkpoint in 1.6 will test whether the mental models from this level have landed. After that, Level 2 teaches the single most impactful skill: how to write briefings that get the right result on the first try."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What three things should you observe while Claude works on a task?",
+      "options": [
+        "Speed, cost, and model name",
+        "The gather phase, act phase, and verify phase",
+        "Font size, colors, and layout"
+      ],
+      "correctIndex": 1,
+      "explanation": "You should watch for the gather phase (reading files), act phase (making changes), and verify phase (checking work).",
+      "encourageCorrect": "Great recall! Watching the loop phases helps you understand Claude's process.",
+      "encourageIncorrect": "The three things to observe are the gather phase (reading), act phase (editing), and verify phase (checking) of the agentic loop."
+    },
+    {
+      "question": "What is the best way to learn Claude Code according to this lesson?",
+      "options": [
+        "Read the documentation thoroughly",
+        "Use it on real tasks and observe the loop",
+        "Watch tutorial videos"
+      ],
+      "correctIndex": 1,
+      "explanation": "The best way to learn is by using Claude Code on real tasks, observing the loop, and noting what you'd do differently next time.",
+      "encourageCorrect": "Absolutely! Hands-on experience is the best teacher.",
+      "encourageIncorrect": "The lesson emphasizes learning by doing — use Claude on real tasks, observe the loop, and reflect on what you'd do differently."
+    }
   ]
 }

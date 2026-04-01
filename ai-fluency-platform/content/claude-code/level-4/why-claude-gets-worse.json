@@ -47,5 +47,31 @@
       "type": "connectPrompt",
       "prompt": "Now you know why Claude gets worse. The next module explains exactly what fills up the context window — so you can start making informed decisions about what is worth the cost and what is waste."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "How does Claude's quality degrade as context fills up?",
+      "options": [
+        "It gradually gets a little worse",
+        "It falls off a cliff around 80-90% context usage",
+        "It stays the same until it stops completely"
+      ],
+      "correctIndex": 1,
+      "explanation": "Quality stays consistent up to about 80%, then drops dramatically — it's a cliff, not a slope.",
+      "encourageCorrect": "Right! It's a cliff, which is why monitoring context is so important.",
+      "encourageIncorrect": "Quality doesn't degrade gradually — it falls off a cliff around 80-90% context usage. This is why checking /context matters."
+    },
+    {
+      "question": "When Claude seems to 'get dumber' during a long session, what is the most likely cause?",
+      "options": [
+        "Claude's servers are overloaded",
+        "The context window is full",
+        "You're asking harder questions"
+      ],
+      "correctIndex": 1,
+      "explanation": "When quality drops, the desk is full, not the brain. It's almost always a context management issue.",
+      "encourageCorrect": "That's the key insight — it's a context problem, not a Claude problem.",
+      "encourageIncorrect": "When Claude seems to get worse, the most likely cause is a full context window — the desk is full, not the brain."
+    }
   ]
 }

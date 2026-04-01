@@ -118,5 +118,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Private Capital: Equity and Debt**, where you will apply these performance measures to specific strategies like leveraged buyouts, venture capital, and mezzanine lending \u2014 and see how deal structure affects the IRR and MOIC you just learned to calculate."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Survivorship bias in hedge fund databases means:",
+      "options": [
+        "Only the oldest funds are included",
+        "Failed funds are removed, making average reported returns look better than reality",
+        "All funds are accurately represented"
+      ],
+      "correctIndex": 1,
+      "explanation": "When poorly performing funds close and are removed from databases, the remaining funds show inflated average returns.",
+      "encourageCorrect": "Exactly! Removing losers makes the survivors look artificially good.",
+      "encourageIncorrect": "Survivorship bias occurs when failed funds drop out of databases. The remaining funds show higher average returns than the full universe actually experienced."
+    },
+    {
+      "question": "Why is the Sharpe ratio potentially misleading for alternative investments?",
+      "options": [
+        "It's too complicated to calculate",
+        "Smoothed returns understate volatility, inflating the Sharpe ratio",
+        "It only works for stocks"
+      ],
+      "correctIndex": 1,
+      "explanation": "Alternatives often have smoothed (appraisal-based) returns that understate true risk. Lower measured volatility artificially inflates the Sharpe ratio.",
+      "encourageCorrect": "Right! Smooth returns give a false sense of low risk.",
+      "encourageIncorrect": "The Sharpe ratio can be misleading for alternatives because smoothed/appraisal-based returns understate volatility, making risk-adjusted performance look better than it is."
+    }
   ]
 }

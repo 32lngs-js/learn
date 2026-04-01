@@ -99,5 +99,31 @@
       "type": "connectPrompt",
       "prompt": "Next we explore **Behavioral Finance** in asset allocation \u2014 how cognitive biases systematically distort investment decisions and how behavioral insights can improve portfolio construction and client communication."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Rebalancing a portfolio involves trade-offs between:",
+      "options": [
+        "Risk and return only",
+        "Transaction costs, tax consequences, and maintaining the target allocation",
+        "Manager selection and benchmark choice"
+      ],
+      "correctIndex": 1,
+      "explanation": "Rebalancing returns the portfolio to target weights but incurs trading costs and may trigger taxable gains. The optimal approach balances these costs against tracking risk.",
+      "encourageCorrect": "That's the practical reality! Rebalancing has real costs beyond just portfolio math.",
+      "encourageIncorrect": "Rebalancing involves balancing transaction costs and taxes against the benefit of staying close to your target allocation."
+    },
+    {
+      "question": "A liquidity constraint in asset allocation means:",
+      "options": [
+        "The portfolio must earn a minimum return",
+        "A portion of assets must be easily convertible to cash to meet near-term needs",
+        "All assets must be publicly traded"
+      ],
+      "correctIndex": 1,
+      "explanation": "Liquidity constraints require keeping enough liquid assets to meet expected cash outflows (spending, margin calls, etc.) without forced selling at bad prices.",
+      "encourageCorrect": "Right! You must keep enough liquid assets to meet near-term cash needs.",
+      "encourageIncorrect": "Liquidity constraints mean maintaining enough easily-accessible assets to meet near-term cash needs without being forced to sell illiquid holdings."
+    }
   ]
 }

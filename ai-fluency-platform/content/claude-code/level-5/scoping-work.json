@@ -43,5 +43,31 @@
       "type": "connectPrompt",
       "prompt": "Now that you understand the four-phase workflow and scoping, the next three modules apply these concepts to specific workflows: research, writing, and data work. Each one shows how the explore-plan-implement-verify pattern adapts to different kinds of knowledge work."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "How should you break down large tasks?",
+      "options": [
+        "By individual steps",
+        "By milestones — meaningful intermediate results",
+        "By file type"
+      ],
+      "correctIndex": 1,
+      "explanation": "Chunk by milestone (meaningful results), not by step (individual actions). Each milestone should fit in one session.",
+      "encourageCorrect": "That's the key! Milestones give you natural checkpoints.",
+      "encourageIncorrect": "Break work into milestones — meaningful intermediate results — not steps. Each milestone is a session-sized piece with a tangible output."
+    },
+    {
+      "question": "What is a warning sign that a task is too big for one session?",
+      "options": [
+        "It takes more than 5 minutes",
+        "It uses 'do everything' language or involves 10+ files",
+        "It requires reading any files"
+      ],
+      "correctIndex": 1,
+      "explanation": "Warning signs include 'do everything' language, multiple outputs, 10+ files involved, or estimated output over 2,000 words.",
+      "encourageCorrect": "Good eye! Those are clear signals to decompose the task.",
+      "encourageIncorrect": "Signs a task is too big: 'do everything' language, multiple distinct outputs, more than 10 files, or expected output over 2,000 words."
+    }
   ]
 }

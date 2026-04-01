@@ -104,5 +104,31 @@
       "type": "connectPrompt",
       "prompt": "With return expectations in hand, the next module covers **Overview of Asset Allocation** \u2014 how to translate these CMEs into actual portfolio allocations using asset-only, liability-relative, and goals-based frameworks."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "The building block approach to equity return forecasting starts with:",
+      "options": [
+        "A top-down GDP forecast only",
+        "The risk-free rate, then adds equity risk premium and other adjustments",
+        "Technical chart patterns"
+      ],
+      "correctIndex": 1,
+      "explanation": "Building blocks: Expected return = Risk-free rate + Equity risk premium + Other premiums (size, value, etc.).",
+      "encourageCorrect": "That's the building block method! Stack up the components from the risk-free rate.",
+      "encourageIncorrect": "The building block approach: start with the risk-free rate, add the equity risk premium, then any additional premiums for size, value, or other factors."
+    },
+    {
+      "question": "The Singer-Terhaar model adjusts expected returns for:",
+      "options": [
+        "Only inflation",
+        "The degree of market segmentation versus full integration",
+        "Historical average returns"
+      ],
+      "correctIndex": 1,
+      "explanation": "Singer-Terhaar blends fully integrated and fully segmented risk premiums, recognizing that most markets are partially integrated.",
+      "encourageCorrect": "Exactly! It accounts for the reality that markets are neither fully integrated nor fully segmented.",
+      "encourageIncorrect": "Singer-Terhaar adjusts risk premiums based on how integrated a market is globally. Fully segmented markets require higher premiums than integrated ones."
+    }
   ]
 }

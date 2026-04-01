@@ -1,0 +1,110 @@
+{
+  "meta": {
+    "title": "6.3 Common Patterns You'll See",
+    "description": "Recognize environment variables, API calls, responsive design, form handling, and authentication patterns in real codebases.",
+    "level": "level-6",
+    "slug": "common-patterns",
+    "order": 3,
+    "isCheckpoint": false,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "predictPrompt",
+      "prompt": "Real web applications do more than display text \u2014 they fetch data from servers, look different on phones versus desktops, collect information through forms, and require users to log in. What do you think these features look like in the code? Do you think you would recognize them if you saw them?"
+    },
+    {
+      "type": "markdown",
+      "content": "## Five patterns you will see everywhere\n\nOnce you can navigate a project and read components, you will start noticing certain patterns that appear in almost every real codebase. You do not need to write any of these \u2014 but recognizing them will help you follow conversations with developers and understand what code is doing.\n\n## 1. Environment variables (.env files)\n\nApplications need different settings in different places. Your local machine, the staging server, and the production server all need different database URLs, API keys, and feature flags.\n\nThese settings live in **`.env` files** (short for \"environment\"):\n\n```\n# .env\nAPI_URL=https://api.example.com\nAPI_KEY=sk-abc123secret\nFEATURE_NEW_DASHBOARD=true\n```\n\nIn the code, they are accessed like this:\n\n```javascript\nfetch(process.env.API_URL + '/users')\n```\n\nThe key things to know:\n\n- `.env` files store **secrets and configuration** that change per environment\n- `process.env.SOMETHING` means \"get this value from the environment\" \u2014 the actual value is not in the code\n- `.env` files are **never** committed to Git (they contain secrets). You will see `.env.example` with placeholder values instead\n- When a developer says \"check the env vars,\" they mean check what values are set in the `.env` file for that environment\n\n## 2. API calls (fetching data)\n\nMost web apps display data that lives on a server somewhere. They get it using **API calls** \u2014 requests to a server that return data, usually in JSON format:\n\n```javascript\nconst response = await fetch('https://api.example.com/products');\nconst products = await response.json();\n```\n\nWhen you see `fetch(...)` or `axios.get(...)` in code, the app is asking a server for data. The URL tells you what data it is asking for. The `.json()` part converts the response into a format JavaScript can work with.\n\nYou do not need to understand `await` or `async`. Just recognize that `fetch` means \"go get data from somewhere else.\"\n\n## 3. Responsive design (mobile-first)\n\nReal websites need to work on phones, tablets, and desktops. This is handled through **responsive design** using CSS **media queries** \u2014 rules that only apply at certain screen sizes:\n\n```css\n/* Default styles (mobile) */\n.sidebar {\n  display: none;\n}\n\n/* Tablet and up */\n@media (min-width: 768px) {\n  .sidebar {\n    display: block;\n  }\n}\n\n/* Desktop */\n@media (min-width: 1024px) {\n  .sidebar {\n    width: 300px;\n  }\n}\n```\n\nThe pattern is called **mobile-first**: the default styles are for phones, and `@media` rules add complexity for larger screens. The pixel values (768px, 1024px) are called **breakpoints** \u2014 the screen widths where the layout changes.\n\nWhen someone says \"it looks broken on mobile,\" the issue is usually in the default styles or a missing/wrong breakpoint.\n\n## 4. Form handling (collect, validate, submit)\n\nForms follow a three-step pattern in every framework:\n\n1. **Collect** \u2014 Track what the user types (usually stored in component state)\n2. **Validate** \u2014 Check the input before submitting (is the email valid? is the field empty?)\n3. **Submit** \u2014 Send the data to a server via an API call\n\n```jsx\nfunction ContactForm() {\n  const [email, setEmail] = useState('');\n  \n  const handleSubmit = (e) => {\n    e.preventDefault();\n    if (!email.includes('@')) {\n      alert('Please enter a valid email');\n      return;\n    }\n    fetch('/api/contact', {\n      method: 'POST',\n      body: JSON.stringify({ email })\n    });\n  };\n  \n  return (\n    <form onSubmit={handleSubmit}>\n      <input value={email} onChange={e => setEmail(e.target.value)} />\n      <button type=\"submit\">Send</button>\n    </form>\n  );\n}\n```\n\nYou do not need to understand `useState` or `preventDefault`. The pattern is: input field collects data, a function validates it, and `fetch` sends it to the server.\n\n## 5. Authentication patterns (login, tokens, protected routes)\n\nMost apps have pages that require you to be logged in. The pattern works like this:\n\n1. User enters credentials on a **login page**\n2. Server validates them and returns a **token** (a long string that proves you are logged in)\n3. The token is stored in the browser (usually in localStorage or a cookie)\n4. **Protected routes** check for the token before showing the page \u2014 if no token, redirect to login\n\nIn code, you will see patterns like:\n\n```jsx\n// Protecting a route\n{isAuthenticated ? <Dashboard /> : <LoginPage />}\n```\n\nThis means: if the user is authenticated, show the Dashboard. Otherwise, show the login page. The `?` and `:` are a shorthand if/else in JavaScript called a ternary operator.\n\nWhen someone says \"the auth is broken,\" they mean one of these steps is failing \u2014 the login, the token storage, or the route protection."
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "On a scale of 1-5, how confident are you that you could recognize an environment variable, an API call, or a responsive breakpoint if you saw one in code?",
+      "answer": "If you rated yourself 3 or higher, great. The key signatures are: process.env.SOMETHING means environment variable, fetch(...) means API call, and @media (min-width: ...) means responsive breakpoint. You do not need to understand the mechanics \u2014 just recognize the pattern."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Common Patterns",
+      "problems": [
+        {
+          "id": "wf6-7",
+          "question": "You see this line in a codebase:\n\n```javascript\nconst apiKey = process.env.API_KEY;\n```\n\nWhat does `process.env.API_KEY` mean?",
+          "options": [
+            "A) It creates a new API key and saves it to a file",
+            "B) It reads the value of API_KEY from the environment variables \u2014 the actual secret is not in the code",
+            "C) It sends the API key to the server for validation"
+          ],
+          "correctAnswer": "B",
+          "explanation": "process.env reads values from environment variables, which are set in .env files or on the server. The actual key value is never written directly in the code \u2014 this keeps secrets out of the codebase. If you need to know what the value is, check the .env file for that environment.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "wf6-8",
+          "question": "An AI assistant generated a form that collects a user's email but has no validation \u2014 it submits whatever the user types, even if the field is blank. What should you ask the AI to add?",
+          "options": [
+            "A) A media query to make the form responsive on mobile",
+            "B) Validation that checks the input before submitting \u2014 for example, ensuring the email field is not empty and contains an @ symbol",
+            "C) An environment variable to store the email address"
+          ],
+          "correctAnswer": "B",
+          "explanation": "Forms follow a collect-validate-submit pattern. If there is no validation step, the form will happily send empty or invalid data to the server. Asking the AI to add validation (check for empty fields, check email format) is the right fix. Media queries handle layout, not form logic, and environment variables store config \u2014 not user input.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "wf6-9",
+          "question": "The app works fine on the staging server but shows errors on the production server. A developer says \"check the env vars.\" What are they talking about?",
+          "options": [
+            "A) The CSS variables that control the color theme",
+            "B) The environment variables \u2014 the .env file on production might be missing values or have wrong URLs compared to staging",
+            "C) The JavaScript variables declared with var, let, or const in the source code"
+          ],
+          "correctAnswer": "B",
+          "explanation": "\"Env vars\" is short for environment variables \u2014 the settings stored in .env files that differ between staging and production. If the app works in staging but not production, a common cause is that the production .env file is missing a required value (like a database URL) or has an incorrect one. CSS variables and JavaScript variables are something different entirely.",
+          "difficulty": "intermediate"
+        }
+      ]
+    },
+    {
+      "type": "reflectPrompt",
+      "questions": [
+        "Which of the five patterns (env vars, API calls, responsive design, forms, auth) do you think you would encounter most often in your work?",
+        "Have you ever experienced a situation where a website worked on desktop but looked broken on your phone? Now that you know about breakpoints, what do you think might have caused it?",
+        "If a developer told you 'the API is down,' what do you now understand that to mean in terms of what the user would experience?"
+      ]
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "Five patterns appear in nearly every real codebase: environment variables (settings that change per environment), API calls (fetching data from servers with fetch), responsive design (CSS breakpoints for different screen sizes), form handling (collect, validate, submit), and authentication (login, tokens, protected routes). You do not need to write any of these \u2014 just recognize the pattern when you see it."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "You can now navigate a project, read components, and recognize the most common patterns in real code. Time to put it all together. The checkpoint will give you a realistic project and a bug report \u2014 your job is to trace the problem to the right file."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "An environment variable (like process.env.API_KEY) is used to:",
+      "options": [
+        "Style HTML elements",
+        "Store configuration settings that change between environments (development vs production)",
+        "Create new HTML pages"
+      ],
+      "correctIndex": 1,
+      "explanation": "Environment variables hold settings (API keys, database URLs) that differ between development, staging, and production. They keep sensitive data out of code.",
+      "encourageCorrect": "Exactly! Environment variables separate configuration from code.",
+      "encourageIncorrect": "Environment variables store settings that change per environment (like API keys). They keep sensitive configuration out of the codebase."
+    },
+    {
+      "question": "A responsive breakpoint in CSS is:",
+      "options": [
+        "A point where the CSS file stops loading",
+        "A screen width at which the layout changes to fit different devices",
+        "A JavaScript error condition"
+      ],
+      "correctIndex": 1,
+      "explanation": "Breakpoints (set via @media queries) define screen widths where the layout adapts \u2014 e.g., switching from a multi-column to single-column layout on smaller screens.",
+      "encourageCorrect": "Right! Breakpoints define where the design adapts to different screen sizes.",
+      "encourageIncorrect": "A responsive breakpoint is a screen width (like 768px) where the CSS layout changes to better fit the device, defined using @media queries."
+    }
+  ]
+}

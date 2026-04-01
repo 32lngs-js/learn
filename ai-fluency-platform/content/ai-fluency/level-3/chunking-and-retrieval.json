@@ -55,5 +55,31 @@
       "type": "connectPrompt",
       "prompt": "Good retrieval gets relevant information to the model. But even with perfect retrieval, the model can still misinterpret, over-generalize, or fabricate. Module 3.5 covers grounding techniques that push the model toward accurate, verifiable responses."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What happens if you make document chunks too small in a RAG system?",
+      "options": [
+        "They load faster but lack important context",
+        "They are more accurate",
+        "They use more storage space"
+      ],
+      "correctIndex": 0,
+      "explanation": "Chunks that are too small may lack the surrounding context needed to make the information meaningful or useful to the model.",
+      "encourageCorrect": "That's right! There's a balance -- too small means lost context, too large means diluted relevance.",
+      "encourageIncorrect": "Small chunks lack context -- a sentence fragment might not carry enough meaning on its own. The key is finding the right chunk size for your content."
+    },
+    {
+      "question": "Why is combining semantic search and keyword search recommended for retrieval?",
+      "options": [
+        "It's faster than either alone",
+        "Semantic search catches meaning while keyword search catches exact terms -- together they're more comprehensive",
+        "It reduces storage costs"
+      ],
+      "correctIndex": 1,
+      "explanation": "Hybrid search combines the strengths of both: semantic search finds conceptually relevant chunks while keyword search catches exact terms and names.",
+      "encourageCorrect": "Exactly! Hybrid search gives you the best of both worlds -- meaning and precision.",
+      "encourageIncorrect": "Hybrid search is recommended because semantic search finds related concepts while keyword search catches exact terms -- together they provide more comprehensive retrieval."
+    }
   ]
 }

@@ -59,5 +59,31 @@
       "type": "keyTakeaway",
       "content": "The ethics of AI-generated content cannot be solved with technology alone. It requires a combination of technical standards (provenance, watermarking), legal frameworks (copyright reform, disclosure requirements), industry norms (responsible use policies), and individual critical thinking. AI practitioners bear a special responsibility because they understand both the capabilities and the limitations of these systems."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Why is deepfake detection fundamentally harder than deepfake creation?",
+      "options": [
+        "Because detectors need more data",
+        "Because creators only need to make something look right, while detectors must find what's wrong -- and perfect generation is achievable while perfect detection is not",
+        "Because detection requires more compute"
+      ],
+      "correctIndex": 1,
+      "explanation": "There's a structural asymmetry: generators improve with every iteration while detectors must constantly find new discriminating features. Perfect generation is theoretically possible; perfect detection is not.",
+      "encourageCorrect": "Great insight! This asymmetry is why provenance (proving content IS authentic) may be more promising than detection.",
+      "encourageIncorrect": "Detection is harder because creation only needs to look right, while detection must find flaws. As models improve, artifacts disappear -- making detection an arms race that favors the creator."
+    },
+    {
+      "question": "Why might provenance approaches be more promising than detection approaches for combating deepfakes?",
+      "options": [
+        "Because provenance is cheaper",
+        "Because proving content IS authentic is more tractable than proving content IS NOT authentic",
+        "Because provenance works offline"
+      ],
+      "correctIndex": 1,
+      "explanation": "Detection faces an asymmetric arms race. Provenance sidesteps this by proving authenticity of real content rather than trying to identify fakes.",
+      "encourageCorrect": "That's right! Provenance flips the problem from detecting fakes to proving authenticity.",
+      "encourageIncorrect": "Provenance is more promising because proving something IS authentic is more tractable than proving something IS NOT authentic -- it sidesteps the detection arms race entirely."
+    }
   ]
 }

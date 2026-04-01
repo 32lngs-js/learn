@@ -43,5 +43,31 @@
       "type": "connectPrompt",
       "prompt": "You now have the core briefing techniques: define done, be specific, give something to verify, and use the interview pattern for ambiguity. The next module covers the practical mechanics of getting information into Claude — file references, image paste, piping data, and more."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "When should you use the interview pattern?",
+      "options": [
+        "When you know exactly what you want",
+        "When the task is ambiguous and you can't write a clear briefing",
+        "When you want Claude to work faster"
+      ],
+      "correctIndex": 1,
+      "explanation": "The interview pattern is for ambiguous tasks where you can't articulate clear requirements upfront.",
+      "encourageCorrect": "Right! The interview pattern shines when you have a feeling but not a specification.",
+      "encourageIncorrect": "Use the interview pattern when the task is ambiguous — tell Claude to ask you questions before starting work."
+    },
+    {
+      "question": "What is the basic form of the interview pattern?",
+      "options": [
+        "Write a long detailed prompt",
+        "Tell Claude to interview you before starting work",
+        "Ask Claude to generate options"
+      ],
+      "correctIndex": 1,
+      "explanation": "Tell Claude to interview you first — it asks clarifying questions that surface assumptions and uncover requirements you hadn't considered.",
+      "encourageCorrect": "That's it! Let Claude interview you to build a shared understanding.",
+      "encourageIncorrect": "The basic form is telling Claude to interview you before starting — 'Ask me questions one at a time until you have enough information.'"
+    }
   ]
 }

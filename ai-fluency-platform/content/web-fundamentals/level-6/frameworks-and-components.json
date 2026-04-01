@@ -1,0 +1,106 @@
+{
+  "meta": {
+    "title": "6.1 Frameworks and Components",
+    "description": "Recognize component-based architecture, JSX, and framework syntax \u2014 without needing to learn any framework yourself.",
+    "level": "level-6",
+    "slug": "frameworks-and-components",
+    "order": 1,
+    "isCheckpoint": false,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "predictPrompt",
+      "prompt": "You have been reading plain HTML so far. But if you open a real project at a company, the code often looks like HTML mixed with JavaScript \u2014 curly braces inside tags, function names where you expect filenames. Why do you think real projects look so different from the HTML you have learned?"
+    },
+    {
+      "type": "markdown",
+      "content": "## Why real code looks different\n\nIn a small website, you might have one big HTML file with everything on it. But real applications have dozens or hundreds of pages, and many of those pages share the same pieces \u2014 the same navigation bar, the same footer, the same button style.\n\nCopy-pasting that navigation bar into every HTML file is a maintenance nightmare. Change one link, and you have to update it in 47 places.\n\n**Frameworks** solve this by letting developers build pages out of **reusable pieces** called **components**. A component is like a custom HTML tag that you define once and use everywhere.\n\n## Components: pages built from pieces\n\nImagine you are building a page with a header, a product card, and a footer. In a framework, each of those is a separate component:\n\n```\nPage\n\u251c\u2500\u2500 Header        (used on every page)\n\u251c\u2500\u2500 ProductCard   (used on product pages)\n\u2514\u2500\u2500 Footer        (used on every page)\n```\n\nEach component is its own file. The `Header` component might live in `Header.jsx` or `Header.vue`. It contains the HTML, styling, and behavior for just that one piece.\n\nThis is **component-based architecture**: instead of one giant HTML file, the page is assembled from small, focused pieces.\n\n## JSX: HTML inside JavaScript (React)\n\nThe most popular framework is **React**, and it uses a syntax called **JSX**. JSX looks almost like HTML, but it lives inside a JavaScript file. Here is a simple React component:\n\n```jsx\nfunction WelcomeBanner({ userName }) {\n  return (\n    <div className=\"banner\">\n      <h1>Welcome back, {userName}!</h1>\n      <p>Here is what is new today.</p>\n    </div>\n  );\n}\n\nexport default WelcomeBanner;\n```\n\nLet's break down the differences from plain HTML:\n\n| What you see | What it means |\n| :-- | :-- |\n| `function WelcomeBanner` | This is a component \u2014 a reusable piece of UI |\n| `({ userName })` | **Props** \u2014 data passed into the component from the outside (like function arguments) |\n| `className` instead of `class` | React uses `className` because `class` is a reserved word in JavaScript |\n| `{userName}` in curly braces | Curly braces mean \"insert this JavaScript value here\" |\n| `export default` | Makes this component available for other files to use |\n\n**You do NOT need to learn React. You need to recognize it.** When you see `className`, curly braces inside HTML-like code, and `export default` \u2014 you are looking at React.\n\n## How to read a component\n\nEvery component follows the same basic pattern: **props in, HTML out**.\n\n1. **Props come in** at the top (the data the component needs)\n2. **HTML comes out** from the `return` statement (what the user sees)\n\nIf a designer asks you to change the heading text in the welcome banner, you look at the `return` section and find the `<h1>` tag. The logic at the top is plumbing \u2014 the return statement is the visible result.\n\n## Recognizing other frameworks\n\nReact is not the only framework. Here is how to spot the big three:\n\n**React** \u2014 Files end in `.jsx` or `.tsx`. Uses `className`, curly braces for dynamic values, `export default`.\n```jsx\n<h1 className=\"title\">{pageTitle}</h1>\n```\n\n**Vue** \u2014 Files end in `.vue`. Has a `<template>` section for HTML, `<script>` for logic, `<style>` for CSS, all in one file. Uses double curly braces `{{ }}` for dynamic values.\n```vue\n<template>\n  <h1 class=\"title\">{{ pageTitle }}</h1>\n</template>\n```\n\n**Angular** \u2014 Files end in `.component.ts` with a separate `.component.html` template. Uses double curly braces and special attributes starting with `*ng` or `[brackets]`.\n```html\n<h1 class=\"title\">{{ pageTitle }}</h1>\n<div *ngIf=\"showBanner\">Welcome!</div>\n```\n\nYou do not need to memorize these. The point is: when you see code that looks like HTML-but-not-quite, you are looking at a framework component. Check the file extension to figure out which one."
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "On a scale of 1-5, how confident are you that you could look at a code file and determine whether it is plain HTML or a React component?",
+      "answer": "If you rated yourself 3 or higher, good. The key giveaways for React are: className instead of class, curly braces for dynamic values inside the markup, the file ends in .jsx or .tsx, and there is an export default at the bottom. If you see those, it is React \u2014 not plain HTML."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Frameworks and Components",
+      "problems": [
+        {
+          "id": "wf6-1",
+          "question": "Look at this code. Is it plain HTML or React? How can you tell?\n\n```\nfunction Navbar() {\n  return (\n    <nav className=\"main-nav\">\n      <a href=\"/\">Home</a>\n      <a href=\"/about\">About</a>\n    </nav>\n  );\n}\nexport default Navbar;\n```",
+          "options": [
+            "A) React \u2014 it uses className, is wrapped in a function, and has export default",
+            "B) Plain HTML \u2014 it uses standard tags like <nav> and <a>",
+            "C) Vue \u2014 it uses a template structure with double curly braces"
+          ],
+          "correctAnswer": "A",
+          "explanation": "Even though the tags inside look like normal HTML, the giveaways are: it is wrapped in a JavaScript function, it uses className instead of class, and it ends with export default. Those are all React signatures.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "wf6-2",
+          "question": "What does this React component render on screen?\n\n```jsx\nfunction Greeting({ name }) {\n  return (\n    <div className=\"greeting\">\n      <h2>Hello, {name}!</h2>\n      <p>Welcome to the dashboard.</p>\n    </div>\n  );\n}\n```",
+          "options": [
+            "A) A heading that says \"Hello, {name}!\" literally, with the curly braces visible",
+            "B) A heading that says \"Hello,\" followed by whatever name was passed in, plus a welcome paragraph",
+            "C) Nothing \u2014 the function is never called so it does not render"
+          ],
+          "correctAnswer": "B",
+          "explanation": "In React, curly braces mean \"insert this JavaScript value.\" So {name} gets replaced with whatever name is passed into the component as a prop. If someone uses <Greeting name=\"Alex\" />, the heading would read \"Hello, Alex!\" The curly braces themselves do not appear on screen.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "wf6-3",
+          "question": "A designer asks you to change the header text from \"Dashboard\" to \"My Dashboard\" in a React project. Where do you look?\n\n```jsx\nfunction Header({ user, notifications }) {\n  const unread = notifications.filter(n => !n.read);\n  \n  return (\n    <header className=\"app-header\">\n      <h1>Dashboard</h1>\n      <span>{user.name}</span>\n      <span>{unread.length} new</span>\n    </header>\n  );\n}\n```",
+          "options": [
+            "A) Change the filter logic on line 2 \u2014 that controls what text appears",
+            "B) Change the text inside the <h1> tag in the return section \u2014 that is the visible output",
+            "C) Change the className from \"app-header\" to \"my-app-header\""
+          ],
+          "correctAnswer": "B",
+          "explanation": "The return section is what the user sees. The logic above it (filtering notifications) is plumbing. To change visible text, look at the HTML-like code in the return statement. The <h1> tag contains \"Dashboard\" \u2014 change it there.",
+          "difficulty": "intermediate"
+        }
+      ]
+    },
+    {
+      "type": "explainBack",
+      "prompt": "Explain what a component is and why frameworks use them instead of putting everything in one big HTML file. Use your own words \u2014 you do not need to be technical."
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "Real projects use frameworks like React, Vue, or Angular to build pages from reusable components. A component is a self-contained piece of UI \u2014 props go in, HTML comes out. You do not need to learn these frameworks. You need to recognize them: className and curly braces mean React, .vue files with <template> mean Vue, and *ngIf means Angular. When making content changes, look at the return statement \u2014 that is where the visible output lives."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "Now you can recognize framework code when you see it. But a real project has hundreds of files \u2014 components, config, dependencies, and more. How do you find the right file? Module 6.2 will show you how to read a project's folder structure and zero in on what matters."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "A React component can be recognized by:",
+      "options": [
+        "File extension .vue and <template> tags",
+        "Using className instead of class, curly braces for dynamic values, and JSX syntax",
+        "Only using plain HTML tags"
+      ],
+      "correctIndex": 1,
+      "explanation": "React uses className (not class), curly braces {} for dynamic values, and JSX (HTML-like syntax inside JavaScript). Vue uses .vue files with <template> sections.",
+      "encourageCorrect": "Those are the React tells! className, curly braces, and JSX.",
+      "encourageIncorrect": "React components use className (not class), curly braces {} for dynamic content, and JSX syntax. These are the telltale signs."
+    },
+    {
+      "question": "In web development, a component is:",
+      "options": [
+        "A complete standalone website",
+        "A reusable, self-contained piece of UI \u2014 props go in, HTML comes out",
+        "A type of database"
+      ],
+      "correctIndex": 1,
+      "explanation": "Components are reusable UI building blocks. They accept inputs (props) and return HTML. Pages are built by combining many small components.",
+      "encourageCorrect": "That's it! Components are reusable UI pieces that take props and return HTML.",
+      "encourageIncorrect": "A component is a reusable piece of UI. Props (inputs) go in, and rendered HTML comes out. Real applications are built from many small components."
+    }
+  ]
+}

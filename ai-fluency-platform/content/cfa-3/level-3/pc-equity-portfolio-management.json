@@ -104,5 +104,31 @@
       "type": "connectPrompt",
       "prompt": "Next, we cover **Fixed-Income Portfolio Management** \u2014 liability-driven strategies, immunization, active fixed-income approaches, and benchmark selection for bond portfolios."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "A passive equity strategy aims to:",
+      "options": [
+        "Beat the benchmark through stock selection",
+        "Replicate the returns of a specific benchmark index",
+        "Invest only in growth stocks"
+      ],
+      "correctIndex": 1,
+      "explanation": "Passive strategies track a benchmark index, minimizing costs and tracking error. They accept market returns rather than trying to beat them.",
+      "encourageCorrect": "That's the passive approach! Match the benchmark, minimize costs.",
+      "encourageIncorrect": "Passive equity management aims to replicate a benchmark index's returns as closely as possible, keeping costs and tracking error low."
+    },
+    {
+      "question": "Factor tilting in equity portfolio management means:",
+      "options": [
+        "Eliminating all factor exposures",
+        "Deliberately overweighting certain systematic factors (like value or momentum) relative to the benchmark",
+        "Only investing in one sector"
+      ],
+      "correctIndex": 1,
+      "explanation": "Factor tilting intentionally overweights desired factors (value, size, momentum, quality) while maintaining broad market exposure.",
+      "encourageCorrect": "Correct! Tilt toward factors you believe will be rewarded.",
+      "encourageIncorrect": "Factor tilting means intentionally overweighting specific factors (value, momentum, quality, etc.) while maintaining broad diversification."
+    }
   ]
 }

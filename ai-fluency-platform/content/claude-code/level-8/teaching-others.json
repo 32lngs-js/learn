@@ -43,5 +43,31 @@
       "type": "connectPrompt",
       "prompt": "You have learned to use Claude Code, optimize it, and teach it. One challenge remains: proving that your patterns truly transfer — that you can apply everything to an unfamiliar domain you have never worked in. That is the final capstone."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What three things should you teach a new Claude Code user first?",
+      "options": [
+        "Hooks, MCP, and the SDK",
+        "The loop, briefing quality, and escape hatches",
+        "CLAUDE.md, skills, and settings"
+      ],
+      "correctIndex": 1,
+      "explanation": "Start with the loop (how it works), briefing quality (how to get good results), and escape hatches (how to recover from mistakes).",
+      "encourageCorrect": "Perfect foundation! Everything else can wait.",
+      "encourageIncorrect": "Start with three things: the agentic loop, briefing quality, and escape hatches (Esc, /clear, git undo). Everything else comes later."
+    },
+    {
+      "question": "What is the biggest teaching mistake when onboarding someone to Claude Code?",
+      "options": [
+        "Starting too slowly",
+        "Feature dumping — showing all features on day one",
+        "Not using Plan Mode"
+      ],
+      "correctIndex": 1,
+      "explanation": "Showing all features on day one overwhelms and confuses. Teach in response to real needs, not upfront.",
+      "encourageCorrect": "Less is more when getting started! Teach features as they become relevant.",
+      "encourageIncorrect": "Feature dumping overwhelms new users. Instead, teach the basics first and introduce advanced features only when they have a real problem to solve."
+    }
   ]
 }

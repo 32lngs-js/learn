@@ -118,5 +118,43 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Parametric and Non-Parametric Tests**, extending the hypothesis testing framework to tests of independence and situations where standard distribution assumptions may not hold. You will learn when parametric tests fail and what alternatives exist."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is a Type I error in hypothesis testing?",
+      "options": [
+        "Failing to reject a false null hypothesis",
+        "Rejecting a true null hypothesis",
+        "Using the wrong significance level"
+      ],
+      "correctIndex": 1,
+      "explanation": "A Type I error means rejecting the null hypothesis when it is actually true \u2014 a 'false positive.'",
+      "encourageCorrect": "Nice work! Type I is the 'false positive' \u2014 rejecting something that's actually true.",
+      "encourageIncorrect": "A Type I error is rejecting the null hypothesis when it's actually true. Think of it as a false alarm."
+    },
+    {
+      "question": "If a test statistic falls inside the acceptance region, what do you conclude?",
+      "options": [
+        "Reject the null hypothesis",
+        "Fail to reject the null hypothesis",
+        "Accept the alternative hypothesis"
+      ],
+      "correctIndex": 1,
+      "explanation": "When the test statistic is within the acceptance region, there is insufficient evidence to reject the null hypothesis.",
+      "encourageCorrect": "Correct! We 'fail to reject' \u2014 we haven't proven it true, just that we lack evidence against it.",
+      "encourageIncorrect": "When the test statistic is in the acceptance region, we fail to reject the null hypothesis. We don't have enough evidence to reject it."
+    },
+    {
+      "question": "What does the power of a test represent?",
+      "options": [
+        "The probability of a Type I error",
+        "The probability of correctly rejecting a false null hypothesis",
+        "The confidence level of the test"
+      ],
+      "correctIndex": 1,
+      "explanation": "Power = 1 - beta, where beta is the probability of a Type II error. Higher power means the test is better at detecting false null hypotheses.",
+      "encourageCorrect": "Exactly! Power is the ability to detect a false null \u2014 the higher the better.",
+      "encourageIncorrect": "Power equals 1 minus beta, which is the probability of correctly rejecting a false null hypothesis. It measures the test's sensitivity."
+    }
   ]
 }

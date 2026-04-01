@@ -11,11 +11,11 @@
   "blocks": [
     {
       "type": "predictPrompt",
-      "prompt": "You have 5 web servers behind a load balancer. One server is 2x faster than the others. How should the load balancer distribute traffic? What if one server starts failing — how should the load balancer respond?"
+      "prompt": "You have 5 web servers behind a load balancer. One server is 2x faster than the others. How should the load balancer distribute traffic? What if one server starts failing \u2014 how should the load balancer respond?"
     },
     {
       "type": "markdown",
-      "content": "## What load balancers do\n\nA load balancer distributes incoming requests across multiple servers to ensure no single server is overwhelmed, improve availability, and enable horizontal scaling.\n\n### L4 vs L7 load balancing\n\n**Layer 4 (Transport):** Makes routing decisions based on IP address and TCP/UDP port. Does not inspect the request content. Fast because it operates at the network level.\n\n**Layer 7 (Application):** Inspects HTTP headers, URLs, cookies, and request bodies. Can make intelligent routing decisions based on content.\n\n| Feature | L4 | L7 |\n|---|---|---|\n| Speed | Faster (no content inspection) | Slower (parses HTTP) |\n| Routing granularity | IP + port only | URL path, headers, cookies |\n| SSL termination | Usually pass-through | Terminates SSL, inspects content |\n| Use case | High-throughput TCP traffic | HTTP APIs, microservices |\n| Example | AWS NLB, HAProxy (TCP mode) | AWS ALB, Nginx, HAProxy (HTTP mode) |\n\n**L7 enables:** Path-based routing (`/api/*` → API servers, `/static/*` → CDN origin), header-based routing (mobile vs desktop), A/B testing, canary deployments.\n\n### Load balancing algorithms\n\n**Round Robin:** Requests go to servers in order: 1, 2, 3, 1, 2, 3... Simple but ignores server capacity and current load.\n\n**Weighted Round Robin:** Server 1 gets 3x traffic, Server 2 gets 1x. Useful when servers have different capacities.\n\n**Least Connections:** Send to the server with the fewest active connections. Adapts to server speed — fast servers finish requests and become available sooner.\n\n**Least Response Time:** Send to the server with the fastest recent response time. Best for heterogeneous server pools.\n\n**IP Hash:** Hash the client IP to determine the server. Same client always goes to the same server (sticky sessions without cookies).\n\n**Consistent Hashing:** Advanced form of hashing that minimizes redistribution when servers are added/removed. Used by Cassandra, DynamoDB, and many caching layers.\n\n### Health checks\n\nLoad balancers must detect failed servers and stop sending traffic to them.\n\n**Passive health checks:** Monitor responses from normal traffic. If a server returns 5xx errors or times out, mark it unhealthy.\n\n**Active health checks:** Periodically send probe requests to a health endpoint (e.g., `GET /health`). If the server fails N consecutive checks, remove it from the pool.\n\n**Graceful degradation:** When a server is marked unhealthy, existing connections may be allowed to drain (complete) while new connections go elsewhere."
+      "content": "## What load balancers do\n\nA load balancer distributes incoming requests across multiple servers to ensure no single server is overwhelmed, improve availability, and enable horizontal scaling.\n\n### L4 vs L7 load balancing\n\n**Layer 4 (Transport):** Makes routing decisions based on IP address and TCP/UDP port. Does not inspect the request content. Fast because it operates at the network level.\n\n**Layer 7 (Application):** Inspects HTTP headers, URLs, cookies, and request bodies. Can make intelligent routing decisions based on content.\n\n| Feature | L4 | L7 |\n|---|---|---|\n| Speed | Faster (no content inspection) | Slower (parses HTTP) |\n| Routing granularity | IP + port only | URL path, headers, cookies |\n| SSL termination | Usually pass-through | Terminates SSL, inspects content |\n| Use case | High-throughput TCP traffic | HTTP APIs, microservices |\n| Example | AWS NLB, HAProxy (TCP mode) | AWS ALB, Nginx, HAProxy (HTTP mode) |\n\n**L7 enables:** Path-based routing (`/api/*` \u2192 API servers, `/static/*` \u2192 CDN origin), header-based routing (mobile vs desktop), A/B testing, canary deployments.\n\n### Load balancing algorithms\n\n**Round Robin:** Requests go to servers in order: 1, 2, 3, 1, 2, 3... Simple but ignores server capacity and current load.\n\n**Weighted Round Robin:** Server 1 gets 3x traffic, Server 2 gets 1x. Useful when servers have different capacities.\n\n**Least Connections:** Send to the server with the fewest active connections. Adapts to server speed \u2014 fast servers finish requests and become available sooner.\n\n**Least Response Time:** Send to the server with the fastest recent response time. Best for heterogeneous server pools.\n\n**IP Hash:** Hash the client IP to determine the server. Same client always goes to the same server (sticky sessions without cookies).\n\n**Consistent Hashing:** Advanced form of hashing that minimizes redistribution when servers are added/removed. Used by Cassandra, DynamoDB, and many caching layers.\n\n### Health checks\n\nLoad balancers must detect failed servers and stop sending traffic to them.\n\n**Passive health checks:** Monitor responses from normal traffic. If a server returns 5xx errors or times out, mark it unhealthy.\n\n**Active health checks:** Periodically send probe requests to a health endpoint (e.g., `GET /health`). If the server fails N consecutive checks, remove it from the pool.\n\n**Graceful degradation:** When a server is marked unhealthy, existing connections may be allowed to drain (complete) while new connections go elsewhere."
     },
     {
       "type": "practiceSet",
@@ -30,7 +30,7 @@
             "C) DNS-based round robin"
           ],
           "correctAnswer": "B",
-          "explanation": "Path-based routing requires inspecting the HTTP request URL, which is only possible at Layer 7. L4 (option A) cannot inspect HTTP content — it only sees IP addresses and ports. DNS round robin (option C) distributes traffic across servers but cannot route different paths to different services. This is a textbook L7 load balancing use case and exactly what AWS ALB, Nginx, and Envoy are designed for.",
+          "explanation": "Path-based routing requires inspecting the HTTP request URL, which is only possible at Layer 7. L4 (option A) cannot inspect HTTP content \u2014 it only sees IP addresses and ports. DNS round robin (option C) distributes traffic across servers but cannot route different paths to different services. This is a textbook L7 load balancing use case and exactly what AWS ALB, Nginx, and Envoy are designed for.",
           "difficulty": "basic"
         },
         {
@@ -42,7 +42,7 @@
             "C) The load balancer automatically detects the slowdown and removes Server 3 from the pool"
           ],
           "correctAnswer": "B",
-          "explanation": "Round robin blindly sends every 4th request to Server 3 regardless of its performance. Since Server 3 takes 5x longer, it accumulates connections while the other servers finish quickly. This creates a growing backlog on Server 3, eventually causing timeouts and errors for 25% of users. Least-connections would naturally adapt: since Server 3 finishes requests slowly, it always has more active connections, so the algorithm sends fewer new requests to it. Option A is wrong (the system degrades). Option C describes health checks, not the load balancing algorithm — and health checks typically look for failures, not slowdowns.",
+          "explanation": "Round robin blindly sends every 4th request to Server 3 regardless of its performance. Since Server 3 takes 5x longer, it accumulates connections while the other servers finish quickly. This creates a growing backlog on Server 3, eventually causing timeouts and errors for 25% of users. Least-connections would naturally adapt: since Server 3 finishes requests slowly, it always has more active connections, so the algorithm sends fewer new requests to it. Option A is wrong (the system degrades). Option C describes health checks, not the load balancing algorithm \u2014 and health checks typically look for failures, not slowdowns.",
           "difficulty": "intermediate"
         }
       ]
@@ -53,7 +53,33 @@
     },
     {
       "type": "connectPrompt",
-      "prompt": "Load balancers distribute traffic. Module 2.4 covers reverse proxies and API gateways — the layer that adds authentication, rate limiting, request transformation, and other cross-cutting concerns before traffic reaches your services."
+      "prompt": "Load balancers distribute traffic. Module 2.4 covers reverse proxies and API gateways \u2014 the layer that adds authentication, rate limiting, request transformation, and other cross-cutting concerns before traffic reaches your services."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is the key difference between L4 and L7 load balancers?",
+      "options": [
+        "L4 is for HTTP; L7 is for TCP",
+        "L4 routes by IP/port; L7 inspects HTTP content for intelligent routing",
+        "L4 is slower; L7 is faster"
+      ],
+      "correctIndex": 1,
+      "explanation": "L4 operates at the transport layer (IP/port); L7 inspects application-layer content like URLs and headers.",
+      "encourageCorrect": "That is right! L4 is fast but blind; L7 is smarter but does more work per request.",
+      "encourageIncorrect": "L4 routes by IP/port (fast, no inspection). L7 inspects HTTP headers and URLs for content-aware routing."
+    },
+    {
+      "question": "Which load balancing algorithm adapts best to servers with different processing speeds?",
+      "options": [
+        "Round robin",
+        "Least connections",
+        "Random"
+      ],
+      "correctIndex": 1,
+      "explanation": "Least connections naturally adapts \u2014 slower servers accumulate more active connections.",
+      "encourageCorrect": "Exactly! Least connections self-adjusts because slow servers naturally have more active connections.",
+      "encourageIncorrect": "Least connections adapts because slow servers accumulate more connections, receiving fewer new requests."
     }
   ]
 }

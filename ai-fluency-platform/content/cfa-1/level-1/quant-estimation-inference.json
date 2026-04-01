@@ -118,5 +118,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Hypothesis Testing**, where you will use the estimation concepts learned here to formally test claims about population parameters. Confidence intervals and hypothesis tests are two sides of the same coin \u2014 a value outside the CI corresponds to rejecting the null hypothesis."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What does the standard error of the sample mean measure?",
+      "options": [
+        "The spread of the raw data",
+        "How precisely the sample mean estimates the population mean",
+        "The maximum possible sampling error"
+      ],
+      "correctIndex": 1,
+      "explanation": "The standard error (s/sqrt(n)) measures how much the sample mean is expected to vary from the true population mean.",
+      "encourageCorrect": "Well done! Standard error tells us how precise our sample mean is as an estimate.",
+      "encourageIncorrect": "The standard error measures how precisely the sample mean estimates the population mean. It equals s divided by the square root of n."
+    },
+    {
+      "question": "As sample size increases, what happens to a confidence interval (all else equal)?",
+      "options": [
+        "It gets wider",
+        "It gets narrower",
+        "It stays the same"
+      ],
+      "correctIndex": 1,
+      "explanation": "Larger samples reduce the standard error, which narrows the confidence interval and gives a more precise estimate.",
+      "encourageCorrect": "That's right! More data means more precision and a tighter interval.",
+      "encourageIncorrect": "Larger samples reduce standard error, which makes the confidence interval narrower. More observations give us a better estimate."
+    }
   ]
 }

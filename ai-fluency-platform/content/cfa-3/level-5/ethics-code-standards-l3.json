@@ -100,5 +100,31 @@
       "type": "connectPrompt",
       "prompt": "Next, we explore **Guidance for Standards** at the Level III depth \u2014 advanced scenarios involving complex organizational structures, PM responsibilities, and multi-stakeholder ethical challenges."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Standard VII(A) Conduct as Participants in CFA Programs requires candidates to:",
+      "options": [
+        "Share exam content with others after the exam",
+        "Not compromise the integrity of the CFA exam process",
+        "Study a minimum of 300 hours"
+      ],
+      "correctIndex": 1,
+      "explanation": "Candidates must not disclose specific exam content, cheat, or engage in conduct that undermines the integrity of the CFA Program.",
+      "encourageCorrect": "Right! Protecting the exam's integrity is every candidate's responsibility.",
+      "encourageIncorrect": "Standard VII(A) requires candidates to protect the CFA exam's integrity. Sharing exam content or cheating violates this Standard."
+    },
+    {
+      "question": "When Standards conflict with local law, a CFA member should follow:",
+      "options": [
+        "Always the local law",
+        "The stricter of the two (Standards or local law)",
+        "Always the CFA Standards"
+      ],
+      "correctIndex": 1,
+      "explanation": "CFA members must follow whichever is stricter \u2014 the CFA Standards or local law. The higher ethical standard always applies.",
+      "encourageCorrect": "Exactly! Always follow the stricter requirement.",
+      "encourageIncorrect": "When there's a conflict, follow the stricter of the CFA Standards or local law. The higher ethical standard always prevails."
+    }
   ]
 }

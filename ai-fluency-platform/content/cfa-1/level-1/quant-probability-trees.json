@@ -118,5 +118,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Portfolio Mathematics**, where you will use expected values, variances, and a new concept \u2014 covariance \u2014 to calculate portfolio risk and return. The probability-weighted calculations from this module directly underpin portfolio theory."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What does Bayes' theorem allow you to do?",
+      "options": [
+        "Calculate the probability of independent events",
+        "Update a prior probability with new information",
+        "Determine if events are mutually exclusive"
+      ],
+      "correctIndex": 1,
+      "explanation": "Bayes' theorem updates prior probabilities when new evidence is received, producing posterior probabilities.",
+      "encourageCorrect": "Well done! Bayes' theorem is all about updating beliefs with new evidence.",
+      "encourageIncorrect": "Bayes' theorem lets you update a prior probability using new information. It turns P(A) into P(A|B) when you observe B."
+    },
+    {
+      "question": "Two events are independent if:",
+      "options": [
+        "P(A and B) = P(A) + P(B)",
+        "P(A|B) = P(A)",
+        "P(A or B) = P(A) x P(B)"
+      ],
+      "correctIndex": 1,
+      "explanation": "Independence means knowing B occurred doesn't change the probability of A \u2014 P(A|B) equals P(A).",
+      "encourageCorrect": "That's right! Independence means one event doesn't affect the other's probability.",
+      "encourageIncorrect": "Events are independent when P(A|B) = P(A), meaning knowing B happened doesn't change A's probability."
+    }
   ]
 }

@@ -42,5 +42,31 @@
       "type": "connectPrompt",
       "prompt": "You can now build custom commands that encode your workflows. But skills still require you to invoke them manually. What if some actions should happen automatically — every time, without you remembering? That is what hooks do, and that is where we go next."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "How long does it typically take to create a working skill?",
+      "options": [
+        "About an hour",
+        "About five minutes",
+        "At least a day"
+      ],
+      "correctIndex": 1,
+      "explanation": "Creating a skill takes about five minutes: create the directory, write the Markdown file, and test with /skill-name.",
+      "encourageCorrect": "Quick, right? The simplicity is the point.",
+      "encourageIncorrect": "It only takes about five minutes — create .claude/skills/, write a Markdown file with frontmatter, and test it."
+    },
+    {
+      "question": "What is the most common mistake when writing skills?",
+      "options": [
+        "Making them too short",
+        "Making them too rigid — scripting every tool call instead of describing desired outcomes",
+        "Using the wrong file format"
+      ],
+      "correctIndex": 1,
+      "explanation": "Don't script every tool call — tell Claude what you want, not how to use its tools. Let the agentic loop do its job.",
+      "encourageCorrect": "Good awareness! Describe outcomes, not tool sequences.",
+      "encourageIncorrect": "The common mistake is being too rigid — scripting every tool call. Instead, describe the desired outcome and let Claude figure out how."
+    }
   ]
 }

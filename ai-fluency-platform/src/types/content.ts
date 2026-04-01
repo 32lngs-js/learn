@@ -30,9 +30,19 @@ export interface CourseInfo {
   color: string;
 }
 
+export interface LessonReviewQuestion {
+  question: string;
+  options: string[];
+  correctIndex: number;
+  explanation: string;
+  encourageCorrect: string;
+  encourageIncorrect: string;
+}
+
 export interface ModuleContent {
   meta: ModuleMeta;
   blocks: ContentBlock[];
+  reviewQuestions?: LessonReviewQuestion[];
 }
 
 export type ContentBlock =

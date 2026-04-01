@@ -33,7 +33,7 @@
     {
       "type": "tryItYourself",
       "title": "Design a model registry workflow for a team that deploys both LLM-based features and traditional ML classifiers. What stages would you define? What metadata is mandatory before a model can be promoted to production? What automated checks would gate each transition?",
-      "solution": "A robust registry workflow might include:\n\n**Stages**: `Experimental` → `Validated` → `Staging` → `Production` → `Deprecated`\n\n**Mandatory metadata for production promotion**:\n- Training dataset version and hash\n- Evaluation metrics on holdout set (with confidence intervals)\n- Bias/fairness audit results\n- Latency and throughput benchmarks\n- Rollback plan documentation\n\n**Automated gates**:\n- `Experimental → Validated`: Unit tests pass, metrics exceed baseline by a defined margin\n- `Validated → Staging`: Integration tests pass, no data quality alerts in last 24 hours\n- `Staging → Production`: Canary deployment shows no regression over N hours, human approval from model owner"
+      "solution": "A robust registry workflow might include:\n\n**Stages**: `Experimental` \u2192 `Validated` \u2192 `Staging` \u2192 `Production` \u2192 `Deprecated`\n\n**Mandatory metadata for production promotion**:\n- Training dataset version and hash\n- Evaluation metrics on holdout set (with confidence intervals)\n- Bias/fairness audit results\n- Latency and throughput benchmarks\n- Rollback plan documentation\n\n**Automated gates**:\n- `Experimental \u2192 Validated`: Unit tests pass, metrics exceed baseline by a defined margin\n- `Validated \u2192 Staging`: Integration tests pass, no data quality alerts in last 24 hours\n- `Staging \u2192 Production`: Canary deployment shows no regression over N hours, human approval from model owner"
     },
     {
       "type": "markdown",
@@ -58,6 +58,32 @@
     {
       "type": "keyTakeaway",
       "content": "MLOps is not just tooling -- it is the organizational discipline of treating data, models, and experiments as first-class citizens alongside code, enabling reproducibility, governance, and continuous improvement at scale."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Why is experiment tracking more critical in ML than version control alone?",
+      "options": [
+        "Because ML code is more complex",
+        "Because ML behavior depends on code, data, hyperparameters, and training randomness -- not just code",
+        "Because ML uses more files"
+      ],
+      "correctIndex": 1,
+      "explanation": "In traditional software, code determines behavior. In ML, the combination of code, data, hyperparameters, and randomness determines behavior -- all must be tracked.",
+      "encourageCorrect": "Exactly! ML has more axes of variation than traditional software, so you need to track more.",
+      "encourageIncorrect": "ML behavior depends on code plus data, hyperparameters, and training randomness -- version control tracks only code, so experiment tracking captures the full picture."
+    },
+    {
+      "question": "What is the core idea behind MLOps?",
+      "options": [
+        "Using more powerful hardware",
+        "Treating data, models, and experiments as first-class citizens alongside code for reproducibility and governance",
+        "Automating all ML decisions"
+      ],
+      "correctIndex": 1,
+      "explanation": "MLOps applies DevOps principles to ML, ensuring data, models, and experiments are versioned, tracked, and governed just like code.",
+      "encourageCorrect": "That's right! MLOps brings the rigor of software engineering to the unique challenges of ML.",
+      "encourageIncorrect": "MLOps treats data, models, and experiments as first-class citizens alongside code -- enabling reproducibility, governance, and continuous improvement at scale."
     }
   ]
 }

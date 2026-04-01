@@ -118,5 +118,31 @@
       "type": "connectPrompt",
       "prompt": "This completes the Ethics application module. The **Ethics Checkpoint** will test your ability to apply all standards simultaneously to complex vignettes \u2014 the format and difficulty level of the actual CFA Level II exam. Review any areas of uncertainty before proceeding."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "In CFA Level II ethics vignettes, what is the most common testing format?",
+      "options": [
+        "True/false questions",
+        "Item sets (vignettes) with multiple related questions about a scenario",
+        "Essay questions"
+      ],
+      "correctIndex": 1,
+      "explanation": "Level II uses item sets \u2014 longer scenarios followed by multiple questions. This requires careful reading to identify all relevant Standards.",
+      "encourageCorrect": "Correct! Item sets test your ability to analyze complex, multi-issue scenarios.",
+      "encourageIncorrect": "Level II tests ethics through item sets (vignettes) \u2014 detailed scenarios with multiple questions. Each scenario may involve several Standards."
+    },
+    {
+      "question": "When multiple Standards apply to a single scenario, you should:",
+      "options": [
+        "Only address the most obvious violation",
+        "Identify all applicable Standards and determine which is most directly violated",
+        "Assume only one Standard can be violated at a time"
+      ],
+      "correctIndex": 1,
+      "explanation": "Real ethical situations often involve multiple Standards simultaneously. Identify all that apply, then determine the primary violation.",
+      "encourageCorrect": "That's the key skill! Real scenarios often involve multiple overlapping Standards.",
+      "encourageIncorrect": "Multiple Standards often apply to a single situation. Identify all relevant ones and determine which is most directly violated."
+    }
   ]
 }

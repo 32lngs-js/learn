@@ -100,5 +100,31 @@
       "type": "connectPrompt",
       "prompt": "Next, we explore **Goals-Based Investing** -- a framework that brings together risk management, asset allocation, and behavioral finance into a unified approach to private wealth management."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Life insurance in private wealth planning serves primarily as:",
+      "options": [
+        "An investment vehicle for maximum returns",
+        "A risk management tool to replace lost income and fund obligations if the breadwinner dies",
+        "A tax avoidance strategy"
+      ],
+      "correctIndex": 1,
+      "explanation": "Life insurance manages the financial risk of premature death \u2014 replacing income, paying off debts, and funding goals the deceased would have supported.",
+      "encourageCorrect": "That's the primary purpose! Insurance manages the risk of premature income loss.",
+      "encourageIncorrect": "Life insurance primarily manages the risk of premature death by replacing lost income and ensuring financial obligations are met."
+    },
+    {
+      "question": "An umbrella liability policy provides:",
+      "options": [
+        "Coverage only for auto accidents",
+        "Broad excess liability coverage beyond the limits of other policies",
+        "Health insurance for the entire family"
+      ],
+      "correctIndex": 1,
+      "explanation": "An umbrella policy provides additional liability coverage above and beyond the limits of home and auto policies, protecting against catastrophic claims.",
+      "encourageCorrect": "Right! It's the extra layer of protection for large liability claims.",
+      "encourageIncorrect": "An umbrella policy provides excess liability coverage beyond other policies' limits. It protects high-net-worth individuals from catastrophic lawsuits."
+    }
   ]
 }

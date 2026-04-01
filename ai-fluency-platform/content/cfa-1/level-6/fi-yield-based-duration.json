@@ -118,5 +118,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Yield-Based Bond Convexity**, the second-order measure that improves duration's accuracy for larger yield changes. Convexity captures the curvature in the price-yield relationship that duration alone misses."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What does modified duration approximate?",
+      "options": [
+        "The bond's yield to maturity",
+        "The percentage change in bond price for a 1% change in yield",
+        "The bond's credit spread"
+      ],
+      "correctIndex": 1,
+      "explanation": "Modified duration approximates the percentage price change for a 100 basis point (1%) change in yield.",
+      "encourageCorrect": "That's the key interpretation! Modified duration links yield changes to price changes.",
+      "encourageIncorrect": "Modified duration estimates the percentage change in a bond's price for a 1% (100 bps) change in yield. A duration of 5 means roughly a 5% price change per 1% yield change."
+    },
+    {
+      "question": "All else equal, which bond has the longest duration?",
+      "options": [
+        "A 30-year bond with a high coupon",
+        "A 30-year zero-coupon bond",
+        "A 5-year zero-coupon bond"
+      ],
+      "correctIndex": 1,
+      "explanation": "Duration increases with maturity and decreases with coupon. A 30-year zero-coupon bond has the longest duration because all cash flow comes at maturity.",
+      "encourageCorrect": "Correct! No coupons and long maturity means maximum duration.",
+      "encourageIncorrect": "A 30-year zero-coupon bond has the longest duration. Duration increases with maturity and decreases with coupon rate. Zero coupon + long maturity = maximum duration."
+    }
   ]
 }

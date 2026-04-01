@@ -118,5 +118,31 @@
       "type": "connectPrompt",
       "prompt": "Understanding who the stakeholders are and how their interests conflict naturally leads to the question: how do we govern these conflicts? The next module covers **Corporate Governance** \u2014 the structures, processes, and mechanisms that align the interests of managers, shareholders, and other stakeholders."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is the difference between a shareholder and a stakeholder?",
+      "options": [
+        "They mean the same thing",
+        "Shareholders own equity; stakeholders include anyone affected by the company",
+        "Stakeholders only include employees"
+      ],
+      "correctIndex": 1,
+      "explanation": "Shareholders are equity owners, while stakeholders include all parties affected by the firm: employees, customers, creditors, communities, and shareholders themselves.",
+      "encourageCorrect": "Well put! Stakeholders is the broader group \u2014 anyone with a stake in the company.",
+      "encourageIncorrect": "Shareholders own equity in the company. Stakeholders is broader \u2014 it includes employees, customers, creditors, communities, and shareholders."
+    },
+    {
+      "question": "ESG considerations relate to:",
+      "options": [
+        "Only environmental factors",
+        "Environmental, Social, and Governance factors",
+        "Earnings, Sales, and Growth metrics"
+      ],
+      "correctIndex": 1,
+      "explanation": "ESG stands for Environmental, Social, and Governance \u2014 three categories of non-financial factors that can affect investment risk and return.",
+      "encourageCorrect": "Correct! Environmental, Social, and Governance covers the full ESG spectrum.",
+      "encourageIncorrect": "ESG stands for Environmental, Social, and Governance. It covers non-financial factors like climate risk, labor practices, and board quality."
+    }
   ]
 }

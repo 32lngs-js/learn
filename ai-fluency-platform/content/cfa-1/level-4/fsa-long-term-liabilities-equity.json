@@ -122,5 +122,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Analysis of Income Taxes**, where you'll learn about deferred tax assets and liabilities \u2014 timing differences between accounting and tax reporting. Bond discount/premium amortization and lease accounting are common sources of temporary differences that create deferred taxes."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "When a bond is issued at a discount, its coupon rate is:",
+      "options": [
+        "Equal to the market interest rate",
+        "Higher than the market interest rate",
+        "Lower than the market interest rate"
+      ],
+      "correctIndex": 2,
+      "explanation": "A discount bond has a coupon rate below the market rate. Investors pay less than par to compensate for the lower coupon.",
+      "encourageCorrect": "Exactly! Below-market coupon means the bond sells at a discount.",
+      "encourageIncorrect": "A bond issued at a discount has a coupon rate lower than the market rate. The discount compensates investors for the lower coupon."
+    },
+    {
+      "question": "What is the effect of a share buyback on earnings per share (EPS)?",
+      "options": [
+        "EPS decreases",
+        "EPS increases (assuming net income stays constant)",
+        "EPS is unaffected"
+      ],
+      "correctIndex": 1,
+      "explanation": "Buybacks reduce the number of shares outstanding. With the same earnings spread over fewer shares, EPS rises.",
+      "encourageCorrect": "Right! Fewer shares with the same earnings means higher EPS.",
+      "encourageIncorrect": "Share buybacks reduce shares outstanding, so the same net income is divided by fewer shares, increasing EPS."
+    }
   ]
 }

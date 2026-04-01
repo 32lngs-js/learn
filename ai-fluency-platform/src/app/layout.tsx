@@ -7,6 +7,8 @@ import { Footer } from "@/components/layout/Footer";
 import { AuthProvider } from "@/lib/auth-context";
 import { ProviderProvider } from "@/lib/store/provider-context";
 import { IOSInstallPrompt } from "@/components/pwa/IOSInstallPrompt";
+import { DailyQuizProvider } from "@/components/review/DailyQuizProvider";
+import { SyncProvider } from "@/components/sync/SyncProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -47,12 +49,15 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
         <AuthProvider>
+          <SyncProvider>
           <ProviderProvider>
             <Header />
             <div className="flex-1">{children}</div>
             <Footer />
             <IOSInstallPrompt />
+            <DailyQuizProvider />
           </ProviderProvider>
+          </SyncProvider>
         </AuthProvider>
       </body>
     </html>

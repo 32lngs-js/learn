@@ -1,0 +1,106 @@
+{
+  "meta": {
+    "title": "2.1 CSS Is Just Instructions",
+    "description": "Selectors pick the target. Properties describe the change. That is all CSS does.",
+    "level": "level-2",
+    "slug": "css-is-instructions",
+    "order": 1,
+    "isCheckpoint": false,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "predictPrompt",
+      "prompt": "You see this CSS code: `h1 { color: blue; }`. Without any prior knowledge of CSS, what do you think this does?"
+    },
+    {
+      "type": "markdown",
+      "content": "## CSS Is Just Instructions\n\nEvery CSS instruction follows the same pattern:\n\n```css\nselector { property: value; }\n```\n\nThat is it. Every piece of CSS you will ever see is some variation of this pattern. Let's break it down:\n\n- **Selector** \u2014 *which* elements to change (the target)\n- **Property** \u2014 *what* to change about them\n- **Value** \u2014 *how* to change it\n\n### Reading CSS out loud\n\nThe single best trick for reading CSS is to translate it into a sentence:\n\n```css\nh1 { color: blue; }\n```\n\n> \"For all `h1` elements, set the color to blue.\"\n\n```css\np { font-size: 18px; margin-bottom: 12px; }\n```\n\n> \"For all paragraphs, set the font size to 18 pixels and the bottom margin to 12 pixels.\"\n\nOnce you can do this, you can read any CSS. The selectors and properties might get more specific, but the pattern never changes.\n\n### Where CSS lives\n\nCSS can appear in three places:\n\n**1. External stylesheet** (most common in real projects)\n```html\n<link rel=\"stylesheet\" href=\"styles.css\">\n```\nThe CSS lives in a separate `.css` file. This is how most real websites work \u2014 keeps things organized.\n\n**2. Style tag** (in the HTML file)\n```html\n<style>\n  h1 { color: blue; }\n</style>\n```\nThe CSS is written directly in the HTML document, inside `<style>` tags. Common in quick prototypes or AI-generated pages.\n\n**3. Inline styles** (on the element itself)\n```html\n<h1 style=\"color: blue;\">Hello</h1>\n```\nThe CSS is written directly on the element. This overrides most other styles. AI tools often generate inline styles because it is simpler, but it is harder to maintain.\n\n### Targeting specific elements: Classes and IDs\n\nSo far we have targeted elements by their tag name (`h1`, `p`). But what if you have ten paragraphs and only want to style one?\n\n**Classes** (`.classname`) \u2014 for groups of elements\n```css\n.hero-text { font-size: 48px; color: white; }\n```\n> \"For all elements with the class `hero-text`, set font size to 48px and color to white.\"\n\nIn HTML: `<p class=\"hero-text\">Welcome</p>`\n\n**IDs** (`#idname`) \u2014 for one specific element\n```css\n#main-title { text-align: center; }\n```\n> \"For the element with the ID `main-title`, center the text.\"\n\nIn HTML: `<h1 id=\"main-title\">My Site</h1>`\n\nThe key difference: a class can be used on many elements, but an ID should only be used once per page. Think of classes like \"everyone wearing a red shirt\" and IDs like \"the person with badge number 42.\"\n\n### Why this matters for working with AI\n\nWhen AI generates CSS, it will use selectors, properties, and values \u2014 the same pattern every time. If the result looks wrong, you now know how to read the CSS and figure out which instruction is causing the problem. Instead of saying \"it looks weird,\" you can say \"the `.hero-text` color is wrong\" or \"the `h1` margin is too big.\""
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "How confident are you that you could read a CSS rule like `.card { background-color: #f0f0f0; border-radius: 8px; }` and explain what it does in plain English?",
+      "answer": "This says: \"For all elements with the class `card`, set the background color to light gray (#f0f0f0) and round the corners by 8 pixels.\" If you got the gist \u2014 targeting a class and changing how it looks \u2014 you are on track. The specific property names become familiar with exposure."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Reading CSS Rules",
+      "problems": [
+        {
+          "id": "wf2-1",
+          "question": "What does this CSS do?\n\n```css\n.hero {\n  background-color: #000;\n  color: #fff;\n}\n```",
+          "options": [
+            "A) Sets a black background and white text on elements with the class `hero`",
+            "B) Creates a new HTML element called `hero` with black and white colors",
+            "C) Removes the background from all hero images on the page"
+          ],
+          "correctAnswer": "A",
+          "explanation": "The `.hero` selector targets elements with the class `hero`. `background-color: #000` is black, and `color: #fff` is white. Read it as: \"For all elements with class hero, make the background black and the text white.\"",
+          "difficulty": "basic"
+        },
+        {
+          "id": "wf2-2",
+          "question": "A page has this CSS in a stylesheet:\n\n```css\nh1 { color: red; }\n```\n\nBut in the HTML, the heading has:\n\n```html\n<h1 style=\"color: green;\">Welcome</h1>\n```\n\nWhat color will the heading be?",
+          "options": [
+            "A) Red, because the stylesheet was loaded first",
+            "B) Green, because inline styles override stylesheet rules",
+            "C) Both colors will blend together"
+          ],
+          "correctAnswer": "B",
+          "explanation": "Inline styles (written directly on the element) take priority over styles in a stylesheet. This is a common source of confusion when AI generates inline styles that override your stylesheet. If you cannot figure out why a style is not applying, check for inline styles first.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "wf2-3",
+          "question": "AI generated a page and ALL headings are blue. You only want the main title to be blue. The CSS says:\n\n```css\nh1, h2, h3 { color: blue; }\n```\n\nWhat is the problem?",
+          "options": [
+            "A) The selector targets all h1, h2, and h3 elements instead of just the main title",
+            "B) The `color` property does not work on headings",
+            "C) The commas in the selector are a syntax error"
+          ],
+          "correctAnswer": "A",
+          "explanation": "The selector `h1, h2, h3` means \"all h1 elements AND all h2 elements AND all h3 elements.\" That is why every heading is blue. The fix: use a class or ID to target only the main title, like `#main-title { color: blue; }` or `.page-title { color: blue; }`.",
+          "difficulty": "intermediate"
+        }
+      ]
+    },
+    {
+      "type": "explainBack",
+      "prompt": "Explain in your own words what the three parts of a CSS rule are (selector, property, value) and how you would read a CSS rule out loud. Use the example `.button { background-color: green; }` in your explanation."
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "Every CSS rule follows the same pattern: selector (who), property (what), value (how). You can read any CSS rule by saying \"For [selector], set [property] to [value].\" CSS can live in external files, style tags, or inline on elements \u2014 and inline styles override the others. Classes (.) target groups; IDs (#) target one specific element."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "Now you can read what CSS instructions say. But have you ever wondered why there is so much space around some elements and so little around others? Module 2.2 introduces the box model \u2014 the invisible boxes that surround every element on the page."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Every CSS rule follows the pattern:",
+      "options": [
+        "element -> style -> color",
+        "selector { property: value; }",
+        "tag = 'style'"
+      ],
+      "correctIndex": 1,
+      "explanation": "CSS always follows: selector (who to style), then property: value pairs inside curly braces. For example: .card { color: blue; }",
+      "encourageCorrect": "That's the pattern! Selector, property, value. That's all CSS is.",
+      "encourageIncorrect": "Every CSS rule is: selector { property: value; }. The selector picks which element, the property is what to change, and the value is how."
+    },
+    {
+      "question": "In CSS, a dot (.) before a name like .card means it targets:",
+      "options": [
+        "An HTML tag",
+        "A class name",
+        "An element ID"
+      ],
+      "correctIndex": 1,
+      "explanation": "A dot (.) targets a class. A hash (#) targets an ID. A bare name (like h1) targets an HTML tag. Classes are the most commonly used selector.",
+      "encourageCorrect": "Right! Dot = class, hash = ID, bare name = tag.",
+      "encourageIncorrect": "A dot (.) targets a CSS class. For example, .card matches all elements with class=\"card\". Classes are the most common selector type."
+    }
+  ]
+}

@@ -100,5 +100,31 @@
       "type": "connectPrompt",
       "prompt": "The final content module covers **Private Markets Portfolio Construction** -- how to build and manage a portfolio across all private market asset classes, including commitment pacing, liquidity management, and performance benchmarking."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Distressed debt investing involves:",
+      "options": [
+        "Only buying government bonds",
+        "Purchasing the debt of companies in or near bankruptcy at a deep discount",
+        "Lending to highly rated corporations"
+      ],
+      "correctIndex": 1,
+      "explanation": "Distressed debt investors buy bonds or loans of troubled companies at steep discounts, aiming to profit from restructuring, recovery, or gaining control of the company.",
+      "encourageCorrect": "That's the strategy! Buy distressed debt cheaply and profit from the recovery.",
+      "encourageIncorrect": "Distressed debt investing means buying debt of companies near or in bankruptcy at deep discounts, profiting from restructuring or recovery."
+    },
+    {
+      "question": "A secondary market transaction in private equity involves:",
+      "options": [
+        "The initial fundraising of a PE fund",
+        "An existing LP selling their fund interest to another investor before the fund's end",
+        "An IPO of a portfolio company"
+      ],
+      "correctIndex": 1,
+      "explanation": "PE secondaries let existing limited partners sell their fund stakes to other investors, providing liquidity in an otherwise illiquid asset class.",
+      "encourageCorrect": "Right! Secondaries provide a liquidity solution for PE investors.",
+      "encourageIncorrect": "PE secondaries involve an existing LP selling their fund interest to a new investor. This provides liquidity that wouldn't otherwise exist in private equity."
+    }
   ]
 }

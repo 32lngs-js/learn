@@ -1,0 +1,29 @@
+{
+  "meta": {
+    "title": "Level 6: The Debugging",
+    "description": "Something is broken. Learn to find it.",
+    "level": "level-6",
+    "slug": "index",
+    "order": 0,
+    "isCheckpoint": false,
+    "isIndex": true
+  },
+  "blocks": [
+    {
+      "type": "markdown",
+      "content": "## Welcome to Level 6\n\nThe screen is blank. A button does nothing when you click it. The data shows \"undefined\" where a username should be. A red error message fills the console with a stack trace that looks like it was written for machines, not people.\n\nSomething is broken, and someone needs to figure out what.\n\nThat someone does not have to be a developer. In fact, the most valuable debugging skill is not writing a fix -- it is **identifying the problem precisely enough that someone (or an AI) can fix it.** That is what this level teaches.\n\nYou have spent five levels learning to read React code. Now you will learn to read React code that is not working. The skills are the same -- tracing props, reading state, understanding hooks -- but applied to a specific question: **what went wrong, and where?**\n\n### What you will learn\n\n| Module | Topic | Core Idea |\n| :-- | :-- | :-- |\n| 6.1 | Reading Error Messages | React errors are scary but they follow patterns you can decode |\n| 6.2 | React DevTools | Your X-ray vision into any React app's state and structure |\n| 6.3 | Common Bug Patterns | The same bugs come up over and over -- learn to recognize them on sight |\n| 6.4 | The Troubleshooting Checklist | A systematic approach that works for any React bug |\n| 6.5 | Checkpoint | Diagnose multiple React bugs from error messages and code |\n\n### The core idea\n\nDebugging is not guesswork. It is a systematic process: read the error, find the component, inspect the data, form a hypothesis, and test it. The same bugs appear in codebase after codebase. Once you learn to recognize the patterns, you can diagnose most React issues by reading the code and the error message."
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "Debugging is a skill, not a talent. React bugs follow predictable patterns, and error messages tell you more than you think. This level teaches you to decode them systematically."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "Think about the last time something went wrong in a product you use or a project you work on. How was the problem identified? Who figured out what was broken? As you work through Level 6, you will build the ability to be that person for React issues."
+    },
+    {
+      "type": "markdown",
+      "content": "### Ready?\n\nStart with [Module 6.1: Reading Error Messages](/react-literacy/level-6/reading-error-messages/) to learn how to decode the most common React error messages."
+    }
+  ]
+}

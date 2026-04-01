@@ -106,5 +106,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Private Company Valuation**, where many of these same models apply but with important adjustments \u2014 discounts for lack of marketability and control, different risk premiums, and approaches unique to non-public firms."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Residual income is defined as:",
+      "options": [
+        "Total revenue minus total expenses",
+        "Net income minus the equity charge (cost of equity times book value of equity)",
+        "Cash flow minus dividends"
+      ],
+      "correctIndex": 1,
+      "explanation": "Residual income = Net income - (Equity charge). It measures income above and beyond what shareholders require on their invested capital.",
+      "encourageCorrect": "Exactly! RI captures value creation above the cost of equity.",
+      "encourageIncorrect": "Residual income = Net income minus (cost of equity x book value). It measures whether the company earns more than its shareholders require."
+    },
+    {
+      "question": "Positive residual income indicates the company is:",
+      "options": [
+        "Destroying shareholder value",
+        "Creating value above the required return on equity",
+        "Breaking even exactly"
+      ],
+      "correctIndex": 1,
+      "explanation": "Positive RI means the company earns more than the cost of equity capital \u2014 it's creating economic value for shareholders.",
+      "encourageCorrect": "Right! Positive RI means the company is earning more than its cost of equity.",
+      "encourageIncorrect": "Positive residual income means the company is creating value \u2014 its returns exceed what shareholders require for the risk they bear."
+    }
   ]
 }

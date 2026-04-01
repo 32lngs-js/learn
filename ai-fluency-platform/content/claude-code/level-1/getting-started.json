@@ -30,5 +30,43 @@
       "type": "connectPrompt",
       "prompt": "Now that you have a running session, the next module teaches you to read what Claude Code is showing you — the permission prompts, tool calls, and status indicators that tell you what the agentic loop is doing at each moment."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What command installs Claude Code globally?",
+      "options": [
+        "pip install claude-code",
+        "npm install -g @anthropic-ai/claude-code",
+        "brew install claude"
+      ],
+      "correctIndex": 1,
+      "explanation": "Claude Code is installed via npm with 'npm install -g @anthropic-ai/claude-code'.",
+      "encourageCorrect": "That's the one! npm is the package manager used to install Claude Code.",
+      "encourageIncorrect": "The install command is npm install -g @anthropic-ai/claude-code — it uses the Node.js package manager."
+    },
+    {
+      "question": "What flag do you use to resume your most recent Claude Code session?",
+      "options": [
+        "claude --resume",
+        "claude --continue or claude -c",
+        "claude --last"
+      ],
+      "correctIndex": 1,
+      "explanation": "Use 'claude --continue' or 'claude -c' to resume your most recent session.",
+      "encourageCorrect": "Nice! The -c flag is a quick shortcut you'll use often.",
+      "encourageIncorrect": "To resume the most recent session, use 'claude --continue' or the shortcut 'claude -c'."
+    },
+    {
+      "question": "What does the 'claude -p' flag do?",
+      "options": [
+        "Opens Plan Mode",
+        "Prints a quick answer and exits",
+        "Pauses the session"
+      ],
+      "correctIndex": 1,
+      "explanation": "The -p flag runs Claude in print mode — it processes your prompt, prints the response, and exits.",
+      "encourageCorrect": "Correct! Print mode is great for quick one-shot questions.",
+      "encourageIncorrect": "The -p flag stands for print mode — Claude processes your prompt, prints the answer to the terminal, and exits."
+    }
   ]
 }

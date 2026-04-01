@@ -118,5 +118,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Monetary Policy** \u2014 the central bank's tools for influencing the economy through interest rates and money supply. You'll see how monetary and fiscal policy can work together or at cross-purposes, and why central bank independence matters."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is fiscal policy?",
+      "options": [
+        "Central bank control of interest rates and money supply",
+        "Government use of spending and taxation to influence the economy",
+        "International trade agreements between nations"
+      ],
+      "correctIndex": 1,
+      "explanation": "Fiscal policy involves government decisions on spending and taxation. Monetary policy (not fiscal) is about interest rates and money supply.",
+      "encourageCorrect": "That's right! Fiscal = government spending and taxes. Monetary = central bank and interest rates.",
+      "encourageIncorrect": "Fiscal policy is the government's use of spending and taxation to influence the economy. Don't confuse it with monetary policy (central bank actions)."
+    },
+    {
+      "question": "An expansionary fiscal policy involves:",
+      "options": [
+        "Increasing taxes and decreasing government spending",
+        "Decreasing taxes and/or increasing government spending",
+        "Raising interest rates"
+      ],
+      "correctIndex": 1,
+      "explanation": "Expansionary fiscal policy stimulates the economy by cutting taxes (more money for consumers) and/or boosting government spending.",
+      "encourageCorrect": "Exactly! Tax cuts and more spending pump money into the economy.",
+      "encourageIncorrect": "Expansionary fiscal policy means lower taxes and/or higher government spending to stimulate the economy. The opposite would be contractionary."
+    }
   ]
 }

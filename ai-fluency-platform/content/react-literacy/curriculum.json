@@ -1,0 +1,511 @@
+{
+  "levels": [
+    {
+      "level": 1,
+      "title": "The Component",
+      "subtitle": "What you are actually looking at",
+      "color": "#3b82f6",
+      "description": "A React app is built from components — small, reusable pieces of UI. This level teaches you to look at a React file and see structure, not intimidating code. You will learn to read JSX, identify what a component renders, and understand how components nest inside each other.",
+      "moduleCount": 5
+    },
+    {
+      "level": 2,
+      "title": "The Data Flow",
+      "subtitle": "How information moves through a React app",
+      "color": "#8b5cf6",
+      "description": "React components are not isolated — they pass data to each other through props. This level teaches you to trace how data flows from parent to child, recognize common data-passing patterns, and understand why a component shows the wrong information.",
+      "moduleCount": 6
+    },
+    {
+      "level": 3,
+      "title": "The Memory",
+      "subtitle": "State, hooks, and why things change on screen",
+      "color": "#06b6d4",
+      "description": "Props are data passed in from outside. State is data the component remembers on its own. This level teaches you to read React's most important hooks — useState, useEffect, useContext — and understand why and when a component re-renders.",
+      "moduleCount": 7
+    },
+    {
+      "level": 4,
+      "title": "The Side Effects",
+      "subtitle": "What happens beyond the screen",
+      "color": "#f97316",
+      "description": "Real React apps talk to servers, read from URLs, handle form submissions, and manage timing. This level teaches you to read the patterns that connect React components to the outside world.",
+      "moduleCount": 6
+    },
+    {
+      "level": 5,
+      "title": "The Shape of Code",
+      "subtitle": "TypeScript and patterns you will encounter",
+      "color": "#ec4899",
+      "description": "Most real React codebases use TypeScript and follow common structural patterns. This level teaches you to read type annotations without panic and recognize the architectural patterns you will see in professional React code.",
+      "moduleCount": 6
+    },
+    {
+      "level": 6,
+      "title": "The Debugging",
+      "subtitle": "Finding and fixing what went wrong",
+      "color": "#ef4444",
+      "description": "Something is broken. The screen is blank, the data is wrong, a button does nothing. This level teaches you systematic React debugging — how to read error messages, use React DevTools, and identify the most common categories of bugs.",
+      "moduleCount": 6
+    },
+    {
+      "level": 7,
+      "title": "The AI Review",
+      "subtitle": "Reviewing and directing AI-generated React code",
+      "color": "#10b981",
+      "description": "AI can generate entire React components and pages. But it makes predictable mistakes. This level teaches you to review AI-generated React code systematically, catch the mistakes it makes most often, and write precise instructions to fix them.",
+      "moduleCount": 6
+    },
+    {
+      "level": 8,
+      "title": "The Codebase",
+      "subtitle": "Navigating real React projects with confidence",
+      "color": "#6366f1",
+      "description": "You have learned to read individual components, hooks, state, effects, types, and AI output. This level puts it all together: navigating a real React project, understanding how the pieces connect, and building the confidence to direct AI on any React task.",
+      "moduleCount": 4
+    }
+  ],
+  "modules": {
+    "root": [
+      {
+        "title": "Getting Started",
+        "description": "What this course is, who it's for, and why React literacy matters in the age of AI.",
+        "level": "root",
+        "slug": "getting-started",
+        "order": 0,
+        "isCheckpoint": false,
+        "isIndex": false
+      }
+    ],
+    "level-1": [
+      {
+        "title": "Level 1: The Component",
+        "description": "Every React app is built from components. Learn to see the building blocks.",
+        "level": "level-1",
+        "slug": "index",
+        "order": 0,
+        "isCheckpoint": false,
+        "isIndex": true
+      },
+      {
+        "title": "1.1 JSX Is HTML-Plus",
+        "description": "The markup in React files is called JSX. It looks like HTML with a few extra tricks.",
+        "level": "level-1",
+        "slug": "jsx-is-html-plus",
+        "order": 1,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "1.2 Anatomy of a Component",
+        "description": "Every component follows the same pattern: data in, markup out.",
+        "level": "level-1",
+        "slug": "anatomy-of-a-component",
+        "order": 2,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "1.3 Components Inside Components",
+        "description": "Pages are built by nesting components like building blocks.",
+        "level": "level-1",
+        "slug": "components-inside-components",
+        "order": 3,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "1.4 Checkpoint",
+        "description": "Read React components and identify what the user sees.",
+        "level": "level-1",
+        "slug": "checkpoint",
+        "order": 4,
+        "isCheckpoint": true,
+        "isIndex": false
+      }
+    ],
+    "level-2": [
+      {
+        "title": "Level 2: The Data Flow",
+        "description": "Data flows downward through props. Learn to trace the flow.",
+        "level": "level-2",
+        "slug": "index",
+        "order": 0,
+        "isCheckpoint": false,
+        "isIndex": true
+      },
+      {
+        "title": "2.1 Props Are Arguments",
+        "description": "Components receive data the same way functions receive arguments.",
+        "level": "level-2",
+        "slug": "props-are-arguments",
+        "order": 1,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "2.2 Passing Props Down",
+        "description": "How parent components hand data to child components.",
+        "level": "level-2",
+        "slug": "passing-props-down",
+        "order": 2,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "2.3 Showing and Hiding",
+        "description": "Components decide what to show based on the data they receive.",
+        "level": "level-2",
+        "slug": "showing-and-hiding",
+        "order": 3,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "2.4 Rendering Lists",
+        "description": "When you see .map() in React, it is turning an array into a list of components.",
+        "level": "level-2",
+        "slug": "rendering-lists",
+        "order": 4,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "2.5 Checkpoint",
+        "description": "Trace data flow through a multi-component page and identify problems.",
+        "level": "level-2",
+        "slug": "checkpoint",
+        "order": 5,
+        "isCheckpoint": true,
+        "isIndex": false
+      }
+    ],
+    "level-3": [
+      {
+        "title": "Level 3: The Memory",
+        "description": "Components remember things with state. Learn to read the hooks that manage it.",
+        "level": "level-3",
+        "slug": "index",
+        "order": 0,
+        "isCheckpoint": false,
+        "isIndex": true
+      },
+      {
+        "title": "3.1 useState: The Basics",
+        "description": "The most common hook. It gives a component a piece of memory that triggers a re-render when it changes.",
+        "level": "level-3",
+        "slug": "usestate-the-basics",
+        "order": 1,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "3.2 State Updates and Gotchas",
+        "description": "State does not update instantly, and updating objects and arrays has tricky rules.",
+        "level": "level-3",
+        "slug": "state-updates-and-gotchas",
+        "order": 2,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "3.3 useEffect: When Things Happen",
+        "description": "useEffect runs code at specific moments — when the component appears, when data changes, or when it disappears.",
+        "level": "level-3",
+        "slug": "useeffect-when-things-happen",
+        "order": 3,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "3.4 useContext: Data Without Drilling",
+        "description": "Some data needs to be available everywhere. useContext is React's way of sharing it.",
+        "level": "level-3",
+        "slug": "usecontext-data-without-drilling",
+        "order": 4,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "3.5 Reading Hooks in the Wild",
+        "description": "Real components combine multiple hooks. Practice reading them together.",
+        "level": "level-3",
+        "slug": "reading-hooks-in-the-wild",
+        "order": 5,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "3.6 Checkpoint",
+        "description": "Read stateful components and identify what changes, when, and why.",
+        "level": "level-3",
+        "slug": "checkpoint",
+        "order": 6,
+        "isCheckpoint": true,
+        "isIndex": false
+      }
+    ],
+    "level-4": [
+      {
+        "title": "Level 4: The Side Effects",
+        "description": "React components do more than show things. Learn to read what they do behind the scenes.",
+        "level": "level-4",
+        "slug": "index",
+        "order": 0,
+        "isCheckpoint": false,
+        "isIndex": true
+      },
+      {
+        "title": "4.1 Fetching Data",
+        "description": "The most common side effect: loading data from a server.",
+        "level": "level-4",
+        "slug": "fetching-data",
+        "order": 1,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "4.2 Forms and User Input",
+        "description": "How React handles what users type.",
+        "level": "level-4",
+        "slug": "forms-and-user-input",
+        "order": 2,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "4.3 Navigation and Routing",
+        "description": "How single-page apps show different pages without reloading.",
+        "level": "level-4",
+        "slug": "navigation-and-routing",
+        "order": 3,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "4.4 Common Async Patterns",
+        "description": "Loading states, error boundaries, and the patterns that handle things that take time.",
+        "level": "level-4",
+        "slug": "common-async-patterns",
+        "order": 4,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "4.5 Checkpoint",
+        "description": "Trace what happens when a user submits a form, navigates, or triggers a data fetch.",
+        "level": "level-4",
+        "slug": "checkpoint",
+        "order": 5,
+        "isCheckpoint": true,
+        "isIndex": false
+      }
+    ],
+    "level-5": [
+      {
+        "title": "Level 5: The Shape of Code",
+        "description": "Real React uses TypeScript and established patterns. Learn to read them.",
+        "level": "level-5",
+        "slug": "index",
+        "order": 0,
+        "isCheckpoint": false,
+        "isIndex": true
+      },
+      {
+        "title": "5.1 TypeScript Is Just Labels",
+        "description": "TypeScript adds labels to data — what type each variable is. It looks scary but it is just documentation.",
+        "level": "level-5",
+        "slug": "typescript-is-just-labels",
+        "order": 1,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "5.2 Reading Typed Components",
+        "description": "React components with TypeScript have a clear contract: here is what I need, here is what I give back.",
+        "level": "level-5",
+        "slug": "reading-typed-components",
+        "order": 2,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "5.3 Custom Hooks",
+        "description": "When you see useXyz(), someone built a reusable piece of logic. Learn to read what it does.",
+        "level": "level-5",
+        "slug": "custom-hooks",
+        "order": 3,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "5.4 Common Project Patterns",
+        "description": "Real projects organize code in recognizable ways.",
+        "level": "level-5",
+        "slug": "common-project-patterns",
+        "order": 4,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "5.5 Checkpoint",
+        "description": "Read TypeScript React code and navigate project structures.",
+        "level": "level-5",
+        "slug": "checkpoint",
+        "order": 5,
+        "isCheckpoint": true,
+        "isIndex": false
+      }
+    ],
+    "level-6": [
+      {
+        "title": "Level 6: The Debugging",
+        "description": "Something is broken. Learn to find it.",
+        "level": "level-6",
+        "slug": "index",
+        "order": 0,
+        "isCheckpoint": false,
+        "isIndex": true
+      },
+      {
+        "title": "6.1 Reading Error Messages",
+        "description": "React error messages look intimidating but they tell you exactly what is wrong and where.",
+        "level": "level-6",
+        "slug": "reading-error-messages",
+        "order": 1,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "6.2 React DevTools",
+        "description": "The Components tab and Profiler tab are your X-ray vision into any React app.",
+        "level": "level-6",
+        "slug": "react-devtools",
+        "order": 2,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "6.3 Common Bug Patterns",
+        "description": "The same bugs come up over and over. Learn to recognize them on sight.",
+        "level": "level-6",
+        "slug": "common-bug-patterns",
+        "order": 3,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "6.4 The Troubleshooting Checklist",
+        "description": "A systematic approach to any React bug.",
+        "level": "level-6",
+        "slug": "the-troubleshooting-checklist",
+        "order": 4,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "6.5 Checkpoint",
+        "description": "Diagnose multiple React bugs from error messages and code snippets.",
+        "level": "level-6",
+        "slug": "checkpoint",
+        "order": 5,
+        "isCheckpoint": true,
+        "isIndex": false
+      }
+    ],
+    "level-7": [
+      {
+        "title": "Level 7: The AI Review",
+        "description": "AI writes React fast. You learn to check it.",
+        "level": "level-7",
+        "slug": "index",
+        "order": 0,
+        "isCheckpoint": false,
+        "isIndex": true
+      },
+      {
+        "title": "7.1 What AI Gets Wrong in React",
+        "description": "AI makes the same React mistakes over and over. Here is the catalog.",
+        "level": "level-7",
+        "slug": "what-ai-gets-wrong",
+        "order": 1,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "7.2 The Review Checklist",
+        "description": "A systematic process for reviewing any AI-generated React code.",
+        "level": "level-7",
+        "slug": "the-review-checklist",
+        "order": 2,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "7.3 Writing Better React Prompts",
+        "description": "The more precisely you describe what you want, the better the output.",
+        "level": "level-7",
+        "slug": "writing-better-react-prompts",
+        "order": 3,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "7.4 Iterating on AI React Code",
+        "description": "When the first attempt is not right, how to describe the problem and get a fix.",
+        "level": "level-7",
+        "slug": "iterating-on-ai-react-code",
+        "order": 4,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "7.5 Checkpoint",
+        "description": "Review a complete AI-generated React feature and write the prompts to fix it.",
+        "level": "level-7",
+        "slug": "checkpoint",
+        "order": 5,
+        "isCheckpoint": true,
+        "isIndex": false
+      }
+    ],
+    "level-8": [
+      {
+        "title": "Level 8: The Codebase",
+        "description": "Put it all together. Navigate a real React project with confidence.",
+        "level": "level-8",
+        "slug": "index",
+        "order": 0,
+        "isCheckpoint": false,
+        "isIndex": true
+      },
+      {
+        "title": "8.1 Reading a React Project",
+        "description": "package.json, src/, components/, pages/ — the map of a real React codebase.",
+        "level": "level-8",
+        "slug": "reading-a-react-project",
+        "order": 1,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "8.2 Tracing a Feature",
+        "description": "Follow a user action from button click through state change to API call and screen update across multiple files.",
+        "level": "level-8",
+        "slug": "tracing-a-feature",
+        "order": 2,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "8.3 Final Capstone",
+        "description": "A comprehensive exercise: navigate a realistic React project, identify bugs, review AI output, and communicate fixes.",
+        "level": "level-8",
+        "slug": "final-capstone",
+        "order": 3,
+        "isCheckpoint": true,
+        "isIndex": false
+      }
+    ]
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "meta": {
+    "title": "Level 2: The Look",
+    "description": "CSS controls everything visual on a webpage. Learn to read it, understand it, and troubleshoot it.",
+    "level": "level-2",
+    "slug": "index",
+    "order": 0,
+    "isCheckpoint": false,
+    "isIndex": true
+  },
+  "blocks": [
+    {
+      "type": "markdown",
+      "content": "## Level 2: The Look\n\nIn Level 1, you learned to read HTML — the structure of a page. But HTML by itself is ugly. Every heading looks the same. Every paragraph is the same font. Everything stacks straight down the page with no personality.\n\n**CSS** (Cascading Style Sheets) is what transforms that plain skeleton into something that looks like a real website. It controls colors, fonts, spacing, layout — everything visual.\n\nHere is the key insight: CSS is just a list of instructions. Each instruction says \"find this element, and make it look like this.\" That is it. There is no logic, no calculations, no programming. Just instructions.\n\nWhen something looks wrong on a webpage — text is the wrong color, a button is too small, a layout is broken on mobile — the answer is almost always in the CSS.\n\n## What you will learn\n\n| Module | Topic | What you will be able to do |\n| :-- | :-- | :-- |\n| 2.1 | **CSS Is Just Instructions** | Read a CSS rule and say exactly what it does in plain English |\n| 2.2 | **The Box Model** | Understand why things are spaced the way they are and what to adjust |\n| 2.3 | **Layout and Positioning** | Recognize flexbox and grid, and know why elements end up where they do |\n| 2.4 | **Reading Real CSS** | Decode media queries, hover effects, transitions, and CSS variables |\n| 2.5 | **Checkpoint** | Debug CSS problems by reading the code and identifying what went wrong |\n\n## The mental model\n\nThink of HTML as the blueprint for a house — it defines the rooms, the doors, the windows. CSS is the interior design: paint colors, furniture arrangement, curtain choices, how much space between the couch and the wall.\n\nWhen a client says \"the living room feels cramped,\" the interior designer does not tear down walls. They adjust spacing, rearrange furniture, change proportions. That is exactly what CSS does for a webpage.\n\nYou do not need to become a CSS designer. You need to look at CSS and understand what each instruction does — so when something looks wrong, you can describe the problem precisely and know what to ask AI to fix."
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "CSS is a list of visual instructions — each one picks an element and describes how it should look. When something looks wrong on a page, the CSS is where you look. You do not need to write CSS from scratch. You need to read it well enough to spot what is off and describe what needs to change."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "Let's start with the building block of every CSS instruction: the rule. Module 2.1 will show you how to read any CSS rule in plain English."
+    }
+  ]
+}

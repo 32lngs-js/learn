@@ -106,5 +106,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Corporate Restructuring**, where you'll learn about the reverse of M&A \u2014 how companies divest, spin off, and restructure their businesses, including bankruptcy processes that may result from overleveraged acquisitions."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Synergies in a merger refer to:",
+      "options": [
+        "The premium paid over market price",
+        "The additional value created by combining two companies that exceeds their standalone values",
+        "The cost of the acquisition"
+      ],
+      "correctIndex": 1,
+      "explanation": "Synergies are the extra value from combining firms \u2014 cost savings (cost synergies) or revenue enhancements (revenue synergies) that neither could achieve alone.",
+      "encourageCorrect": "That's it! 1 + 1 = 3 is the synergy concept.",
+      "encourageIncorrect": "Synergies are the additional value from combining two companies \u2014 cost savings or revenue gains that wouldn't exist separately."
+    },
+    {
+      "question": "A hostile takeover occurs when:",
+      "options": [
+        "Both boards agree to merge",
+        "The acquirer bypasses the target's management and appeals directly to shareholders",
+        "A company goes bankrupt"
+      ],
+      "correctIndex": 1,
+      "explanation": "In a hostile takeover, the acquirer goes directly to shareholders (via tender offer or proxy fight) because the target's board has rejected the bid.",
+      "encourageCorrect": "Right! Hostile means going around management directly to shareholders.",
+      "encourageIncorrect": "A hostile takeover bypasses the target's management, appealing directly to shareholders through a tender offer or proxy fight."
+    }
   ]
 }

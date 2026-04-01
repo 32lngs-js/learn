@@ -43,5 +43,31 @@
       "type": "connectPrompt",
       "prompt": "CI/CD and scripts use Claude through the command line. But sometimes you need deeper programmatic control — dynamic prompts, conditional logic, complex orchestration. That is what the SDK provides, and it is the next step."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is the most common problem with automated Claude PR reviews?",
+      "options": [
+        "They are too slow",
+        "Too many trivial comments that developers learn to ignore",
+        "They can't read code"
+      ],
+      "correctIndex": 1,
+      "explanation": "If Claude comments on every PR with obvious observations, developers ignore it. Focus on high-value issues like security and logic errors.",
+      "encourageCorrect": "Signal over noise! Focus on what matters to build trust.",
+      "encourageIncorrect": "The key problem is signal-to-noise — too many trivial comments make developers ignore Claude. Focus on substantive issues only."
+    },
+    {
+      "question": "Should Claude's automated review output block merging?",
+      "options": [
+        "Yes, always block on any issue",
+        "No — it should inform humans, not replace them",
+        "Only on security issues"
+      ],
+      "correctIndex": 1,
+      "explanation": "Claude's output should inform human reviewers, not block the pipeline. A failed AI review should flag items for attention, not prevent merging.",
+      "encourageCorrect": "Right! Claude assists reviewers rather than replacing them.",
+      "encourageIncorrect": "Claude's reviews should inform humans, not block the pipeline — AI reviews flag items for attention, while humans make the final call."
+    }
   ]
 }

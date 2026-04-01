@@ -118,5 +118,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Valuation of Contingent Claims** \u2014 options, which unlike forwards, give the holder the *right* but not the obligation to transact. You will learn the binomial model and Black-Scholes-Merton framework, which build on the same no-arbitrage principles used here but must account for the asymmetric payoff of options."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "The value of a forward contract after initiation depends on:",
+      "options": [
+        "Only the original forward price",
+        "The difference between the current forward price and the original contract forward price",
+        "The risk-free rate only"
+      ],
+      "correctIndex": 1,
+      "explanation": "After initiation, the contract has value because the original forward price may differ from the current market forward price. The difference (discounted) is the contract value.",
+      "encourageCorrect": "That's it! The value comes from the gap between the old and current forward prices.",
+      "encourageIncorrect": "A forward's value after initiation is the present value of the difference between the current forward price and the original contract price."
+    },
+    {
+      "question": "The fixed rate in an interest rate swap is set so that the swap has:",
+      "options": [
+        "Positive value to the fixed-rate payer",
+        "Zero value to both parties at inception",
+        "Positive value to the floating-rate payer"
+      ],
+      "correctIndex": 1,
+      "explanation": "Like forwards, swaps are designed so neither party pays the other at inception \u2014 the fixed rate is chosen to make the initial swap value zero.",
+      "encourageCorrect": "Correct! The swap rate is the breakeven fixed rate that makes the swap fair at inception.",
+      "encourageIncorrect": "The swap fixed rate is set so neither party owes the other at inception \u2014 the contract starts with zero value, just like a forward."
+    }
   ]
 }

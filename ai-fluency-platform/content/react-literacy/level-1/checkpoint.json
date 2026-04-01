@@ -1,0 +1,107 @@
+{
+  "meta": {
+    "title": "1.4 Checkpoint",
+    "description": "Read React components and identify what the user sees.",
+    "level": "level-1",
+    "slug": "checkpoint",
+    "order": 4,
+    "isCheckpoint": true,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "markdown",
+      "content": "## Checkpoint: The Component\n\nThis checkpoint tests whether you have internalized the concepts from Level 1. The goal is to read React components and answer questions about them **without scrolling back** to the modules. If you find yourself struggling, revisit the relevant module before continuing to Level 2.\n\n### Concept recall"
+    },
+    {
+      "type": "explainBack",
+      "prompt": "List the four key differences between HTML and JSX. For each one, give an example of what the code looks like in HTML versus JSX."
+    },
+    {
+      "type": "explainBack",
+      "prompt": "Describe the two zones of a React component. If you see a variable defined above the return statement, is it visible to the user? What about a variable used inside curly braces in the return statement?"
+    },
+    {
+      "type": "explainBack",
+      "prompt": "How do you tell the difference between a React component and an HTML element when reading JSX? If you see a tag you do not recognize, what is the first thing you check to find where it is defined?"
+    },
+    {
+      "type": "markdown",
+      "content": "### Applied exercises\n\nRead each component and answer the question."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Level 1 Synthesis",
+      "problems": [
+        {
+          "id": "rl1-cp-1",
+          "question": "What does this component render to the screen?\n\n```jsx\nfunction WelcomeBanner() {\n  const company = \"Acme Corp\";\n  const year = 2025;\n  const slogan = `Welcome to ${company}`;\n\n  return (\n    <div className=\"banner\">\n      <h1>{slogan}</h1>\n      <p>&copy; {year} {company}. All rights reserved.</p>\n    </div>\n  );\n}\n```",
+          "options": [
+            "A) A heading 'Welcome to Acme Corp' and a paragraph with the copyright for 2025 Acme Corp",
+            "B) A heading '{slogan}' and a paragraph '{year} {company}'",
+            "C) A heading 'Welcome to ${company}' and a paragraph with the year 2025"
+          ],
+          "correctAnswer": "A",
+          "explanation": "The template literal `Welcome to ${company}` evaluates to 'Welcome to Acme Corp' and is stored in the slogan variable. Inside the JSX, {slogan} inserts that string. {year} becomes 2025 and {company} becomes 'Acme Corp'. The &copy; is an HTML entity that renders as the copyright symbol. className='banner' applies CSS styling but is not visible text.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "rl1-cp-2",
+          "question": "This JSX has a bug. What is wrong?\n\n```jsx\nfunction ProfileCard() {\n  const user = { name: \"Dana\", title: \"VP of Product\" };\n\n  return (\n    <div class=\"card\">\n      <h2>{user.name}</h2>\n      <p>{user.title}</p>\n      <img src=\"avatar.jpg\" alt={user.name}>\n    </div>\n  );\n}\n```",
+          "options": [
+            "A) 'class' should be 'className' and the <img> tag must be self-closing: <img ... />",
+            "B) user.name and user.title cannot be accessed with dot notation in JSX",
+            "C) The function is missing an export default statement"
+          ],
+          "correctAnswer": "A",
+          "explanation": "Two JSX rules are violated. First, 'class' is not valid in JSX -- it must be 'className'. Second, the <img> tag has no closing tag and is not self-closing. In JSX, every tag must be closed. Since <img> has no children, it should be <img src='avatar.jpg' alt={user.name} />. Dot notation works fine in JSX curly braces, and while export default is best practice, its absence does not cause a JSX error.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "rl1-cp-3",
+          "question": "How many React components and how many HTML elements are in this JSX?\n\n```jsx\nfunction App() {\n  return (\n    <div>\n      <NavigationBar />\n      <main>\n        <HeroBanner />\n        <section>\n          <FeatureCard />\n          <FeatureCard />\n          <FeatureCard />\n        </section>\n      </main>\n      <SiteFooter />\n    </div>\n  );\n}\n```",
+          "options": [
+            "A) 3 components (NavigationBar, HeroBanner, FeatureCard) and 3 HTML elements (div, main, section)",
+            "B) 5 components (NavigationBar, HeroBanner, FeatureCard x3) and 3 HTML elements (div, main, section)",
+            "C) 6 components and 3 HTML elements"
+          ],
+          "correctAnswer": "C",
+          "explanation": "Count every capitalized tag: NavigationBar (1), HeroBanner (1), FeatureCard appears three times (3), and SiteFooter (1) = 6 React component instances. The HTML elements are div, main, and section (3). FeatureCard is the same component used three times -- each instance counts separately because each one renders independently.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "rl1-cp-4",
+          "question": "Read this component. What can you tell about the page structure without seeing any child component's code?\n\n```jsx\nimport Breadcrumb from \"./Breadcrumb\";\nimport ProductImage from \"./ProductImage\";\nimport ProductInfo from \"./ProductInfo\";\nimport AddToCartButton from \"./AddToCartButton\";\nimport ReviewList from \"./ReviewList\";\n\nfunction ProductPage() {\n  const product = {\n    name: \"Ergonomic Keyboard\",\n    price: 129.99,\n    rating: 4.5,\n  };\n\n  return (\n    <>\n      <Breadcrumb current={product.name} />\n      <div className=\"product-layout\">\n        <ProductImage />\n        <div className=\"product-details\">\n          <ProductInfo name={product.name} price={product.price} />\n          <AddToCartButton price={product.price} />\n        </div>\n      </div>\n      <ReviewList rating={product.rating} />\n    </>\n  );\n}\n```",
+          "options": [
+            "A) A breadcrumb showing the product name, then a product image next to product details and an add-to-cart button, followed by a review list",
+            "B) Only a product image and a price -- the other components are decorative",
+            "C) You cannot determine anything about the layout without reading each component's source code"
+          ],
+          "correctAnswer": "A",
+          "explanation": "The component names describe their purpose. Breadcrumb shows navigation context with the product name. The product-layout div contains ProductImage beside a details section with ProductInfo (receiving name and price) and AddToCartButton (receiving price). ReviewList with the rating appears below. The fragment (<></>) groups everything without adding extra HTML. You can read the entire page structure from the component names and nesting alone.",
+          "difficulty": "advanced"
+        },
+        {
+          "id": "rl1-cp-5",
+          "question": "What would you tell an AI to fix in this component?\n\n```jsx\nfunction Alert() {\n  const type = \"warning\";\n  const message = \"Your session expires in 5 minutes\";\n\n  return (\n    <div class=\"alert\">\n      <span class=\"alert-icon\">{type === \"warning\" ? \"⚠️\" : \"ℹ️\"}</span>\n      <p>{message}</p>\n      <button>Dismiss<button>\n    </div>\n  );\n}\n```",
+          "options": [
+            "A) Tell the AI: 'Change class to className in both places, and fix the button closing tag -- it should be </button> not <button>'",
+            "B) Tell the AI: 'The ternary expression is wrong -- switch the emoji order'",
+            "C) Tell the AI: 'The component name Alert is invalid because it conflicts with a browser API'"
+          ],
+          "correctAnswer": "A",
+          "explanation": "There are two types of errors. First, 'class' appears twice and should be 'className' in both places. Second, the button's closing tag is written as <button> instead of </button> -- it is missing the forward slash. The ternary expression is correct (warning shows the warning emoji). Alert is a perfectly valid component name -- while window.alert() exists in browsers, the capital A makes this a React component, not a browser API call.",
+          "difficulty": "advanced"
+        }
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "### Self-assessment\n\nRate your confidence on each Level 1 concept from 1 (cannot explain it) to 5 (could teach it):\n\n| Concept | Confidence (1-5) |\n| :-- | :-- |\n| className vs class | |\n| Self-closing tags | |\n| Curly braces for JavaScript expressions | |\n| Fragments | |\n| The two zones (logic vs markup) | |\n| export default | |\n| Capital letter = component, lowercase = HTML | |\n| Reading import statements to find components | |\n\nIf any concept is below a 3, revisit that module before continuing to Level 2."
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "Level 1 fluency means you can look at any React component and answer three questions: What JSX syntax is being used? Where is the logic and where is the markup? Which tags are custom components and which are HTML? If you can answer these confidently, you are ready for Level 2, where you will learn how data flows between components through props."
+    }
+  ]
+}

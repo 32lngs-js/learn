@@ -104,5 +104,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Analysis of Active Portfolio Management**, where you will learn to quantify a manager's skill using the Information Ratio and the Fundamental Law of Active Management. These tools help determine whether active management can add value \u2014 and how much \u2014 given the economic environment you just studied."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "The equity risk premium represents:",
+      "options": [
+        "The total return on equities",
+        "The extra return investors expect from equities over the risk-free rate",
+        "The dividend yield on stocks"
+      ],
+      "correctIndex": 1,
+      "explanation": "The equity risk premium is the additional return investors require for bearing the systematic risk of equities compared to risk-free assets.",
+      "encourageCorrect": "Right! It's the reward for taking on stock market risk above the risk-free rate.",
+      "encourageIncorrect": "The equity risk premium is the excess return investors demand for holding equities instead of risk-free bonds. It compensates for equity's higher risk."
+    },
+    {
+      "question": "In a risk-on environment, investors typically:",
+      "options": [
+        "Flee to safe-haven assets",
+        "Increase allocation to riskier assets seeking higher returns",
+        "Hold only cash"
+      ],
+      "correctIndex": 1,
+      "explanation": "Risk-on sentiment means investors are willing to take more risk, moving into equities, credit, and emerging markets. Risk-off is the opposite \u2014 flight to safety.",
+      "encourageCorrect": "Correct! Risk-on means appetite for risky assets increases.",
+      "encourageIncorrect": "In a risk-on environment, investors are optimistic and increase exposure to riskier assets like equities and high-yield bonds."
+    }
   ]
 }

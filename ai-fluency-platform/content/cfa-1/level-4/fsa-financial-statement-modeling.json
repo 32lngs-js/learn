@@ -122,5 +122,31 @@
       "type": "connectPrompt",
       "prompt": "The next module is the **FSA Checkpoint**, which tests your knowledge across all FSA topics covered so far. The modeling skills from this module tie together everything \u2014 income statement analysis, balance sheet concepts, cash flow analysis, inventory methods, depreciation choices, tax effects, and ratio analysis all feed into the financial model."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is the primary purpose of financial statement modeling?",
+      "options": [
+        "To comply with audit requirements",
+        "To project future financial statements and estimate intrinsic value",
+        "To calculate historical tax obligations"
+      ],
+      "correctIndex": 1,
+      "explanation": "Financial modeling projects future income statements, balance sheets, and cash flows to estimate a company's value.",
+      "encourageCorrect": "Right! Modeling is about projecting the future to estimate value.",
+      "encourageIncorrect": "Financial statement modeling projects future financial statements to help estimate a company's intrinsic value."
+    },
+    {
+      "question": "Revenue forecasts in a financial model are typically built using:",
+      "options": [
+        "Random number generation",
+        "A top-down (market-based) or bottom-up (company-specific) approach",
+        "Only historical averages with no adjustments"
+      ],
+      "correctIndex": 1,
+      "explanation": "Analysts use top-down (starting with the market/economy) or bottom-up (starting with company-specific drivers) approaches to forecast revenue.",
+      "encourageCorrect": "Well done! Top-down starts with the market, bottom-up starts with the company.",
+      "encourageIncorrect": "Revenue is forecast using top-down (market/economy first) or bottom-up (company-specific drivers first) approaches."
+    }
   ]
 }

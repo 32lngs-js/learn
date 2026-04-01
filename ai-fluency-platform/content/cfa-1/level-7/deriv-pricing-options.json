@@ -114,5 +114,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Put-Call Parity** \u2014 a fundamental relationship linking call prices, put prices, the underlying, and a risk-free bond. It shows how to create synthetic positions and identify arbitrage opportunities."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Which of the following factors increases the value of a call option?",
+      "options": [
+        "A decrease in the underlying asset's price",
+        "An increase in volatility of the underlying asset",
+        "A decrease in time to expiration"
+      ],
+      "correctIndex": 1,
+      "explanation": "Higher volatility increases the chance of large favorable moves for the option holder, increasing value. This applies to both calls and puts.",
+      "encourageCorrect": "Correct! More volatility means more potential upside for option holders.",
+      "encourageIncorrect": "Higher volatility increases the value of both calls and puts. More volatility means a greater chance of the option finishing deep in the money."
+    },
+    {
+      "question": "An option's intrinsic value is:",
+      "options": [
+        "Always positive or zero \u2014 the payoff if exercised immediately",
+        "The total premium paid for the option",
+        "The time value component of the option price"
+      ],
+      "correctIndex": 0,
+      "explanation": "Intrinsic value is the amount the option is in the money (or zero if out of the money). Option price = Intrinsic value + Time value.",
+      "encourageCorrect": "Right! Intrinsic value is the immediate exercise value, never negative.",
+      "encourageIncorrect": "Intrinsic value is the payoff if exercised now (max of 0 and in-the-money amount). The option's total price also includes time value."
+    }
   ]
 }

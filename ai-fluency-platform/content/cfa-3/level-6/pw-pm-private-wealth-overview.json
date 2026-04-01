@@ -100,5 +100,31 @@
       "type": "connectPrompt",
       "prompt": "This concludes the Portfolio Management Pathway. The next checkpoint will test your ability to integrate concepts across liability-driven strategies, yield curve positioning, credit analysis, equity strategies, multi-asset approaches, and private wealth management."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Private wealth management differs from institutional management primarily because:",
+      "options": [
+        "Private clients have simpler needs",
+        "Individual clients have taxes, behavioral biases, unique goals, and finite time horizons",
+        "Private clients don't need an IPS"
+      ],
+      "correctIndex": 1,
+      "explanation": "Individual clients face unique considerations: personal taxes, emotional biases, specific life goals, and a finite time horizon tied to their lifespan.",
+      "encourageCorrect": "That's the key difference! Individuals bring taxes, emotions, and life stage into the equation.",
+      "encourageIncorrect": "Private wealth management must address taxes, behavioral biases, personal goals, and the finite time horizon of individual clients \u2014 complications institutional clients often don't face."
+    },
+    {
+      "question": "Human capital refers to:",
+      "options": [
+        "The value of a person's investment portfolio",
+        "The present value of a person's expected future labor income",
+        "A company's employee headcount"
+      ],
+      "correctIndex": 1,
+      "explanation": "Human capital is the PV of future earnings. Young workers have high human capital (many earning years ahead); retirees have little or none.",
+      "encourageCorrect": "Right! Your future earning power is a valuable 'asset' in wealth planning.",
+      "encourageIncorrect": "Human capital is the present value of expected future labor income. It's largest early in a career and diminishes toward retirement."
+    }
   ]
 }

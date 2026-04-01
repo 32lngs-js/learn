@@ -118,5 +118,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Simple Linear Regression**, where you will model the linear relationship between two variables formally. Regression builds directly on the correlation concepts from this module \u2014 the correlation coefficient is related to R-squared, the key measure of regression fit."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "When is a non-parametric test preferred over a parametric test?",
+      "options": [
+        "When the sample is very large",
+        "When the data is skewed or from a non-normal distribution with a small sample",
+        "When you want more statistical power"
+      ],
+      "correctIndex": 1,
+      "explanation": "Non-parametric tests don't assume normality, making them appropriate for small samples from non-normal or skewed distributions.",
+      "encourageCorrect": "Right! Non-parametric tests shine when normality assumptions don't hold.",
+      "encourageIncorrect": "Non-parametric tests are best when data is skewed or non-normal, especially with small samples where the Central Limit Theorem can't help."
+    },
+    {
+      "question": "What does the Spearman rank correlation measure?",
+      "options": [
+        "The linear relationship between two variables",
+        "The monotonic relationship between two variables using ranks",
+        "The causal relationship between two variables"
+      ],
+      "correctIndex": 1,
+      "explanation": "Spearman rank correlation uses ranked data to measure monotonic (consistently increasing or decreasing) relationships, not just linear ones.",
+      "encourageCorrect": "That's it! Spearman uses ranks to capture monotonic relationships.",
+      "encourageIncorrect": "Spearman rank correlation measures monotonic relationships using ranks, unlike Pearson which measures linear relationships using raw values."
+    }
   ]
 }

@@ -1,0 +1,109 @@
+{
+  "meta": {
+    "title": "4.2 Forms and User Input",
+    "description": "How React handles what users type.",
+    "level": "level-4",
+    "slug": "forms-and-user-input",
+    "order": 2,
+    "isCheckpoint": false,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "predictPrompt",
+      "prompt": "In regular HTML, when you type in an input field, the browser handles everything -- it shows what you typed and keeps track of the value. In React, the component manages its own state. So how do you think React keeps an input field in sync with a state variable? Does the input manage itself, or does React tell it what to show?"
+    },
+    {
+      "type": "markdown",
+      "content": "## React takes control of the input\n\nIn plain HTML, an input field manages its own value. You type, it displays. Simple.\n\nIn React, the most common pattern flips this around. React tells the input what to display, and the input tells React what the user typed. This is called a **controlled component** -- the React state is the \"single source of truth\" for the input's value.\n\n### The controlled input pattern\n\n```jsx\nfunction SearchBar() {\n  const [query, setQuery] = useState('');\n\n  return (\n    <input\n      value={query}\n      onChange={(e) => setQuery(e.target.value)}\n    />\n  );\n}\n```\n\nTwo attributes make this work:\n\n1. **`value={query}`** -- React tells the input what to display. The input always shows whatever `query` is.\n2. **`onChange={(e) => setQuery(e.target.value)}`** -- When the user types, the browser fires an onChange event. The handler reads what was typed (`e.target.value`) and updates the state.\n\nThe cycle on every keystroke:\n1. User types \"h\"\n2. Browser fires onChange with `e.target.value` = \"h\"\n3. `setQuery(\"h\")` updates state\n4. Component re-renders with `query` = \"h\"\n5. Input displays \"h\" because `value={query}`\n\nThis happens so fast it feels instant. But understanding the cycle matters because bugs in this cycle are visible and confusing.\n\n### What happens if you forget onChange?\n\n```jsx\n// BUG: input appears frozen\n<input value={query} />\n```\n\nWithout onChange, the state never updates. But `value={query}` forces the input to show the current state (an empty string). The user types, but the input stays empty. It looks frozen.\n\nIf you see a bug report like \"the input field does not let me type anything,\" check for a missing onChange handler.\n\n### What happens if you forget value?\n\n```jsx\n// This works but React does not control the input\n<input onChange={(e) => setQuery(e.target.value)} />\n```\n\nWithout `value`, the input manages itself (an \"uncontrolled\" component). The onChange still fires and updates state, but React is not driving the display. This can cause the input and state to get out of sync.\n\n## The event object\n\nWhen you see `(e)` or `(event)` in an onChange handler, that is the **event object**. It contains information about what happened.\n\nThe most important property: `e.target.value` -- what the user typed.\n\n```jsx\nonChange={(e) => setQuery(e.target.value)}\n```\n\n`e.target` is the HTML element that fired the event (the input). `e.target.value` is the text currently in that input.\n\nFor checkboxes, the relevant property is `e.target.checked` (a boolean):\n\n```jsx\n<input\n  type=\"checkbox\"\n  checked={isSubscribed}\n  onChange={(e) => setIsSubscribed(e.target.checked)}\n/>\n```\n\n## Form submission\n\nWhen a form has multiple fields, they are typically wrapped in a `<form>` element with an `onSubmit` handler:\n\n```jsx\nfunction ContactForm() {\n  const [name, setName] = useState('');\n  const [email, setEmail] = useState('');\n  const [message, setMessage] = useState('');\n  const [submitting, setSubmitting] = useState(false);\n\n  function handleSubmit(e) {\n    e.preventDefault();\n\n    setSubmitting(true);\n    fetch('/api/contact', {\n      method: 'POST',\n      headers: { 'Content-Type': 'application/json' },\n      body: JSON.stringify({ name, email, message }),\n    })\n      .then(() => {\n        alert('Message sent!');\n        setName('');\n        setEmail('');\n        setMessage('');\n      })\n      .finally(() => setSubmitting(false));\n  }\n\n  return (\n    <form onSubmit={handleSubmit}>\n      <input\n        value={name}\n        onChange={(e) => setName(e.target.value)}\n        placeholder=\"Your name\"\n      />\n      <input\n        type=\"email\"\n        value={email}\n        onChange={(e) => setEmail(e.target.value)}\n        placeholder=\"Your email\"\n      />\n      <textarea\n        value={message}\n        onChange={(e) => setMessage(e.target.value)}\n        placeholder=\"Your message\"\n      />\n      <button type=\"submit\" disabled={submitting}>\n        {submitting ? 'Sending...' : 'Send'}\n      </button>\n    </form>\n  );\n}\n```\n\n### The critical line: `e.preventDefault()`\n\nThis is the single most important line in any React form handler:\n\n```jsx\nfunction handleSubmit(e) {\n  e.preventDefault();  // <-- THIS LINE\n  // ... rest of the handler\n}\n```\n\nWhy? Because the default behavior of an HTML form submission is to **reload the entire page**. In a React app (which is a single-page application), a page reload wipes out all state and starts the app over from scratch.\n\n`e.preventDefault()` tells the browser: \"Do not do the default thing. I will handle the submission myself.\"\n\n**This is the most common AI-generated form bug.** When AI generates a form and the page refreshes on submit, the first thing to check is whether `e.preventDefault()` is present in the onSubmit handler.\n\n### Reading a form component\n\nWhen you encounter a form in React code:\n\n1. **Look at the state** -- each field usually has its own useState\n2. **Find the onSubmit handler** -- this is where the form data goes (usually a fetch POST request)\n3. **Check for `e.preventDefault()`** -- if it is missing, the form is broken\n4. **Look for validation** -- any checks before the fetch (empty fields, email format, etc.)\n5. **Check the submit button** -- is it disabled while submitting? Does it show loading text?\n\n## Common form patterns\n\n### Single object state for forms\n\nInstead of separate useState for each field, some components use one object:\n\n```jsx\nfunction RegistrationForm() {\n  const [form, setForm] = useState({\n    username: '',\n    email: '',\n    password: '',\n  });\n\n  function handleChange(e) {\n    setForm({\n      ...form,\n      [e.target.name]: e.target.value,\n    });\n  }\n\n  return (\n    <form onSubmit={handleSubmit}>\n      <input name=\"username\" value={form.username} onChange={handleChange} />\n      <input name=\"email\" value={form.email} onChange={handleChange} />\n      <input name=\"password\" value={form.password} onChange={handleChange} />\n    </form>\n  );\n}\n```\n\nThe trick: `[e.target.name]: e.target.value` uses the input's `name` attribute as the key to update the correct field in the state object. This is a computed property name -- a JavaScript feature that lets you use a variable as an object key.\n\nThis pattern reduces the number of handlers from one per field to one shared handler.\n\n### Select dropdowns\n\n```jsx\n<select value={country} onChange={(e) => setCountry(e.target.value)}>\n  <option value=\"us\">United States</option>\n  <option value=\"uk\">United Kingdom</option>\n  <option value=\"ca\">Canada</option>\n</select>\n```\n\nIn React, the `value` attribute on `<select>` determines which option is selected. This is different from plain HTML where you put `selected` on the option.\n\n### Radio buttons\n\n```jsx\n<label>\n  <input\n    type=\"radio\"\n    name=\"plan\"\n    value=\"basic\"\n    checked={plan === 'basic'}\n    onChange={(e) => setPlan(e.target.value)}\n  />\n  Basic\n</label>\n<label>\n  <input\n    type=\"radio\"\n    name=\"plan\"\n    value=\"pro\"\n    checked={plan === 'pro'}\n    onChange={(e) => setPlan(e.target.value)}\n  />\n  Pro\n</label>\n```\n\nEach radio button has a `checked` attribute driven by state comparison and an onChange that updates the shared state.\n\n## Summary\n\n| Concept | What to know |\n| :-- | :-- |\n| Controlled component | `value` + `onChange` -- React drives the input |\n| `e.target.value` | The current text in the input |\n| `e.target.checked` | The current checked state of a checkbox |\n| `e.preventDefault()` | Prevents page reload on form submit |\n| Frozen input | Missing `onChange` -- state never updates |\n| Page refreshes on submit | Missing `e.preventDefault()` |"
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "A React form has `<form onSubmit={handleSubmit}>` but the handleSubmit function does NOT call `e.preventDefault()`. What happens when the user clicks the submit button?",
+      "answer": "The entire page reloads. The browser performs its default form submission behavior -- an HTTP request that navigates to a new page (or reloads the current one). In a React single-page app, this means all state is lost and the app restarts from scratch. The form data may or may not reach the server depending on the setup, but even if it does, the user experience is broken."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Forms and User Input",
+      "problems": [
+        {
+          "id": "rl4-2-1",
+          "question": "The user reports that they cannot type in the email field. It appears frozen. What is wrong?\n\n```jsx\nfunction Newsletter() {\n  const [email, setEmail] = useState('');\n\n  return (\n    <form>\n      <input\n        type=\"email\"\n        value={email}\n        placeholder=\"Enter your email\"\n      />\n      <button type=\"submit\">Subscribe</button>\n    </form>\n  );\n}\n```",
+          "options": [
+            "A) The input has `value={email}` but no `onChange` handler. React forces the input to show the current state (empty string) and the user's keystrokes are ignored.",
+            "B) The useState should initialize with null instead of an empty string.",
+            "C) The form needs an onSubmit handler before inputs will work.",
+            "D) The input type \"email\" is not supported in React."
+          ],
+          "correctAnswer": "A",
+          "explanation": "This is the classic frozen input bug. The `value` attribute locks the input to whatever the state is (empty string). Without an `onChange` handler, no keystrokes update the state, so the input stays empty. The fix: add `onChange={(e) => setEmail(e.target.value)}`.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "rl4-2-2",
+          "question": "A client says: \"When I submit the login form, the page flashes white and then I am back at the login form with empty fields.\" What is the bug?\n\n```jsx\nfunction LoginForm() {\n  const [email, setEmail] = useState('');\n  const [password, setPassword] = useState('');\n\n  function handleSubmit() {\n    fetch('/api/login', {\n      method: 'POST',\n      headers: { 'Content-Type': 'application/json' },\n      body: JSON.stringify({ email, password }),\n    })\n      .then(res => res.json())\n      .then(data => {\n        localStorage.setItem('token', data.token);\n        window.location.href = '/dashboard';\n      });\n  }\n\n  return (\n    <form onSubmit={handleSubmit}>\n      <input value={email} onChange={e => setEmail(e.target.value)} />\n      <input\n        type=\"password\"\n        value={password}\n        onChange={e => setPassword(e.target.value)}\n      />\n      <button type=\"submit\">Log In</button>\n    </form>\n  );\n}\n```",
+          "options": [
+            "A) `handleSubmit` does not call `e.preventDefault()`. The browser performs a default form submission (page reload) before the fetch can complete, so the login never succeeds.",
+            "B) The fetch URL is wrong.",
+            "C) localStorage.setItem does not work in React.",
+            "D) The password input type prevents submission."
+          ],
+          "correctAnswer": "A",
+          "explanation": "The handleSubmit function does not receive or use the event object, so `e.preventDefault()` is never called. When the form submits, the browser reloads the page before the fetch has a chance to complete. The fix: change to `function handleSubmit(e) { e.preventDefault(); ... }`. The white flash is the page reloading. This is the most common AI-generated form bug.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "rl4-2-3",
+          "question": "You are reviewing AI-generated code for a user settings form. The client says: \"When I change the email field, my display name disappears.\" What would you tell the AI to fix?\n\n```jsx\nfunction SettingsForm() {\n  const [settings, setSettings] = useState({\n    displayName: 'Alice',\n    email: 'alice@example.com',\n    bio: 'Hello world',\n  });\n\n  return (\n    <form>\n      <input\n        value={settings.displayName}\n        onChange={(e) => setSettings({ displayName: e.target.value })}\n      />\n      <input\n        value={settings.email}\n        onChange={(e) => setSettings({ email: e.target.value })}\n      />\n      <textarea\n        value={settings.bio}\n        onChange={(e) => setSettings({ bio: e.target.value })}\n      />\n    </form>\n  );\n}\n```",
+          "options": [
+            "A) Each onChange replaces the entire settings object with only one field. When email changes, `setSettings({ email: 'new' })` erases displayName and bio. Fix: spread the existing state first: `setSettings({ ...settings, email: e.target.value })`.",
+            "B) The textarea cannot be controlled in React.",
+            "C) The form needs an onSubmit handler for the inputs to work.",
+            "D) useState cannot hold objects."
+          ],
+          "correctAnswer": "A",
+          "explanation": "This is the same bug from Module 3.2 in a form context. `setSettings({ email: e.target.value })` replaces the entire state object with `{ email: 'new@example.com' }` -- the displayName and bio keys are gone. The fix: spread the existing state first in every onChange: `setSettings({ ...settings, email: e.target.value })`. Or better yet, use the shared handler pattern with `[e.target.name]: e.target.value`. You would tell the AI: \"Each onChange handler replaces the entire settings object. Spread the existing settings before overriding the changed field.\"",
+          "difficulty": "advanced"
+        }
+      ]
+    },
+    {
+      "type": "explainBack",
+      "prompt": "Explain what a controlled component is in React. What two attributes on an input make it controlled? What happens if you have `value` but no `onChange`? And why is `e.preventDefault()` essential in form submit handlers?"
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "React forms use controlled components where state drives the input's value and onChange updates the state on every keystroke. Missing onChange means a frozen input. Missing e.preventDefault() in the submit handler means a full page reload. These are the two most common form bugs, especially in AI-generated code."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "Every form you fill out on the web -- login pages, search bars, checkout flows, settings panels -- uses these patterns under the hood. The next time you encounter a form that does not work right (input does not respond, page refreshes on submit), you now know exactly where to look."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What two attributes make an input a 'controlled component' in React?",
+      "options": ["value and onChange", "name and type", "placeholder and defaultValue"],
+      "correctIndex": 0,
+      "explanation": "A controlled component uses 'value' to display the current state and 'onChange' to update the state on every keystroke. Together, React drives the input.",
+      "encourageCorrect": "That's it! value + onChange is the controlled component formula.",
+      "encourageIncorrect": "The answer is value and onChange. The value prop tells the input what to show, and onChange updates state when the user types."
+    },
+    {
+      "question": "What does e.preventDefault() do in a form's onSubmit handler?",
+      "options": ["It clears the form fields", "It stops the browser from reloading the page", "It validates the form data"],
+      "correctIndex": 1,
+      "explanation": "By default, submitting an HTML form causes a full page reload. e.preventDefault() stops that default behavior so React can handle the submission without losing state.",
+      "encourageCorrect": "Nice work! Without preventDefault, the page reloads and all React state is lost.",
+      "encourageIncorrect": "Not quite -- e.preventDefault() stops the browser's default form submission behavior, which is to reload the entire page. This is essential in React apps."
+    },
+    {
+      "question": "If an input has 'value={email}' but no onChange handler, what happens when the user tries to type?",
+      "options": ["The input works normally", "The input appears frozen -- keystrokes are ignored", "The input crashes the app"],
+      "correctIndex": 1,
+      "explanation": "Without onChange, the state never updates. But value locks the input to the current state (empty string), so the user's keystrokes have no visible effect. The input appears frozen.",
+      "encourageCorrect": "Correct! This is the classic frozen input bug -- a missing onChange handler.",
+      "encourageIncorrect": "Actually, the input appears frozen. The value prop locks it to the current state, and without onChange, nothing ever updates that state."
+    }
+  ]
+}

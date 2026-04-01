@@ -51,5 +51,31 @@
       "type": "connectPrompt",
       "prompt": "You now understand embeddings (Module 3.1) and where to store them (Module 3.2). In Module 3.3, you will connect these pieces into a complete RAG pipeline -- the architecture that retrieves relevant data and injects it into the model's context."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What algorithm do most vector databases use for fast similarity search?",
+      "options": [
+        "Binary search",
+        "HNSW (Hierarchical Navigable Small World)",
+        "SQL indexing"
+      ],
+      "correctIndex": 1,
+      "explanation": "HNSW is an approximate nearest neighbor algorithm that provides millisecond-speed similarity search by trading a small accuracy margin for massive speed gains.",
+      "encourageCorrect": "Exactly! HNSW is the workhorse algorithm behind most vector database search.",
+      "encourageIncorrect": "Most vector databases use HNSW (Hierarchical Navigable Small World) -- an approximate nearest neighbor algorithm that's extremely fast with 95-99% recall."
+    },
+    {
+      "question": "Does HNSW always find the absolute closest vector?",
+      "options": [
+        "Yes, it guarantees exact results",
+        "No, it's approximate but typically has 95-99% recall",
+        "Only for small datasets"
+      ],
+      "correctIndex": 1,
+      "explanation": "HNSW is an approximate nearest neighbor algorithm -- it may occasionally miss the absolute closest vector in exchange for dramatic speed improvements.",
+      "encourageCorrect": "Right! That small accuracy tradeoff is what makes vector search fast enough for real-time applications.",
+      "encourageIncorrect": "HNSW is approximate -- it finds the closest vectors 95-99% of the time, trading a small accuracy margin for speed gains that make real-time search possible."
+    }
   ]
 }

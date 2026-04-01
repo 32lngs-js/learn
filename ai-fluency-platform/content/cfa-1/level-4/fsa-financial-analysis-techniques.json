@@ -118,5 +118,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Financial Statement Modeling**, where you'll build a 3-statement financial model using the ratio analysis and common-size techniques from this module. The ratios become inputs for forecasting \u2014 historical margins, turnover rates, and leverage levels form the basis for projecting future performance."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What does the DuPont decomposition break ROE into?",
+      "options": [
+        "Revenue growth, profit margin, and dividend yield",
+        "Profit margin, asset turnover, and financial leverage",
+        "Current ratio, debt ratio, and interest coverage"
+      ],
+      "correctIndex": 1,
+      "explanation": "DuPont: ROE = Net profit margin x Asset turnover x Equity multiplier (leverage). This shows the three drivers of return on equity.",
+      "encourageCorrect": "Well done! Margin, turnover, and leverage \u2014 the three levers of ROE.",
+      "encourageIncorrect": "The DuPont decomposition breaks ROE into: profit margin (profitability) x asset turnover (efficiency) x equity multiplier (leverage)."
+    },
+    {
+      "question": "In common-size analysis of an income statement, each line item is expressed as a percentage of:",
+      "options": [
+        "Total assets",
+        "Revenue (sales)",
+        "Net income"
+      ],
+      "correctIndex": 1,
+      "explanation": "Common-size income statements express every line item as a percentage of revenue, making it easy to compare firms of different sizes.",
+      "encourageCorrect": "Right! Everything as a percentage of revenue enables cross-company comparison.",
+      "encourageIncorrect": "In a common-size income statement, each item is shown as a percentage of revenue. For balance sheets, it's a percentage of total assets."
+    }
   ]
 }

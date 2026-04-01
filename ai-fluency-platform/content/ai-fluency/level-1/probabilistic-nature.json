@@ -51,5 +51,31 @@
       "type": "connectPrompt",
       "prompt": "Now that you understand the probabilistic engine underneath, Module 1.3 will teach you the first practical prompting patterns -- summarize, draft, brainstorm -- and how to write prompts that steer this probability engine toward useful output."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Why can an AI model give different answers to the same question?",
+      "options": [
+        "Because it searches different websites each time",
+        "Because outputs are sampled from a probability distribution, not retrieved from a database",
+        "Because it learns something new between each answer"
+      ],
+      "correctIndex": 1,
+      "explanation": "AI outputs are sampled from probability distributions -- the model calculates probabilities for many possible next tokens and samples from them.",
+      "encourageCorrect": "Right! Each response is one sample from many possibilities -- that's why outputs can vary.",
+      "encourageIncorrect": "AI outputs are sampled from probability distributions, not looked up. This means the same prompt can produce different valid responses each time."
+    },
+    {
+      "question": "What happens when you set the temperature to 0?",
+      "options": [
+        "The model refuses to answer",
+        "The model picks the highest-probability token each time, producing near-deterministic output",
+        "The model generates the longest possible response"
+      ],
+      "correctIndex": 1,
+      "explanation": "At temperature 0, the model uses greedy decoding -- always selecting the most probable next token, making output effectively deterministic.",
+      "encourageCorrect": "Exactly! Temperature 0 means greedy decoding -- the most probable token wins every time.",
+      "encourageIncorrect": "At temperature 0, the model always picks the most probable token (greedy decoding), giving you nearly deterministic output."
+    }
   ]
 }

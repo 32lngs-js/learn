@@ -43,5 +43,43 @@
       "type": "connectPrompt",
       "prompt": "Slash commands control the conversation. But there is another layer of control that affects how much autonomy Claude has: permission modes. The next module covers the trust spectrum — from asking permission for everything to running fully autonomously."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What does /compact do?",
+      "options": [
+        "Deletes the conversation entirely",
+        "Compresses the conversation into a summary to free space",
+        "Saves the conversation to a file"
+      ],
+      "correctIndex": 1,
+      "explanation": "/compact summarizes the conversation so far, replacing detailed history with a compressed version to free up context space.",
+      "encourageCorrect": "That's it! /compact frees space while keeping the key information.",
+      "encourageIncorrect": "/compact compresses your conversation into a summary — you keep the key points but free up context space."
+    },
+    {
+      "question": "What should you run before accepting Claude's work as done?",
+      "options": [
+        "/clear",
+        "/diff",
+        "/export"
+      ],
+      "correctIndex": 1,
+      "explanation": "/diff shows all changes Claude made in the session — your audit trail before accepting the work.",
+      "encourageCorrect": "Good habit! Always review changes with /diff before moving on.",
+      "encourageIncorrect": "Run /diff to see every change Claude made in the session — it's your review tool before accepting work."
+    },
+    {
+      "question": "What does /rewind do?",
+      "options": [
+        "Goes back to the beginning of the session",
+        "Undoes Claude's last action and reverts changes",
+        "Replays the last command"
+      ],
+      "correctIndex": 1,
+      "explanation": "/rewind removes Claude's last action from the conversation and reverts any changes it made.",
+      "encourageCorrect": "Correct! /rewind is your undo button for Claude's actions.",
+      "encourageIncorrect": "/rewind undoes Claude's last action — it removes the response and reverts any file changes."
+    }
   ]
 }

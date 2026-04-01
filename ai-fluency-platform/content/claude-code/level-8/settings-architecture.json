@@ -43,5 +43,31 @@
       "type": "connectPrompt",
       "prompt": "You understand how configuration works for yourself. But mastery includes helping others. The next module covers how to onboard teammates, build shared standards, and create a team-wide Claude Code culture."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is the precedence order for Claude Code settings?",
+      "options": [
+        "User > Project > Local > Managed",
+        "Managed > Local > Project > User",
+        "Project > User > Local > Managed"
+      ],
+      "correctIndex": 1,
+      "explanation": "More specific layers override broader ones: Managed (highest) > Local > Project > User (lowest).",
+      "encourageCorrect": "That's the order! Managed settings can't be overridden by anyone.",
+      "encourageIncorrect": "The order is Managed > Local > Project > User — more specific settings always win."
+    },
+    {
+      "question": "Where should team-shared standards like project skills and hooks go?",
+      "options": [
+        "In ~/.claude/ (user settings)",
+        "In .claude/ (project settings, committed to version control)",
+        "In .claude.local/ (local settings)"
+      ],
+      "correctIndex": 1,
+      "explanation": "Team-shared configuration goes in the project .claude/ directory, which is committed to version control so everyone gets the same settings.",
+      "encourageCorrect": "Right! Project settings are how you scale your setup to the team.",
+      "encourageIncorrect": "Team-shared settings go in .claude/ at the project level — committed to version control so everyone on the team gets the same configuration."
+    }
   ]
 }

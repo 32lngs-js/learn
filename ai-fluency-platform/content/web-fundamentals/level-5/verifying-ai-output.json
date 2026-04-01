@@ -1,0 +1,118 @@
+{
+  "meta": {
+    "title": "5.2 Verifying AI Output",
+    "description": "Learn to check AI-generated web code for structural issues, visual bugs, broken logic, and accessibility problems.",
+    "level": "level-5",
+    "slug": "verifying-ai-output",
+    "order": 2,
+    "isCheckpoint": false,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "predictPrompt",
+      "prompt": "You ask AI to build a contact form and it gives you code that looks reasonable at first glance. What kinds of things could be wrong with it that you would not notice without reading the code carefully?"
+    },
+    {
+      "type": "markdown",
+      "content": "## AI is fast but careless\n\nAI can produce a full webpage in seconds. That is impressive \u2014 but speed is not the same as correctness. AI-generated code frequently contains subtle issues that look fine at first glance but cause real problems.\n\nThe good news: you can now read the code. That means you can verify it.\n\n## The verification checklist\n\nWhen AI gives you web code, run through these checks:\n\n### 1. Is the HTML structure sensible?\n\n- Does it use semantic elements? A navigation section should be `<nav>`, not `<div class=\"nav\">`. A clickable action should be `<button>`, not `<div onclick=\"...\">`. A list of items should be `<ul>` and `<li>`, not a stack of `<div>` tags.\n- Do heading levels make sense? There should be one `<h1>`, and headings should not skip levels (jumping from `<h1>` to `<h4>`).\n- Are all tags properly opened and closed?\n\n### 2. Do the CSS selectors match the HTML?\n\n- If the CSS targets `.hero-title`, does the HTML actually have an element with `class=\"hero-title\"`?\n- Watch for typos: `.hero-tittle` in the CSS will not match `class=\"hero-title\"` in the HTML.\n- Check that media queries use the right direction: `max-width` for \"screens this size and smaller,\" `min-width` for \"screens this size and larger.\"\n\n### 3. Does the JavaScript actually work?\n\n- Does `querySelector('.menu-toggle')` match an element that actually exists in the HTML with that class?\n- Are event listeners attached to the right elements?\n- Open the browser console (`F12` \u2192 Console tab) \u2014 are there any errors?\n\n### 4. Does it work at different screen sizes?\n\n- Resize the browser window. Does the layout break at any point?\n- Do images overflow their containers?\n- Is text still readable on small screens?\n\n### 5. Is it accessible?\n\nThis one is critical and frequently overlooked by AI:\n\n- **Images need alt text.** Every `<img>` should have a meaningful `alt` attribute. A screen reader user cannot see the image \u2014 the alt text is all they get.\n- **Buttons should be `<button>`, not `<div>`.** A `<div>` with an `onclick` handler looks clickable to sighted users, but keyboard users cannot tab to it and screen readers do not announce it as a button.\n- **Color contrast matters.** Light gray text on a white background might look subtle and elegant, but it is unreadable for people with low vision.\n- **Keyboard navigation must work.** Can you tab through the page and interact with every control without using a mouse?\n\n## Common AI mistakes\n\nHere are the patterns you will see again and again:\n\n| Mistake | What it looks like | Why it happens |\n| :-- | :-- | :-- |\n| `<div>` instead of `<button>` | Works with a mouse, fails with keyboard | AI defaults to generic elements |\n| Missing `alt` on images | Page looks fine visually, fails accessibility | AI does not prioritize accessibility |\n| Wrong media query direction | Mobile styles apply on desktop or vice versa | `min-width` and `max-width` are easy to confuse |\n| Mismatched selectors | Styles do not apply, no visible error | Typos between HTML class names and CSS selectors |\n| Hallucinated CSS properties | Property is ignored silently by browser | AI invents properties that do not exist |\n| Missing edge cases in JS | Works on first click, breaks on second | AI writes the happy path and stops |"
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "On a scale of 1-5, how confident are you that you could take a block of AI-generated HTML, CSS, and JS and identify at least two potential issues without running it in a browser?",
+      "answer": "If you rated yourself 3 or higher, you are building a strong review instinct. The checklist approach \u2014 structure, selectors, logic, responsiveness, accessibility \u2014 gives you a systematic way to catch problems before they reach real users."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Spotting AI Mistakes",
+      "problems": [
+        {
+          "id": "wf5-2-1",
+          "question": "AI generated this code for a clickable call-to-action:\n\n```html\n<div class=\"cta-button\" onclick=\"signup()\">\n  Sign Up Free\n</div>\n```\n\n```css\n.cta-button {\n  background-color: #4CAF50;\n  color: white;\n  padding: 12px 24px;\n  border-radius: 6px;\n  cursor: pointer;\n}\n```\n\nIt looks and works fine with a mouse. What is the problem?",
+          "options": [
+            "A) The `<div>` should be a `<button>` \u2014 keyboard users cannot tab to a div, and screen readers will not announce it as a button",
+            "B) The `cursor: pointer` property is unnecessary on a button",
+            "C) The `onclick` attribute should be `onClick` with a capital C"
+          ],
+          "correctAnswer": "A",
+          "explanation": "A <div> is not a focusable or interactive element by default. Keyboard users cannot tab to it, screen readers do not announce it as a button, and it does not respond to the Enter or Space keys. The fix is to use <button> instead, which gets all of that behavior for free. This is one of the most common AI mistakes.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "wf5-2-2",
+          "question": "AI generated a responsive layout with this media query:\n\n```css\n@media (min-width: 768px) {\n  .nav-links {\n    display: none;\n  }\n  .hamburger {\n    display: block;\n  }\n}\n```\n\nThe hamburger menu is showing up on desktop instead of mobile. What went wrong?",
+          "options": [
+            "A) The media query should use `max-width: 768px` instead of `min-width: 768px`",
+            "B) The `.hamburger` class name is misspelled",
+            "C) The `display: block` should be `display: flex`"
+          ],
+          "correctAnswer": "A",
+          "explanation": "min-width: 768px means \"on screens 768px and wider\" \u2014 that is tablets and desktops. The hamburger menu should show on small screens, so the query should be max-width: 768px (\"on screens 768px and narrower\"). This is an extremely common AI mistake because the two directions are easy to confuse.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "wf5-2-3",
+          "question": "AI generated a gallery with these images:\n\n```html\n<img src=\"coffee-shop.jpg\">\n<img src=\"latte-art.jpg\">\n<img src=\"barista.jpg\">\n```\n\nThe page looks great visually. What is missing?",
+          "options": [
+            "A) Each `<img>` is missing an `alt` attribute, which means screen reader users get no information about what the images show",
+            "B) The images need `width` and `height` attributes to load properly",
+            "C) The `src` attributes should use absolute URLs instead of relative paths"
+          ],
+          "correctAnswer": "A",
+          "explanation": "The alt attribute provides a text description of the image for screen reader users, and it also displays when the image fails to load. Without alt text, screen readers either skip the image entirely or read the file name (\"coffee-shop-dot-jpg\"), which is unhelpful. Every image should have a meaningful alt attribute like alt=\"Interior of a cozy coffee shop with warm lighting\".",
+          "difficulty": "basic"
+        },
+        {
+          "id": "wf5-2-4",
+          "question": "AI generated a hero section with this CSS:\n\n```css\n.hero {\n  background-color: #ffffff;\n  color: #ffffff;\n  padding: 80px 20px;\n}\n\n.hero h1 {\n  font-size: 2.5rem;\n}\n```\n\nYou paste the code into your page and the hero section appears completely blank. What happened?",
+          "options": [
+            "A) The `font-size` is too large for the container",
+            "B) The text color and background color are both `#ffffff` (white on white), making the text invisible",
+            "C) The `padding` is pushing the text out of view"
+          ],
+          "correctAnswer": "B",
+          "explanation": "Both background-color and color are set to #ffffff, which is white. The text is there \u2014 it is just white text on a white background, making it invisible. This is a color contrast failure that also creates an accessibility problem. The fix is to change either the background or the text color so there is sufficient contrast between them.",
+          "difficulty": "basic"
+        }
+      ]
+    },
+    {
+      "type": "explainBack",
+      "prompt": "In your own words, explain why using a <button> element matters more than styling a <div> to look like a button. Who is affected, and what do they lose when AI uses a <div> instead?"
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "AI-generated code needs verification. Check five things: HTML structure and semantic elements, CSS selectors matching the HTML, JavaScript working without console errors, the layout at different screen sizes, and accessibility (alt text, real buttons, color contrast, keyboard navigation). The most common AI mistakes are using div instead of button, missing alt text, wrong media query directions, and mismatched selectors."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "Now you can spot problems in AI output. But spotting a problem is only half the battle \u2014 next, you need to tell the AI how to fix it. Module 5.3 will teach you how to describe visual and functional problems in code terms so the AI fixes them on the first try."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "When verifying AI-generated code, the five things to check are:",
+      "options": [
+        "File size, load speed, SEO, analytics, and ads",
+        "HTML structure, CSS selectors matching HTML, no JS console errors, responsive layout, and accessibility",
+        "Color scheme, fonts, animations, hover effects, and transitions"
+      ],
+      "correctIndex": 1,
+      "explanation": "Check HTML structure, CSS-HTML alignment, JavaScript errors in console, responsive behavior at different sizes, and accessibility (alt text, buttons, contrast).",
+      "encourageCorrect": "That's the checklist! Structure, selectors, console, responsive, accessible.",
+      "encourageIncorrect": "Verify five things: HTML structure, CSS selectors matching HTML, no JS console errors, layout at different screen sizes, and accessibility."
+    },
+    {
+      "question": "The most common issue with AI-generated code that looks fine visually is:",
+      "options": [
+        "It uses the wrong programming language",
+        "Accessibility problems (missing alt text, divs instead of buttons, poor color contrast)",
+        "It's always perfectly correct"
+      ],
+      "correctIndex": 1,
+      "explanation": "AI-generated code often looks fine but has accessibility issues \u2014 non-semantic elements, missing alt text, and poor color contrast that affects real users.",
+      "encourageCorrect": "Right! AI often misses accessibility \u2014 that's where human review matters most.",
+      "encourageIncorrect": "AI code frequently has accessibility issues: divs used instead of semantic buttons, missing alt text on images, and insufficient color contrast."
+    }
+  ]
+}

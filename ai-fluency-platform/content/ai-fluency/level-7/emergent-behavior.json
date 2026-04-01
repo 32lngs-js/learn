@@ -19,7 +19,7 @@
     },
     {
       "type": "markdown",
-      "content": "One of the most striking phenomena in modern AI is emergence: capabilities that appear suddenly and unpredictably as models scale in size, data, or compute. A model with 10 billion parameters cannot do arithmetic. The same architecture with 100 billion parameters can. Nothing in the training objective explicitly teaches arithmetic -- the capability emerges from scale alone.\n\n### Scaling Laws\n\nResearch by Kaplan et al. (2020) and the Chinchilla paper (Hoffmann et al., 2022) established that model performance follows predictable power laws with respect to three variables:\n\n- **Model size** (number of parameters)\n- **Dataset size** (number of training tokens)\n- **Compute budget** (total FLOPs used in training)\n\nThe key insight is that **performance improves smoothly and predictably** as these variables increase, following a mathematical relationship:\n\n```\nLoss ≈ A / N^α + B / D^β + C\n```\n\nWhere N is model size, D is dataset size, and A, B, C, α, β are empirically determined constants.\n\nThe Chinchilla finding was that most large models were **undertrained** -- they had too many parameters for the amount of data they were trained on. The compute-optimal balance is roughly 20 tokens per parameter. This shifted the field toward training smaller models on more data rather than building ever-larger models."
+      "content": "One of the most striking phenomena in modern AI is emergence: capabilities that appear suddenly and unpredictably as models scale in size, data, or compute. A model with 10 billion parameters cannot do arithmetic. The same architecture with 100 billion parameters can. Nothing in the training objective explicitly teaches arithmetic -- the capability emerges from scale alone.\n\n### Scaling Laws\n\nResearch by Kaplan et al. (2020) and the Chinchilla paper (Hoffmann et al., 2022) established that model performance follows predictable power laws with respect to three variables:\n\n- **Model size** (number of parameters)\n- **Dataset size** (number of training tokens)\n- **Compute budget** (total FLOPs used in training)\n\nThe key insight is that **performance improves smoothly and predictably** as these variables increase, following a mathematical relationship:\n\n```\nLoss \u2248 A / N^\u03b1 + B / D^\u03b2 + C\n```\n\nWhere N is model size, D is dataset size, and A, B, C, \u03b1, \u03b2 are empirically determined constants.\n\nThe Chinchilla finding was that most large models were **undertrained** -- they had too many parameters for the amount of data they were trained on. The compute-optimal balance is roughly 20 tokens per parameter. This shifted the field toward training smaller models on more data rather than building ever-larger models."
     },
     {
       "type": "calibrationCheck",
@@ -58,6 +58,32 @@
     {
       "type": "keyTakeaway",
       "content": "Emergent capabilities are both the promise and the peril of scaling AI systems. They drive the rapid advance of AI usefulness, but they also mean that we cannot fully predict or control what larger systems will be able to do. This fundamental unpredictability is why alignment and safety research must advance alongside capability research."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What are emergent capabilities in AI?",
+      "options": [
+        "Features that developers explicitly program",
+        "Capabilities that appear suddenly and unpredictably as models scale in size, data, or compute",
+        "Bugs in the training process"
+      ],
+      "correctIndex": 1,
+      "explanation": "Emergent capabilities like few-shot learning and chain-of-thought reasoning appear at certain scales without being explicitly trained -- they arise from scale itself.",
+      "encourageCorrect": "That's right! Emergence is one of the most surprising and important phenomena in modern AI.",
+      "encourageIncorrect": "Emergent capabilities appear suddenly as models scale -- like a 10B parameter model that can't do arithmetic, but the same architecture at 100B parameters can."
+    },
+    {
+      "question": "Why is the emergence of new capabilities both promising and concerning?",
+      "options": [
+        "Because they make models expensive",
+        "Because we cannot fully predict what larger models will be able to do, making safety harder to guarantee",
+        "Because they only work sometimes"
+      ],
+      "correctIndex": 1,
+      "explanation": "Emergence drives rapid advances in AI usefulness, but it also means we cannot predict or control what capabilities larger models will develop.",
+      "encourageCorrect": "Exactly! This unpredictability is why alignment research must advance alongside capability research.",
+      "encourageIncorrect": "Emergence is promising because it drives rapid capability advances, but concerning because we can't predict what larger models will do -- making safety much harder to guarantee."
     }
   ]
 }

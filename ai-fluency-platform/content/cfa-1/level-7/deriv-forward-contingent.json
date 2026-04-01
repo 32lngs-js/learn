@@ -114,5 +114,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Benefits, Risks, and Uses of Derivatives** \u2014 why market participants use these instruments, the specific advantages they offer, and the risks (counterparty, liquidity, operational, basis) that must be managed."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is the key difference between a forward commitment and a contingent claim?",
+      "options": [
+        "Forward commitments are always exchange-traded",
+        "Forward commitments obligate both parties; contingent claims give one party the right but not obligation",
+        "Contingent claims are always cheaper"
+      ],
+      "correctIndex": 1,
+      "explanation": "Forwards/futures/swaps obligate both parties to transact. Options (contingent claims) give the buyer a right, not an obligation.",
+      "encourageCorrect": "Exactly! Obligation vs right \u2014 that's the fundamental distinction.",
+      "encourageIncorrect": "Forward commitments (forwards, futures, swaps) obligate both parties. Contingent claims (options) give the buyer a right but not an obligation."
+    },
+    {
+      "question": "A call option gives the holder the right to:",
+      "options": [
+        "Sell the underlying at the strike price",
+        "Buy the underlying at the strike price",
+        "Exchange one currency for another"
+      ],
+      "correctIndex": 1,
+      "explanation": "A call option gives the buyer the right (not obligation) to buy the underlying asset at the strike price on or before expiration.",
+      "encourageCorrect": "Right! Call = right to buy. Put = right to sell.",
+      "encourageIncorrect": "A call option gives the holder the right to buy the underlying at the strike price. A put option gives the right to sell."
+    }
   ]
 }

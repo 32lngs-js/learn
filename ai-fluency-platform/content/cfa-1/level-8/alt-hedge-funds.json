@@ -118,5 +118,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Digital Assets**, the newest category of alternative investments. You will learn about blockchain technology, cryptocurrencies, tokens, DeFi, and the unique valuation and regulatory challenges these assets present."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is the typical fee structure of a hedge fund?",
+      "options": [
+        "No fees, just profit sharing",
+        "A management fee (often 1-2%) plus a performance fee (often 15-20%)",
+        "A flat annual fee of 5%"
+      ],
+      "correctIndex": 1,
+      "explanation": "Hedge funds commonly charge '2 and 20' \u2014 a 2% management fee on AUM plus a 20% performance fee on profits above a hurdle rate.",
+      "encourageCorrect": "That's the classic structure! Management fee plus performance fee.",
+      "encourageIncorrect": "Hedge funds typically charge a management fee (1-2% of assets) plus a performance fee (15-20% of profits). The classic '2 and 20' structure."
+    },
+    {
+      "question": "A high-water mark in hedge fund fees ensures that:",
+      "options": [
+        "The fund always makes money for investors",
+        "Performance fees are only charged on new profits above the previous peak",
+        "Management fees are capped"
+      ],
+      "correctIndex": 1,
+      "explanation": "The high-water mark prevents managers from earning performance fees on gains that merely recover previous losses.",
+      "encourageCorrect": "Correct! The high-water mark protects investors from paying fees on loss recovery.",
+      "encourageIncorrect": "The high-water mark means performance fees are only earned on new profits above the fund's previous peak value. No double-charging for recovering losses."
+    }
   ]
 }

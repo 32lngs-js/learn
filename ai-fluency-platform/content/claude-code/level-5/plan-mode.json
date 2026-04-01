@@ -47,5 +47,31 @@
       "type": "connectPrompt",
       "prompt": "Plan Mode is the foundation. The next module builds on it with the full four-phase workflow: Explore, Plan, Implement, Verify. This is the canonical pattern for tackling any non-trivial task with Claude Code."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What does Plan Mode prevent Claude from doing?",
+      "options": [
+        "Reading files",
+        "Making any changes — no edits, no writes, no commands",
+        "Asking questions"
+      ],
+      "correctIndex": 1,
+      "explanation": "Plan Mode is read-only — Claude can read and analyze but cannot modify files, run commands, or create anything.",
+      "encourageCorrect": "That's right! Plan Mode is purely analytical — safe for exploration.",
+      "encourageIncorrect": "Plan Mode prevents all changes — no edits, no writes, no destructive commands. Claude can only read, search, and analyze."
+    },
+    {
+      "question": "What habit does the lesson recommend for complex tasks?",
+      "options": [
+        "Start in Auto-Accept mode for speed",
+        "Start in Plan Mode — explore and understand first",
+        "Start by writing CLAUDE.md"
+      ],
+      "correctIndex": 1,
+      "explanation": "Start complex tasks in Plan Mode to explore and understand, then switch to normal mode to execute with confidence.",
+      "encourageCorrect": "Exactly! Understand first, act second.",
+      "encourageIncorrect": "The expert habit is to start complex tasks in Plan Mode — explore and understand before switching to normal mode to execute."
+    }
   ]
 }

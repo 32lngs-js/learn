@@ -51,5 +51,31 @@
       "type": "connectPrompt",
       "prompt": "With model architecture awareness, economic thinking, and compression techniques in your toolkit, you now have the complete Level 3 skill set. The Level 3 Checkpoint will test whether you can integrate all of these concepts into coherent system design decisions."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is the main tradeoff in context compression?",
+      "options": [
+        "Speed vs. accuracy",
+        "Token cost vs. information fidelity",
+        "Model size vs. output length"
+      ],
+      "correctIndex": 1,
+      "explanation": "Context compression trades token cost against information fidelity -- you save tokens but risk losing important details.",
+      "encourageCorrect": "Right! Every compression technique involves deciding what information you can afford to lose.",
+      "encourageIncorrect": "The core tradeoff is between token cost and information fidelity -- compressing saves tokens but risks losing details that matter for answer quality."
+    },
+    {
+      "question": "Why is summarizing a legal contract from 10,000 to 2,000 tokens potentially dangerous?",
+      "options": [
+        "The summary might be too short to read",
+        "Summarization tends to drop qualifiers, exceptions, and conditional clauses that are legally critical",
+        "The model cannot read legal language"
+      ],
+      "correctIndex": 1,
+      "explanation": "Summarization preserves high-level structure but tends to drop the exceptions and conditional clauses that are often the most legally important parts.",
+      "encourageCorrect": "Great insight! Those dropped exceptions and conditionals are often the most important parts of a legal document.",
+      "encourageIncorrect": "Summarization drops qualifiers and exceptions -- for a legal contract, 'unless terminated without cause' is exactly the kind of critical detail that gets lost."
+    }
   ]
 }

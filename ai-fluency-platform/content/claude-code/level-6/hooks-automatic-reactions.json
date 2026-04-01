@@ -43,5 +43,31 @@
       "type": "connectPrompt",
       "prompt": "You understand the four hook types and what they can do. In the next module, you will build a real hook, configure it in your settings, and test it live. Start thinking about which automatic reaction would save you the most worry."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What does a PreToolUse hook do?",
+      "options": [
+        "Runs after Claude uses a tool",
+        "Runs before Claude uses a tool and can block the action",
+        "Sends a notification when a tool is used"
+      ],
+      "correctIndex": 1,
+      "explanation": "PreToolUse hooks run before Claude takes an action and can block it by exiting with a non-zero code.",
+      "encourageCorrect": "That's right! PreToolUse is your guardian — it can prevent dangerous actions.",
+      "encourageIncorrect": "PreToolUse hooks fire before Claude acts — if the hook exits with a non-zero code, the action is blocked."
+    },
+    {
+      "question": "Why do hooks solve a problem that manual vigilance cannot?",
+      "options": [
+        "They're faster",
+        "They run automatically every time without you remembering",
+        "They use fewer tokens"
+      ],
+      "correctIndex": 1,
+      "explanation": "Manual vigilance doesn't scale — you will forget to check. Hooks run automatically every time, without fail.",
+      "encourageCorrect": "Exactly! Automated vigilance never forgets.",
+      "encourageIncorrect": "Hooks solve the problem because they run automatically every time — unlike manual checks, they never forget."
+    }
   ]
 }

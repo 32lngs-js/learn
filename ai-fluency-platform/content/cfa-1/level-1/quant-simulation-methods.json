@@ -118,5 +118,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Estimation and Inference**, where you will learn to make formal statistical statements about population parameters from sample data. Concepts like confidence intervals and standard error provide the statistical foundation that underlies the simulation results you analyzed here."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is the main limitation of Monte Carlo simulation?",
+      "options": [
+        "It can only model one variable at a time",
+        "Its output quality depends on the assumed input distributions",
+        "It requires historical data"
+      ],
+      "correctIndex": 1,
+      "explanation": "Monte Carlo is 'garbage in, garbage out' \u2014 if the assumed probability distributions are wrong, the simulation results will be misleading.",
+      "encourageCorrect": "That's it! Monte Carlo is only as good as its input assumptions.",
+      "encourageIncorrect": "The main limitation is 'garbage in, garbage out' \u2014 if you specify the wrong distributions, the simulation output will be unreliable."
+    },
+    {
+      "question": "How does historical simulation differ from Monte Carlo simulation?",
+      "options": [
+        "Historical simulation uses actual past data instead of assumed distributions",
+        "Historical simulation is always more accurate",
+        "Historical simulation can model scenarios that never occurred"
+      ],
+      "correctIndex": 0,
+      "explanation": "Historical simulation replays actual past returns, avoiding the need to assume distributions, but it is limited to scenarios that actually happened.",
+      "encourageCorrect": "Correct! Historical simulation uses real past data \u2014 no distribution assumptions needed.",
+      "encourageIncorrect": "Historical simulation uses actual past data rather than assumed distributions. The trade-off is it can't model scenarios that never occurred."
+    }
   ]
 }

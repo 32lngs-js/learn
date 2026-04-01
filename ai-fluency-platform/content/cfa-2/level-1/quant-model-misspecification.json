@@ -133,5 +133,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Extensions of Multiple Regression** \u2014 dummy variables, interaction terms, and qualitative dependent variables (logistic regression). These extensions allow you to model categorical outcomes and non-linear relationships while building on the regression framework and diagnostic tools you have learned."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is heteroskedasticity in a regression model?",
+      "options": [
+        "When the error terms have constant variance",
+        "When the variance of error terms changes across observations",
+        "When independent variables are correlated with each other"
+      ],
+      "correctIndex": 1,
+      "explanation": "Heteroskedasticity means the spread of residuals is not constant \u2014 it varies with the level of the independent variable, violating a key regression assumption.",
+      "encourageCorrect": "Right! Non-constant error variance is heteroskedasticity.",
+      "encourageIncorrect": "Heteroskedasticity means the variance of the error terms is not constant across observations. This violates a regression assumption and affects standard errors."
+    },
+    {
+      "question": "Multicollinearity in multiple regression occurs when:",
+      "options": [
+        "The dependent variable is non-linear",
+        "Two or more independent variables are highly correlated with each other",
+        "The error terms are correlated over time"
+      ],
+      "correctIndex": 1,
+      "explanation": "Multicollinearity makes it hard to isolate individual variable effects. Signs include high R-squared but insignificant individual coefficients.",
+      "encourageCorrect": "That's it! Correlated predictors make individual effects hard to untangle.",
+      "encourageIncorrect": "Multicollinearity occurs when independent variables are highly correlated with each other. It inflates standard errors and makes coefficients unreliable."
+    }
   ]
 }

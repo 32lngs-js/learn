@@ -104,5 +104,31 @@
       "type": "connectPrompt",
       "prompt": "This completes the Performance Measurement section. The **checkpoint** follows, and then we conclude with **Ethics** \u2014 applying the Code and Standards at the portfolio management level."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Under GIPS, composites must include:",
+      "options": [
+        "Only the firm's best-performing accounts",
+        "All actual, fee-paying, discretionary portfolios managed to a similar strategy",
+        "Only accounts larger than $1 million"
+      ],
+      "correctIndex": 1,
+      "explanation": "GIPS requires all actual, fee-paying, discretionary portfolios to be assigned to at least one composite. Cherry-picking is not allowed.",
+      "encourageCorrect": "Exactly! All qualifying accounts must be included \u2014 no cherry-picking.",
+      "encourageIncorrect": "GIPS composites must include all actual, fee-paying, discretionary portfolios managed to the same strategy. Firms cannot exclude poor-performing accounts."
+    },
+    {
+      "question": "GIPS requires a minimum of how many years of compliant performance history when first claiming compliance?",
+      "options": [
+        "One year",
+        "Five years (or since inception if less)",
+        "Ten years"
+      ],
+      "correctIndex": 1,
+      "explanation": "Firms must present at least five years of GIPS-compliant history (or since inception if shorter). After that, they add a year annually until reaching ten years.",
+      "encourageCorrect": "Right! Five years minimum, building to ten years over time.",
+      "encourageIncorrect": "GIPS requires at least five years of compliant performance when first claiming compliance (or since inception if the firm is newer)."
+    }
   ]
 }

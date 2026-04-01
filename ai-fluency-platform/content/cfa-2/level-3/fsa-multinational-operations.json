@@ -110,5 +110,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Analysis of Financial Institutions**, where you'll apply specialized analytical frameworks including CAMELS and Basel III capital adequacy \u2014 institutions whose complex balance sheets require different analytical tools than typical corporate entities."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "The functional currency of a foreign subsidiary is:",
+      "options": [
+        "Always the parent company's currency",
+        "The currency of the primary economic environment in which the subsidiary operates",
+        "Always the US dollar"
+      ],
+      "correctIndex": 1,
+      "explanation": "The functional currency is the currency of the subsidiary's main economic environment \u2014 where it earns and spends most of its cash.",
+      "encourageCorrect": "Right! It's based on where the subsidiary primarily operates.",
+      "encourageIncorrect": "The functional currency is the currency of the subsidiary's primary economic environment. It could be the local currency, the parent's currency, or another currency."
+    },
+    {
+      "question": "Translation adjustments under the current rate method are reported in:",
+      "options": [
+        "The income statement",
+        "Other comprehensive income (equity)",
+        "Cash flow from operations"
+      ],
+      "correctIndex": 1,
+      "explanation": "Under the current rate method, translation gains and losses bypass the income statement and are reported in other comprehensive income as a cumulative translation adjustment.",
+      "encourageCorrect": "That's it! Translation adjustments go to OCI, not the income statement.",
+      "encourageIncorrect": "Under the current rate method, translation gains/losses go to other comprehensive income (OCI) in equity, not the income statement."
+    }
   ]
 }

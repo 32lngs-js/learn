@@ -59,5 +59,31 @@
       "type": "keyTakeaway",
       "content": "AI systems degrade silently because the world changes around them. Robust monitoring that tracks input distributions, output quality proxies, and business outcomes is the only defense against models that work perfectly at launch but fail gradually in production."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is concept drift?",
+      "options": [
+        "When the model's code changes unexpectedly",
+        "When the relationship between inputs and correct outputs changes, even though the input distribution stays the same",
+        "When the model runs out of memory"
+      ],
+      "correctIndex": 1,
+      "explanation": "Concept drift means the same inputs now map to different correct answers than they did during training -- the world changed, not the data distribution.",
+      "encourageCorrect": "That's right! Concept drift is especially tricky because input-based monitoring won't catch it.",
+      "encourageIncorrect": "Concept drift is when input-to-output relationships change while inputs look the same. It's the hardest drift to detect because standard input monitoring shows no anomaly."
+    },
+    {
+      "question": "Why can AI systems degrade even when no code has changed?",
+      "options": [
+        "Because hardware wears out",
+        "Because the world changes around the model -- user behavior shifts, language evolves, new topics emerge",
+        "Because API keys expire"
+      ],
+      "correctIndex": 1,
+      "explanation": "Models trained on historical data gradually become misaligned with reality as user behavior, language, and topics evolve -- causing silent degradation.",
+      "encourageCorrect": "Exactly! Silent degradation from a changing world is unique to AI systems.",
+      "encourageIncorrect": "Unlike traditional software, AI can degrade silently because the world changes -- user behavior shifts, language evolves, and new topics emerge that the model wasn't trained on."
+    }
   ]
 }

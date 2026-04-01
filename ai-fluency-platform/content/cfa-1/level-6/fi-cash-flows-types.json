@@ -104,5 +104,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Issuance and Trading of Fixed-Income Securities**, exploring how bonds are brought to market through primary issuance (underwriting, auctions) and how they trade in secondary markets. Understanding market mechanics is essential for evaluating bond liquidity and pricing."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is a zero-coupon bond?",
+      "options": [
+        "A bond that pays interest monthly",
+        "A bond that pays no periodic interest and is sold at a deep discount to par",
+        "A bond with a floating interest rate"
+      ],
+      "correctIndex": 1,
+      "explanation": "Zero-coupon bonds pay no periodic coupons. The investor's return comes entirely from buying at a discount and receiving par at maturity.",
+      "encourageCorrect": "Exactly! No coupons \u2014 all return comes from the discount to par.",
+      "encourageIncorrect": "A zero-coupon bond makes no periodic interest payments. It's issued at a discount, and the investor receives par value at maturity."
+    },
+    {
+      "question": "A floating-rate note (FRN) has a coupon that:",
+      "options": [
+        "Is fixed for the life of the bond",
+        "Resets periodically based on a reference rate",
+        "Decreases over time"
+      ],
+      "correctIndex": 1,
+      "explanation": "FRN coupons reset periodically (e.g., quarterly) based on a reference rate like SOFR, plus a fixed spread.",
+      "encourageCorrect": "Right! FRN coupons adjust with market rates, reducing interest rate risk.",
+      "encourageIncorrect": "Floating-rate notes have coupons that reset periodically based on a reference rate (like SOFR) plus a spread."
+    }
   ]
 }

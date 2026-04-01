@@ -1,0 +1,116 @@
+{
+  "meta": {
+    "title": "3.6 Checkpoint",
+    "description": "Read stateful components and identify what changes, when, and why.",
+    "level": "level-3",
+    "slug": "checkpoint",
+    "order": 6,
+    "isCheckpoint": true,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "markdown",
+      "content": "## Checkpoint: The Memory\n\nThis checkpoint tests whether you have internalized the concepts from Level 3. The goal is to recall and explain these ideas **without scrolling back** to the modules. If you find yourself struggling with a concept, that is valuable information -- revisit that module before moving to Level 4.\n\n### Concept recall"
+    },
+    {
+      "type": "explainBack",
+      "prompt": "Explain the useState pattern. What two things does it return? What happens when you call the setter function? What is the significance of the initial value?"
+    },
+    {
+      "type": "explainBack",
+      "prompt": "What is a stale closure, and when does it happen? Explain why calling `setCount(count + 1)` three times only increments by one. What is the fix?"
+    },
+    {
+      "type": "explainBack",
+      "prompt": "Explain the three dependency array patterns for useEffect. For each pattern, describe when the effect runs and give a real-world example."
+    },
+    {
+      "type": "explainBack",
+      "prompt": "What problem does useContext solve? Describe the three pieces (create, provide, consume) and name three common things shared through context."
+    },
+    {
+      "type": "markdown",
+      "content": "### Applied exercises"
+    },
+    {
+      "type": "practiceSet",
+      "title": "Level 3 Checkpoint",
+      "problems": [
+        {
+          "id": "rl3-6-1",
+          "question": "Read this component with multiple hooks. What does it do, and in what order do things happen when the user first visits the page?\n\n```jsx\nfunction UserDashboard() {\n  const { user } = useContext(AuthContext);\n  const [repos, setRepos] = useState([]);\n  const [loading, setLoading] = useState(true);\n  const [sortBy, setSortBy] = useState('updated');\n\n  useEffect(() => {\n    if (!user) return;\n    setLoading(true);\n    fetch(`/api/users/${user.id}/repos?sort=${sortBy}`)\n      .then(res => res.json())\n      .then(data => {\n        setRepos(data);\n        setLoading(false);\n      });\n  }, [user, sortBy]);\n\n  useEffect(() => {\n    document.title = `${user?.name || 'User'}'s Repos`;\n  }, [user]);\n\n  if (!user) return <p>Please log in</p>;\n  if (loading) return <Spinner />;\n\n  return (\n    <div>\n      <h1>{user.name}'s Repositories</h1>\n      <select value={sortBy} onChange={e => setSortBy(e.target.value)}>\n        <option value=\"updated\">Recently Updated</option>\n        <option value=\"stars\">Most Stars</option>\n      </select>\n      {repos.map(repo => (\n        <RepoCard key={repo.id} repo={repo} />\n      ))}\n    </div>\n  );\n}\n```",
+          "options": [
+            "A) It reads the user from context, fetches their repos sorted by the selected option, updates the page title, and re-fetches when the user or sort order changes. On first load: render with loading=true, show spinner, both effects run, data arrives, repos display.",
+            "B) It fetches repos once on mount and never re-fetches regardless of sort changes.",
+            "C) It only runs the effects when the user clicks the sort dropdown.",
+            "D) The component crashes because AuthContext is not defined."
+          ],
+          "correctAnswer": "A",
+          "explanation": "On first load: (1) Component renders -- user comes from context, loading is true, so the Spinner shows. (2) Both useEffects run after render. Effect 1 fetches repos with the default sort ('updated'). Effect 2 sets the page title. (3) When the fetch completes, setRepos and setLoading update state, triggering a re-render that shows the repo list. When the user changes the sort dropdown, setSortBy triggers a re-render, and the first effect re-runs because sortBy is in its dependency array.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "rl3-6-2",
+          "question": "Find the infinite loop in this component. What is causing it, and what is the fix?\n\n```jsx\nfunction LiveChat({ roomId }) {\n  const [messages, setMessages] = useState([]);\n  const [input, setInput] = useState('');\n\n  useEffect(() => {\n    fetch(`/api/rooms/${roomId}/messages`)\n      .then(res => res.json())\n      .then(data => setMessages(data));\n  });\n\n  function handleSend() {\n    const newMessage = { text: input, timestamp: Date.now() };\n    setMessages([...messages, newMessage]);\n    setInput('');\n  }\n\n  return (\n    <div>\n      {messages.map((msg, i) => (\n        <p key={i}>{msg.text}</p>\n      ))}\n      <input value={input} onChange={e => setInput(e.target.value)} />\n      <button onClick={handleSend}>Send</button>\n    </div>\n  );\n}\n```",
+          "options": [
+            "A) The useEffect has no dependency array, so it runs after every render. The fetch calls `setMessages`, which triggers a re-render, which runs the effect again. Fix: add `[roomId]` as the dependency array.",
+            "B) The handleSend function causes an infinite loop by calling setMessages.",
+            "C) The input onChange triggers too many re-renders.",
+            "D) Using the array index as key causes infinite re-renders."
+          ],
+          "correctAnswer": "A",
+          "explanation": "The useEffect is missing its dependency array. It runs after every render, fetches messages, calls setMessages, which triggers another render, which runs the effect again -- an infinite loop. The fix is `}, [roomId]);` so the fetch only happens when the room changes. This is the single most common React bug.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "rl3-6-3",
+          "question": "This component has a stale closure bug. The user clicks \"Increment 3x\" but the count only goes up by 1. Which line is the problem and what is the fix?\n\n```jsx\nfunction FastCounter() {\n  const [count, setCount] = useState(0);\n\n  function incrementThree() {\n    setCount(count + 1);\n    setCount(count + 1);\n    setCount(count + 1);\n  }\n\n  return (\n    <div>\n      <p>Count: {count}</p>\n      <button onClick={incrementThree}>Increment 3x</button>\n    </div>\n  );\n}\n```",
+          "options": [
+            "A) All three `setCount(count + 1)` calls read the same stale `count`. Fix: use functional updates `setCount(prev => prev + 1)` for all three.",
+            "B) You cannot call setCount more than once in a function.",
+            "C) The count variable is not reactive enough.",
+            "D) The button onClick should call setCount directly."
+          ],
+          "correctAnswer": "A",
+          "explanation": "When incrementThree runs, `count` has whatever value it had when the component last rendered (say, 0). All three calls are `setCount(0 + 1)`. They all set count to 1. The functional update form `setCount(prev => prev + 1)` reads the latest queued value each time: prev is 0, then 1, then 2, resulting in count becoming 3.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "rl3-6-4",
+          "question": "You are reviewing AI-generated code for an e-commerce site. The client reports: \"Adding an item to the cart works, but removing an item does nothing.\" What is wrong with the remove function?\n\n```jsx\nfunction ShoppingCart() {\n  const [items, setItems] = useState([\n    { id: 1, name: 'Keyboard', price: 79 },\n    { id: 2, name: 'Mouse', price: 49 },\n  ]);\n\n  function addItem(newItem) {\n    setItems(prev => [...prev, newItem]);\n  }\n\n  function removeItem(id) {\n    const index = items.findIndex(i => i.id === id);\n    items.splice(index, 1);\n    setItems(items);\n  }\n\n  const total = items.reduce((sum, item) => sum + item.price, 0);\n\n  return (\n    <div>\n      {items.map(item => (\n        <div key={item.id}>\n          <span>{item.name} - ${item.price}</span>\n          <button onClick={() => removeItem(item.id)}>Remove</button>\n        </div>\n      ))}\n      <p>Total: ${total}</p>\n    </div>\n  );\n}\n```",
+          "options": [
+            "A) `removeItem` mutates the array with `splice` and passes the same reference to `setItems`. React does not detect the change. Fix: `setItems(items.filter(i => i.id !== id))` or `setItems(prev => prev.filter(i => i.id !== id))`.",
+            "B) The findIndex call returns the wrong index.",
+            "C) The addItem function is stealing the items reference.",
+            "D) The reduce function for calculating total is interfering."
+          ],
+          "correctAnswer": "A",
+          "explanation": "This is the classic mutation bug from Module 3.2. `items.splice(index, 1)` modifies the existing array in place. `setItems(items)` passes the same array reference. React compares references and may conclude nothing changed, so it does not re-render. The `addItem` function works because it creates a new array with the spread operator. The fix for remove: `setItems(prev => prev.filter(i => i.id !== id))`. You would tell the AI: \"The removeItem function mutates the array with splice. Replace it with filter to create a new array.\"",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "rl3-6-5",
+          "question": "What does the custom hook return, and what happens when `roomId` changes?\n\n```jsx\nfunction useChatMessages(roomId) {\n  const [messages, setMessages] = useState([]);\n  const [isConnected, setIsConnected] = useState(false);\n\n  useEffect(() => {\n    const ws = new WebSocket(`wss://chat.example.com/${roomId}`);\n    ws.onopen = () => setIsConnected(true);\n    ws.onmessage = (event) => {\n      setMessages(prev => [...prev, JSON.parse(event.data)]);\n    };\n\n    return () => {\n      ws.close();\n      setIsConnected(false);\n      setMessages([]);\n    };\n  }, [roomId]);\n\n  return { messages, isConnected };\n}\n```",
+          "options": [
+            "A) It returns `{ messages, isConnected }`. When roomId changes: the cleanup function closes the old WebSocket and resets state, then the effect re-runs to open a new connection to the new room.",
+            "B) It returns the WebSocket connection directly.",
+            "C) When roomId changes, both connections stay open simultaneously.",
+            "D) The hook crashes because you cannot use WebSocket in useEffect."
+          ],
+          "correctAnswer": "A",
+          "explanation": "The custom hook manages a WebSocket connection. It returns an object with `messages` (an array that grows as messages arrive) and `isConnected` (a boolean). The `[roomId]` dependency means the effect re-runs when the room changes. Before re-running, the cleanup function (`return () => {...}`) closes the old WebSocket, resets the connected flag, and clears old messages. Then a new connection opens for the new room. This is proper cleanup -- exactly what Module 3.3 taught.",
+          "difficulty": "advanced"
+        }
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "### Self-assessment\n\nRate your confidence on each Level 3 concept from 1 (cannot explain it) to 5 (could teach it):\n\n| Concept | Confidence (1-5) |\n| :-- | :-- |\n| useState pattern and the `[value, setValue]` convention | |\n| Stale closures and functional updates | |\n| Immutable state updates (spread to copy) | |\n| useEffect dependency arrays (three patterns) | |\n| The infinite loop bug (missing dependency array) | |\n| useEffect cleanup functions | |\n| useContext and the three pieces of context | |\n| Reading custom hooks by name and return value | |\n| The State / Effects / JSX reading strategy | |\n\nIf any concept is below a 3, revisit that module before continuing."
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "Level 3 fluency means you can look at a React component with hooks and quickly understand: what it remembers (useState), when it acts (useEffect), what shared data it reads (useContext), and what the user sees (JSX). The most common bugs -- stale closures, mutation, missing dependency arrays -- all follow patterns you can now recognize. You are ready for Level 4."
+    }
+  ]
+}

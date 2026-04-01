@@ -104,5 +104,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Currency Management** \u2014 a critical component of international portfolio management that uses forwards, options, and active strategies to manage the currency exposure that arises from investing in foreign assets."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "An investor can extend portfolio duration using interest rate futures by:",
+      "options": [
+        "Selling bond futures",
+        "Buying bond futures",
+        "Buying equity futures"
+      ],
+      "correctIndex": 1,
+      "explanation": "Buying bond futures adds duration exposure to the portfolio, equivalent to buying bonds. Selling futures would reduce duration.",
+      "encourageCorrect": "Right! Long bond futures add duration to the portfolio.",
+      "encourageIncorrect": "Buying bond futures adds duration exposure. Selling bond futures would reduce it. Futures are an efficient way to adjust duration without trading physical bonds."
+    },
+    {
+      "question": "An equity swap can be used to:",
+      "options": [
+        "Only hedge currency risk",
+        "Gain or reduce equity market exposure without buying or selling stocks",
+        "Only invest in fixed income"
+      ],
+      "correctIndex": 1,
+      "explanation": "Equity swaps let investors receive equity returns (and pay a fixed/floating rate) or pay equity returns (and receive fixed/floating) to adjust exposure synthetically.",
+      "encourageCorrect": "Exactly! Swaps adjust exposure without touching the physical portfolio.",
+      "encourageIncorrect": "Equity swaps allow synthetic adjustment of equity exposure. You can gain equity exposure by receiving equity returns, or reduce it by paying them."
+    }
   ]
 }

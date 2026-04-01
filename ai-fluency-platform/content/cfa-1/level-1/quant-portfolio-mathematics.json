@@ -122,5 +122,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Simulation Methods**, where you will learn how Monte Carlo and historical simulations generate thousands of possible outcomes to model portfolio risk. These simulations rely on the return distributions and correlations you studied here."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "A portfolio's expected return is calculated as what?",
+      "options": [
+        "The highest return among its assets",
+        "The weighted average of individual asset expected returns",
+        "The geometric mean of individual asset returns"
+      ],
+      "correctIndex": 1,
+      "explanation": "Portfolio expected return equals the sum of each asset's weight times its expected return.",
+      "encourageCorrect": "Perfect! It's simply the weighted average of the component returns.",
+      "encourageIncorrect": "Portfolio expected return is the weighted average of each asset's expected return. It can never exceed the highest individual return."
+    },
+    {
+      "question": "What happens to diversification benefits as the correlation between assets decreases?",
+      "options": [
+        "Diversification benefits decrease",
+        "Diversification benefits increase",
+        "Diversification benefits stay the same"
+      ],
+      "correctIndex": 1,
+      "explanation": "Lower correlation means assets move less in sync, providing greater risk reduction through diversification.",
+      "encourageCorrect": "Exactly! Lower correlation means the assets offset each other more, reducing portfolio risk.",
+      "encourageIncorrect": "Lower correlation means greater diversification benefits. When assets don't move together, combining them reduces overall portfolio risk more."
+    }
   ]
 }

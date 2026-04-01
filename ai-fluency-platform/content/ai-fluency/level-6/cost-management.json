@@ -19,7 +19,7 @@
     },
     {
       "type": "markdown",
-      "content": "AI systems have a fundamentally different cost structure than traditional software. A web server's marginal cost per request is negligible, but an LLM inference request involves significant compute. Without disciplined cost management, AI initiatives that demonstrate impressive results in demos can become financially unsustainable at scale.\n\n### Token Economics\n\nFor API-based AI services, costs are primarily driven by token consumption:\n\n- **Input tokens** (the prompt, system message, and context) are typically cheaper than output tokens.\n- **Output tokens** (the model's generated response) are the larger cost driver because each token requires a full forward pass through the model.\n- **Cached tokens** (when the provider supports prompt caching) can be significantly cheaper than freshly computed tokens.\n\nThe total cost equation for an API-based system:\n\n```\nMonthly Cost = (Avg Input Tokens × Input Price/1K + Avg Output Tokens × Output Price/1K) × Monthly Requests\n```\n\nA seemingly small per-request cost multiplied by production volume creates significant line items. A chatbot that averages 2,000 input tokens and 500 output tokens per interaction, using a frontier model at $10/M input and $30/M output tokens, costs $0.035 per interaction. At 1 million monthly interactions, that is $35,000/month -- $420,000/year -- for a single feature."
+      "content": "AI systems have a fundamentally different cost structure than traditional software. A web server's marginal cost per request is negligible, but an LLM inference request involves significant compute. Without disciplined cost management, AI initiatives that demonstrate impressive results in demos can become financially unsustainable at scale.\n\n### Token Economics\n\nFor API-based AI services, costs are primarily driven by token consumption:\n\n- **Input tokens** (the prompt, system message, and context) are typically cheaper than output tokens.\n- **Output tokens** (the model's generated response) are the larger cost driver because each token requires a full forward pass through the model.\n- **Cached tokens** (when the provider supports prompt caching) can be significantly cheaper than freshly computed tokens.\n\nThe total cost equation for an API-based system:\n\n```\nMonthly Cost = (Avg Input Tokens \u00d7 Input Price/1K + Avg Output Tokens \u00d7 Output Price/1K) \u00d7 Monthly Requests\n```\n\nA seemingly small per-request cost multiplied by production volume creates significant line items. A chatbot that averages 2,000 input tokens and 500 output tokens per interaction, using a frontier model at $10/M input and $30/M output tokens, costs $0.035 per interaction. At 1 million monthly interactions, that is $35,000/month -- $420,000/year -- for a single feature."
     },
     {
       "type": "calibrationCheck",
@@ -28,7 +28,7 @@
     },
     {
       "type": "markdown",
-      "content": "### Cost Optimization Strategies\n\n**Model Selection and Routing**: Not every request needs a frontier model. Implement a model router that directs requests to the cheapest model capable of handling them:\n\n- Simple classification and extraction tasks → Small, fast models (7B-13B parameters or model provider's economy tier)\n- Standard generation tasks → Mid-tier models\n- Complex reasoning, code generation, creative tasks → Frontier models\n\nA well-tuned router can reduce costs by 60-80% while maintaining quality on the tasks that matter.\n\n**Prompt Optimization**: Every token in a prompt costs money at every request. Systematic prompt optimization pays compounding returns:\n\n- Compress verbose system prompts without losing instruction clarity\n- Use structured formats (JSON, XML) that convey information in fewer tokens than natural language\n- Cache and reuse common context prefixes rather than recomputing them\n- Truncate or summarize conversation history instead of sending complete transcripts\n\n**Caching**: As covered in the inference serving module, caching at multiple layers avoids paying for redundant computation:\n\n- Semantic caching for FAQ-style queries (identical intent, different wording)\n- Response caching for deterministic requests (temperature=0, same input)\n- KV-cache reuse for shared prompt prefixes\n\n**Batching and Throughput**: For non-latency-critical workloads (batch processing, overnight analysis), accumulate requests and process them in efficient batches rather than making individual API calls."
+      "content": "### Cost Optimization Strategies\n\n**Model Selection and Routing**: Not every request needs a frontier model. Implement a model router that directs requests to the cheapest model capable of handling them:\n\n- Simple classification and extraction tasks \u2192 Small, fast models (7B-13B parameters or model provider's economy tier)\n- Standard generation tasks \u2192 Mid-tier models\n- Complex reasoning, code generation, creative tasks \u2192 Frontier models\n\nA well-tuned router can reduce costs by 60-80% while maintaining quality on the tasks that matter.\n\n**Prompt Optimization**: Every token in a prompt costs money at every request. Systematic prompt optimization pays compounding returns:\n\n- Compress verbose system prompts without losing instruction clarity\n- Use structured formats (JSON, XML) that convey information in fewer tokens than natural language\n- Cache and reuse common context prefixes rather than recomputing them\n- Truncate or summarize conversation history instead of sending complete transcripts\n\n**Caching**: As covered in the inference serving module, caching at multiple layers avoids paying for redundant computation:\n\n- Semantic caching for FAQ-style queries (identical intent, different wording)\n- Response caching for deterministic requests (temperature=0, same input)\n- KV-cache reuse for shared prompt prefixes\n\n**Batching and Throughput**: For non-latency-critical workloads (batch processing, overnight analysis), accumulate requests and process them in efficient batches rather than making individual API calls."
     },
     {
       "type": "tryItYourself",
@@ -58,6 +58,32 @@
     {
       "type": "keyTakeaway",
       "content": "AI cost management is not about spending less -- it is about spending wisely. Model routing, prompt optimization, caching, and per-feature cost attribution transform AI from an unpredictable expense into a managed, optimizable investment with clear ROI."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "How is AI cost fundamentally different from traditional software cost?",
+      "options": [
+        "AI costs are always higher",
+        "AI has significant marginal cost per request (tokens), unlike traditional software where marginal cost is negligible",
+        "AI costs are fixed regardless of usage"
+      ],
+      "correctIndex": 1,
+      "explanation": "Traditional web servers have negligible per-request cost, but each LLM inference involves significant compute cost measured in tokens.",
+      "encourageCorrect": "Right! This per-request cost is why AI cost management is a distinct discipline.",
+      "encourageIncorrect": "Unlike traditional software with negligible per-request cost, every AI inference costs real money in tokens -- that's why cost management is critical."
+    },
+    {
+      "question": "What are the key strategies for managing AI costs?",
+      "options": [
+        "Just use cheaper models for everything",
+        "Model routing, prompt optimization, caching, and per-feature cost attribution",
+        "Reduce the number of users"
+      ],
+      "correctIndex": 1,
+      "explanation": "Effective cost management combines routing requests to the right model tier, optimizing prompts, caching common responses, and attributing costs per feature.",
+      "encourageCorrect": "Exactly! It's about spending wisely, not just spending less.",
+      "encourageIncorrect": "The key strategies are model routing (right model per task), prompt optimization, caching, and per-feature cost attribution -- spending wisely, not just spending less."
     }
   ]
 }

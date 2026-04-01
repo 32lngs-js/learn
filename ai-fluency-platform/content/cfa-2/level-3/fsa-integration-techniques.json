@@ -106,5 +106,31 @@
       "type": "connectPrompt",
       "prompt": "You've now completed the Financial Statement Analysis section for Level II. The **FSA Checkpoint** is next, testing your ability to integrate intercorporate investments, pensions, multinational operations, financial institution analysis, and quality assessment into comprehensive analysis."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Financial statement integration means:",
+      "options": [
+        "Merging two companies' financial statements",
+        "Analyzing the interconnections between the income statement, balance sheet, and cash flow statement",
+        "Using only one financial statement for analysis"
+      ],
+      "correctIndex": 1,
+      "explanation": "Integration recognizes that the three financial statements are interconnected \u2014 changes in one affect the others, and skilled analysts trace these connections.",
+      "encourageCorrect": "Exactly! The three statements are deeply linked and must be analyzed together.",
+      "encourageIncorrect": "Integration means analyzing how the income statement, balance sheet, and cash flow statement connect. A change in one flows through to the others."
+    },
+    {
+      "question": "Accruals that are not supported by future cash flows are considered:",
+      "options": [
+        "High-quality earnings",
+        "A sign of potential earnings manipulation",
+        "Normal and expected"
+      ],
+      "correctIndex": 1,
+      "explanation": "Accruals should eventually convert to cash. If they consistently don't, it may indicate earnings are being inflated through aggressive accounting.",
+      "encourageCorrect": "Right! Accruals without cash backing are a warning sign.",
+      "encourageIncorrect": "Accruals that don't convert to cash suggest potential earnings manipulation. High-quality earnings are supported by actual cash flows."
+    }
   ]
 }

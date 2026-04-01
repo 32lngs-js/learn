@@ -1,0 +1,106 @@
+{
+  "meta": {
+    "title": "5.2 Reading Typed Components",
+    "description": "React components with TypeScript have a clear contract: here is what I need, here is what I give back.",
+    "level": "level-5",
+    "slug": "reading-typed-components",
+    "order": 2,
+    "isCheckpoint": false,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "predictPrompt",
+      "prompt": "In Level 2, you learned that components receive data through props. If TypeScript adds labels to everything, what do you think a typed component's props look like? How might TypeScript make it clearer what a component expects?"
+    },
+    {
+      "type": "markdown",
+      "content": "## Reading Typed Components\n\nIn Level 2, you learned that props are how a parent component passes data to a child component. In plain JavaScript, you had to look at how the props were used inside the component to figure out what they were. With TypeScript, the component declares its props up front in an interface -- and that interface becomes the single best piece of documentation about what the component needs.\n\n### The Props Interface\n\nHere is a typical typed React component:\n\n```typescript\ninterface ButtonProps {\n  label: string;\n  onClick: () => void;\n  variant?: \"primary\" | \"secondary\" | \"danger\";\n  disabled?: boolean;\n}\n\nfunction Button({ label, onClick, variant = \"primary\", disabled = false }: ButtonProps) {\n  return (\n    <button\n      className={`btn btn-${variant}`}\n      onClick={onClick}\n      disabled={disabled}\n    >\n      {label}\n    </button>\n  );\n}\n```\n\nLook at that `ButtonProps` interface. Without reading a single line of the component's logic, you already know:\n\n- The button needs `label` (text to display) -- **required**\n- The button needs `onClick` (a click handler function) -- **required**\n- The button accepts a `variant` (one of three visual styles) -- **optional**, defaults to \"primary\"\n- The button accepts a `disabled` flag -- **optional**, defaults to false\n\nThis is the component's contract. It tells you exactly how to use it. If you are a PM reviewing a pull request, or a designer checking if the component matches specs, the props interface is the first thing to read.\n\n### Reading Function Types in Props\n\nYou will frequently see function types in props interfaces. Here are the most common patterns:\n\n```typescript\ninterface FormProps {\n  onSubmit: (data: FormData) => void;\n  onChange: (field: string, value: string) => void;\n  onCancel: () => void;\n  validate?: (data: FormData) => boolean;\n}\n```\n\nLet us decode each one:\n\n- `onSubmit: (data: FormData) => void` -- a function that receives form data and returns nothing (it just does something, like sending to a server)\n- `onChange: (field: string, value: string) => void` -- a function that receives a field name and a value, returns nothing\n- `onCancel: () => void` -- a function that takes nothing and returns nothing (just triggers an action)\n- `validate?: (data: FormData) => boolean` -- an optional function that takes form data and returns true or false\n\nThe pattern is always `(parameters) => returnType`. When the return type is `void`, it means the function does something but does not give a value back -- like clicking a button or submitting a form.\n\n### Two Styles of Typed Components\n\nYou will see two ways developers type their components. Both do the same thing:\n\n**Style 1: Typed parameter (more common today)**\n```typescript\nfunction UserCard({ name, email, avatar }: UserCardProps) {\n  return (\n    <div className=\"card\">\n      <img src={avatar} alt={name} />\n      <h3>{name}</h3>\n      <p>{email}</p>\n    </div>\n  );\n}\n```\n\n**Style 2: React.FC (older style, still common)**\n```typescript\nconst UserCard: React.FC<UserCardProps> = ({ name, email, avatar }) => {\n  return (\n    <div className=\"card\">\n      <img src={avatar} alt={name} />\n      <h3>{name}</h3>\n      <p>{email}</p>\n    </div>\n  );\n};\n```\n\nIn Style 2, `React.FC<UserCardProps>` means \"this is a React Function Component that accepts UserCardProps.\" The angle brackets `< >` are generics -- we will cover those next. For now, just know that `React.FC<Something>` means \"a component that takes Something as props.\"\n\nBoth styles work the same way. When you see either pattern, look for the props interface to understand what the component expects.\n\n### Union Types: One of These Values\n\nYou saw `\"primary\" | \"secondary\" | \"danger\"` in the Button example. The `|` symbol means \"or\" -- the value must be exactly one of these options. This is extremely common in React components:\n\n```typescript\ninterface AlertProps {\n  message: string;\n  severity: \"info\" | \"warning\" | \"error\" | \"success\";\n  size?: \"sm\" | \"md\" | \"lg\";\n  onDismiss?: () => void;\n}\n```\n\nWhen you see a union type like this, think of it as a dropdown menu -- the value must be one of the listed options. This is incredibly useful for code review: if a designer asks \"what visual variants does this component support?\", the union type is the answer.\n\n### Generics: The Angle Brackets\n\nSometimes you will see angle brackets with letters inside them:\n\n```typescript\ninterface ListProps<T> {\n  items: T[];\n  renderItem: (item: T) => React.ReactNode;\n  keyExtractor: (item: T) => string;\n}\n```\n\nThis looks intimidating, but the concept is simple: **`<T>` means \"this works with any type.\"** The `T` is a placeholder. When someone uses this component, they fill in what `T` actually is:\n\n```typescript\n<List<User>\n  items={users}\n  renderItem={(user) => <UserCard name={user.name} />}\n  keyExtractor={(user) => user.id}\n/>\n```\n\nHere `T` becomes `User`, so `items` is `User[]`, `renderItem` receives a `User`, and `keyExtractor` receives a `User`.\n\n**The practical reading strategy for generics:** when you see `<T>` or `<SomeType>`, mentally replace it with the actual type being used. If you cannot figure out the actual type, you can often just ignore the generic and focus on the structure. Generics are a power tool for library authors -- as a code reader, you rarely need to understand them deeply.\n\n### Putting It Together: Reading a Real Typed Component\n\nHere is a realistic component you might see in a production codebase:\n\n```typescript\ninterface SearchBarProps {\n  placeholder?: string;\n  value: string;\n  onChange: (query: string) => void;\n  onSubmit: (query: string) => void;\n  isLoading?: boolean;\n  suggestions?: string[];\n  onSelectSuggestion?: (suggestion: string) => void;\n}\n\nfunction SearchBar({\n  placeholder = \"Search...\",\n  value,\n  onChange,\n  onSubmit,\n  isLoading = false,\n  suggestions = [],\n  onSelectSuggestion,\n}: SearchBarProps) {\n  return (\n    <div className=\"search-bar\">\n      <form onSubmit={(e) => { e.preventDefault(); onSubmit(value); }}>\n        <input\n          type=\"text\"\n          placeholder={placeholder}\n          value={value}\n          onChange={(e) => onChange(e.target.value)}\n        />\n        {isLoading && <span className=\"spinner\" />}\n      </form>\n      {suggestions.length > 0 && (\n        <ul className=\"suggestions\">\n          {suggestions.map((s) => (\n            <li key={s} onClick={() => onSelectSuggestion?.(s)}>\n              {s}\n            </li>\n          ))}\n        </ul>\n      )}\n    </div>\n  );\n}\n```\n\nReading the props interface alone tells you everything about this component:\n\n- It shows a search input with a configurable placeholder\n- It is a **controlled component** -- the parent owns the `value` and `onChange`\n- It can show a loading state\n- It can display suggestions as a dropdown\n- The parent gets notified on submit and when a suggestion is selected\n\nYou did not need to read the JSX to understand what this component does. The interface told you. That is the power of typed components."
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "When you see `onClick: () => void` in a props interface, what does `void` mean?",
+      "answer": "It means the function does not return a value. It performs an action (like handling a click) but does not give anything back. `() => void` reads as: a function that takes no arguments and returns nothing."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Reading Typed Components",
+      "problems": [
+        {
+          "id": "rl5-2-1",
+          "question": "What does this props interface tell you about the Modal component?\n\n```typescript\ninterface ModalProps {\n  title: string;\n  children: React.ReactNode;\n  isOpen: boolean;\n  onClose: () => void;\n  size?: \"sm\" | \"md\" | \"lg\";\n}\n```",
+          "options": [
+            "A) The Modal requires a title, content (children), whether it is open, and a close handler. It optionally accepts a size.",
+            "B) The Modal only requires a title and size. Everything else is optional.",
+            "C) The Modal requires all five props to be passed."
+          ],
+          "correctAnswer": "A",
+          "explanation": "Properties without `?` are required: `title`, `children`, `isOpen`, and `onClose`. Only `size` has the `?` mark, making it optional with three possible values. `React.ReactNode` means the children can be any renderable content (text, elements, components).",
+          "difficulty": "basic"
+        },
+        {
+          "id": "rl5-2-2",
+          "question": "A developer wrote this component. What is wrong with how it is being used?\n\n```typescript\ninterface ToastProps {\n  message: string;\n  type: \"success\" | \"error\" | \"warning\";\n  duration?: number;\n  onDismiss: () => void;\n}\n\nfunction Toast({ message, type, duration = 3000, onDismiss }: ToastProps) {\n  // ... component logic\n}\n\n// Usage:\n<Toast\n  message=\"Profile updated\"\n  type=\"info\"\n  onDismiss={() => setShowToast(false)}\n/>\n```",
+          "options": [
+            "A) The `duration` prop is missing",
+            "B) The `type` prop is set to \"info\" but the interface only allows \"success\", \"error\", or \"warning\"",
+            "C) The `onDismiss` function should return a boolean, not void"
+          ],
+          "correctAnswer": "B",
+          "explanation": "The `type` union is `\"success\" | \"error\" | \"warning\"` -- there is no \"info\" option. TypeScript would catch this error. The `duration` is optional (it has `?` and a default value of 3000), so omitting it is fine. You would tell the developer: the type needs to be one of success, error, or warning.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "rl5-2-3",
+          "question": "You are reviewing a PR and see this component interface. The designer asks: what configuration options does this table support?\n\n```typescript\ninterface Column<T> {\n  key: keyof T;\n  header: string;\n  render?: (value: T[keyof T], row: T) => React.ReactNode;\n  sortable?: boolean;\n  width?: string;\n}\n\ninterface DataTableProps<T> {\n  data: T[];\n  columns: Column<T>[];\n  onRowClick?: (row: T) => void;\n  isLoading?: boolean;\n  emptyMessage?: string;\n  sortBy?: string;\n  sortDirection?: \"asc\" | \"desc\";\n}\n```\n\nWhat would you tell the designer?",
+          "options": [
+            "A) The table just shows data in rows. There are no configuration options.",
+            "B) The table requires data and column definitions. It optionally supports row click handling, loading state, a custom empty message, and sorting (ascending or descending). Each column can optionally have custom rendering, be sortable, and have a custom width.",
+            "C) The table only works with User objects and cannot be customized."
+          ],
+          "correctAnswer": "B",
+          "explanation": "Despite the generics (`<T>`), you can read the structure clearly. Required: `data` (array of items) and `columns` (column definitions). Optional features: `onRowClick`, `isLoading`, `emptyMessage`, sorting via `sortBy` and `sortDirection`. Each column needs a `key` and `header`, and optionally supports custom `render`, `sortable`, and `width`. The generics just mean this table works with any data type.",
+          "difficulty": "advanced"
+        }
+      ]
+    },
+    {
+      "type": "explainBack",
+      "prompt": "Imagine a junior PM joins your team and opens a React file with a props interface for the first time. How would you explain what the interface block tells them about the component?"
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "A props interface is the single best documentation for a React component. It tells you exactly what data the component needs, what callbacks it supports, and which props are optional. Read the interface first -- it is the component's contract with the outside world."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "Next time you see a React component in a pull request or codebase, look for the props interface first. Try reading just the interface and predicting what the component does before you read the JSX. How accurate were you?"
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What does a props interface tell you about a React component?",
+      "options": ["How the component is styled", "Exactly what data the component needs, what callbacks it supports, and which props are optional", "How fast the component renders"],
+      "correctIndex": 1,
+      "explanation": "A props interface is the component's contract. It lists every piece of data the component needs, its type, whether it is required or optional, and what callback functions it accepts.",
+      "encourageCorrect": "Exactly! The props interface is the single best documentation for any React component.",
+      "encourageIncorrect": "A props interface is like a component's contract -- it tells you what data it needs, what callbacks it uses, and what is optional. Read it first when encountering a new component."
+    },
+    {
+      "question": "What does 'onClick: () => void' mean in a props interface?",
+      "options": ["A function that takes no arguments and returns nothing", "A function that returns a boolean", "A string describing a click event"],
+      "correctIndex": 0,
+      "explanation": "() => void means a function that takes no arguments and returns nothing (void). It just performs an action, like handling a click.",
+      "encourageCorrect": "Nice! The void return type means the function does something but does not give a value back.",
+      "encourageIncorrect": "() => void is a function type -- the empty parentheses mean no arguments, and void means it returns nothing. It just performs an action."
+    },
+    {
+      "question": "What does a union type like 'variant: \"primary\" | \"secondary\" | \"danger\"' mean?",
+      "options": ["The value can be any string", "The value must be exactly one of those three specific strings", "The value is an array of those three strings"],
+      "correctIndex": 1,
+      "explanation": "A union type with specific string values means the prop must be exactly one of those options. Think of it like a dropdown -- you pick one.",
+      "encourageCorrect": "That's it! Union types restrict a value to a specific set of allowed options.",
+      "encourageIncorrect": "A union type with | means 'one of these values.' So the variant must be exactly \"primary\", \"secondary\", or \"danger\" -- no other string is allowed."
+    }
+  ]
+}

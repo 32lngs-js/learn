@@ -128,5 +128,31 @@
       "type": "connectPrompt",
       "prompt": "You have now completed the Derivatives content modules. The next step is the **Derivatives Checkpoint**, which will test your understanding across all derivative topics \u2014 from market structure to forward pricing, option valuation, put-call parity, and the binomial model."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "In the one-period binomial option pricing model, the option value is calculated using:",
+      "options": [
+        "The actual probabilities of up and down moves",
+        "Risk-neutral probabilities and the risk-free rate for discounting",
+        "Only the current stock price and strike price"
+      ],
+      "correctIndex": 1,
+      "explanation": "The binomial model uses risk-neutral probabilities (not actual probabilities) and discounts expected payoffs at the risk-free rate.",
+      "encourageCorrect": "Well done! Risk-neutral pricing is the key insight of the binomial model.",
+      "encourageIncorrect": "The binomial model prices options using risk-neutral probabilities and the risk-free rate. Actual real-world probabilities are not needed."
+    },
+    {
+      "question": "In the binomial model, what are the two possible outcomes for the stock price in each period?",
+      "options": [
+        "It stays the same or moves up",
+        "It moves up by a factor u or down by a factor d",
+        "It moves to one of three possible prices"
+      ],
+      "correctIndex": 1,
+      "explanation": "At each node, the stock either goes up (multiplied by u) or down (multiplied by d), creating a branching tree of possible prices.",
+      "encourageCorrect": "That's the binomial structure! Up (u) or down (d) at each step.",
+      "encourageIncorrect": "The binomial model assumes two outcomes per period: the stock multiplied by an up factor (u) or a down factor (d)."
+    }
   ]
 }

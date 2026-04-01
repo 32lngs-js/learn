@@ -1,0 +1,98 @@
+{
+  "meta": {
+    "title": "7.4 Iterating on AI React Code",
+    "description": "When the first attempt is not right, how to describe the problem and get a fix.",
+    "level": "level-7",
+    "slug": "iterating-on-ai-react-code",
+    "order": 4,
+    "isCheckpoint": false,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "predictPrompt",
+      "prompt": "You asked an AI to build a React component and the result has some problems. Before reading further, think about how you would describe a bug to the AI. What kind of description do you think would be most helpful — vague, technical, or somewhere in between?"
+    },
+    {
+      "type": "markdown",
+      "content": "## From \"it is broken\" to \"here is exactly what is wrong\"\n\nThe AI generated your component. You ran the review checklist. You found problems. Now what?\n\nYou could start over with a better prompt. But often, the component is 80% right — the structure, layout, and overall logic are fine. The issues are specific: a missing dependency array, derived state that should be calculated, a missing error state. In these cases, iterating is faster than regenerating.\n\nBut the quality of your iteration depends entirely on how precisely you describe the problem. Let us compare.\n\n---\n\n### Bad feedback vs. good feedback\n\n#### Example 1: Stale data bug\n\n**Bad:** \"It is not working. The data does not update.\"\n\nThe AI has no idea what \"not working\" means. It might rewrite the entire component, potentially introducing new bugs.\n\n**Good:** \"The useEffect on line 12 is missing `userId` in the dependency array. It currently has an empty array `[]`, so it only fetches once on mount. When the userId prop changes, the component shows stale data from the previous user. Add userId to the dependency array: `[userId]`.\"\n\nThis tells the AI exactly what is wrong, where it is, why it matters, and how to fix it. The AI can make a surgical change.\n\n#### Example 2: Form reloading\n\n**Bad:** \"The form is broken. When I click submit nothing happens.\"\n\n**Good:** \"The `handleSubmit` function is missing `e.preventDefault()`. When the form submits, the browser performs a full page reload, which wipes out all React state. Add `(e: React.FormEvent)` as the parameter and `e.preventDefault()` as the first line of the function.\"\n\n#### Example 3: Derived state\n\n**Bad:** \"The total is sometimes wrong.\"\n\n**Good:** \"The `totalPrice` state variable is derived from the `items` array. Remove the `useState` for totalPrice and the `useEffect` that calculates it. Instead, calculate it directly: `const totalPrice = items.reduce((sum, item) => sum + item.price, 0)`. This eliminates the extra render cycle where totalPrice is briefly out of sync with items.\"\n\n#### Example 4: Accessibility issue\n\n**Bad:** \"Make the buttons work better.\"\n\n**Good:** \"The close button on line 24 is a `<div>` with an onClick handler. Change it to a `<button>` element with `aria-label='Close dialog'`. This makes it keyboard-accessible and properly announced by screen readers.\"\n\n---\n\n### The anatomy of good iteration feedback\n\nEvery good correction has four parts:\n\n1. **What** is wrong — name the specific issue\n2. **Where** it is — reference the function, hook, or line\n3. **Why** it matters — explain the user impact\n4. **How** to fix it — describe the change\n\nHere is the template:\n\n```\n\"The [what: specific issue] in [where: function/hook/line] causes \n[why: user-facing problem]. Fix it by [how: specific change].\"\n```\n\nExamples using this template:\n\n- \"The missing cleanup function in the useEffect on line 15 causes a memory leak if the component unmounts before the timer fires. Fix it by adding `return () => clearTimeout(timer)` inside the effect.\"\n- \"The `isValid` state variable is derived from the form fields. Remove the useState and useEffect for isValid, and calculate it directly: `const isValid = email.includes('@') && password.length >= 8`.\"\n- \"The product list uses array index as the key prop. If products are reordered or filtered, React will mix up the component state between rows. Change `key={index}` to `key={product.id}`.\"\n\n---\n\n### When to iterate vs. when to start over\n\nNot every AI output is worth fixing. Here is how to decide.\n\n**Iterate when the structure is right but details are wrong:**\n- Missing dependency arrays — easy to add\n- Derived state — easy to refactor\n- Missing error/loading states — add them\n- Missing preventDefault — one line fix\n- Missing accessibility attributes — add them\n- Missing keys or wrong keys — quick fix\n\nThese are all surgical changes. The component's overall architecture is correct; it just needs adjustments.\n\n**Start over when the approach is fundamentally wrong:**\n- The AI put all state in one component when it should be split across multiple components\n- The AI created a context provider when simple props would work\n- The AI built a class component when you need a function component\n- The AI fetches data in a child component when it should be fetched in the parent and passed as props\n- The AI used the wrong library or pattern entirely (e.g., built custom form validation when you wanted to use a form library)\n\nThe test: \"Is the component's architecture correct, or would fixing it require rewriting most of the code?\" If the architecture is wrong, a fresh prompt with clearer requirements is faster than trying to patch it.\n\n---\n\n### Multi-step iteration conversations\n\nSometimes you need to iterate more than once. Here is an example of a productive multi-step conversation:\n\n**Round 1 (initial prompt):**\n> \"Create a SearchableUserList that fetches users from /api/users and lets the user filter by name.\"\n\n**AI output:** A component with derived state, no error handling, index keys.\n\n**Round 2 (first fix):**\n> \"Three fixes needed: (1) Remove the filteredUsers useState and useEffect — calculate filtered users directly from the users array and searchTerm. (2) Add loading and error states for the fetch. Check res.ok before parsing. (3) Change key={index} to key={user.id} in the user list.\"\n\n**AI output:** Fixed version, but the search input has no label.\n\n**Round 3 (polish):**\n> \"Add a `<label htmlFor='search'>` element before the search input, and add `id='search'` to the input for accessibility.\"\n\nNotice how each round gets more specific as the big issues are resolved and smaller ones remain. This is normal and efficient.\n\n---\n\n### Pro tip: paste the error message\n\nIf the AI-generated code produces an error, paste the exact error message into your follow-up prompt. AI is remarkably good at fixing its own errors when given the exact message.\n\n```\n\"The component throws this error:\n\nTypeError: Cannot read properties of undefined (reading 'name')\nat UserCard (UserCard.tsx:14)\n\nThis happens when the user prop is undefined. Add a null \ncheck: if (!user) return null; at the top of the component.\"\n```\n\nEven better: paste the error message AND your diagnosis. The AI gets context about what went wrong and your analysis of why.\n\n---\n\n### Common iteration patterns\n\nHere are the most common follow-up prompts you will write, organized by the mistakes from Module 7.1:\n\n| AI Mistake | Follow-up prompt |\n| :-- | :-- |\n| Derived state | \"Remove the useState for X and the useEffect that sets it. Calculate X directly from Y and Z.\" |\n| Missing dependency | \"Add [variable] to the useEffect dependency array on line N.\" |\n| Missing error handling | \"Add loading, error, and data states. Show a spinner while loading and an error message if the fetch fails.\" |\n| Bad keys | \"Change key={index} to key={item.id} in the .map() on line N.\" |\n| Missing preventDefault | \"Add e.preventDefault() as the first line of the handleSubmit function.\" |\n| Overengineering | \"This is too complex. Simplify: remove the custom hook and use a single useState directly in the component.\" |\n| Missing accessibility | \"Change the div on line N to a button element. Add aria-label='X'.\" |\n| Stale closure | \"The setTimeout on line N uses a stale value of count. Change `setCount(count + 1)` to `setCount(prev => prev + 1)`.\" |"
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "An AI-generated component fetches data in a child component, but you want the parent to fetch data and pass it down as props. Should you iterate on the AI output or start over with a new prompt? Why?",
+      "answer": "You should start over with a new prompt. The fundamental data flow architecture is wrong — the AI placed the fetch in the child when it belongs in the parent. Fixing this would require moving the useEffect, the state, and the loading/error handling from the child to the parent, then restructuring the child to accept props instead. That is essentially rewriting both components, so a fresh prompt that specifies 'the parent fetches data and passes it as props to the child component' will be faster and cleaner."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Iterating on AI Code",
+      "problems": [
+        {
+          "id": "rl7-4-1",
+          "question": "An AI generated a component and you see this issue. Which follow-up prompt is most effective?\n\n```tsx\nconst [items, setItems] = useState([]);\nconst [total, setTotal] = useState(0);\n\nuseEffect(() => {\n  setTotal(items.reduce((s, i) => s + i.price, 0));\n}, [items]);\n```",
+          "options": [
+            "A) \"The total is wrong, fix it\"",
+            "B) \"Remove the useState for total and the useEffect that sets it. Calculate total directly: `const total = items.reduce((s, i) => s + i.price, 0)`. This is derived state and does not need its own state variable.\"",
+            "C) \"Add more items to the dependency array\""
+          ],
+          "correctAnswer": "B",
+          "explanation": "Prompt B follows the four-part template: what (derived state), where (the total useState and useEffect), why (it is derived from items and does not need its own state), and how (calculate directly). Prompt A gives the AI no useful information. Prompt C would make the problem worse — the dependency array is not the issue here.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "rl7-4-2",
+          "question": "You asked AI to build a comment section. The output has these issues: (1) comments use index as key, (2) the \"post comment\" button is a styled div, (3) there is no loading state while comments fetch. Should you iterate or start over?",
+          "options": [
+            "A) Start over — three issues is too many to fix",
+            "B) Iterate — all three are detail-level fixes; the overall component structure is correct",
+            "C) Start over — using index as key means the entire list implementation is wrong"
+          ],
+          "correctAnswer": "B",
+          "explanation": "All three issues are surgical fixes: change key={index} to key={comment.id}, change the div to a <button>, and add loading/error state variables. The overall architecture — a comment section that fetches and displays comments with a form to post new ones — is correct. These are exactly the kind of detail-level fixes that iteration handles well.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "rl7-4-3",
+          "question": "Your AI-generated component throws this error: `Warning: Each child in a list should have a unique \"key\" prop.` You also notice the component has no error handling for the fetch call. Which iteration approach is best?\n\n```tsx\nuseEffect(() => {\n  fetch(\"/api/tasks\")\n    .then(res => res.json())\n    .then(data => setTasks(data));\n}, []);\n\nreturn (\n  <ul>\n    {tasks.map(task => (\n      <li>{task.title}</li>\n    ))}\n  </ul>\n);\n```",
+          "options": [
+            "A) Fix only the key warning since that is the error shown",
+            "B) Paste the error message and describe both issues: \"Fix the key warning by adding key={task.id} to the <li>. Also add loading and error states: useState for isLoading (default true) and error (default null), check res.ok, add .catch(), and show appropriate UI for each state.\"",
+            "C) Start over because the fetch pattern is fundamentally wrong"
+          ],
+          "correctAnswer": "B",
+          "explanation": "The best approach addresses both the immediate error and the review findings in a single iteration. Paste the error message for the key issue, and describe the missing error handling while you are at it. The fetch pattern itself is fine — it just needs error handling added. Starting over would be wasteful since the component structure is correct.",
+          "difficulty": "advanced"
+        }
+      ]
+    },
+    {
+      "type": "explainBack",
+      "prompt": "In your own words, explain the difference between when you should iterate on AI code versus start over with a new prompt. Give one example of each situation."
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "Good iteration feedback has four parts: what is wrong, where it is, why it matters, and how to fix it. Iterate when the component's structure is right but details are wrong. Start over when the fundamental architecture is wrong. Pro tip: paste exact error messages — AI is very good at fixing its own errors when given the exact message."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "You now know how to spot AI mistakes, review code systematically, write better prompts, and iterate effectively. The next module is the Level 7 checkpoint — a realistic AI-generated component with multiple bugs that you need to review and fix."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What are the four parts of good iteration feedback to AI?",
+      "options": ["Who, what, when, where", "What is wrong, where it is, why it matters, how to fix it", "Bug description, screenshot, expected behavior, actual behavior"],
+      "correctIndex": 1,
+      "explanation": "Good feedback tells the AI what the specific issue is, where in the code it lives, why it causes a problem for users, and how to fix it.",
+      "encourageCorrect": "Exactly! Those four parts give the AI everything it needs to make a precise, targeted fix.",
+      "encourageIncorrect": "The four parts are: what is wrong, where it is, why it matters, and how to fix it. This gives the AI enough context for a surgical fix."
+    },
+    {
+      "question": "When should you start over with a new prompt instead of iterating?",
+      "options": ["When there are more than two bugs", "When the component's fundamental architecture is wrong", "When the component has no TypeScript types"],
+      "correctIndex": 1,
+      "explanation": "Start over when the overall approach is wrong — like data fetched in the wrong component or the wrong state management pattern. Detail-level bugs (missing keys, derived state, missing error handling) are better fixed through iteration.",
+      "encourageCorrect": "Right! If the skeleton is sound, iterate. If the skeleton is wrong, rebuild.",
+      "encourageIncorrect": "The key signal is architecture: if the overall structure is correct but details are wrong, iterate. If the fundamental approach is wrong, start fresh."
+    }
+  ]
+}

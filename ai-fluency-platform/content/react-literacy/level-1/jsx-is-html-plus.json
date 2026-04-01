@@ -1,0 +1,106 @@
+{
+  "meta": {
+    "title": "1.1 JSX Is HTML-Plus",
+    "description": "The markup in React files is called JSX. It looks like HTML with a few extra tricks.",
+    "level": "level-1",
+    "slug": "jsx-is-html-plus",
+    "order": 1,
+    "isCheckpoint": false,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "predictPrompt",
+      "prompt": "You open a React file and see something that looks almost like HTML -- but there are curly braces, the word 'className' instead of 'class', and some tags that close themselves like <img />. Before reading further, write down your best guess: why would React use something that looks like HTML but is not exactly HTML?"
+    },
+    {
+      "type": "markdown",
+      "content": "## JSX: the markup language of React\n\nEvery React component produces some visual output -- a button, a card, a whole page. That output is written in **JSX**, which stands for JavaScript XML. JSX looks almost identical to HTML, and that is intentional. The React team designed it so that anyone who can read HTML can read JSX with just a few adjustments.\n\nHere is a piece of HTML you might find on any webpage:\n\n```html\n<div class=\"greeting\">\n  <h1>Hello, world</h1>\n  <img src=\"logo.png\" alt=\"Company logo\">\n</div>\n```\n\nAnd here is the same thing in JSX:\n\n```jsx\n<div className=\"greeting\">\n  <h1>Hello, world</h1>\n  <img src=\"logo.png\" alt=\"Company logo\" />\n</div>\n```\n\nSpot the differences? There are exactly two: `class` became `className`, and the `<img>` tag gained a forward slash before the closing bracket. That is the gap between HTML and JSX. Let us walk through every difference you will encounter.\n\n### Difference 1: `className` instead of `class`\n\nIn HTML, you write `class=\"header\"` to apply a CSS class. In JSX, you write `className=\"header\"` instead. The reason is technical -- `class` is a reserved word in JavaScript, and since JSX lives inside JavaScript files, React uses `className` to avoid the conflict.\n\nYou do not need to understand the technical reason. You just need to recognize the pattern:\n\n```jsx\n// HTML version\n<div class=\"sidebar active\">\n\n// JSX version\n<div className=\"sidebar active\">\n```\n\nWhen you see `className` in code, mentally translate it to \"CSS class.\" That is all it means.\n\n### Difference 2: Self-closing tags\n\nHTML is forgiving about tags. You can write `<img src=\"photo.jpg\">` or `<br>` without closing them, and the browser figures it out. JSX is stricter -- every tag must be explicitly closed. For tags that have no children (no content between an opening and closing tag), you use a **self-closing tag** with a `/>`:\n\n```jsx\n<img src=\"photo.jpg\" />\n<br />\n<input type=\"text\" />\n<hr />\n```\n\nThe rule is simple: if a tag has no children, it ends with `/>`. If it has children, it has a separate closing tag:\n\n```jsx\n// No children -- self-closing\n<img src=\"photo.jpg\" />\n\n// Has children -- opening and closing tags\n<div>\n  <p>This div has children.</p>\n</div>\n```\n\n### Difference 3: Curly braces = \"insert JavaScript here\"\n\nThis is the most important difference between HTML and JSX, and the one that gives JSX its power. Curly braces `{}` let you embed any JavaScript expression directly into your markup:\n\n```jsx\nconst userName = \"Sarah\";\nconst itemCount = 3;\n\nreturn (\n  <div>\n    <h1>Welcome back, {userName}</h1>\n    <p>You have {itemCount} items in your cart.</p>\n    <p>Total: ${itemCount * 29.99}</p>\n  </div>\n);\n```\n\nThis renders:\n\n> **Welcome back, Sarah**\n>\n> You have 3 items in your cart.\n>\n> Total: $89.97\n\nAnything inside `{}` is evaluated as JavaScript. A variable name gets replaced with its value. A math expression gets calculated. A function call gets executed and the result is inserted.\n\nThink of curly braces as a window from the markup world into the JavaScript world. Everything outside the braces is literal text or HTML-like structure. Everything inside the braces is live JavaScript.\n\nHere are common things you will see inside curly braces:\n\n```jsx\n// A variable\n<h1>{title}</h1>\n\n// A property of an object\n<p>{user.email}</p>\n\n// A function call\n<span>{formatDate(order.createdAt)}</span>\n\n// A ternary expression (if/else)\n<p>{isLoggedIn ? \"Welcome back\" : \"Please sign in\"}</p>\n\n// A math expression\n<p>{price * quantity}</p>\n```\n\n### Difference 4: Fragments -- wrapping without adding HTML\n\nA React component can only return **one** element. This is a rule of JSX. So what do you do when you want to return two sibling elements?\n\n```jsx\n// This will cause an error -- two sibling elements\nreturn (\n  <h1>Title</h1>\n  <p>Description</p>\n);\n```\n\nYou could wrap them in a `<div>`, but that adds an extra HTML element to the page for no reason. Instead, React provides **fragments** -- empty angle brackets that group elements without producing any HTML output:\n\n```jsx\n// This works -- fragment wraps siblings\nreturn (\n  <>\n    <h1>Title</h1>\n    <p>Description</p>\n  </>\n);\n```\n\nThe `<>` and `</>` are a fragment. They tell React \"these elements belong together\" without adding a `<div>` or any other element to the actual page. When you see empty angle brackets in React code, you are looking at a fragment.\n\n### Putting it all together\n\nHere is a realistic piece of JSX that uses all four differences:\n\n```jsx\nconst ProductCard = () => {\n  const product = { name: \"Wireless Headphones\", price: 79.99, inStock: true };\n\n  return (\n    <>\n      <div className=\"product-card\">\n        <img src=\"/images/headphones.jpg\" alt={product.name} />\n        <h2 className=\"product-title\">{product.name}</h2>\n        <p className=\"product-price\">${product.price}</p>\n        <p>{product.inStock ? \"In Stock\" : \"Out of Stock\"}</p>\n      </div>\n    </>\n  );\n};\n```\n\nYou can now read every line of this:\n- `className` is used instead of `class` for CSS classes\n- `<img />` is self-closing because it has no children\n- `{product.name}`, `{product.price}` insert JavaScript values into the markup\n- `{product.inStock ? \"In Stock\" : \"Out of Stock\"}` is a conditional expression inside curly braces\n- `<>` and `</>` are a fragment wrapping the content\n\n### Common JSX patterns you will see in the wild\n\nA few more patterns worth recognizing:\n\n**Style attributes use double curly braces** -- the outer pair says \"JavaScript expression here\" and the inner pair is a JavaScript object:\n\n```jsx\n<div style={{ color: \"red\", fontSize: \"16px\" }}>\n  Warning message\n</div>\n```\n\n**Event handlers use camelCase** -- `onclick` becomes `onClick`, `onchange` becomes `onChange`:\n\n```jsx\n<button onClick={handleSubmit}>Submit</button>\n```\n\n**Boolean attributes** -- in HTML you might write `<input disabled>`. In JSX, you write `<input disabled />` or `<input disabled={true} />`:\n\n```jsx\n<button disabled={isLoading}>Submit</button>\n```"
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "Look at this JSX: `<p className=\"total\">Your total is ${price * quantity}</p>`. What does the user see on screen if price is 25 and quantity is 4?",
+      "answer": "The user sees: 'Your total is $100'. The curly braces `{price * quantity}` evaluate the JavaScript expression 25 * 4, which equals 100. The dollar sign before the opening brace is literal text (not part of the JavaScript), so it appears as-is. The `className` attribute applies a CSS class called 'total' but does not appear in the visible output."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Reading JSX",
+      "problems": [
+        {
+          "id": "rl1-1-1",
+          "question": "What does this JSX render to the screen?\n\n```jsx\nconst name = \"Alex\";\nconst role = \"Designer\";\n\nreturn (\n  <div className=\"profile\">\n    <h1>{name}</h1>\n    <p>Role: {role}</p>\n  </div>\n);\n```",
+          "options": [
+            "A) A heading that says 'Alex' and a paragraph that says 'Role: Designer'",
+            "B) A heading that says '{name}' and a paragraph that says 'Role: {role}'",
+            "C) A heading that says 'Alex' and a paragraph that says 'Designer'"
+          ],
+          "correctAnswer": "A",
+          "explanation": "Curly braces in JSX insert the value of the JavaScript expression inside them. {name} becomes 'Alex' and {role} becomes 'Designer'. The literal text 'Role: ' before the curly braces is preserved as-is. className='profile' applies a CSS class but does not appear in the visible output.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "rl1-1-2",
+          "question": "A developer wrote this JSX but it is not valid. What is wrong?\n\n```jsx\nreturn (\n  <div class=\"container\">\n    <h1>Dashboard</h1>\n    <img src=\"logo.png\">\n  </div>\n);\n```",
+          "options": [
+            "A) 'class' should be 'className' and the <img> tag needs to be self-closing: <img src=\"logo.png\" />",
+            "B) The <h1> tag needs a className attribute",
+            "C) The return statement should not have parentheses"
+          ],
+          "correctAnswer": "A",
+          "explanation": "Two JSX rules are broken here. First, JSX uses 'className' instead of 'class' because 'class' is a reserved word in JavaScript. Second, every tag in JSX must be explicitly closed -- since <img> has no children, it must be self-closing: <img src='logo.png' />. The parentheses after return are valid and common in JSX.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "rl1-1-3",
+          "question": "What does this component render?\n\n```jsx\nconst isAdmin = false;\nconst user = { name: \"Jordan\", email: \"jordan@example.com\" };\n\nreturn (\n  <>\n    <h2>{user.name}</h2>\n    <p>{user.email}</p>\n    <p>{isAdmin ? \"Admin Access\" : \"Standard Access\"}</p>\n  </>\n);\n```",
+          "options": [
+            "A) A heading 'Jordan', a paragraph 'jordan@example.com', and a paragraph 'Admin Access'",
+            "B) A heading 'Jordan', a paragraph 'jordan@example.com', and a paragraph 'Standard Access'",
+            "C) A heading 'Jordan', a paragraph 'jordan@example.com', and nothing else because isAdmin is false"
+          ],
+          "correctAnswer": "B",
+          "explanation": "The curly braces insert JavaScript values: {user.name} becomes 'Jordan' and {user.email} becomes 'jordan@example.com'. The ternary expression checks isAdmin -- since it is false, the expression evaluates to 'Standard Access'. The fragment (<> and </>) groups the elements without adding any extra HTML to the page.",
+          "difficulty": "advanced"
+        }
+      ]
+    },
+    {
+      "type": "explainBack",
+      "prompt": "In your own words, explain the four key differences between HTML and JSX. For each one, describe what you would see in the code and why it exists."
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "JSX is HTML with four adjustments: className instead of class, self-closing tags for elements with no children, curly braces {} to insert JavaScript expressions, and fragments <></> to group elements without adding extra HTML. Once you know these four rules, you can read any JSX."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "Now that you can read JSX, the next step is understanding the structure it lives inside. Every piece of JSX is returned from a function -- and that function is what React calls a 'component.' Module 1.2 shows you the anatomy of that function."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "In JSX, what do you use instead of 'class' for CSS classes?",
+      "options": ["cssClass", "className", "htmlClass"],
+      "correctIndex": 1,
+      "explanation": "JSX uses 'className' instead of 'class' because 'class' is a reserved word in JavaScript.",
+      "encourageCorrect": "That's right! className is one of those small differences that becomes second nature quickly.",
+      "encourageIncorrect": "Close! The answer is className. Since JSX lives inside JavaScript, and 'class' is reserved in JS, React uses className instead."
+    },
+    {
+      "question": "What do curly braces {} do inside JSX?",
+      "options": ["They create a new HTML element", "They insert a JavaScript expression into the markup", "They add a CSS style"],
+      "correctIndex": 1,
+      "explanation": "Curly braces in JSX let you embed any JavaScript expression -- a variable, a calculation, a function call -- directly into your markup.",
+      "encourageCorrect": "Exactly! Curly braces are your window from markup into JavaScript. Great recall!",
+      "encourageIncorrect": "Not quite -- curly braces are how you insert JavaScript expressions into JSX. Think of them as a bridge between markup and code."
+    },
+    {
+      "question": "What are fragments (<> and </>) used for in JSX?",
+      "options": ["Adding invisible divs to the page", "Grouping elements without adding extra HTML to the page", "Creating comments in JSX"],
+      "correctIndex": 1,
+      "explanation": "Fragments let you group multiple elements together without adding an extra element like a div to the actual HTML output.",
+      "encourageCorrect": "Nice one! Fragments are a handy way to satisfy the single-element rule without cluttering the DOM.",
+      "encourageIncorrect": "Good try! Fragments group sibling elements together without producing any actual HTML on the page -- unlike a div, they leave no trace."
+    }
+  ]
+}

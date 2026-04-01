@@ -104,5 +104,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Application of Ethics L2**, where you will work through complex, multi-stakeholder vignettes that require integrating knowledge of all Standards simultaneously \u2014 the exact format tested on the CFA Level II exam."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "The mosaic theory allows analysts to form investment conclusions by:",
+      "options": [
+        "Using material nonpublic information directly",
+        "Combining public information with non-material nonpublic information",
+        "Relying solely on insider tips"
+      ],
+      "correctIndex": 1,
+      "explanation": "Under mosaic theory, analysts can combine public information with non-material nonpublic information (e.g., industry contacts) to form conclusions.",
+      "encourageCorrect": "That's the mosaic theory! Public info plus non-material nonpublic info is fine.",
+      "encourageIncorrect": "Mosaic theory allows combining public information with non-material nonpublic information to reach investment conclusions. Material nonpublic information is still off-limits."
+    },
+    {
+      "question": "Standard III(B) Fair Dealing requires that investment recommendations be disseminated:",
+      "options": [
+        "To the analyst's best clients first",
+        "Fairly to all clients, without favoring any group",
+        "Only after the analyst has traded personally"
+      ],
+      "correctIndex": 1,
+      "explanation": "Fair dealing means all clients should receive recommendations at approximately the same time. It doesn't require identical treatment but must be equitable.",
+      "encourageCorrect": "Correct! Fair dealing means no client gets unfair priority.",
+      "encourageIncorrect": "Fair dealing requires disseminating recommendations fairly to all clients at approximately the same time. No preferential treatment."
+    }
   ]
 }

@@ -118,5 +118,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Understanding Business Cycles** \u2014 the macroeconomic fluctuations that affect all firms regardless of market structure. You'll see how expansion and contraction phases change demand conditions, unemployment, and inflation, shifting the environment in which these market structures operate."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "In perfect competition, what is the relationship between price and marginal cost in long-run equilibrium?",
+      "options": [
+        "Price exceeds marginal cost",
+        "Price equals marginal cost",
+        "Price is below marginal cost"
+      ],
+      "correctIndex": 1,
+      "explanation": "In perfect competition, firms are price takers and produce where P = MC. In the long run, economic profits are zero.",
+      "encourageCorrect": "Correct! P = MC is the hallmark of perfect competition in equilibrium.",
+      "encourageIncorrect": "In perfect competition, firms produce where price equals marginal cost. Long-run economic profit is zero."
+    },
+    {
+      "question": "Which market structure has the fewest firms and the most pricing power?",
+      "options": [
+        "Perfect competition",
+        "Monopolistic competition",
+        "Monopoly"
+      ],
+      "correctIndex": 2,
+      "explanation": "A monopoly has a single firm with maximum pricing power, as there are no competitors and high barriers to entry.",
+      "encourageCorrect": "Right! A single firm with no competitors has the most power over price.",
+      "encourageIncorrect": "Monopoly has the fewest firms (one) and the most pricing power. No competition means the firm sets the market price."
+    }
   ]
 }

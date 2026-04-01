@@ -1,0 +1,99 @@
+{
+  "meta": {
+    "title": "6.5 Checkpoint",
+    "description": "Diagnose multiple React bugs from error messages and code snippets.",
+    "level": "level-6",
+    "slug": "checkpoint",
+    "order": 5,
+    "isCheckpoint": true,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "markdown",
+      "content": "## Level 6 Checkpoint: The Debugging\n\nThis is the most practical checkpoint in the course. Every question below simulates a real debugging scenario: you get an error message, a piece of code, or a bug report, and you need to identify what is wrong.\n\nThese problems are harder than previous levels. That is intentional -- debugging requires combining everything you have learned: reading JSX, tracing props, understanding state, recognizing hooks, and knowing TypeScript. Take your time."
+    },
+    {
+      "type": "explainBack",
+      "prompt": "In your own words, describe the seven-step troubleshooting checklist. You do not need to list every detail -- just the essence of each step and why it matters."
+    },
+    {
+      "type": "explainBack",
+      "prompt": "Explain the difference between a TypeScript error (caught at build time) and a runtime error (caught when the code runs). Give an example of a bug that TypeScript catches and one that it does not."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Level 6 Checkpoint: Diagnosing React Bugs",
+      "problems": [
+        {
+          "id": "rl6-5-1",
+          "question": "A user reports: \"The page shows 'Loading...' forever.\" You check the Network tab and see the API returned data successfully. Here is the component:\n\n```typescript\nfunction UserDashboard() {\n  const [user, setUser] = useState<User | null>(null);\n  const [loading, setLoading] = useState(true);\n\n  useEffect(() => {\n    async function loadUser() {\n      try {\n        const res = await fetch('/api/me');\n        const data = await res.json();\n        setUser(data);\n      } catch (err) {\n        console.error(err);\n      }\n    }\n    loadUser();\n  }, []);\n\n  if (loading) return <p>Loading...</p>;\n  return <h1>Welcome, {user?.name}</h1>;\n}\n```\n\nWhat is the bug?",
+          "options": [
+            "A) The fetch URL is wrong",
+            "B) The `loading` state is initialized to `true` but is never set to `false` -- the `setLoading(false)` call is missing from both the success and error paths",
+            "C) The `useEffect` dependency array should include `user`"
+          ],
+          "correctAnswer": "B",
+          "explanation": "`loading` starts as `true` and is never changed. The component always hits the `if (loading) return <p>Loading...</p>` guard. The fix: add `setLoading(false)` in the try block after `setUser(data)` and in the catch block after logging the error (or use a `.finally()` pattern).",
+          "difficulty": "basic"
+        },
+        {
+          "id": "rl6-5-2",
+          "question": "The console shows: `Warning: Can't perform a React state update on an unmounted component.` Here is the code:\n\n```typescript\nfunction LivePrice({ symbol }: { symbol: string }) {\n  const [price, setPrice] = useState<number | null>(null);\n\n  useEffect(() => {\n    const interval = setInterval(async () => {\n      const res = await fetch(`/api/price/${symbol}`);\n      const data = await res.json();\n      setPrice(data.price);\n    }, 5000);\n  }, [symbol]);\n\n  if (!price) return <p>Loading price...</p>;\n  return <p>{symbol}: ${price.toFixed(2)}</p>;\n}\n```\n\nWhat is the bug, and what would you tell the AI to fix?",
+          "options": [
+            "A) The interval is too frequent at 5 seconds",
+            "B) The useEffect has no cleanup function. When the component unmounts (user navigates away), the interval keeps running and tries to call setPrice on an unmounted component.",
+            "C) The price should be formatted differently"
+          ],
+          "correctAnswer": "B",
+          "explanation": "The `setInterval` runs every 5 seconds but is never cleared. When the component unmounts, the interval keeps firing, fetching data, and calling `setPrice` on a component that no longer exists. The fix: add `return () => clearInterval(interval);` to the useEffect. You would tell the AI: \"Add cleanup to the useEffect that clears the interval when the component unmounts or when the symbol changes.\"",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "rl6-5-3",
+          "question": "A developer asks for help with this component. The user types in the search box, but the results never update:\n\n```typescript\nfunction SearchPage() {\n  const [query, setQuery] = useState('');\n  const [results, setResults] = useState<Result[]>([]);\n\n  useEffect(() => {\n    if (query.length < 3) return;\n\n    fetch(`/api/search?q=${query}`)\n      .then((res) => res.json())\n      .then((data) => setResults(data));\n  }, []);\n\n  return (\n    <div>\n      <input\n        value={query}\n        onChange={(e) => setQuery(e.target.value)}\n        placeholder=\"Search...\"\n      />\n      <ul>\n        {results.map((r) => (\n          <li key={r.id}>{r.title}</li>\n        ))}\n      </ul>\n    </div>\n  );\n}\n```\n\nWhat would you tell the AI to fix?",
+          "options": [
+            "A) The input's onChange handler is wrong",
+            "B) The useEffect dependency array is `[]` (empty), so the effect only runs once on mount -- it never re-runs when `query` changes. Change it to `[query]`.",
+            "C) The results array should use index as key instead of r.id"
+          ],
+          "correctAnswer": "B",
+          "explanation": "The useEffect has an empty dependency array `[]`, meaning it runs only once when the component first mounts. At that point, `query` is an empty string, so the `if (query.length < 3) return` guard exits immediately. When the user types, `query` state updates and the component re-renders, but the effect never runs again. The fix: change `[]` to `[query]` so the effect re-runs whenever the search query changes.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "rl6-5-4",
+          "question": "This component has a subtle bug. Users report that the counter sometimes shows the wrong number after clicking rapidly:\n\n```typescript\nfunction RapidCounter() {\n  const [count, setCount] = useState(0);\n\n  async function handleClick() {\n    setCount(count + 1);\n    await fetch('/api/track-click', { method: 'POST' });\n    setCount(count + 1);\n  }\n\n  return (\n    <div>\n      <p>Count: {count}</p>\n      <button onClick={handleClick}>Click me</button>\n    </div>\n  );\n}\n```\n\nWhat is going wrong?",
+          "options": [
+            "A) The fetch call is causing the problem",
+            "B) Both `setCount(count + 1)` calls use the same stale `count` value from when the function was created. The second call does not see the result of the first. After `await`, `count` still refers to the old value, so both calls set count to the same number.",
+            "C) The button should be disabled while the API call is in progress"
+          ],
+          "correctAnswer": "B",
+          "explanation": "This is a stale closure bug. `count` is captured when `handleClick` is created. Both `setCount(count + 1)` calls use the same `count` value. If count is 5, both calls set it to 6, not 7. After the `await`, `count` is still 5 (the old value). The fix: use the functional updater: `setCount(prev => prev + 1)`. This always uses the latest state value, not the captured one.",
+          "difficulty": "advanced"
+        },
+        {
+          "id": "rl6-5-5",
+          "question": "A PM reports: \"The order form submits with the wrong items. The user adds Item A, removes it, adds Item B, but the order includes both Item A and Item B.\"\n\n```typescript\nfunction OrderForm() {\n  const [items, setItems] = useState<OrderItem[]>([]);\n\n  function addItem(item: OrderItem) {\n    items.push(item);\n    setItems(items);\n  }\n\n  function removeItem(id: string) {\n    const index = items.findIndex((i) => i.id === id);\n    items.splice(index, 1);\n    setItems(items);\n  }\n\n  async function submitOrder() {\n    await fetch('/api/orders', {\n      method: 'POST',\n      headers: { 'Content-Type': 'application/json' },\n      body: JSON.stringify({ items }),\n    });\n  }\n\n  return (\n    <div>\n      {items.map((item) => (\n        <div key={item.id}>\n          <span>{item.name}</span>\n          <button onClick={() => removeItem(item.id)}>Remove</button>\n        </div>\n      ))}\n      <button onClick={submitOrder}>Submit Order</button>\n    </div>\n  );\n}\n```\n\nWhat is the root cause and how would you describe it to the development team?",
+          "options": [
+            "A) The submit function sends the wrong data format",
+            "B) Both `addItem` and `removeItem` directly mutate the state array with `.push()` and `.splice()` instead of creating new arrays. React does not detect the change because the array reference is the same, so the UI may not update correctly, and the internal state becomes unreliable.",
+            "C) The key prop on the list items is incorrect"
+          ],
+          "correctAnswer": "B",
+          "explanation": "This is the direct state mutation bug. `items.push()` and `items.splice()` modify the existing array. `setItems(items)` passes the same reference. React may not re-render because it thinks nothing changed. Even when it does re-render, the mutations have corrupted the original state. The UI may show one thing while the actual array contains something else. The fix: `setItems([...items, item])` for add, and `setItems(items.filter(i => i.id !== id))` for remove. You would tell the team: \"The add and remove functions mutate the state array directly instead of creating new arrays. This causes React to miss updates and leads to the submitted data being out of sync with what the user sees.\"",
+          "difficulty": "advanced"
+        }
+      ]
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "You now have a complete debugging toolkit: reading error messages to identify the problem type, using React DevTools to inspect live data, recognizing the ten most common bug patterns by sight, and following a systematic checklist to diagnose any React issue. You do not need to write the fix -- you need to describe the problem precisely. That skill is just as valuable."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "Think about the bugs you have encountered in products you use. A button that does not work. A page that loads forever. Data that shows up wrong. With the skills from this level, you could now open DevTools on those pages and start investigating. The debugging process you learned here applies to any web application, not just ones you are building."
+    }
+  ]
+}

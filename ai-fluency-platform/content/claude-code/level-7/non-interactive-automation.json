@@ -43,5 +43,31 @@
       "type": "connectPrompt",
       "prompt": "Non-interactive mode works great for scripts you run yourself. But what about running Claude in a team's shared infrastructure — CI/CD pipelines that trigger automatically on every code push or pull request? That is the next frontier."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What flags are essential for safe non-interactive Claude Code runs?",
+      "options": [
+        "--verbose and --debug",
+        "--max-turns and --max-budget-usd",
+        "--fast and --quiet"
+      ],
+      "correctIndex": 1,
+      "explanation": "--max-turns prevents infinite loops and --max-budget-usd sets a cost cap — both critical when no human is watching.",
+      "encourageCorrect": "Those are the safety essentials for unattended runs!",
+      "encourageIncorrect": "--max-turns prevents runaway loops and --max-budget-usd caps costs — both essential when Claude runs without human oversight."
+    },
+    {
+      "question": "What is the key difference between interactive and non-interactive prompts?",
+      "options": [
+        "Non-interactive prompts must be shorter",
+        "Non-interactive prompts must be fully self-contained with no opportunity for follow-up",
+        "There is no difference"
+      ],
+      "correctIndex": 1,
+      "explanation": "In non-interactive mode, the prompt must be complete on the first try — there's no opportunity for follow-up or clarification.",
+      "encourageCorrect": "Critical distinction! No follow-up means the prompt must be perfect.",
+      "encourageIncorrect": "Non-interactive prompts must be fully self-contained — Claude gets one shot with no chance for clarification."
+    }
   ]
 }

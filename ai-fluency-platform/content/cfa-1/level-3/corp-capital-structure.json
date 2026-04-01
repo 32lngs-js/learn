@@ -132,5 +132,31 @@
       "type": "connectPrompt",
       "prompt": "Capital structure determines how a company finances its operations. The next module explores **Business Models** \u2014 how companies actually create, deliver, and capture value. Understanding business models helps analysts assess whether a company's strategy can generate the returns needed to exceed its cost of capital."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "According to Modigliani-Miller (without taxes), does capital structure affect firm value?",
+      "options": [
+        "Yes, more debt always increases value",
+        "No, firm value is independent of capital structure",
+        "Yes, more equity always increases value"
+      ],
+      "correctIndex": 1,
+      "explanation": "Under the original MM proposition (no taxes, no bankruptcy costs), how a firm finances itself doesn't affect its total value.",
+      "encourageCorrect": "Correct! In the idealized MM world, capital structure doesn't matter for firm value.",
+      "encourageIncorrect": "Under MM without taxes, firm value is independent of capital structure. The pie's total size doesn't change based on how you slice it."
+    },
+    {
+      "question": "What is the tax benefit of using debt financing?",
+      "options": [
+        "Debt has no tax benefit",
+        "Interest payments are tax-deductible, creating a tax shield",
+        "Debt reduces the cost of equity"
+      ],
+      "correctIndex": 1,
+      "explanation": "Interest on debt is tax-deductible, which reduces the firm's tax bill. This 'tax shield' is a key advantage of debt financing.",
+      "encourageCorrect": "Right! The interest tax shield is a major reason firms use debt.",
+      "encourageIncorrect": "Interest payments are tax-deductible, creating a tax shield that reduces the firm's tax burden. This is a key advantage of debt."
+    }
   ]
 }

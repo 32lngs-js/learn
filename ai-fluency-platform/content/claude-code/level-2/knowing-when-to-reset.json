@@ -43,5 +43,31 @@
       "type": "connectPrompt",
       "prompt": "You now have the complete Level 2 toolkit: the briefing mindset, specificity, verification criteria, the interview pattern, input methods, and the reset rule. The checkpoint in the next module will test whether these concepts have landed by asking you to rewrite bad prompts into effective briefings."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is the 'two-correction rule'?",
+      "options": [
+        "Always send exactly two corrections",
+        "After two failed corrections, stop correcting and reset",
+        "Wait two minutes before correcting"
+      ],
+      "correctIndex": 1,
+      "explanation": "After two failed corrections, run /clear and start fresh with a better briefing that incorporates what you learned.",
+      "encourageCorrect": "That's the rule! Two strikes and it's time for a fresh start.",
+      "encourageIncorrect": "After two failed corrections, stop correcting and reset with /clear — write a new briefing using what you learned from the failed attempt."
+    },
+    {
+      "question": "Why do correction spirals happen?",
+      "options": [
+        "Claude is not smart enough",
+        "The original briefing was insufficient and patches create contradictions",
+        "The internet connection is slow"
+      ],
+      "correctIndex": 1,
+      "explanation": "Correction spirals happen because the original briefing was missing key information, and each correction adds conflicting signals to the context.",
+      "encourageCorrect": "Exactly! The root cause is always the original briefing, not Claude's ability.",
+      "encourageIncorrect": "Correction spirals happen because the original briefing was insufficient — each correction adds contradictory signals that muddle the context."
+    }
   ]
 }

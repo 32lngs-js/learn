@@ -1,0 +1,25 @@
+{
+  "meta": {
+    "title": "Level 7: The Confidence",
+    "description": "Solidify your code literacy with real-world scenarios, a capstone project, and the mindset to keep growing after the course ends.",
+    "level": "level-7",
+    "slug": "the-confidence",
+    "order": 0,
+    "isCheckpoint": false,
+    "isIndex": true
+  },
+  "blocks": [
+    {
+      "type": "markdown",
+      "content": "## Level 7: The Confidence\n\nYou have come a long way.\n\nIn Level 1, you learned that HTML is just labeled content. In Level 2, you saw how CSS controls the look. In Level 3, you met JavaScript and event-driven behavior. Level 4 tied it all together into full pages. Level 5 taught you to direct AI with precision. Level 6 showed you how real codebases work in the wild.\n\nNow it is time to prove — to yourself — that this knowledge is real and durable.\n\nThis final level is not about learning new syntax. It is about **solidifying your confidence** through real scenarios, a comprehensive capstone exercise, and a mindset shift that will serve you long after this course ends.\n\n## What you will learn\n\n| Module | Topic | What you will be able to do |\n| :-- | :-- | :-- |\n| 7.1 | **The Literacy Mindset** | Understand the difference between code literacy and code fluency, know when to DIY vs delegate, and articulate what you do and do not understand |\n| 7.2 | **Real Scenarios** | Apply your code literacy to 8 realistic role-specific situations — from adding tracking code to estimating feature complexity |\n| 7.3 | **Final Capstone** | Debug a complete webpage with 5 intentional bugs, prove your skills across HTML, CSS, and JavaScript, and reflect on how far you have come |\n\n## The mental model\n\nThink of this level as your graduation exercise. A driving instructor does not just teach you to steer and brake — the final lesson puts you on a real road with real traffic and real decisions. That is what this level does for code literacy. You will face messy, realistic situations where the answer is not obvious and you have to think it through.\n\nThe goal is not perfection. It is the confidence to look at code and say: \"I know enough to figure this out.\""
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "This capstone level brings together everything you have learned. You will not memorize new syntax — you will prove to yourself that you can apply code literacy to real situations, debug real code, and communicate about technology with genuine confidence."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "Before we dive into scenarios and debugging, let's start with the most important thing: your mindset. Module 7.1 will help you understand what you have actually built over the past six levels — and how to keep building on it."
+    }
+  ]
+}

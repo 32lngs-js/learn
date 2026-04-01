@@ -104,5 +104,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Backtesting and Simulation**, where you will learn how to validate risk models and investment strategies. You will study the biases that plague backtests (survivorship, look-ahead, data-snooping) and how Monte Carlo simulation and bootstrapping can improve the robustness of your analysis."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Conditional VaR (CVaR or Expected Shortfall) differs from standard VaR because it:",
+      "options": [
+        "Always shows a smaller loss estimate",
+        "Measures the expected loss in the tail beyond the VaR threshold",
+        "Only applies to equity portfolios"
+      ],
+      "correctIndex": 1,
+      "explanation": "CVaR answers: 'If we do lose more than the VaR amount, how much do we expect to lose on average?' It captures tail risk severity.",
+      "encourageCorrect": "That's the key improvement! CVaR looks at what happens beyond VaR.",
+      "encourageIncorrect": "CVaR (Expected Shortfall) measures the average loss in the worst cases beyond the VaR level. It captures the severity of tail losses, not just the threshold."
+    },
+    {
+      "question": "Stress testing a portfolio involves:",
+      "options": [
+        "Running the model under normal market conditions only",
+        "Examining how the portfolio would perform under extreme but plausible scenarios",
+        "Calculating daily VaR"
+      ],
+      "correctIndex": 1,
+      "explanation": "Stress testing applies extreme scenarios (market crashes, rate spikes) to understand potential portfolio impacts that normal risk measures might miss.",
+      "encourageCorrect": "Right! Stress tests prepare you for extreme scenarios that VaR might miss.",
+      "encourageIncorrect": "Stress testing examines portfolio performance under extreme but plausible scenarios. It complements VaR by revealing vulnerabilities in crisis conditions."
+    }
   ]
 }

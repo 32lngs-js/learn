@@ -118,5 +118,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Hedge Funds**, where you will learn about strategies that use commodities, equities, fixed income, and derivatives to generate returns that are less dependent on market direction \u2014 including long/short equity, global macro, and managed futures."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Commodities can serve as a portfolio diversifier because they often have:",
+      "options": [
+        "High correlation with stocks",
+        "Low or negative correlation with traditional assets",
+        "Guaranteed positive returns"
+      ],
+      "correctIndex": 1,
+      "explanation": "Commodity returns are driven by different factors (supply/demand for physical goods) than stocks and bonds, providing diversification benefits.",
+      "encourageCorrect": "Right! Different return drivers mean low correlation with traditional portfolios.",
+      "encourageIncorrect": "Commodities often have low or negative correlation with stocks and bonds because their returns are driven by different factors (physical supply and demand)."
+    },
+    {
+      "question": "The return from holding commodity futures includes:",
+      "options": [
+        "Only the change in the spot price",
+        "Price return, roll return, and collateral return",
+        "Dividend income from the commodity"
+      ],
+      "correctIndex": 1,
+      "explanation": "Commodity futures returns have three components: spot price changes, roll yield (from rolling expiring contracts), and collateral return (interest on posted margin).",
+      "encourageCorrect": "Well done! Three components: price, roll, and collateral return.",
+      "encourageIncorrect": "Commodity futures returns come from three sources: price return (spot changes), roll return (from rolling contracts), and collateral return (interest earned on margin)."
+    }
   ]
 }

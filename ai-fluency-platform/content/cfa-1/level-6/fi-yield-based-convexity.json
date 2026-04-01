@@ -104,5 +104,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Curve-Based Risk Measures** \u2014 effective duration, effective convexity, key rate duration, and spread duration. These measures account for embedded options and non-parallel yield curve shifts that yield-based measures cannot capture."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What does positive convexity mean for a bond investor?",
+      "options": [
+        "The bond loses more when rates rise than it gains when rates fall",
+        "The bond gains more when rates fall than it loses for an equal rise in rates",
+        "The bond's price doesn't change with interest rates"
+      ],
+      "correctIndex": 1,
+      "explanation": "Positive convexity is beneficial: price increases from rate decreases are larger than price decreases from rate increases of the same magnitude.",
+      "encourageCorrect": "Exactly! Positive convexity is the investor's friend \u2014 more upside than downside.",
+      "encourageIncorrect": "Positive convexity means the bond gains more from a rate decrease than it loses from an equal rate increase. It's an asymmetric benefit for the investor."
+    },
+    {
+      "question": "Why is duration alone insufficient for estimating bond price changes for large yield moves?",
+      "options": [
+        "Duration doesn't account for credit risk",
+        "Duration assumes a linear price-yield relationship, but the actual relationship is curved",
+        "Duration only works for zero-coupon bonds"
+      ],
+      "correctIndex": 1,
+      "explanation": "Duration provides a linear approximation of the curved price-yield relationship. For large yield changes, the convexity adjustment is needed for accuracy.",
+      "encourageCorrect": "Right! Duration is a straight-line estimate of a curved relationship.",
+      "encourageIncorrect": "Duration gives a linear approximation, but the bond price-yield relationship is actually curved. Convexity captures that curvature for large yield changes."
+    }
   ]
 }

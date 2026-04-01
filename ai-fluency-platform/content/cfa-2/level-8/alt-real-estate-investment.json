@@ -118,5 +118,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Natural Resources**, including commodity futures pricing. You will see how the cost-of-carry model from derivatives applies to commodities, and learn about contango, backwardation, and roll yield \u2014 concepts that affect commodity investment returns."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "The capitalization (cap) rate in real estate is calculated as:",
+      "options": [
+        "Property price / Annual rental income",
+        "Net operating income / Property value",
+        "Total return / Initial investment"
+      ],
+      "correctIndex": 1,
+      "explanation": "Cap rate = NOI / Property value. A higher cap rate implies a higher return relative to price (or lower valuation for a given NOI).",
+      "encourageCorrect": "Correct! Cap rate = NOI / Value. It's the real estate equivalent of an earnings yield.",
+      "encourageIncorrect": "Cap rate = Net operating income / Property value. It measures the rate of return on a property based on its income, similar to an earnings yield."
+    },
+    {
+      "question": "The income approach to real estate valuation values property based on:",
+      "options": [
+        "Comparable recent sales",
+        "The present value of expected future rental income",
+        "Replacement cost of the building"
+      ],
+      "correctIndex": 1,
+      "explanation": "The income approach discounts expected future net operating income to present value, treating the property like any other income-generating asset.",
+      "encourageCorrect": "That's right! Discount future income, just like valuing any income-producing asset.",
+      "encourageIncorrect": "The income approach values property by discounting expected future net operating income. The comparable sales approach and cost approach are alternatives."
+    }
   ]
 }

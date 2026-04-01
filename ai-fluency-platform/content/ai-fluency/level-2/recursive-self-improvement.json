@@ -55,5 +55,31 @@
       "type": "connectPrompt",
       "prompt": "You now have five core prompt engineering techniques: few-shot, chain-of-thought, roles, parameters, and self-improvement. In Module 2.6, you will learn how to save and organize your best prompts into a reusable library so this work compounds over time."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is the basic loop in recursive self-improvement?",
+      "options": [
+        "Ask, answer, done",
+        "Generate, critique, refine",
+        "Search, rank, display"
+      ],
+      "correctIndex": 1,
+      "explanation": "The model generates an initial output, then critiques it against specific criteria, then produces a refined version based on its own feedback.",
+      "encourageCorrect": "Nice! Generate-critique-refine is a powerful technique for improving output quality.",
+      "encourageIncorrect": "The loop is: generate an initial output, critique it against criteria, then refine it. This works because evaluation uses different patterns than generation."
+    },
+    {
+      "question": "Can the model's self-critique step make the output worse?",
+      "options": [
+        "No, critique always improves quality",
+        "Yes, because the critique itself is probabilistic and can be wrong",
+        "Only if the temperature is too high"
+      ],
+      "correctIndex": 1,
+      "explanation": "The model's self-critique is itself a probabilistic prediction that can flag correct information as incorrect or suggest changes that reduce accuracy.",
+      "encourageCorrect": "That's an important insight! Self-critique is still probabilistic, so human oversight of the final output is essential.",
+      "encourageIncorrect": "Yes, the critique is itself probabilistic -- it can be wrong, flag correct info as incorrect, or cause drift from your original intent. Always verify the final result."
+    }
   ]
 }

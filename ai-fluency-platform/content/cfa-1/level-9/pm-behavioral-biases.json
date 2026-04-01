@@ -114,5 +114,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Introduction to Risk Management**, which moves from individual investor psychology to a systematic, enterprise-level view of risk. You will learn about risk governance, VaR, stress testing, and how organizations measure and manage risk across their entire operations \u2014 building on your understanding of risk tolerance from the IPS and the behavioral challenges that complicate risk decisions."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is loss aversion?",
+      "options": [
+        "Avoiding all risky investments",
+        "The tendency to feel the pain of losses more strongly than the pleasure of equivalent gains",
+        "Preferring bonds over stocks"
+      ],
+      "correctIndex": 1,
+      "explanation": "Loss aversion means investors feel roughly twice as much pain from a loss as pleasure from a gain of the same size, leading to irrational decision-making.",
+      "encourageCorrect": "Exactly! Losses hurt about twice as much as equivalent gains feel good.",
+      "encourageIncorrect": "Loss aversion means the pain of losing $100 is felt more intensely than the pleasure of gaining $100. This can lead to holding losers too long or selling winners too early."
+    },
+    {
+      "question": "Confirmation bias leads investors to:",
+      "options": [
+        "Seek out information that supports their existing beliefs and ignore contradictory evidence",
+        "Change their mind too frequently",
+        "Follow expert recommendations blindly"
+      ],
+      "correctIndex": 0,
+      "explanation": "Confirmation bias means people favor information that confirms what they already believe, leading to poorly diversified portfolios and missed warning signs.",
+      "encourageCorrect": "Right! We all tend to seek evidence that supports what we already think.",
+      "encourageIncorrect": "Confirmation bias causes investors to seek information confirming their existing views while ignoring contradictory evidence."
+    }
   ]
 }

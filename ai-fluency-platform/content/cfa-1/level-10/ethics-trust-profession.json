@@ -118,5 +118,31 @@
       "type": "connectPrompt",
       "prompt": "Now that you understand why ethics matter and the frameworks for ethical reasoning, the next module covers the **Code of Ethics and Standards of Professional Conduct** \u2014 the specific principles and rules that CFA members and candidates must follow. The Code translates the broad ethical ideas from this module into concrete professional obligations."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Why is trust considered essential to the investment profession?",
+      "options": [
+        "Because regulations require it",
+        "Because clients must rely on professionals to act in their interest given information asymmetry",
+        "Because it increases trading volume"
+      ],
+      "correctIndex": 1,
+      "explanation": "Clients typically have less knowledge than their advisors, so they must trust that professionals will act honestly and in their best interest.",
+      "encourageCorrect": "Spot on! Information asymmetry makes trust the foundation of the client relationship.",
+      "encourageIncorrect": "Trust is essential because of information asymmetry \u2014 clients know less than their advisors, so they must rely on professionals to act in their interest."
+    },
+    {
+      "question": "What is the difference between ethical conduct and legal conduct?",
+      "options": [
+        "They are the same thing",
+        "Ethical conduct can exceed legal requirements",
+        "Legal requirements are always stricter than ethical standards"
+      ],
+      "correctIndex": 1,
+      "explanation": "Something can be legal but still unethical. Ethical standards often go beyond what the law requires.",
+      "encourageCorrect": "Exactly! Ethics often sets a higher bar than the law alone.",
+      "encourageIncorrect": "Ethical standards can exceed legal requirements. An action may be legal but still be considered unethical in the investment profession."
+    }
   ]
 }

@@ -118,5 +118,31 @@
       "type": "connectPrompt",
       "prompt": "You have now covered all the core Fixed Income content for CFA Level I. The next module is the **Fixed Income Checkpoint** \u2014 a comprehensive assessment that tests your understanding across all FI topics from bond pricing to securitization."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Prepayment risk in mortgage-backed securities means:",
+      "options": [
+        "Borrowers may repay their mortgages early, especially when interest rates fall",
+        "The MBS may default",
+        "Interest rates will definitely rise"
+      ],
+      "correctIndex": 0,
+      "explanation": "When rates fall, homeowners refinance, returning principal to MBS investors early. Investors then reinvest at lower rates.",
+      "encourageCorrect": "That's it! Prepayment risk is the MBS investor's main concern when rates drop.",
+      "encourageIncorrect": "Prepayment risk means borrowers may pay off mortgages early (refinancing when rates fall), returning principal to investors who must reinvest at lower rates."
+    },
+    {
+      "question": "A pass-through MBS distributes cash flows to investors based on:",
+      "options": [
+        "A fixed schedule regardless of borrower payments",
+        "The actual principal and interest payments from the underlying mortgage pool",
+        "Only interest, never principal"
+      ],
+      "correctIndex": 1,
+      "explanation": "Pass-through MBS pass the mortgage payments (interest + scheduled principal + prepayments) directly to investors, minus a servicing fee.",
+      "encourageCorrect": "Correct! Cash flows 'pass through' from borrowers to investors.",
+      "encourageIncorrect": "A pass-through MBS distributes the actual cash flows from the underlying mortgages (interest, scheduled principal, and prepayments) to investors."
+    }
   ]
 }

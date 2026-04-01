@@ -114,5 +114,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Forward Commitments and Contingent Claims** \u2014 the two fundamental categories of derivative instruments. You will learn how forwards, futures, swaps, and options differ in their obligation structures and payoff profiles."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Exchange-traded derivatives differ from OTC derivatives mainly because:",
+      "options": [
+        "Exchange-traded are standardized and cleared through a central counterparty",
+        "Exchange-traded derivatives are always more expensive",
+        "OTC derivatives don't carry any risk"
+      ],
+      "correctIndex": 0,
+      "explanation": "Exchange-traded derivatives are standardized contracts cleared through a clearinghouse, reducing counterparty risk. OTC derivatives are customized bilateral agreements.",
+      "encourageCorrect": "That's the key distinction! Standardization and central clearing vs customization.",
+      "encourageIncorrect": "Exchange-traded derivatives are standardized and use a central clearinghouse (reducing counterparty risk). OTC derivatives are customized and carry more counterparty risk."
+    },
+    {
+      "question": "What is the role of margin in futures trading?",
+      "options": [
+        "It's the profit from the trade",
+        "It's a performance deposit that ensures both parties can meet their obligations",
+        "It's the commission paid to the broker"
+      ],
+      "correctIndex": 1,
+      "explanation": "Margin is a good-faith deposit. Daily mark-to-market adjusts accounts, and maintenance margin triggers margin calls if the balance falls too low.",
+      "encourageCorrect": "Correct! Margin is a performance bond, not a down payment.",
+      "encourageIncorrect": "Margin in futures is a performance deposit (not a loan). It ensures both parties can meet obligations, with daily mark-to-market adjustments."
+    }
   ]
 }

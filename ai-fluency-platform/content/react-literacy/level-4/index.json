@@ -1,0 +1,29 @@
+{
+  "meta": {
+    "title": "Level 4: The Side Effects",
+    "description": "React components do more than show things. Learn to read what they do behind the scenes.",
+    "level": "level-4",
+    "slug": "index",
+    "order": 0,
+    "isCheckpoint": false,
+    "isIndex": true
+  },
+  "blocks": [
+    {
+      "type": "markdown",
+      "content": "## Welcome to Level 4\n\nIn Level 3, you learned to read hooks -- useState for memory, useEffect for timing, useContext for shared data. Now you are ready to see what React components actually do with those tools in the real world.\n\nReal React apps are not static displays. They talk to servers, handle forms, navigate between pages, and manage the messy reality of things that take time. This level teaches you to read the patterns that connect React components to the outside world.\n\n### What you will learn\n\n| Module | Topic | Core Idea |\n| :-- | :-- | :-- |\n| 4.1 | Fetching Data | The most common side effect: loading data from a server |\n| 4.2 | Forms and User Input | How React handles what users type and submit |\n| 4.3 | Navigation and Routing | How single-page apps show different pages without reloading |\n| 4.4 | Common Async Patterns | Loading states, error handling, and patterns that handle things that take time |\n| 4.5 | Checkpoint | Test your ability to trace what happens beyond the screen |\n\n### The core idea\n\nEvery pattern in this level builds on what you learned in Level 3. Data fetching is useState + useEffect. Forms are useState + event handlers. Routing introduces new hooks but follows the same read-the-name-and-return-value strategy. You already have the foundation -- this level shows you the most common things built on top of it."
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "Level 4 connects React components to the real world -- servers, user input, URLs, and time. Every pattern here combines the hooks you learned in Level 3 with practical, everyday use cases."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "Think about the last time you used a web app. You probably loaded a page (data fetch), filled out a form (user input), clicked a link to another page (routing), and waited for something to load (async pattern). This level covers all four."
+    },
+    {
+      "type": "markdown",
+      "content": "### Ready?\n\nStart with [Module 4.1: Fetching Data](/react-literacy/level-4/fetching-data/) to learn the pattern behind every loading spinner you have ever seen."
+    }
+  ]
+}

@@ -133,5 +133,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Big Data Projects** \u2014 the practical workflow of collecting, cleaning, and preparing data for the machine learning models you just learned about. You will learn about text analytics, data quality issues, and the end-to-end process from raw data to model deployment."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is the bias-variance tradeoff in machine learning?",
+      "options": [
+        "Simple models have low bias but high variance",
+        "Simple models tend to have high bias (underfitting) while complex models tend to have high variance (overfitting)",
+        "Bias and variance are unrelated"
+      ],
+      "correctIndex": 1,
+      "explanation": "Simple models may miss patterns (high bias, underfitting). Complex models may memorize noise (high variance, overfitting). The goal is balancing both.",
+      "encourageCorrect": "That's the key tradeoff! Finding the sweet spot between too simple and too complex.",
+      "encourageIncorrect": "The bias-variance tradeoff: simple models underfit (high bias), complex models overfit (high variance). The best model balances both."
+    },
+    {
+      "question": "Cross-validation in machine learning is used to:",
+      "options": [
+        "Increase the training data size",
+        "Estimate how well a model will generalize to new data",
+        "Speed up model training"
+      ],
+      "correctIndex": 1,
+      "explanation": "Cross-validation repeatedly splits data into training and validation sets to estimate out-of-sample performance, helping detect overfitting.",
+      "encourageCorrect": "Correct! Cross-validation helps ensure your model works on data it hasn't seen.",
+      "encourageIncorrect": "Cross-validation estimates how well a model generalizes to unseen data by training and testing on different subsets of the available data."
+    }
   ]
 }

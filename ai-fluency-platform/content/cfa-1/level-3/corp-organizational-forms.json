@@ -118,5 +118,31 @@
       "type": "connectPrompt",
       "prompt": "Now that you understand how businesses are organized and the agency conflicts that arise, the next module covers **Investors and Other Stakeholders** \u2014 who provides capital to corporations, what different types of investors expect, and how stakeholder interests can conflict with shareholder goals."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is a key advantage of the corporate form of business organization?",
+      "options": [
+        "Owners have unlimited liability",
+        "Limited liability for shareholders",
+        "It avoids all taxation"
+      ],
+      "correctIndex": 1,
+      "explanation": "In a corporation, shareholders' losses are limited to their investment. Personal assets are protected from the company's debts.",
+      "encourageCorrect": "That's the big one! Limited liability protects shareholders' personal assets.",
+      "encourageIncorrect": "Limited liability is a key advantage of corporations \u2014 shareholders can only lose what they invested, not their personal assets."
+    },
+    {
+      "question": "What is 'double taxation' as it relates to corporations?",
+      "options": [
+        "The company pays taxes twice a year",
+        "Corporate profits are taxed at the corporate level and again when distributed as dividends",
+        "Shareholders pay both state and federal taxes"
+      ],
+      "correctIndex": 1,
+      "explanation": "Double taxation means corporate income is taxed once at the firm level and again at the shareholder level when paid out as dividends.",
+      "encourageCorrect": "Right! Income is taxed at the corporate level, then dividends are taxed again at the personal level.",
+      "encourageIncorrect": "Double taxation means profits are taxed at the corporate level and then dividends are taxed again at the shareholder level."
+    }
   ]
 }

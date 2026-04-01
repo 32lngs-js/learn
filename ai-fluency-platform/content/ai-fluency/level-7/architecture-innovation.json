@@ -64,5 +64,31 @@
       "type": "keyTakeaway",
       "content": "The transformer is powerful but not permanent. State space models offer linear scaling at the cost of precise retrieval. Attention variants reduce cost while preserving the mechanism's strengths. Mixture of Experts activates only relevant parameters. Novel optimizers reduce training cost. The critical skill is not memorizing architectures but evaluating innovations: what problem does it solve, what does it sacrifice, and does the evidence support the claims at meaningful scale?"
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is the main limitation of state space models compared to transformers?",
+      "options": [
+        "They are slower to train",
+        "They compress history into a fixed-size state, losing the ability to precisely retrieve specific earlier tokens",
+        "They require more memory"
+      ],
+      "correctIndex": 1,
+      "explanation": "SSMs trade precise random access to history for efficient sequential processing -- they can handle longer sequences but struggle with exact recall of specific positions.",
+      "encourageCorrect": "Right! This is the fundamental tradeoff SSMs make -- efficiency at the cost of precise retrieval.",
+      "encourageIncorrect": "State space models compress all history into a fixed-size state, which loses precise positional information. They excel at long sequences but struggle with tasks like 'what was the third word?'"
+    },
+    {
+      "question": "What does Mixture of Experts (MoE) achieve?",
+      "options": [
+        "It trains multiple separate models",
+        "It activates only relevant parameter subsets per query, getting the benefits of scale without activating everything",
+        "It combines human and AI expertise"
+      ],
+      "correctIndex": 1,
+      "explanation": "MoE routes each query to a subset of specialized 'expert' networks, gaining the knowledge capacity of a large model with the inference cost of a smaller one.",
+      "encourageCorrect": "Exactly! MoE is a clever way to scale capability without proportionally scaling compute cost.",
+      "encourageIncorrect": "MoE activates only the relevant expert subnetworks for each query -- you get the capacity of a huge model but only pay the compute cost of the active subset."
+    }
   ]
 }

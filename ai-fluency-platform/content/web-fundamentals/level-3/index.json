@@ -1,0 +1,25 @@
+{
+  "meta": {
+    "title": "Level 3: The Behavior",
+    "description": "Learn to read JavaScript and understand how webpages respond to clicks, validate forms, and talk to servers — no coding required.",
+    "level": "level-3",
+    "slug": "the-behavior",
+    "order": 0,
+    "isCheckpoint": false,
+    "isIndex": true
+  },
+  "blocks": [
+    {
+      "type": "markdown",
+      "content": "## Level 3: The Behavior\n\nHTML gives a page its structure. CSS gives it style. But when you click a button and something happens — a menu opens, a form validates, data loads — that is **JavaScript**.\n\nJavaScript is the only true programming language of the three. It makes decisions, responds to actions, and changes the page after it has already loaded. If HTML is the skeleton and CSS is the clothing, JavaScript is the nervous system.\n\nYou do not need to write JavaScript to work with web teams effectively. But if you can **read** it — even roughly — you can troubleshoot broken buttons, understand error messages, and have much more productive conversations with developers.\n\n## What you will learn\n\n| Module | Topic | What you will be able to do |\n| :-- | :-- | :-- |\n| 3.1 | **What JavaScript Actually Does** | Understand the three jobs of JS, read variables and functions, and translate code to plain English |\n| 3.2 | **Events and Interaction** | Recognize how clicks, typing, and form submissions are wired up — and why they break |\n| 3.3 | **The Console Is Your Friend** | Open DevTools, read error messages, and understand what common errors actually mean |\n| 3.4 | **Reading Real JavaScript** | Trace through real-world patterns like form validation, API calls, and show/hide toggles |\n| 3.5 | **Checkpoint** | Debug a realistic interactive feature using everything you have learned |\n\n## The mental model\n\nImagine you are at a restaurant. The menu (HTML) tells you what is available. The decor and plating (CSS) make it look appealing. But the **waiter** is the one who takes your order, carries it to the kitchen, brings back your food, and tells you if something is unavailable.\n\nJavaScript is the waiter. It listens for what you want, goes and gets it, and updates what you see. When the waiter does not show up, or brings back the wrong dish, that is a JavaScript bug.\n\nYou already interact with JavaScript hundreds of times a day. Now you will learn to read the instructions that make it work."
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "JavaScript is the behavior layer of the web. It responds to user actions, changes page content dynamically, and communicates with servers. Learning to read JavaScript means you can troubleshoot interactive features, understand error messages, and communicate more effectively with developers."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "Let's start with the fundamentals: what does JavaScript actually do on a webpage? Module 3.1 will show you the three jobs every piece of JavaScript is doing and teach you to read code like plain English."
+    }
+  ]
+}

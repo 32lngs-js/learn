@@ -100,5 +100,31 @@
       "type": "connectPrompt",
       "prompt": "Next, we explore **Natural Resources** -- investments in energy, mining, agriculture, and timberland that provide commodity exposure and additional inflation protection within a private markets portfolio."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Infrastructure investments are attractive to institutional investors because they typically offer:",
+      "options": [
+        "High short-term trading liquidity",
+        "Stable, inflation-linked cash flows over very long periods",
+        "Guaranteed returns with no risk"
+      ],
+      "correctIndex": 1,
+      "explanation": "Infrastructure assets (toll roads, pipelines, utilities) often have regulated or contracted revenues with built-in inflation adjustments and very long asset lives.",
+      "encourageCorrect": "Exactly! Stable, inflation-protected income over decades is the draw.",
+      "encourageIncorrect": "Infrastructure offers stable, long-duration cash flows that are often linked to inflation. This makes them attractive for liability matching and real return generation."
+    },
+    {
+      "question": "Greenfield infrastructure projects differ from brownfield projects in that greenfield projects:",
+      "options": [
+        "Are fully operational existing assets",
+        "Involve building new assets from scratch, carrying construction and demand risk",
+        "Have no risk whatsoever"
+      ],
+      "correctIndex": 1,
+      "explanation": "Greenfield = new construction (higher risk, potentially higher return). Brownfield = existing operational assets (lower risk, more predictable cash flows).",
+      "encourageCorrect": "Right! Greenfield is new builds; brownfield is existing assets.",
+      "encourageIncorrect": "Greenfield projects build new assets from scratch, carrying construction and demand risk. Brownfield projects acquire existing, operational assets."
+    }
   ]
 }

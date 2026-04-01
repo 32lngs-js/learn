@@ -1,0 +1,110 @@
+{
+  "meta": {
+    "title": "5.4 Checkpoint",
+    "description": "Put it all together: review AI-generated landing page code, find structural issues, visual bugs, JS errors, and accessibility problems, then write prompts to fix them.",
+    "level": "level-5",
+    "slug": "checkpoint",
+    "order": 4,
+    "isCheckpoint": true,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "markdown",
+      "content": "## Checkpoint: The Full Review\n\nYou asked AI to build a landing page for a fitness studio. It gave you the following code. Your job is to review it — find the structural issues, visual bugs, JavaScript errors, and accessibility problems — and then write the prompts to fix them.\n\n```html\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>FitStudio</title>\n  <style>\n    * { margin: 0; padding: 0; box-sizing: border-box; }\n    body { font-family: Arial, sans-serif; }\n\n    .nav {\n      display: flex;\n      justify-content: space-between;\n      align-items: center;\n      padding: 16px 24px;\n      background-color: #1a1a2e;\n      color: #ffffff;\n    }\n    .nav-links { display: flex; list-style: none; gap: 20px; }\n    .nav-links a { color: #ffffff; text-decoration: none; }\n\n    .hero {\n      background-color: #16213e;\n      color: #16213e;\n      text-align: center;\n      padding: 100px 20px;\n    }\n    .hero h1 { font-size: 2.5rem; margin-bottom: 16px; }\n    .hero p { font-size: 1.2rem; margin-bottom: 24px; }\n\n    .cta-btn {\n      background-color: #e94560;\n      color: #ffffff;\n      padding: 14px 32px;\n      font-size: 1rem;\n      border: none;\n      border-radius: 6px;\n      cursor: pointer;\n    }\n\n    .classes {\n      padding: 60px 20px;\n      text-align: center;\n    }\n    .classes h2 { font-size: 2rem; margin-bottom: 32px; }\n    .class-grid {\n      display: grid;\n      grid-template-columns: repeat(3, 1fr);\n      gap: 24px;\n      max-width: 1000px;\n      margin: 0 auto;\n    }\n    .class-card {\n      border: 1px solid #ddd;\n      border-radius: 8px;\n      overflow: hidden;\n    }\n    .class-card img { width: 100%; }\n    .class-card h3 { padding: 16px 16px 8px; }\n    .class-card p { padding: 0 16px 16px; color: #666; }\n\n    .footer {\n      background-color: #1a1a2e;\n      color: #ffffff;\n      text-align: center;\n      padding: 24px;\n    }\n\n    @media (min-width: 768px) {\n      .class-grid {\n        grid-template-columns: 1fr;\n      }\n      .nav-links {\n        display: none;\n      }\n    }\n  </style>\n</head>\n<body>\n  <div class=\"nav\">\n    <h1>FitStudio</h1>\n    <ul class=\"nav-links\">\n      <li><a href=\"#classes\">Classes</a></li>\n      <li><a href=\"#about\">About</a></li>\n      <li><a href=\"#contact\">Contact</a></li>\n    </ul>\n    <div class=\"menu-toggle\" onclick=\"toggleMenu()\">☰</div>\n  </div>\n\n  <section class=\"hero\">\n    <h1>Transform Your Body</h1>\n    <p>Join our expert-led classes and start your fitness journey today.</p>\n    <div class=\"cta-btn\" onclick=\"signup()\">Start Free Trial</div>\n  </section>\n\n  <section class=\"classes\" id=\"classes\">\n    <h2>Our Classes</h2>\n    <div class=\"class-grid\">\n      <div class=\"class-card\">\n        <img src=\"yoga.jpg\">\n        <h3>Yoga Flow</h3>\n        <p>Find your balance with our relaxing yoga sessions.</p>\n      </div>\n      <div class=\"class-card\">\n        <img src=\"hiit.jpg\">\n        <h3>HIIT Blast</h3>\n        <p>High intensity intervals to torch calories fast.</p>\n      </div>\n      <div class=\"class-card\">\n        <img src=\"spin.jpg\">\n        <h3>Spin Cycle</h3>\n        <p>Ride to the beat in our energizing spin classes.</p>\n      </div>\n    </div>\n  </section>\n\n  <div class=\"footer\">\n    <p>© 2024 FitStudio. All rights reserved.</p>\n  </div>\n\n  <script>\n    function toggleMenu() {\n      document.querySelector('.nav-list').classList.toggle('active');\n    }\n\n    function signup() {\n      alert('Signing up!');\n    }\n  </script>\n</body>\n</html>\n```\n\nTake your time. Read through the HTML, CSS, and JavaScript carefully. Then answer the questions below."
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "Before looking at the questions, how many issues do you think you spotted in the code above? Write down your count.",
+      "answer": "There are at least 7 distinct issues in this code spanning HTML structure, CSS bugs, JavaScript errors, and accessibility problems. If you found 4 or more on your own, your review skills are strong. If you found fewer, the practice problems below will help you build that eye."
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "Which category do you think has the most issues: HTML structure, CSS styling, JavaScript logic, or accessibility?",
+      "answer": "Accessibility has the most issues (div-as-button, missing alt text, div-as-nav, color contrast). This is realistic — AI-generated code most frequently falls short on accessibility, which is exactly why knowing what to check for matters so much."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Full Page Review",
+      "problems": [
+        {
+          "id": "wf5-4-1",
+          "question": "The hero section text is invisible when you load the page. Look at the `.hero` CSS. What is the problem?",
+          "options": [
+            "A) The `text-align: center` is pushing the text off screen",
+            "B) The `color` and `background-color` are both set to `#16213e`, making text invisible against the background",
+            "C) The `padding: 100px 20px` is too large and hides the text below the fold"
+          ],
+          "correctAnswer": "B",
+          "explanation": "The .hero rule sets both background-color and color to #16213e (a dark blue). The text is there but it is the same color as the background — invisible. The fix: change color to #ffffff or another light color that contrasts with the dark background.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "wf5-4-2",
+          "question": "The media query is supposed to make the page work on mobile, but the nav links disappear on desktop and the card grid becomes single-column on desktop. What is wrong?",
+          "options": [
+            "A) The media query uses `min-width: 768px` when it should use `max-width: 768px`",
+            "B) The `.nav-links` class name does not match the HTML",
+            "C) The `grid-template-columns` value is invalid"
+          ],
+          "correctAnswer": "A",
+          "explanation": "The media query says @media (min-width: 768px), which means it applies on screens 768px and wider — that is tablets and desktops. The mobile-specific rules (hiding nav links, single-column grid) are being applied to large screens instead. Changing to max-width: 768px fixes this.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "wf5-4-3",
+          "question": "The hamburger menu toggle does not work — clicking it does nothing. Look at the JavaScript `toggleMenu()` function and the HTML. What is the bug?",
+          "options": [
+            "A) The `onclick` attribute should be `onClick` with a capital C",
+            "B) The JavaScript targets `.nav-list` but the HTML uses the class `.nav-links`",
+            "C) The `classList.toggle` method does not exist in JavaScript"
+          ],
+          "correctAnswer": "B",
+          "explanation": "The JavaScript uses document.querySelector('.nav-list') but the HTML element has class=\"nav-links\". The selector does not match any element, so querySelector returns null and the toggle fails silently (or throws a console error). The fix: change '.nav-list' to '.nav-links' in the JavaScript.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "wf5-4-4",
+          "question": "The \"Start Free Trial\" call-to-action is built like this:\n\n```html\n<div class=\"cta-btn\" onclick=\"signup()\">Start Free Trial</div>\n```\n\nWhat is the accessibility problem?",
+          "options": [
+            "A) The `onclick` handler should use `addEventListener` instead",
+            "B) The `<div>` should be a `<button>` so it is keyboard-accessible and announced as a button by screen readers",
+            "C) The class name `cta-btn` is misleading because it is not a real button"
+          ],
+          "correctAnswer": "B",
+          "explanation": "A <div> is not focusable with the Tab key, not announced as a button by screen readers, and does not respond to Enter or Space key presses. Using <button class=\"cta-btn\" onclick=\"signup()\"> gives you all of that accessibility for free. This is the same issue from Module 5.2 — it is that common.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "wf5-4-5",
+          "question": "All three class card images are missing something important:\n\n```html\n<img src=\"yoga.jpg\">\n<img src=\"hiit.jpg\">\n<img src=\"spin.jpg\">\n```\n\nWhat is missing and why does it matter?",
+          "options": [
+            "A) They are missing `width` and `height` attributes, which causes layout shift",
+            "B) They are missing `alt` attributes, which means screen reader users get no description of the images",
+            "C) They are missing `loading=\"lazy\"` which hurts page performance"
+          ],
+          "correctAnswer": "B",
+          "explanation": "Every <img> should have an alt attribute with a meaningful description, such as alt=\"Woman in a yoga pose on a mat\". Without alt text, screen reader users hear nothing or just the file name. This is an accessibility requirement and one of the most common omissions in AI-generated code.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "wf5-4-6",
+          "question": "The navigation is built with `<div class=\"nav\">` and the footer uses `<div class=\"footer\">`. The page logo also uses an `<h1>` tag inside the nav. Which prompt would fix the structural and semantic issues?\n\n**Prompt A:** \"Change the navigation `<div class=\"nav\">` to a `<nav>` element, change the footer `<div class=\"footer\">` to a `<footer>` element, and change the logo `<h1>` in the nav to a `<span>` or `<a>` since the page should have only one `<h1>` (which is already in the hero section).\"\n\n**Prompt B:** \"Make the HTML more semantic.\"\n\n**Prompt C:** \"Add ARIA roles to the div elements.\"",
+          "options": [
+            "A) Prompt A",
+            "B) Prompt B",
+            "C) Prompt C"
+          ],
+          "correctAnswer": "A",
+          "explanation": "Prompt A identifies three specific issues (div instead of nav, div instead of footer, duplicate h1) and gives the exact fix for each. Prompt B is too vague — the AI might change some things but miss others. Prompt C is a workaround; using the correct semantic elements is better than adding ARIA roles to generic divs.",
+          "difficulty": "intermediate"
+        }
+      ]
+    },
+    {
+      "type": "tryItYourself",
+      "title": "Write a single follow-up prompt to the AI that addresses ALL of the issues found in this checkpoint. Be specific: name every element, property, and behavior that needs to change. Organize your prompt so the AI can work through the fixes systematically.",
+      "solution": "A strong follow-up prompt would cover all the issues found: \"Fix the following issues in the FitStudio landing page: (1) In the .hero CSS, change color from #16213e to #ffffff so the text is visible against the dark background. (2) Change the media query from min-width: 768px to max-width: 768px so mobile styles only apply on small screens. (3) In the toggleMenu() JavaScript function, change the selector from '.nav-list' to '.nav-links' to match the HTML class. (4) Change the <div class='cta-btn'> to a <button class='cta-btn'> for keyboard accessibility. (5) Add meaningful alt attributes to all three <img> tags: alt='Yoga class in session' on yoga.jpg, alt='High intensity interval training' on hiit.jpg, and alt='Indoor spin cycling class' on spin.jpg. (6) Change <div class='nav'> to <nav>, change <div class='footer'> to <footer>, and change the <h1>FitStudio</h1> in the nav to <span> or <a> since the hero already has the page's h1.\" This gives the AI a clear, numbered list of specific changes."
+    }
+  ]
+}

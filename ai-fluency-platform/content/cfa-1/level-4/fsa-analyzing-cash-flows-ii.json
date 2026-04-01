@@ -118,5 +118,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Analysis of Inventories**, where you'll learn how different inventory methods (FIFO, LIFO, weighted average) affect the income statement, balance sheet, and cash flow statement. Inventory choices directly impact COGS and hence CFO, creating one of the most testable IFRS vs GAAP differences."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Free cash flow to the firm (FCFF) represents cash available to:",
+      "options": [
+        "Only equity holders",
+        "Both debt and equity holders",
+        "Only the government (taxes)"
+      ],
+      "correctIndex": 1,
+      "explanation": "FCFF is cash flow available to all capital providers \u2014 both bondholders and shareholders \u2014 after operating expenses and capital expenditures.",
+      "encourageCorrect": "Right! FCFF serves all capital providers, not just equity holders.",
+      "encourageIncorrect": "FCFF is cash available to both debt holders and equity holders. FCFE (to equity) is what's left after debt payments."
+    },
+    {
+      "question": "What does a consistently negative free cash flow suggest about a company?",
+      "options": [
+        "The company is always unprofitable",
+        "The company may be investing heavily for growth, or may have unsustainable operations",
+        "The company's stock price will decline immediately"
+      ],
+      "correctIndex": 1,
+      "explanation": "Negative FCF could mean heavy growth investment (potentially positive) or unsustainable operations (negative). Context matters.",
+      "encourageCorrect": "Good thinking! Negative FCF needs context \u2014 it could be growth investment or a red flag.",
+      "encourageIncorrect": "Negative free cash flow could signal heavy investment for growth (a good thing) or unsustainable operations (a warning sign). Context is essential."
+    }
   ]
 }

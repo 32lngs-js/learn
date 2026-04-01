@@ -43,5 +43,31 @@
       "type": "connectPrompt",
       "prompt": "Now you understand what persists across sessions. The next module covers what happens when your context fills up mid-session: compaction. What survives, what is lost, and how to control it."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is the difference between CLAUDE.md and MEMORY.md?",
+      "options": [
+        "They are the same thing",
+        "CLAUDE.md is written by you, MEMORY.md is written by Claude",
+        "MEMORY.md loads first"
+      ],
+      "correctIndex": 1,
+      "explanation": "CLAUDE.md is the employee handbook you write and maintain. MEMORY.md is the personal notes Claude takes from experience.",
+      "encourageCorrect": "Great distinction! One is your briefing, the other is Claude's notes.",
+      "encourageIncorrect": "CLAUDE.md is written and maintained by you (the onboarding document), while MEMORY.md is written by Claude (learned preferences)."
+    },
+    {
+      "question": "Where should path-specific instructions go?",
+      "options": [
+        "CLAUDE.md",
+        "MEMORY.md",
+        "Rules files in .claude/rules/"
+      ],
+      "correctIndex": 2,
+      "explanation": "Rules files in .claude/rules/ are loaded contextually — only when Claude works in the relevant area, making them budget-efficient.",
+      "encourageCorrect": "Exactly! Rules files are the most budget-efficient for scoped instructions.",
+      "encourageIncorrect": "Path-specific instructions belong in rules files (.claude/rules/) — they only load when relevant, saving context budget."
+    }
   ]
 }

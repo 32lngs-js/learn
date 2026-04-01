@@ -104,5 +104,31 @@
       "type": "connectPrompt",
       "prompt": "Next, we cover the **Asset Manager Code of Professional Conduct** \u2014 a separate code of ethics specifically designed for investment management firms, with six principles covering governance, compliance, and client responsibilities."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "At Level III, ethics scenarios are tested primarily through:",
+      "options": [
+        "Multiple choice only",
+        "Constructed response (essay) questions requiring written analysis",
+        "True or false questions"
+      ],
+      "correctIndex": 1,
+      "explanation": "Level III tests ethics via essay format, requiring candidates to identify violations, cite Standards, and explain their reasoning in writing.",
+      "encourageCorrect": "Right! Essay format requires you to articulate your analysis, not just pick an answer.",
+      "encourageIncorrect": "Level III uses constructed response (essay) for ethics. You must identify violations, cite specific Standards, and explain your reasoning."
+    },
+    {
+      "question": "When writing an ethics essay response, the best approach is to:",
+      "options": [
+        "Write as much as possible to show knowledge",
+        "State the specific Standard violated, explain why it applies, and recommend corrective action",
+        "Only identify the Standard number without explanation"
+      ],
+      "correctIndex": 1,
+      "explanation": "Effective responses are structured: identify the Standard, explain why the conduct violates it, and recommend how to comply.",
+      "encourageCorrect": "That's the structured approach! Standard, explanation, recommendation.",
+      "encourageIncorrect": "The best approach: name the specific Standard, explain why the conduct violates it, and recommend corrective action. Be concise and structured."
+    }
   ]
 }

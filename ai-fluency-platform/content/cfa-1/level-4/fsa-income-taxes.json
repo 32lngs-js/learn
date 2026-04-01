@@ -118,5 +118,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Financial Reporting Quality**, where you'll learn to assess whether financial statements faithfully represent economic reality. Income tax provisions are one of the areas most susceptible to earnings management \u2014 companies can use the valuation allowance, deferred tax assumptions, and tax rate estimates to smooth or inflate reported earnings."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "A deferred tax liability arises when:",
+      "options": [
+        "Taxable income exceeds pretax accounting income now, creating a future tax benefit",
+        "Pretax accounting income exceeds taxable income now, meaning more taxes will be owed in the future",
+        "The company has a net operating loss"
+      ],
+      "correctIndex": 1,
+      "explanation": "A DTL means the company currently pays less tax than the income statement suggests. The difference will reverse as future taxes increase.",
+      "encourageCorrect": "That's correct! DTLs represent future taxes that will need to be paid.",
+      "encourageIncorrect": "A deferred tax liability arises when accounting income exceeds taxable income today. The company has deferred the tax payment to the future."
+    },
+    {
+      "question": "A deferred tax asset represents:",
+      "options": [
+        "Taxes that have already been paid and won't be owed again",
+        "A future tax benefit from amounts that have been taxed but not yet recognized as expense",
+        "A tax penalty for late filing"
+      ],
+      "correctIndex": 1,
+      "explanation": "A DTA arises when the company has paid more tax than accounting income would suggest, creating a benefit that will reduce future taxes.",
+      "encourageCorrect": "Right! A DTA is a future tax benefit \u2014 the company has prepaid taxes in a sense.",
+      "encourageIncorrect": "A deferred tax asset is a future tax benefit. The company has effectively overpaid taxes now and will owe less in the future."
+    }
   ]
 }

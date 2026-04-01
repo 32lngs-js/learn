@@ -104,5 +104,31 @@
       "type": "connectPrompt",
       "prompt": "Next, we explore **Swaps, Forwards, and Futures Strategies** \u2014 how to use these instruments to adjust portfolio exposure to equities, fixed income, and currencies without buying or selling the underlying assets."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "A protective put strategy involves:",
+      "options": [
+        "Selling a put on a stock you own",
+        "Buying a put on a stock you own to limit downside risk",
+        "Buying both a call and a put at the same strike"
+      ],
+      "correctIndex": 1,
+      "explanation": "A protective put combines a long stock with a long put. The put sets a floor on losses while allowing unlimited upside.",
+      "encourageCorrect": "That's right! A protective put is like insurance on your stock position.",
+      "encourageIncorrect": "A protective put means owning a stock and buying a put on it. The put limits your downside to the strike price while preserving upside potential."
+    },
+    {
+      "question": "A covered call strategy involves:",
+      "options": [
+        "Buying a call option with no stock position",
+        "Owning the underlying stock and selling a call option to generate income",
+        "Selling a naked put option"
+      ],
+      "correctIndex": 1,
+      "explanation": "Covered calls generate premium income by selling upside potential. The stock position 'covers' the short call obligation.",
+      "encourageCorrect": "Correct! Sell the call, keep the premium, but cap your upside.",
+      "encourageIncorrect": "A covered call means owning the stock and selling a call on it. You earn premium income but cap your upside at the strike price."
+    }
   ]
 }

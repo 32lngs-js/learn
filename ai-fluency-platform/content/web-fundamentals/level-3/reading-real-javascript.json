@@ -1,0 +1,106 @@
+{
+  "meta": {
+    "title": "3.4 Reading Real JavaScript",
+    "description": "Trace through real-world JavaScript patterns: form validation, API calls, show/hide toggles, and template literals.",
+    "level": "level-3",
+    "slug": "reading-real-javascript",
+    "order": 4,
+    "isCheckpoint": false,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "predictPrompt",
+      "prompt": "When you fill out a form online and it instantly tells you 'Please enter a valid email' before you even click Submit \u2014 what do you think is happening behind the scenes? How does the page know your input is wrong?"
+    },
+    {
+      "type": "markdown",
+      "content": "## Pattern 1: Form Validation\n\nForm validation is one of the most common JavaScript patterns you will encounter. Here is a realistic example:\n\n```javascript\nfunction validateForm() {\n  let email = document.getElementById('email').value;\n  let password = document.getElementById('password').value;\n  let errorMsg = document.getElementById('error-message');\n\n  if (email === '') {\n    errorMsg.textContent = 'Please enter your email.';\n    return false;\n  }\n\n  if (password.length < 8) {\n    errorMsg.textContent = 'Password must be at least 8 characters.';\n    return false;\n  }\n\n  return true;\n}\n```\n\nLet's trace through this line by line:\n1. Get whatever the user typed in the email field\n2. Get whatever the user typed in the password field\n3. Find the element where we will show error messages\n4. **Check:** Is the email empty? If yes, show an error and stop (`return false` means \"do not continue\")\n5. **Check:** Is the password shorter than 8 characters? If yes, show an error and stop\n6. If we get past both checks, everything is valid \u2014 continue (`return true`)\n\nThe key pattern: **check inputs one by one, show an error and stop at the first problem, only proceed if everything passes.**\n\n---\n\n## Pattern 2: fetch() \u2014 Talking to a Server\n\nWhen a page loads new data without refreshing \u2014 search results, user profiles, product info \u2014 it uses `fetch()`.\n\n```javascript\nfetch('https://api.example.com/products')\n  .then(response => response.json())\n  .then(data => {\n    document.getElementById('product-list').innerHTML = data.html;\n  });\n```\n\nTranslation:\n1. \"Go to this URL and ask for data\" (like sending someone to get a file from another room)\n2. \"When the response comes back, convert it from raw text to structured data\"\n3. \"Take that data and put it inside the product-list element on the page\"\n\nThe `.then()` pattern means \"**when this finishes, do the next thing.**\" It is called a **promise** \u2014 JavaScript's way of saying \"I will do this, but it takes time, so here is what to do when I am done.\"\n\nYou do not need to understand promises deeply. Just know: `fetch()` goes to a URL, `.then()` handles what comes back.\n\n---\n\n## Pattern 3: Show/Hide Toggles\n\nToggling visibility is everywhere \u2014 menus, modals, accordions, FAQs:\n\n```javascript\nlet panel = document.getElementById('details-panel');\nlet toggleBtn = document.getElementById('toggle-details');\n\ntoggleBtn.addEventListener('click', function() {\n  panel.classList.toggle('hidden');\n});\n```\n\nTranslation: \"When the toggle button is clicked, add or remove the `hidden` CSS class on the details panel.\"\n\n`classList.toggle()` is like a light switch \u2014 if the class is there, remove it; if it is missing, add it. The CSS class `hidden` typically sets `display: none` to hide the element.\n\nThis is more robust than the `style.display` approach from Module 3.2 because it uses CSS classes, which are easier to style and maintain.\n\n---\n\n## Template Literals: Mixing Text and Variables\n\nYou will often see backtick strings with `${}` inside them:\n\n```javascript\nlet name = 'Alice';\nlet items = 3;\nlet message = `Hello, ${name}! You have ${items} items in your cart.`;\n```\n\nResult: `\"Hello, Alice! You have 3 items in your cart.\"`\n\nThe `${}` syntax means \"insert this variable's value here.\" Think of it as a mail merge \u2014 the template has placeholders, and JavaScript fills them in with real values.\n\nNote the backticks (`` ` ``) instead of regular quotes. Regular quotes (`'` or `\"`) treat everything as literal text. Backticks enable these `${}` placeholders.\n\n---\n\n## The Strategy: Trace Line by Line\n\nWhen you encounter a block of JavaScript you do not immediately understand, use this approach:\n\n1. **Read the function name** \u2014 it usually tells you the purpose\n2. **Identify the inputs** \u2014 what variables are collected at the top?\n3. **Follow the decisions** \u2014 what does each `if` statement check?\n4. **Find the output** \u2014 what gets changed on the page, or what gets sent to a server?\n\nYou do not need to understand every syntax detail. If you can answer \"what does this code intend to do?\" you have successfully read it."
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "If you saw a fetch() call in code, could you identify what URL it contacts and what it does with the response?",
+      "answer": "The URL is the first argument inside fetch('...'). The .then() blocks tell you what happens with the response \u2014 usually converting it to data and then displaying it somewhere on the page. Look for where the data ends up: innerHTML, textContent, or another DOM update."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Reading Real-World JavaScript",
+      "problems": [
+        {
+          "id": "wf3-10",
+          "question": "What does this validation function check?\n\n```javascript\nfunction validateAge() {\n  let age = document.getElementById('age-input').value;\n  let error = document.getElementById('age-error');\n\n  if (age === '') {\n    error.textContent = 'Age is required.';\n    return false;\n  }\n\n  if (age < 13) {\n    error.textContent = 'You must be at least 13 to sign up.';\n    return false;\n  }\n\n  if (age > 120) {\n    error.textContent = 'Please enter a valid age.';\n    return false;\n  }\n\n  error.textContent = '';\n  return true;\n}\n```",
+          "options": [
+            "A) It checks three things: the age field is not empty, the age is at least 13, and the age is not over 120. If any check fails, it shows an error and stops.",
+            "B) It checks whether the user is exactly 13 years old and shows different messages for each age",
+            "C) It only checks whether the age field is empty \u2014 the other checks are never reached"
+          ],
+          "correctAnswer": "A",
+          "explanation": "Tracing line by line: first it checks if age is empty, then if it is under 13, then if it is over 120. Each check shows a specific error message and returns false (stops). Only if all three pass does it clear the error and return true. The checks run in order \u2014 each 'return false' exits the function early, but only if that specific condition is true.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "wf3-11",
+          "question": "What does this code do?\n\n```javascript\nfetch('https://api.weather.com/current?city=Denver')\n  .then(response => response.json())\n  .then(data => {\n    document.getElementById('temp').textContent = data.temperature + '\u00b0F';\n    document.getElementById('conditions').textContent = data.description;\n  });\n```",
+          "options": [
+            "A) It creates a new weather webpage for Denver",
+            "B) It contacts a weather API for Denver's current weather, then displays the temperature and conditions on the page",
+            "C) It saves the user's location as Denver in the browser"
+          ],
+          "correctAnswer": "B",
+          "explanation": "Reading the fetch: go to the weather API and ask for Denver's current weather. When the response comes back, convert it to data. Then put the temperature in the element with id 'temp' and the description in the element with id 'conditions'. This is a classic API call pattern: fetch data, then display it.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "wf3-12",
+          "question": "Users report that the discount code 'SAVE20' is not working. Look at this code \u2014 what is the bug?\n\n```javascript\nfunction applyDiscount() {\n  let code = document.getElementById('discount-code').value;\n\n  if (code === 'save20') {\n    let price = document.getElementById('total').textContent;\n    let discounted = price * 0.80;\n    document.getElementById('total').textContent = '$' + discounted;\n  } else {\n    document.getElementById('discount-error').textContent = 'Invalid code.';\n  }\n}\n```",
+          "options": [
+            "A) The math is wrong \u2014 `price * 0.80` does not apply a 20% discount",
+            "B) The code checks for lowercase `'save20'` but users are typing uppercase `'SAVE20'` \u2014 the comparison is case-sensitive",
+            "C) The discount is being applied to the wrong element on the page"
+          ],
+          "correctAnswer": "B",
+          "explanation": "JavaScript string comparison is case-sensitive. The code checks if the input equals 'save20' (lowercase), but users are entering 'SAVE20' (uppercase). Since 'SAVE20' does not equal 'save20', the code falls through to the else branch and shows 'Invalid code.' The fix would be to convert the input to lowercase before comparing, or check for both cases.",
+          "difficulty": "advanced"
+        }
+      ]
+    },
+    {
+      "type": "explainBack",
+      "prompt": "Pick one of the three patterns from this module (form validation, fetch API calls, or show/hide toggles) and explain how it works as if you were describing it to a colleague who has never seen JavaScript. Use a real-world analogy."
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "Real-world JavaScript follows recognizable patterns. Form validation checks inputs one by one and stops at the first error. fetch() goes to a URL and handles the response with .then(). Show/hide toggles add and remove CSS classes. Template literals (`${}`) are mail-merge placeholders. When reading unfamiliar code, trace line by line: name, inputs, decisions, output."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "You have now built a solid toolkit for reading JavaScript: variables, functions, events, console errors, and real-world patterns. Time to put it all together. The checkpoint will give you a realistic interactive feature to read, understand, and debug."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "A fetch() call in JavaScript is used to:",
+      "options": [
+        "Style an HTML element",
+        "Make a request to a server (API) and handle the response",
+        "Create a new HTML page"
+      ],
+      "correctIndex": 1,
+      "explanation": "fetch() sends a request to a URL and returns a promise. The response is handled with .then() \u2014 it's how JavaScript talks to servers.",
+      "encourageCorrect": "That's it! fetch() is JavaScript's way of talking to servers.",
+      "encourageIncorrect": "fetch() makes HTTP requests to servers (APIs) and handles the response. It's the standard way JavaScript communicates with external data sources."
+    },
+    {
+      "question": "Template literals in JavaScript use backticks (`) and ${} to:",
+      "options": [
+        "Create CSS styles",
+        "Insert variables or expressions into strings, like a mail merge",
+        "Define HTML tags"
+      ],
+      "correctIndex": 1,
+      "explanation": "Template literals use backticks and ${} placeholders to embed variables in strings: `Hello, ${name}!` produces 'Hello, Alice!' if name is 'Alice'.",
+      "encourageCorrect": "Right! Template literals are like mail merge \u2014 insert variables into text.",
+      "encourageIncorrect": "Template literals use backticks (`) and ${} to embed variables or expressions in strings, like a mail-merge template."
+    }
+  ]
+}

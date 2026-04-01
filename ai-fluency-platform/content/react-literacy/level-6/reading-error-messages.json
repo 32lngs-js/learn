@@ -1,0 +1,106 @@
+{
+  "meta": {
+    "title": "6.1 Reading Error Messages",
+    "description": "React error messages look intimidating but they tell you exactly what is wrong and where.",
+    "level": "level-6",
+    "slug": "reading-error-messages",
+    "order": 1,
+    "isCheckpoint": false,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "predictPrompt",
+      "prompt": "You see this error in the browser console: `TypeError: Cannot read properties of undefined (reading 'name')`. Before reading this module, what do you think this error means? What might have caused it?"
+    },
+    {
+      "type": "markdown",
+      "content": "## Reading Error Messages\n\nReact error messages look terrifying. They are long, they are red, they have stack traces that reference files you have never heard of. But here is the secret: **React errors are some of the most helpful error messages in all of web development.** They tell you exactly what went wrong, and usually where.\n\nYou just need to learn how to read them.\n\n### The Anatomy of an Error\n\nEvery React error has three parts:\n\n1. **The error type and message** -- what went wrong\n2. **The stack trace** -- where it went wrong (which file and line number)\n3. **The component stack** -- which component tree path led to the error\n\nLet us decode the five most common React errors you will encounter.\n\n### Error 1: \"Cannot read properties of undefined\"\n\n```\nTypeError: Cannot read properties of undefined (reading 'name')\n    at UserProfile (UserProfile.tsx:12:28)\n    at Dashboard (Dashboard.tsx:45:10)\n```\n\nThis is the single most common React error. It means: **you tried to access a property on something that does not exist yet.**\n\nHere is the code that caused it:\n\n```typescript\nfunction UserProfile({ userId }: { userId: string }) {\n  const [user, setUser] = useState<User | null>(null);\n\n  useEffect(() => {\n    fetch(`/api/users/${userId}`)\n      .then((res) => res.json())\n      .then((data) => setUser(data));\n  }, [userId]);\n\n  return (\n    <div>\n      <h2>{user.name}</h2>  {/* BOOM -- user is null on first render */}\n      <p>{user.email}</p>\n    </div>\n  );\n}\n```\n\nThe problem: `user` starts as `null` (from `useState(null)`). The component renders before the fetch completes. When React tries to evaluate `user.name`, `user` is `null`, so you get \"Cannot read properties of undefined (reading 'name')\".\n\nThe fix:\n```typescript\nif (!user) return <p>Loading...</p>;\n\nreturn (\n  <div>\n    <h2>{user.name}</h2>\n    <p>{user.email}</p>\n  </div>\n);\n```\n\n**What to tell the developer or AI:** \"The user object is null on first render because the fetch has not completed yet. Add a null check before accessing user properties.\"\n\n### Error 2: \"Too many re-renders\"\n\n```\nError: Too many re-renders. React limits the number of renders to prevent an infinite loop.\n    at UserList (UserList.tsx:8:3)\n```\n\nThis means: **the component is stuck in an infinite loop of re-rendering.**\n\nHere is the typical culprit:\n\n```typescript\nfunction UserList() {\n  const [users, setUsers] = useState<User[]>([]);\n  const [filter, setFilter] = useState('');\n\n  // BUG: This runs on every render, which triggers a re-render, which runs this again...\n  setUsers(users.filter((u) => u.name.includes(filter)));\n\n  return (\n    <div>\n      <input value={filter} onChange={(e) => setFilter(e.target.value)} />\n      {users.map((u) => <p key={u.id}>{u.name}</p>)}\n    </div>\n  );\n}\n```\n\nThe problem: calling `setUsers()` directly in the component body (not inside a `useEffect` or event handler) triggers a re-render immediately. That re-render runs `setUsers()` again, which triggers another re-render, forever.\n\n**What to tell the developer or AI:** \"There is a setState call running directly during render instead of inside a useEffect or event handler. This creates an infinite loop. Move the filtering logic into a useMemo or compute it as a derived value.\"\n\n### Error 3: \"Invalid hook call\"\n\n```\nError: Invalid hook call. Hooks can only be called inside of the body of a function component.\n```\n\nThis error has three common causes:\n\n**Cause A: Hook inside a condition**\n```typescript\nfunction UserProfile({ userId }: { userId: string }) {\n  if (!userId) {\n    return <p>No user selected</p>;\n  }\n\n  // BUG: This hook is after a conditional return\n  const [user, setUser] = useState<User | null>(null);\n  // ...\n}\n```\n\n**Cause B: Hook inside a regular function (not a component)**\n```typescript\n// BUG: This is a regular function, not a component or hook\nfunction fetchUserData(userId: string) {\n  const [data, setData] = useState(null); // Hooks cannot be used here\n}\n```\n\n**Cause C: Two copies of React in the project** (a build configuration issue)\n\nThe rule is simple: hooks must be called at the top level of a component or custom hook, every single time the component renders, in the same order.\n\n**What to tell the developer or AI:** \"A hook is being called conditionally or inside a non-component function. Hooks must always be called at the top level of the component, before any conditional returns.\"\n\n### Error 4: \"Each child in a list should have a unique key prop\"\n\n```\nWarning: Each child in a list should have a unique \"key\" prop.\n    at li\n    at UserList (UserList.tsx:15:5)\n```\n\nThis is a warning, not a crash, but it causes subtle bugs with list rendering:\n\n```typescript\nfunction UserList({ users }: { users: User[] }) {\n  return (\n    <ul>\n      {users.map((user) => (\n        <li>{user.name}</li>  {/* Missing key prop */}\n      ))}\n    </ul>\n  );\n}\n```\n\nThe fix is straightforward:\n```typescript\n{users.map((user) => (\n  <li key={user.id}>{user.name}</li>\n))}\n```\n\nReact uses keys to track which items in a list changed, were added, or were removed. Without unique keys, React cannot efficiently update the list and may show stale or incorrect data.\n\n**What to tell the developer or AI:** \"The list items rendered by .map() are missing key props. Add key={item.id} or another unique identifier to each element.\"\n\n### Error 5: \"Objects are not valid as a React child\"\n\n```\nError: Objects are not valid as a React child (found: object with keys {name, email}).\nIf you meant to render a collection of children, use an array instead.\n```\n\nThis means you tried to render a JavaScript object directly in JSX:\n\n```typescript\nfunction UserBadge({ user }: { user: User }) {\n  return (\n    <div>\n      <p>{user}</p>  {/* BUG: user is an object, not a string */}\n    </div>\n  );\n}\n```\n\nReact can render strings, numbers, and arrays of elements. It cannot render a raw object. The fix is to render specific properties:\n\n```typescript\n<p>{user.name}</p>\n```\n\nOr if you need to display the object for debugging:\n```typescript\n<pre>{JSON.stringify(user, null, 2)}</pre>\n```\n\n**What to tell the developer or AI:** \"The component is trying to render an object directly. You need to render specific properties of the object, like user.name instead of user.\"\n\n### Reading the Stack Trace\n\nThe stack trace is the most important part of any error. It tells you WHERE the error happened:\n\n```\nTypeError: Cannot read properties of undefined (reading 'title')\n    at PostCard (PostCard.tsx:18:22)\n    at PostList (PostList.tsx:34:8)\n    at Dashboard (Dashboard.tsx:12:5)\n    at App (App.tsx:8:3)\n```\n\nRead it from top to bottom:\n1. The error happened in `PostCard.tsx` at line 18, column 22\n2. `PostCard` was being rendered by `PostList` at line 34\n3. `PostList` was being rendered by `Dashboard` at line 12\n4. `Dashboard` was being rendered by `App` at line 8\n\nAlways start with the first line -- that is where the error actually occurred. The lines below show the component tree that led to it.\n\n### TypeScript Errors vs Runtime Errors\n\nAn important distinction: TypeScript errors appear in your editor and during build time. They prevent the code from compiling. Runtime errors happen when the code is actually running in the browser.\n\nTypeScript catches many bugs before they happen:\n```typescript\n// TypeScript error (caught before running):\n// Argument of type 'string' is not assignable to parameter of type 'number'\nconst result = multiply(\"hello\", 5);\n```\n\nBut TypeScript cannot catch everything:\n```typescript\n// No TypeScript error, but crashes at runtime if API returns unexpected data:\nconst user = await fetchUser(id);\nconsole.log(user.name); // Crashes if fetchUser returns null\n```\n\nWhen someone says \"there is a TypeScript error,\" they mean the code will not even build. When they say \"there is a runtime error,\" they mean the code built fine but crashes when it runs.\n\n### The Reading Strategy\n\nWhen you see a React error:\n\n1. **Read the error message** -- what kind of error is it?\n2. **Read the first line of the stack trace** -- which file and line number?\n3. **Identify the pattern** -- is it one of the five common errors above?\n4. **Describe the problem** -- you do not need to write the fix. You need to describe what is wrong precisely enough that a developer or AI can fix it.\n\nThat last step is the most important. Your job is not to write code. Your job is to say: \"Line 18 of PostCard.tsx is trying to access the title property of a post object that is undefined. The post data probably has not loaded yet when this component first renders.\""
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "You see this error: `Error: Too many re-renders. React limits the number of renders to prevent an infinite loop.` In one sentence, what is happening?",
+      "answer": "A component is calling setState during its render phase (not inside a useEffect or event handler), which triggers a re-render, which calls setState again, creating an infinite loop."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Decoding Error Messages",
+      "problems": [
+        {
+          "id": "rl6-1-1",
+          "question": "You see this error and code. What is the problem?\n\n```\nTypeError: Cannot read properties of undefined (reading 'map')\n    at ProductList (ProductList.tsx:14:20)\n```\n\n```typescript\nfunction ProductList() {\n  const [products, setProducts] = useState();\n\n  useEffect(() => {\n    fetch('/api/products')\n      .then((res) => res.json())\n      .then((data) => setProducts(data));\n  }, []);\n\n  return (\n    <ul>\n      {products.map((p) => (\n        <li key={p.id}>{p.name}</li>\n      ))}\n    </ul>\n  );\n}\n```",
+          "options": [
+            "A) The fetch URL is wrong",
+            "B) `products` starts as `undefined` because `useState()` has no initial value, so `products.map()` crashes on first render before the fetch completes",
+            "C) The `.map()` method does not work with arrays"
+          ],
+          "correctAnswer": "B",
+          "explanation": "`useState()` with no argument initializes `products` as `undefined`. The component renders before the fetch completes, so `products.map()` crashes because you cannot call `.map()` on `undefined`. The fix: initialize with an empty array: `useState<Product[]>([])`, or add a guard: `products?.map(...)`.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "rl6-1-2",
+          "question": "The console shows this warning. Look at the code -- what needs to change?\n\n```\nWarning: Each child in a list should have a unique \"key\" prop.\n```\n\n```typescript\nfunction TagList({ tags }: { tags: string[] }) {\n  return (\n    <div className=\"tags\">\n      {tags.map((tag, index) => (\n        <span key={index} className=\"tag\">\n          {tag}\n        </span>\n      ))}\n    </div>\n  );\n}\n```",
+          "options": [
+            "A) The code is fine -- using index as key is always correct",
+            "B) Using `index` as key will not trigger the warning, but it can cause subtle bugs if the list is reordered, filtered, or items are added/removed. Better to use `key={tag}` since tag values are likely unique strings.",
+            "C) The `className` prop is wrong"
+          ],
+          "correctAnswer": "B",
+          "explanation": "Using `index` as key suppresses the warning but is a known anti-pattern for dynamic lists. If tags are added, removed, or reordered, React uses the key to track elements. Index-based keys mean React thinks the element at position 0 is always the same, even if the content changed. Since tags are strings that are likely unique, `key={tag}` is better.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "rl6-1-3",
+          "question": "A developer shows you this error and code. What would you tell the AI to fix?\n\n```\nError: Invalid hook call. Hooks can only be called inside of the body of a function component.\n```\n\n```typescript\nfunction OrderPage({ orderId }: { orderId: string }) {\n  if (!orderId) {\n    return <p>No order selected. Please choose an order from the list.</p>;\n  }\n\n  const [order, setOrder] = useState<Order | null>(null);\n  const [loading, setLoading] = useState(true);\n\n  useEffect(() => {\n    fetch(`/api/orders/${orderId}`)\n      .then((res) => res.json())\n      .then((data) => { setOrder(data); setLoading(false); });\n  }, [orderId]);\n\n  if (loading) return <p>Loading order...</p>;\n  if (!order) return <p>Order not found</p>;\n\n  return <OrderDetails order={order} />;\n}\n```",
+          "options": [
+            "A) The fetch URL is incorrect",
+            "B) The useState and useEffect hooks are called after a conditional return statement, violating the rules of hooks -- hooks must always be called before any conditional returns",
+            "C) The OrderDetails component is not defined"
+          ],
+          "correctAnswer": "B",
+          "explanation": "The `if (!orderId) return ...` statement is before the hooks. On renders where `orderId` is falsy, the hooks are never called. React requires hooks to be called in the same order every render. The fix: move all hooks above the early return, then do the orderId check after. You would tell the AI: \"Move the useState and useEffect calls above the early return for missing orderId. Hooks must be called before any conditional returns.\"",
+          "difficulty": "advanced"
+        }
+      ]
+    },
+    {
+      "type": "explainBack",
+      "prompt": "Pick one of the five common React errors from this module. Explain it in plain language as if you were describing it to a non-technical stakeholder who just wants to know why the page is broken."
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "React errors follow patterns. The five most common are: accessing properties on undefined data, infinite re-render loops, invalid hook calls, missing list keys, and trying to render objects directly. For each one, read the error message, check the stack trace for the file and line, and describe the problem precisely."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "Next time you see a red error in a browser console -- on any website -- try reading it with the strategy from this module. Error type first, then the file and line from the stack trace. You will be surprised how much you can understand."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What does 'Cannot read properties of undefined (reading 'name')' usually mean in React?",
+      "options": ["The 'name' variable was never declared", "Code tried to access .name on something that is null or undefined, often because data has not loaded yet", "The component's name prop is misspelled"],
+      "correctIndex": 1,
+      "explanation": "This error means you tried to access a property on a value that does not exist. In React, the most common cause is accessing data before it has been fetched -- like user.name when user is still null.",
+      "encourageCorrect": "Spot on! This is the single most common React error, and now you know exactly what causes it.",
+      "encourageIncorrect": "This error means something is null or undefined when the code tries to read .name from it. Usually, data has not loaded yet when the component first renders."
+    },
+    {
+      "question": "Where should you look first in a stack trace to find where an error happened?",
+      "options": ["The last line at the bottom", "The first line at the top", "The middle of the stack trace"],
+      "correctIndex": 1,
+      "explanation": "The first line of the stack trace shows the exact file and line where the error occurred. Lines below it show the parent components that led to it.",
+      "encourageCorrect": "That's right! Top of the stack trace = where the error actually happened.",
+      "encourageIncorrect": "Always start at the top of the stack trace -- that first line tells you the exact file and line number where things went wrong."
+    },
+    {
+      "question": "What causes a 'Too many re-renders' error?",
+      "options": ["Having too many components on the page", "Calling setState directly during the render phase, creating an infinite loop", "Using too many useEffect hooks"],
+      "correctIndex": 1,
+      "explanation": "Calling setState during render triggers a re-render, which calls setState again, forever. The fix is to move the setState call into a useEffect or event handler.",
+      "encourageCorrect": "Exactly! An infinite render loop from setState in the wrong place. Great recall.",
+      "encourageIncorrect": "This error comes from calling setState directly during rendering (not inside useEffect or an event handler), which creates an endless re-render loop."
+    }
+  ]
+}

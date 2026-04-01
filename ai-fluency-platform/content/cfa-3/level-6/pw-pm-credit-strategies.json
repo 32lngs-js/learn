@@ -100,5 +100,31 @@
       "type": "connectPrompt",
       "prompt": "Next, we move to **Active Equity Strategies** -- applying a similar analytical rigor to stock selection. Just as credit strategies exploit mispricings in default risk, equity strategies exploit mispricings in earnings expectations, factor exposures, and corporate events."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "A credit spread strategy profits when:",
+      "options": [
+        "Interest rates rise across all maturities",
+        "Credit spreads narrow (tighten) on bonds the manager owns",
+        "The risk-free rate increases"
+      ],
+      "correctIndex": 1,
+      "explanation": "When credit spreads narrow, the extra yield demanded for credit risk decreases, causing credit bond prices to rise and generating gains.",
+      "encourageCorrect": "That's it! Spread tightening means prices rise on your credit holdings.",
+      "encourageIncorrect": "Credit spread strategies profit when spreads tighten. Narrower spreads mean lower required yields, which pushes bond prices higher."
+    },
+    {
+      "question": "Bottom-up credit analysis focuses on:",
+      "options": [
+        "Macroeconomic trends",
+        "Individual issuer fundamentals like cash flow, leverage, and business risk",
+        "Only the credit rating assigned by agencies"
+      ],
+      "correctIndex": 1,
+      "explanation": "Bottom-up analysis evaluates individual issuers' ability to service debt by examining their financial health, competitive position, and management quality.",
+      "encourageCorrect": "Right! Issuer-by-issuer analysis of fundamentals is the bottom-up approach.",
+      "encourageIncorrect": "Bottom-up credit analysis examines individual issuers: their cash flows, leverage, business risk, and ability to service debt."
+    }
   ]
 }

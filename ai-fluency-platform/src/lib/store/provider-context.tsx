@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
+import { syncSettings } from "./db-sync";
 
 export const PROVIDERS = ["claude-code", "codex", "cline", "gemini"] as const;
 export type ProviderId = (typeof PROVIDERS)[number];
@@ -46,6 +47,7 @@ export function ProviderProvider({ children }: { children: React.ReactNode }) {
     } catch {
       // localStorage unavailable
     }
+    syncSettings(p);
   };
 
   return (

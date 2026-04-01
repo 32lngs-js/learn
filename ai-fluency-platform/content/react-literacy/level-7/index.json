@@ -1,0 +1,29 @@
+{
+  "meta": {
+    "title": "Level 7: The AI Review",
+    "description": "AI writes React fast. You learn to check it.",
+    "level": "level-7",
+    "slug": "index",
+    "order": 0,
+    "isCheckpoint": false,
+    "isIndex": true
+  },
+  "blocks": [
+    {
+      "type": "markdown",
+      "content": "## AI writes React code fast. Your job is to make sure it is correct.\n\nYou have spent six levels building a powerful skill: the ability to read React code and understand what it does. You can trace data flow, read hooks, spot bugs, and navigate project structures. That skill is about to become extremely practical.\n\nAI tools like ChatGPT, Claude, and GitHub Copilot can generate entire React components in seconds. They can build forms, dashboards, data tables, and navigation systems faster than any human. But here is the catch: **they make the same mistakes over and over.** And if you cannot read the code they produce, you have no way to know whether it works correctly.\n\nThis level teaches you to be the reviewer. The AI writes the first draft. You check it.\n\n### What you will learn\n\n| Module | Topic | Core Idea |\n| :-- | :-- | :-- |\n| 7.1 | What AI Gets Wrong | The catalog of predictable AI React mistakes |\n| 7.2 | The Review Checklist | A step-by-step process for reviewing any AI-generated component |\n| 7.3 | Writing Better React Prompts | How to use your React vocabulary to get better AI output |\n| 7.4 | Iterating on AI React Code | How to describe bugs precisely and know when to start over |\n| 7.5 | Checkpoint | Review a complete AI-generated feature and write the fix prompts |\n\n### The core idea\n\nAI-generated React code is like a first draft from a fast but careless junior developer. The structure is usually reasonable, but the details — dependency arrays, error handling, accessibility, edge cases — are frequently wrong. Once you know the catalog of common mistakes, you can review AI output in minutes and catch problems before they reach users.\n\nThe vocabulary you have built in this course is the same vocabulary you use to direct AI. \"Add a dependency array to the useEffect,\" \"make the form controlled,\" \"add a loading state\" — these are not just things you can read. They are instructions you can give."
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "AI generates React code quickly but makes predictable mistakes. Your ability to read React code is what makes you an effective reviewer and director of AI output."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "Think about a time you used AI to generate code or content. Did you review the output carefully, or did you trust it? As you work through this level, notice how your React reading skills give you the ability to catch things you would have missed before."
+    },
+    {
+      "type": "markdown",
+      "content": "### Ready?\n\nStart with [Module 7.1: What AI Gets Wrong](/react-literacy/level-7/what-ai-gets-wrong/) to learn the catalog of mistakes AI makes most often in React code."
+    }
+  ]
+}

@@ -104,5 +104,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Measuring and Managing Market Risk**, where you will learn VaR methodologies (parametric, historical, Monte Carlo) and stress testing. These tools quantify the downside risk of the portfolios you have just learned to construct."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Tracking error measures:",
+      "options": [
+        "The total risk of a portfolio",
+        "The standard deviation of the difference between portfolio returns and benchmark returns",
+        "The manager's fee"
+      ],
+      "correctIndex": 1,
+      "explanation": "Tracking error quantifies how closely a portfolio follows its benchmark. Lower tracking error means closer benchmark tracking.",
+      "encourageCorrect": "That's it! Tracking error measures how much a portfolio deviates from its benchmark.",
+      "encourageIncorrect": "Tracking error is the standard deviation of active returns (portfolio minus benchmark). It measures how closely the portfolio tracks the benchmark."
+    },
+    {
+      "question": "The difference between strategic and tactical asset allocation is:",
+      "options": [
+        "There is no difference",
+        "Strategic is the long-term policy; tactical is short-term deviations to exploit opportunities",
+        "Strategic is for small portfolios; tactical is for large ones"
+      ],
+      "correctIndex": 1,
+      "explanation": "Strategic allocation is the long-term target. Tactical allocation makes temporary adjustments to capitalize on short-term market conditions.",
+      "encourageCorrect": "Correct! Strategic is the plan; tactical is the opportunistic adjustment.",
+      "encourageIncorrect": "Strategic asset allocation sets the long-term policy mix. Tactical allocation temporarily deviates from the policy to exploit short-term opportunities."
+    }
   ]
 }

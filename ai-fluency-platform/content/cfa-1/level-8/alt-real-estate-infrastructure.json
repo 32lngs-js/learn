@@ -118,5 +118,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Natural Resources**, including commodity markets, farmland, and timberland. You will learn how these real assets provide diversification and inflation protection, and how commodity futures introduce unique return concepts like roll yield and contango."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "REITs (Real Estate Investment Trusts) offer investors:",
+      "options": [
+        "Direct ownership of physical property",
+        "Liquid, publicly traded exposure to real estate with dividend income",
+        "Guaranteed appreciation in property value"
+      ],
+      "correctIndex": 1,
+      "explanation": "REITs are publicly traded securities that own real estate portfolios. They provide liquidity and dividends that direct property ownership does not.",
+      "encourageCorrect": "Exactly! REITs give you real estate exposure without buying property directly.",
+      "encourageIncorrect": "REITs are publicly traded, liquid investments that provide exposure to real estate. They're required to distribute most income as dividends."
+    },
+    {
+      "question": "Infrastructure investments are attractive because they often feature:",
+      "options": [
+        "Very short investment horizons",
+        "Stable, long-term cash flows and inflation protection from regulated or contracted revenues",
+        "High correlation with equity markets"
+      ],
+      "correctIndex": 1,
+      "explanation": "Infrastructure assets (toll roads, utilities, airports) typically generate predictable cash flows over long periods, often with built-in inflation adjustments.",
+      "encourageCorrect": "That's right! Stable cash flows and inflation protection are the draws.",
+      "encourageIncorrect": "Infrastructure investments offer stable, long-term cash flows and natural inflation protection, since many have regulated or inflation-linked revenue streams."
+    }
   ]
 }

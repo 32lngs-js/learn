@@ -106,5 +106,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Credit Analysis Models** \u2014 structural models (Merton) and reduced-form models that quantify default probability and loss given default. Understanding credit risk is essential for interpreting the OAS you've been computing \u2014 the OAS primarily reflects compensation for credit risk."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "A callable bond has a lower value to the investor than an identical non-callable bond because:",
+      "options": [
+        "It pays lower coupons",
+        "The call option benefits the issuer, not the investor, so the investor demands a discount",
+        "It has higher credit risk"
+      ],
+      "correctIndex": 1,
+      "explanation": "Value of callable bond = Value of straight bond - Value of call option. The call option favors the issuer, reducing the bond's value to the investor.",
+      "encourageCorrect": "That's right! The issuer's call option reduces the bond's value to the investor.",
+      "encourageIncorrect": "The call option benefits the issuer (who can refinance at lower rates), so the investor pays less: Callable bond value = Straight bond value - Call option value."
+    },
+    {
+      "question": "Effective duration is preferred over modified duration for bonds with embedded options because:",
+      "options": [
+        "It's always larger",
+        "It accounts for how cash flows change when interest rates change",
+        "It's easier to calculate"
+      ],
+      "correctIndex": 1,
+      "explanation": "Modified duration assumes fixed cash flows. Effective duration uses a valuation model that accounts for how embedded options alter cash flows as rates change.",
+      "encourageCorrect": "Exactly! Changing cash flows require effective duration.",
+      "encourageIncorrect": "Effective duration captures how embedded options change the bond's cash flows as rates move. Modified duration wrongly assumes cash flows are fixed."
+    }
   ]
 }

@@ -99,5 +99,31 @@
       "type": "connectPrompt",
       "prompt": "This completes the Portfolio Construction section. The **checkpoint** follows, then we move to **Performance Measurement** \u2014 evaluating whether all these portfolio decisions actually added value."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "A pension fund's asset allocation is primarily driven by:",
+      "options": [
+        "The fund manager's preferences",
+        "The characteristics of its liabilities (timing, duration, and size of future benefit payments)",
+        "Current market conditions only"
+      ],
+      "correctIndex": 1,
+      "explanation": "Pension funds must match assets to their obligation to pay future benefits. Liability characteristics (duration, inflation sensitivity) drive the allocation.",
+      "encourageCorrect": "Exactly! Liabilities come first in pension fund management.",
+      "encourageIncorrect": "Pension fund allocation is driven by liabilities \u2014 the timing, size, and nature of future benefit payments that must be funded."
+    },
+    {
+      "question": "A university endowment differs from a pension fund because it:",
+      "options": [
+        "Has no investment objective",
+        "Typically has a perpetual time horizon and focuses on maintaining real purchasing power",
+        "Must only invest in bonds"
+      ],
+      "correctIndex": 1,
+      "explanation": "Endowments aim to last forever, spending a portion of assets annually while preserving real value for future generations.",
+      "encourageCorrect": "Right! Endowments are perpetual and must grow to keep pace with inflation.",
+      "encourageIncorrect": "Endowments have a perpetual time horizon. They must balance current spending with preserving real purchasing power for future generations."
+    }
   ]
 }

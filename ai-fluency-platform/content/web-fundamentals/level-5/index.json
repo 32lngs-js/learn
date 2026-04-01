@@ -1,0 +1,25 @@
+{
+  "meta": {
+    "title": "Level 5: The Conversation",
+    "description": "Learn to collaborate with AI on web code — prompting with precision, verifying output, and iterating toward exactly what you want.",
+    "level": "level-5",
+    "slug": "the-conversation",
+    "order": 0,
+    "isCheckpoint": false,
+    "isIndex": true
+  },
+  "blocks": [
+    {
+      "type": "markdown",
+      "content": "## Level 5: The Conversation\n\nYou can now read HTML, CSS, and JavaScript. You know what tags structure a page, what properties style it, and what event listeners make it interactive. That is a genuine skill — and it changes everything about how you can work with AI.\n\nMost people treat AI code generators like a vending machine: put in a vague request, get something out, hope it works. When it does not, they try again with a slightly different vague request. This is frustrating and slow.\n\nYou have a better option. Because you can **read** the code AI produces, you can have a real conversation with it. You can ask for specific things using the right vocabulary. You can spot problems in the output. You can describe exactly what needs to change. The difference is enormous.\n\nThis level teaches you how to have that conversation.\n\n## What you will learn\n\n| Module | Topic | What you will be able to do |\n| :-- | :-- | :-- |\n| 5.1 | **Prompting for Web Code** | Write precise prompts using HTML, CSS, and JS vocabulary instead of vague descriptions |\n| 5.2 | **Verifying AI Output** | Check AI-generated code for structural issues, visual bugs, broken logic, and accessibility problems |\n| 5.3 | **Iterating and Fixing** | Describe problems in code terms so AI can fix them on the first try |\n| 5.4 | **Checkpoint** | Review a full AI-generated landing page, find every issue, and write the prompts to fix them |\n\n## The mental model\n\nThink of working with AI like working with a fast but careless junior developer. They can produce code quickly, but they do not always understand the full picture. They might use a `<div>` where a `<button>` belongs. They might set `color: white` on a white background. They might forget to handle what happens when someone resizes the window.\n\nYour job is not to write the code yourself — it is to **direct the conversation**. The better you can describe what you want and spot what went wrong, the faster you get to a working result. Code literacy is the skill that makes this possible."
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "AI can generate web code fast, but it needs clear direction and careful review. Your ability to read HTML, CSS, and JavaScript — the skills you have built in Levels 1 through 4 — transforms AI from a guessing game into a genuine collaboration."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "Let's start with the foundation of every AI interaction: the prompt. Module 5.1 will show you why the words you use — and the vocabulary you now have — make all the difference."
+    }
+  ]
+}

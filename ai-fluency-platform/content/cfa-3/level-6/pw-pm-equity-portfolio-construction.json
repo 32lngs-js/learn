@@ -100,5 +100,31 @@
       "type": "connectPrompt",
       "prompt": "Next, we explore **Multi-Asset Strategies** -- extending portfolio construction beyond single asset classes. How do you combine equities, fixed income, alternatives, and currencies into a coherent multi-asset portfolio with risk parity, tactical allocation, and portable alpha?"
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Active share measures:",
+      "options": [
+        "The portfolio's total return",
+        "How different a portfolio's holdings are from the benchmark",
+        "The portfolio's tracking error"
+      ],
+      "correctIndex": 1,
+      "explanation": "Active share is the percentage of portfolio holdings that differ from the benchmark. High active share means the portfolio looks very different from its benchmark.",
+      "encourageCorrect": "Exactly! Active share quantifies how different you are from the benchmark.",
+      "encourageIncorrect": "Active share measures the percentage of portfolio holdings that differ from the benchmark. Higher active share means more deviation from the index."
+    },
+    {
+      "question": "A portfolio with high active share and low tracking error is likely:",
+      "options": [
+        "A pure index fund",
+        "A diversified stock picker (many positions different from the benchmark but offsetting risks)",
+        "A concentrated sector bet"
+      ],
+      "correctIndex": 1,
+      "explanation": "High active share (different holdings) with low tracking error (similar risk profile) suggests diversified stock picking where individual bets offset each other.",
+      "encourageCorrect": "Interesting combination! Different holdings but similar risk profile suggests diversified stock selection.",
+      "encourageIncorrect": "High active share but low tracking error indicates diversified stock picking \u2014 many positions differ from the benchmark but factor risks largely offset."
+    }
   ]
 }

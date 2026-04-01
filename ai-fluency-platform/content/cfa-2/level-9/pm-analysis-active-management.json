@@ -104,5 +104,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Multifactor Models**, which formalize the sources of returns and risk in a portfolio. Factor models decompose returns into systematic components (market, value, size, momentum) and idiosyncratic stock-specific returns \u2014 providing the analytical framework for many of the 'bets' counted in breadth."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "The information ratio measures:",
+      "options": [
+        "Total return divided by total risk",
+        "Active return (alpha) divided by active risk (tracking error)",
+        "The Sharpe ratio of the benchmark"
+      ],
+      "correctIndex": 1,
+      "explanation": "Information ratio = Active return / Tracking error. It measures how consistently a manager generates alpha relative to the variability of that alpha.",
+      "encourageCorrect": "That's the key active management metric! Alpha per unit of tracking error.",
+      "encourageIncorrect": "The information ratio = active return / tracking error. It measures reward per unit of active risk \u2014 how consistently the manager beats the benchmark."
+    },
+    {
+      "question": "The fundamental law of active management states that value added depends on:",
+      "options": [
+        "Only the size of the portfolio",
+        "The manager's skill (IC) and the number of independent bets (breadth)",
+        "Market conditions"
+      ],
+      "correctIndex": 1,
+      "explanation": "IR = IC x sqrt(BR). Value added depends on the information coefficient (skill in forecasting) and breadth (number of independent opportunities).",
+      "encourageCorrect": "Exactly! Skill times the square root of breadth determines the information ratio.",
+      "encourageIncorrect": "The fundamental law: IR = IC x sqrt(BR). More skill (IC) and more independent bets (breadth) lead to better risk-adjusted active returns."
+    }
   ]
 }

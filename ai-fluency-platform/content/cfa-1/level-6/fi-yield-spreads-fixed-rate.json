@@ -114,5 +114,31 @@
       "type": "connectPrompt",
       "prompt": "The next module examines **Yield Measures for Floating-Rate Notes**, where the concepts of quoted margin, required margin, and discount margin determine how FRNs are priced relative to their reference rates."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "The G-spread measures the yield difference between:",
+      "options": [
+        "Two corporate bonds of different ratings",
+        "A corporate bond and a government bond of the same maturity",
+        "A bond's current yield and its yield to maturity"
+      ],
+      "correctIndex": 1,
+      "explanation": "The G-spread (government spread) is the simple difference between a corporate bond's yield and an on-the-run government bond yield of similar maturity.",
+      "encourageCorrect": "Right! G-spread is the simplest spread measure \u2014 corporate yield minus government yield.",
+      "encourageIncorrect": "The G-spread is the yield difference between a corporate bond and a government bond of similar maturity. It's one of the simplest spread measures."
+    },
+    {
+      "question": "If credit spreads widen, what happens to corporate bond prices?",
+      "options": [
+        "They increase",
+        "They decrease",
+        "They are unaffected"
+      ],
+      "correctIndex": 1,
+      "explanation": "Wider credit spreads mean investors demand more compensation for credit risk, which pushes corporate bond prices down.",
+      "encourageCorrect": "Exactly! Wider spreads mean higher yields required, which means lower prices.",
+      "encourageIncorrect": "When credit spreads widen, the required yield on corporate bonds increases, causing their prices to fall."
+    }
   ]
 }

@@ -1,0 +1,107 @@
+{
+  "meta": {
+    "title": "2.2 The Box Model",
+    "description": "Every element on a webpage is a box. Margin, border, padding, content \u2014 the four layers.",
+    "level": "level-2",
+    "slug": "the-box-model",
+    "order": 2,
+    "isCheckpoint": false,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "predictPrompt",
+      "prompt": "When you see a button on a webpage with space around it and space between the text and the edges of the button, where do you think that spacing comes from? How many different types of spacing do you think there are?"
+    },
+    {
+      "type": "markdown",
+      "content": "## The Box Model\n\nHere is one of the most important things to understand about CSS: **every element on a webpage is a rectangular box.** A heading is a box. A paragraph is a box. A button is a box. An image is a box.\n\nEach box has four layers, from inside to outside:\n\n1. **Content** \u2014 the actual text, image, or whatever is inside the element\n2. **Padding** \u2014 space *inside* the box, between the content and the border (like bubble wrap inside a shipping box)\n3. **Border** \u2014 the edge of the box (the cardboard of the shipping box)\n4. **Margin** \u2014 space *outside* the box, between this box and neighboring boxes (the gap between boxes on a shelf)\n\n### The shipping box analogy\n\nImagine you are shipping a mug:\n\n- The **mug** is the content\n- The **bubble wrap** around the mug is padding\n- The **cardboard box** is the border\n- The **space between your box and the next box on the shelf** is margin\n\nIf the mug feels cramped, you add more padding (bubble wrap). If boxes are too close together on the shelf, you add more margin.\n\n### Reading box model CSS\n\n```css\n.card {\n  padding: 20px;\n  border: 1px solid #ccc;\n  margin: 16px;\n}\n```\n\n> \"For elements with class `card`: add 20 pixels of inner spacing, a 1-pixel solid gray border, and 16 pixels of outer spacing.\"\n\nYou can also set individual sides:\n\n```css\n.card {\n  padding-top: 10px;\n  padding-bottom: 30px;\n  margin-left: 0;\n  margin-right: auto;\n}\n```\n\nOr use shorthand (top, right, bottom, left \u2014 clockwise from the top):\n\n```css\n.card {\n  padding: 10px 20px 30px 20px;\n}\n```\n\n> \"10px on top, 20px on the right, 30px on the bottom, 20px on the left.\"\n\n### Units: px, rem, and %\n\nYou will see three common units:\n\n- **px** (pixels) \u2014 fixed size. `16px` is always 16 pixels.\n- **rem** \u2014 relative to the root font size. `1rem` is usually 16px, `2rem` is 32px. Scales better across devices.\n- **%** (percent) \u2014 relative to the parent element. `width: 50%` means half the width of the container.\n\nYou do not need to memorize conversion charts. Just know that `px` is absolute, and `rem` and `%` are relative.\n\n### How much total space does a box take up?\n\nThis is a common source of confusion. If an element has:\n\n```css\n.box {\n  width: 200px;\n  padding: 20px;\n  border: 2px solid black;\n  margin: 10px;\n}\n```\n\nThe total horizontal space is: 10 + 2 + 20 + 200 + 20 + 2 + 10 = **264px**\n\n(margin + border + padding + content + padding + border + margin)\n\nThis is why elements sometimes feel bigger than you expect. The `width` only sets the content area \u2014 padding, border, and margin are added on top.\n\n> **Pro tip:** Most modern CSS uses `box-sizing: border-box`, which makes `width` include padding and border. If you see this in code, it means the math is simpler \u2014 `width: 200px` means the whole box (content + padding + border) is 200px, and only margin is extra.\n\n### Seeing the box model in DevTools\n\nBrowsers have a built-in tool that shows you the exact box model of any element:\n\n1. Right-click any element on a page\n2. Click \"Inspect\" or \"Inspect Element\"\n3. In the panel that opens, look for the box model diagram \u2014 a series of colored nested rectangles showing content, padding, border, and margin with exact pixel values\n\nThis is one of the most useful things in DevTools. When something is spaced wrong, inspect it and look at the box model to see exactly where the extra (or missing) space is coming from."
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "If a developer says 'there is too much margin on that card,' could you explain what margin is and where to look for it in the CSS?",
+      "answer": "Margin is the space outside an element's border \u2014 the gap between it and its neighbors. You would look for `margin`, `margin-top`, `margin-bottom`, `margin-left`, or `margin-right` properties on that element's CSS rule. You could also right-click the element, choose Inspect, and check the box model diagram to see the exact margin values."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Understanding the Box Model",
+      "problems": [
+        {
+          "id": "wf2-4",
+          "question": "An element has this CSS:\n\n```css\n.box {\n  width: 300px;\n  padding: 20px;\n  border: 5px solid black;\n  margin: 15px;\n}\n```\n\nHow much total horizontal space does this element take up?",
+          "options": [
+            "A) 300px",
+            "B) 380px (15 + 5 + 20 + 300 + 20 + 5 + 15)",
+            "C) 340px (20 + 300 + 20)"
+          ],
+          "correctAnswer": "B",
+          "explanation": "The total space includes all four layers on both sides: margin (15) + border (5) + padding (20) + content (300) + padding (20) + border (5) + margin (15) = 380px. This is why things sometimes look bigger than the `width` value suggests.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "wf2-5",
+          "question": "A button has text that feels cramped \u2014 the text is pressed right up against the edges of the button. Which CSS property would fix this?",
+          "options": [
+            "A) `margin` \u2014 add space around the button",
+            "B) `padding` \u2014 add space inside the button, between the text and the edge",
+            "C) `border` \u2014 make the button edges thicker"
+          ],
+          "correctAnswer": "B",
+          "explanation": "Padding is the space inside the element between the content and the border. If the text feels cramped inside a button, adding padding gives the text more breathing room. Margin would add space outside the button (between the button and other elements), which is a different problem.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "wf2-6",
+          "question": "There is too much vertical space between sections on a page. You want to tell AI to fix it. What is the most precise way to describe the problem?",
+          "options": [
+            "A) \"Make the sections closer together\"",
+            "B) \"Reduce the margin-bottom on the section elements \u2014 there is too much space between them\"",
+            "C) \"Delete the blank lines between the sections in the HTML\""
+          ],
+          "correctAnswer": "B",
+          "explanation": "The most precise instruction references the specific property causing the problem. Space between elements is controlled by margin. Saying \"reduce the margin-bottom on sections\" tells AI exactly what to change. Option A is vague, and option C is wrong \u2014 spacing between elements comes from CSS, not blank lines in HTML.",
+          "difficulty": "intermediate"
+        }
+      ]
+    },
+    {
+      "type": "tryItYourself",
+      "title": "Inspect the box model on a real webpage. Open any website (your company's site, a news site, anything), right-click on a heading or button, and select 'Inspect.' Find the box model diagram in the panel and identify the content, padding, border, and margin values. What surprised you about the spacing?",
+      "solution": "You should see a nested rectangle diagram with four layers showing pixel values. Most elements have more margin and padding than you might expect \u2014 that is normal. You may also notice that some values are 0 while others are quite large. The box model diagram is color-coded: content (blue), padding (green), border (yellow/brown), and margin (orange)."
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "Every element is a box with four layers: content, padding, border, and margin. Padding is space inside the box (between content and border). Margin is space outside the box (between the element and its neighbors). When spacing looks wrong, inspect the element to see its box model. Use precise language \u2014 'reduce the padding' or 'increase the margin' \u2014 when describing spacing issues to AI."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "You now know how individual boxes are sized and spaced. But how do boxes arrange themselves on the page? Why do some things sit side by side while others stack? Module 2.3 covers layout \u2014 the rules that determine where every box ends up."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "In the CSS box model, every element has four layers. From inside to outside, they are:",
+      "options": [
+        "Margin, border, padding, content",
+        "Content, padding, border, margin",
+        "Border, content, margin, padding"
+      ],
+      "correctIndex": 1,
+      "explanation": "The box model layers from inside out: content (the text/image), padding (space inside the border), border (the edge), margin (space outside the border).",
+      "encourageCorrect": "Perfect! Content, padding, border, margin \u2014 inside to outside.",
+      "encourageIncorrect": "The box model from inside to outside: content, padding, border, margin. Padding is inside the box, margin is outside."
+    },
+    {
+      "question": "Padding is space:",
+      "options": [
+        "Outside the element, between it and its neighbors",
+        "Inside the element, between the content and the border",
+        "Only above and below the element"
+      ],
+      "correctIndex": 1,
+      "explanation": "Padding is inside the box \u2014 the space between the content and the border. Margin is outside the box \u2014 the space between the element and its neighbors.",
+      "encourageCorrect": "That's the key distinction! Padding is inside, margin is outside.",
+      "encourageIncorrect": "Padding is the space inside the box (between content and border). Margin is the space outside the box (between the element and its neighbors)."
+    }
+  ]
+}

@@ -104,5 +104,31 @@
       "type": "connectPrompt",
       "prompt": "Next, we explore **Alternative Investments in Portfolio Allocation** \u2014 how to incorporate private equity, hedge funds, real estate, and other alternatives into an institutional portfolio, managing the unique challenges of illiquidity and valuation."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Liability-driven investing (LDI) in fixed income focuses on:",
+      "options": [
+        "Maximizing absolute returns",
+        "Matching the duration and cash flow characteristics of assets to liabilities",
+        "Investing only in government bonds"
+      ],
+      "correctIndex": 1,
+      "explanation": "LDI matches portfolio duration and cash flows to the institution's liabilities, minimizing the risk that asset values and liability values move apart.",
+      "encourageCorrect": "Right! LDI is about matching assets to obligations, not chasing returns.",
+      "encourageIncorrect": "LDI matches portfolio characteristics (duration, cash flows) to liabilities, reducing the risk that changes in rates create a funding gap."
+    },
+    {
+      "question": "A barbell strategy in fixed income combines:",
+      "options": [
+        "Only intermediate-maturity bonds",
+        "Short-term and long-term bonds while avoiding intermediate maturities",
+        "Only high-yield bonds"
+      ],
+      "correctIndex": 1,
+      "explanation": "A barbell concentrates holdings at the short and long ends of the yield curve. It provides curve exposure and can benefit from certain yield curve changes.",
+      "encourageCorrect": "That's the barbell shape! Short and long ends, nothing in the middle.",
+      "encourageIncorrect": "A barbell strategy holds short-term and long-term bonds but avoids intermediate maturities. It contrasts with a bullet strategy (concentrated in one maturity range)."
+    }
   ]
 }

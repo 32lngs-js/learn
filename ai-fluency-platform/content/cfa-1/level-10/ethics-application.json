@@ -132,5 +132,31 @@
       "type": "connectPrompt",
       "prompt": "The next module is the **Ethics Checkpoint** \u2014 a comprehensive assessment that tests your ability to apply everything from this topic area: the ethical decision-making framework, the Code of Ethics, all seven Standards, GIPS, and scenario-based analysis. Treat it like a mini-exam for the Ethics section."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is the recommended first step when analyzing an ethics scenario on the CFA exam?",
+      "options": [
+        "Identify the relevant Standard immediately",
+        "Read the entire scenario before answering",
+        "Look for the most obvious violation"
+      ],
+      "correctIndex": 1,
+      "explanation": "CFA ethics questions often contain details later in the scenario that change the analysis, so reading everything first is essential.",
+      "encourageCorrect": "Great approach! Always read the full scenario before jumping to conclusions.",
+      "encourageIncorrect": "The first step is to read the entire scenario before answering. Important details often appear later that change the analysis."
+    },
+    {
+      "question": "Which area is most frequently tested in CFA ethics questions?",
+      "options": [
+        "GIPS compliance",
+        "Conflicts of interest",
+        "Soft dollar arrangements"
+      ],
+      "correctIndex": 1,
+      "explanation": "Conflicts of interest are the most commonly tested ethics topic because they arise in nearly every professional context.",
+      "encourageCorrect": "That's right! Conflicts of interest come up constantly in practice and on the exam.",
+      "encourageIncorrect": "Conflicts of interest are the most frequently tested area. They're so common because they arise in nearly every professional relationship."
+    }
   ]
 }

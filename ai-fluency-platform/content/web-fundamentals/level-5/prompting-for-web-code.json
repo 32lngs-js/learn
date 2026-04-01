@@ -1,0 +1,107 @@
+{
+  "meta": {
+    "title": "5.1 Prompting for Web Code",
+    "description": "Learn to write precise prompts using HTML, CSS, and JS vocabulary instead of vague descriptions that leave AI guessing.",
+    "level": "level-5",
+    "slug": "prompting-for-web-code",
+    "order": 1,
+    "isCheckpoint": false,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "predictPrompt",
+      "prompt": "Imagine you ask AI to \"make me a nice landing page.\" What do you think will happen? Now imagine you ask it to \"create a landing page with a full-width hero section containing an h1, a subtitle paragraph, and a call-to-action button, using flexbox to center everything vertically.\" How do you think the results would differ?"
+    },
+    {
+      "type": "markdown",
+      "content": "## Vague prompts, vague results\n\nHere is a prompt most people would write:\n\n> Make me a nice landing page for a coffee shop.\n\nWhat does \"nice\" mean? What should be on the page? How should it be laid out? The AI has to guess every single detail \u2014 and its guesses will probably not match what you had in mind.\n\nNow here is the same request, written by someone who can read web code:\n\n> Create a landing page for a coffee shop with:\n> - A `<header>` containing a `<nav>` with three links: Menu, About, Contact\n> - A hero `<section>` with a background image, an `<h1>` title, a `<p>` tagline, and a `<button>` for \"Order Now\"\n> - Use flexbox to center the hero content vertically and horizontally\n> - The nav should be `position: fixed` at the top with a semi-transparent background\n> - On screens below 768px, the nav links should collapse into a hamburger menu\n\nThe second prompt is not \"better writing\" in a literary sense. It is better because it uses **specific vocabulary** \u2014 element names, CSS properties, layout techniques, and breakpoint values. The AI does not have to guess. It knows exactly what to build.\n\n## The vocabulary you already have\n\nThink about what you have learned so far:\n\n- **HTML elements**: `<header>`, `<nav>`, `<section>`, `<h1>`, `<p>`, `<button>`, `<img>`, `<ul>`, `<li>`, `<a>`, `<footer>`, `<div>`, `<form>`, `<input>`\n- **CSS properties**: `display: flex`, `position: fixed`, `margin`, `padding`, `background-color`, `font-size`, `border-radius`, `grid-template-columns`\n- **Layout concepts**: flexbox, grid, media queries, breakpoints, box model\n- **JS events**: `click`, `submit`, `scroll`, `mouseover`\n- **JS concepts**: event listeners, DOM manipulation, `querySelector`, `classList`\n\nEvery one of these terms is a tool for communicating with AI. When you say `position: fixed` instead of \"stick it to the top,\" the AI produces exactly what you mean on the first try.\n\n## Describing layout in structural terms\n\nInstead of saying \"put the logo on the left and the nav on the right,\" you can say:\n\n> Use `display: flex` with `justify-content: space-between` on the `<header>` to place the logo on the left and the `<nav>` on the right.\n\nInstead of \"make it look good on phones,\" you can say:\n\n> Add a media query at `max-width: 768px` that changes the flex direction to column and hides the nav links behind a toggle button.\n\nThe pattern is always the same: **describe the visual result in terms of the code that produces it.** You do not need to write the code \u2014 you just need to name the right pieces.\n\n## Three rules for better prompts\n\n1. **Name the elements.** Say `<nav>` instead of \"navigation area.\" Say `<footer>` instead of \"the bottom part.\"\n2. **Name the properties.** Say `font-size: 1.2rem` instead of \"make the text a bit bigger.\" Say `gap: 20px` instead of \"add some space.\"\n3. **Name the behavior.** Say \"add a click event listener that toggles a `.menu-open` class\" instead of \"make the menu openable.\""
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "On a scale of 1-5, how confident are you that you could take a visual design you have in mind and describe it to AI using specific HTML elements, CSS properties, and layout terms?",
+      "answer": "If you rated yourself 3 or higher, you are ready to practice. The key insight is that you do not need to know how to write every CSS rule from scratch \u2014 you just need to know the name of the property or element so the AI knows what you are asking for."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Writing Better Prompts",
+      "problems": [
+        {
+          "id": "wf5-1-1",
+          "question": "Which prompt is more likely to produce the result you want on the first try?\n\n**Prompt A:** \"Make a card component that looks clean and modern.\"\n\n**Prompt B:** \"Create a card component using a `<div>` with `border-radius: 8px`, a `box-shadow`, an `<img>` at the top, an `<h3>` title, a `<p>` description, and `padding: 16px`.\"",
+          "options": [
+            "A) Prompt A, because AI works best with creative freedom",
+            "B) Prompt B, because it specifies the exact elements and styles to use",
+            "C) Both prompts will produce the same result"
+          ],
+          "correctAnswer": "B",
+          "explanation": "Prompt B names specific HTML elements (div, img, h3, p) and CSS properties (border-radius, box-shadow, padding). The AI does not have to guess what \"clean and modern\" means \u2014 it has a clear blueprint. Prompt A would produce something, but it would be the AI's interpretation of \"clean,\" which may not match yours.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "wf5-1-2",
+          "question": "You want a navigation bar that stays visible when the user scrolls. Which prompt uses the most precise language?\n\n**Prompt A:** \"Make the nav bar always visible.\"\n\n**Prompt B:** \"Set `position: sticky` with `top: 0` on the `<nav>` element so it stays at the top of the viewport when the user scrolls.\"\n\n**Prompt C:** \"Keep the navigation at the top of the screen.\"",
+          "options": [
+            "A) Prompt A",
+            "B) Prompt B",
+            "C) Prompt C"
+          ],
+          "correctAnswer": "B",
+          "explanation": "Prompt B names the exact CSS property (position: sticky), the value (top: 0), and the HTML element (<nav>). Prompts A and C describe the desired visual result but leave the AI to guess which CSS approach to use \u2014 it might choose position: fixed, position: sticky, or something else entirely.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "wf5-1-3",
+          "question": "You want a responsive navigation that collapses into a hamburger menu on mobile. Which prompt best describes this?\n\n**Prompt A:** \"Add a `<button>` with a hamburger icon that is `display: none` on screens wider than `768px`. Add a click event listener on the button that toggles a `.nav-open` class on the `<nav>`, and use a media query at `max-width: 768px` to hide the `<ul>` and show the button.\"\n\n**Prompt B:** \"Make the nav work on mobile too.\"\n\n**Prompt C:** \"Add a hamburger menu for small screens.\"",
+          "options": [
+            "A) Prompt A",
+            "B) Prompt B",
+            "C) Prompt C"
+          ],
+          "correctAnswer": "A",
+          "explanation": "Prompt A specifies the HTML element (button), the breakpoint (768px), the JavaScript behavior (click event toggling a class), and the CSS approach (media query to show/hide elements). Prompts B and C are understandable but leave the AI to make many decisions about implementation details \u2014 and those decisions may not match what you want.",
+          "difficulty": "intermediate"
+        }
+      ]
+    },
+    {
+      "type": "tryItYourself",
+      "title": "Rewrite this vague prompt to be specific. The original prompt is: \"Make me a footer that looks professional.\" Rewrite it using specific HTML elements, CSS properties, and layout terms you have learned.",
+      "solution": "A strong rewrite might look like: \"Create a <footer> with three columns using display: grid with grid-template-columns: repeat(3, 1fr). The first column should have an <h4> 'About' with a <p> description. The second column should have an <h4> 'Links' with a <ul> of four <li> items containing <a> tags. The third column should have an <h4> 'Contact' with <p> elements for email and phone. Use padding: 40px 20px, background-color: #1a1a2e, and color: #ffffff.\" The key is naming elements, properties, and structure instead of relying on 'professional' which means different things to everyone."
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "The difference between a vague prompt and a precise prompt is vocabulary. Name the HTML elements you want, the CSS properties that should style them, and the JS behaviors that should drive interaction. You do not need to write the code \u2014 you just need to speak the language well enough to direct the AI. Every term you learned in Levels 1 through 4 is a tool for getting better results."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "Writing a good prompt gets you better code on the first try \u2014 but AI still makes mistakes. Next, we will learn how to verify what AI gives you: checking structure, spotting common errors, and making sure it works for everyone."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "The difference between a vague and a precise AI prompt for web code is:",
+      "options": [
+        "The length of the prompt",
+        "Using specific web vocabulary (HTML elements, CSS properties, JS behaviors) vs. generic descriptions",
+        "Whether you include a screenshot"
+      ],
+      "correctIndex": 1,
+      "explanation": "Precision comes from vocabulary. 'A hero section with a flexbox nav bar' is far better than 'a nice header.' You don't write the code \u2014 you direct the AI using specific terms.",
+      "encourageCorrect": "That's the key! Web vocabulary makes your prompts precise and effective.",
+      "encourageIncorrect": "Precise prompts use specific web terms (HTML elements, CSS properties, JS behaviors) instead of vague words like 'nice' or 'modern.'"
+    },
+    {
+      "question": "When prompting AI for web code, you should specify:",
+      "options": [
+        "Only the colors you want",
+        "The HTML elements, CSS styling, and JS behaviors you need",
+        "Just the name of the website you want to copy"
+      ],
+      "correctIndex": 1,
+      "explanation": "Good prompts name the HTML structure, CSS styling properties, and JavaScript behaviors you want. You direct the AI like a knowledgeable client directing a contractor.",
+      "encourageCorrect": "Right! Name the elements, styles, and behaviors you want.",
+      "encourageIncorrect": "Specify the HTML elements you need, the CSS properties for styling, and the JS behaviors for interactivity. This gives AI clear direction."
+    }
+  ]
+}

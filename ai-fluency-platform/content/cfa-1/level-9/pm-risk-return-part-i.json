@@ -118,5 +118,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Portfolio Risk and Return: Part II**, which introduces the Capital Asset Pricing Model (CAPM). CAPM extends the efficient frontier by adding a risk-free asset, creating the capital market line \u2014 and it distinguishes between systematic risk (rewarded) and unsystematic risk (diversifiable). Your understanding of correlation and diversification is the foundation for that distinction."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "The risk-free rate serves as the foundation for pricing because:",
+      "options": [
+        "It's the highest available return",
+        "It represents the minimum return investors require for parting with their money with no risk",
+        "It changes daily"
+      ],
+      "correctIndex": 1,
+      "explanation": "The risk-free rate compensates investors only for the time value of money. All other returns build upon it by adding risk premiums.",
+      "encourageCorrect": "That's the building block! Everything starts from the risk-free rate.",
+      "encourageIncorrect": "The risk-free rate is the minimum return for zero risk \u2014 it compensates for the time value of money. All other rates add risk premiums on top."
+    },
+    {
+      "question": "Systematic risk is also known as:",
+      "options": [
+        "Diversifiable risk",
+        "Market risk or non-diversifiable risk",
+        "Company-specific risk"
+      ],
+      "correctIndex": 1,
+      "explanation": "Systematic (market) risk affects all securities and cannot be diversified away. It includes factors like interest rates, recessions, and wars.",
+      "encourageCorrect": "Correct! Systematic = market = non-diversifiable. It affects everything.",
+      "encourageIncorrect": "Systematic risk is market risk that cannot be diversified away. It affects all investments and includes broad factors like interest rates and recessions."
+    }
   ]
 }

@@ -106,5 +106,31 @@
       "type": "connectPrompt",
       "prompt": "The next module applies binomial trees to **Bonds with Embedded Options** \u2014 callable, putable, and convertible bonds. You'll see how the option exercise decision at each node changes the cash flows and how the option-adjusted spread (OAS) isolates credit risk from option risk."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Arbitrage-free bond valuation uses spot rates instead of a single yield to maturity because:",
+      "options": [
+        "Spot rates are easier to calculate",
+        "Each cash flow should be discounted at the appropriate rate for its specific maturity",
+        "YTM is not a valid concept"
+      ],
+      "correctIndex": 1,
+      "explanation": "Each cash flow has different maturity risk and should be discounted at the zero-coupon (spot) rate for that specific maturity.",
+      "encourageCorrect": "Right! Each cash flow deserves its own discount rate based on its maturity.",
+      "encourageIncorrect": "Arbitrage-free valuation discounts each cash flow at the spot rate matching its maturity. Using one YTM for all cash flows can misprice the bond."
+    },
+    {
+      "question": "A binomial interest rate tree is used to value bonds with embedded options because:",
+      "options": [
+        "It's simpler than using spot rates",
+        "It models how interest rates can evolve over time, affecting the option exercise decision",
+        "It eliminates all interest rate risk"
+      ],
+      "correctIndex": 1,
+      "explanation": "A binomial tree models possible interest rate paths, which is essential for valuing bonds whose cash flows depend on future rate movements (like callable bonds).",
+      "encourageCorrect": "Exactly! Rate paths matter when bond cash flows depend on future rates.",
+      "encourageIncorrect": "A binomial tree models multiple interest rate paths, which is necessary for bonds with embedded options because the cash flows change depending on where rates go."
+    }
   ]
 }

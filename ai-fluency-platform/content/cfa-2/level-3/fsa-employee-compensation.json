@@ -106,5 +106,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Multinational Operations**, where you'll learn how companies with foreign subsidiaries translate financial statements \u2014 including how currency fluctuations create translation adjustments that flow through OCI, similar to pension remeasurements."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Under a defined benefit pension plan, who bears the investment risk?",
+      "options": [
+        "The employee",
+        "The employer (plan sponsor)",
+        "The government"
+      ],
+      "correctIndex": 1,
+      "explanation": "In a defined benefit plan, the employer promises specific retirement payments. If investments underperform, the employer must make up the shortfall.",
+      "encourageCorrect": "Right! The employer bears the risk of funding the promised benefits.",
+      "encourageIncorrect": "In a defined benefit plan, the employer bears the investment risk. If the plan's assets underperform, the employer must contribute more to meet the promised benefits."
+    },
+    {
+      "question": "Stock option compensation is recognized as an expense over:",
+      "options": [
+        "The entire life of the option",
+        "The vesting period",
+        "Only when exercised"
+      ],
+      "correctIndex": 1,
+      "explanation": "Stock-based compensation expense is recognized over the vesting period \u2014 the time the employee must work to earn the options.",
+      "encourageCorrect": "Correct! Expense recognition matches the service period (vesting).",
+      "encourageIncorrect": "Stock option expense is spread over the vesting period, matching the cost to the period the employee provides services."
+    }
   ]
 }

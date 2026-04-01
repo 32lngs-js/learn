@@ -104,5 +104,31 @@
       "type": "connectPrompt",
       "prompt": "The final content module covers **Mortgage-Backed Securities (MBS)**, the largest sector of the securitized market. We'll examine mortgage types, pass-through securities, prepayment models, and CMO structures designed to redistribute prepayment risk."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is an asset-backed security (ABS)?",
+      "options": [
+        "A government bond backed by tax revenue",
+        "A security backed by a pool of financial assets like loans or receivables",
+        "A stock issued by a bank"
+      ],
+      "correctIndex": 1,
+      "explanation": "ABS are created by pooling financial assets (auto loans, credit card receivables, etc.) and issuing securities backed by the cash flows from that pool.",
+      "encourageCorrect": "That's it! ABS are backed by pools of loans or receivables.",
+      "encourageIncorrect": "An ABS is a security backed by a pool of financial assets such as auto loans, credit card receivables, or student loans."
+    },
+    {
+      "question": "Credit tranching in ABS structures is used to:",
+      "options": [
+        "Increase the total cash flows from the pool",
+        "Distribute credit risk unevenly so senior tranches are protected",
+        "Eliminate all default risk"
+      ],
+      "correctIndex": 1,
+      "explanation": "Tranching creates a hierarchy: senior tranches absorb losses last (lower risk, lower yield), while junior tranches absorb losses first (higher risk, higher yield).",
+      "encourageCorrect": "Exactly! Tranching redistributes risk so senior investors are protected by junior ones.",
+      "encourageIncorrect": "Credit tranching creates a loss hierarchy \u2014 junior tranches absorb losses first, protecting senior tranches. It redistributes risk, not eliminates it."
+    }
   ]
 }

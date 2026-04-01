@@ -132,5 +132,31 @@
       "type": "connectPrompt",
       "prompt": "You now have the big picture of the Code and all seven Standards. The next module dives into **detailed guidance for Standards I through VII** \u2014 the specific rules, recommended procedures, and real-world applications that the CFA exam tests most heavily. Knowing the Standard numbers and names is necessary, but applying them to scenarios is where the exam points are."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "How many Standards of Professional Conduct are there in the CFA Code?",
+      "options": [
+        "Five",
+        "Seven",
+        "Ten"
+      ],
+      "correctIndex": 1,
+      "explanation": "There are seven Standards (I through VII) covering professionalism, capital markets integrity, duties to clients, employers, and investment analysis.",
+      "encourageCorrect": "Correct! Seven Standards, labeled I through VII.",
+      "encourageIncorrect": "There are seven Standards of Professional Conduct (I through VII), covering everything from professionalism to duties to clients."
+    },
+    {
+      "question": "The CFA Code of Ethics requires members to place whose interests above their own?",
+      "options": [
+        "Their employer's interests",
+        "The public's and clients' interests",
+        "The CFA Institute's interests"
+      ],
+      "correctIndex": 1,
+      "explanation": "Members must place the integrity of the profession and the interests of clients above their own personal interests.",
+      "encourageCorrect": "Well said! Client and public interests always come first.",
+      "encourageIncorrect": "CFA members must place clients' and the public's interests above their own personal interests. That's a core principle of the Code."
+    }
   ]
 }

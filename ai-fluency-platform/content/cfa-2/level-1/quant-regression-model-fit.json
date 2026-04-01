@@ -133,5 +133,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Model Misspecification** \u2014 what happens when the OLS assumptions from QM.1 are violated. You will learn to detect and correct heteroskedasticity, serial correlation, and multicollinearity, which directly affect whether the standard errors, t-statistics, and R-squared values you learned about here can be trusted."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "The Akaike Information Criterion (AIC) helps analysts:",
+      "options": [
+        "Test for heteroskedasticity",
+        "Compare models by balancing goodness of fit with model complexity",
+        "Calculate the exact number of variables needed"
+      ],
+      "correctIndex": 1,
+      "explanation": "AIC balances model fit against complexity. Lower AIC is better. It helps select among competing models with different numbers of variables.",
+      "encourageCorrect": "Well done! AIC rewards fit but penalizes complexity.",
+      "encourageIncorrect": "AIC helps compare models by balancing fit with complexity. A lower AIC indicates a better balance between explanatory power and parsimony."
+    },
+    {
+      "question": "What does a high R-squared but insignificant individual t-statistics suggest?",
+      "options": [
+        "The model is perfect",
+        "Possible multicollinearity among the independent variables",
+        "The dependent variable is not important"
+      ],
+      "correctIndex": 1,
+      "explanation": "High R-squared with insignificant coefficients is a classic sign of multicollinearity \u2014 the variables explain Y well together but are too correlated with each other.",
+      "encourageCorrect": "That's the classic multicollinearity red flag!",
+      "encourageIncorrect": "High R-squared but insignificant t-stats is a telltale sign of multicollinearity. The variables collectively explain Y but their individual effects can't be separated."
+    }
   ]
 }

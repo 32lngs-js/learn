@@ -59,5 +59,31 @@
       "type": "keyTakeaway",
       "content": "AI governance is not a brake on innovation but an accelerator. Organizations with clear governance frameworks deploy AI faster because teams know exactly what is required, approvals are streamlined through risk-based classification, and stakeholders trust that appropriate safeguards are in place."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Why should AI risk be classified at the use-case level rather than the model level?",
+      "options": [
+        "Because all models are equally risky",
+        "Because the same model can be low-risk for one use case and high-risk for another",
+        "Because model-level classification is more expensive"
+      ],
+      "correctIndex": 1,
+      "explanation": "The same LLM used for internal meeting summaries (low risk) has very different governance needs than the same LLM generating medical advice (high risk).",
+      "encourageCorrect": "That's an essential governance insight! Context determines risk, not the model itself.",
+      "encourageIncorrect": "The same model can be low-risk (meeting summaries) or high-risk (medical advice) depending on the use case -- risk classification must consider the deployment context."
+    },
+    {
+      "question": "Is AI governance meant to slow down innovation?",
+      "options": [
+        "Yes, that's its primary purpose",
+        "No, clear governance frameworks actually accelerate AI deployment by providing clarity and trust",
+        "It depends on the organization"
+      ],
+      "correctIndex": 1,
+      "explanation": "Organizations with clear governance deploy AI faster because teams know the requirements, approvals are streamlined, and stakeholders trust the safeguards.",
+      "encourageCorrect": "Exactly! Good governance is an accelerator, not a brake.",
+      "encourageIncorrect": "Governance actually accelerates AI deployment -- teams know what's required, approvals are streamlined, and stakeholders trust that safeguards are in place."
+    }
   ]
 }

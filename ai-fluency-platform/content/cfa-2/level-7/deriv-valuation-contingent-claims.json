@@ -132,5 +132,31 @@
       "type": "connectPrompt",
       "prompt": "You have now completed the **Derivatives** section. The next topic is **Alternative Investments**, starting with Private Capital. You will explore PE fund structures, valuation methods, and performance metrics \u2014 areas where derivatives concepts like option pricing sometimes apply (e.g., real options in PE deal structuring)."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "The Black-Scholes-Merton model assumes that stock returns are:",
+      "options": [
+        "Normally distributed with constant volatility",
+        "Lognormally distributed (so log returns are normal) with constant volatility",
+        "Uniformly distributed"
+      ],
+      "correctIndex": 1,
+      "explanation": "BSM assumes continuously compounded returns are normally distributed, which means the stock price follows a lognormal distribution.",
+      "encourageCorrect": "Right! Lognormal prices and normal log returns are the BSM assumptions.",
+      "encourageIncorrect": "BSM assumes stock prices are lognormally distributed (log returns are normal) with constant volatility \u2014 a key simplifying assumption."
+    },
+    {
+      "question": "Delta of a call option represents:",
+      "options": [
+        "The option's sensitivity to changes in interest rates",
+        "The change in the option's price for a one-unit change in the underlying asset's price",
+        "The option's time decay"
+      ],
+      "correctIndex": 1,
+      "explanation": "Delta measures how much the option price changes when the underlying moves by one unit. For calls, delta ranges from 0 to 1.",
+      "encourageCorrect": "Exactly! Delta is the option's sensitivity to the underlying price.",
+      "encourageIncorrect": "Delta measures the change in option price per unit change in the underlying. Call delta ranges from 0 to 1; put delta from -1 to 0."
+    }
   ]
 }

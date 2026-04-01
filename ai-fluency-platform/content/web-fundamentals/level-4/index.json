@@ -1,0 +1,25 @@
+{
+  "meta": {
+    "title": "Level 4: The Full Picture",
+    "description": "See how HTML, CSS, and JavaScript work together — and learn to trace problems across all three layers.",
+    "level": "level-4",
+    "slug": "index",
+    "order": 0,
+    "isCheckpoint": false,
+    "isIndex": true
+  },
+  "blocks": [
+    {
+      "type": "markdown",
+      "content": "## Level 4: The Full Picture\n\nYou now know three languages: HTML (structure), CSS (appearance), and JavaScript (behavior). But on a real webpage, they do not work in isolation. They are deeply connected.\n\nWhen a user clicks a button, **JavaScript** handles the click, **modifies the HTML** in the browser's memory, and **triggers CSS rules** that change what the user sees. A single interaction can touch all three layers in under a second.\n\nThis level is about seeing that full chain — and knowing where to look when something breaks.\n\n## What you will learn\n\n| Module | Topic | What you will be able to do |\n| :-- | :-- | :-- |\n| 4.1 | **The Three Layers** | Trace how a user interaction flows through JS, HTML, and CSS |\n| 4.2 | **DevTools for Non-Developers** | Use browser DevTools to inspect elements, read errors, and check network requests |\n| 4.3 | **Tracing a Bug** | Follow a systematic debugging flowchart to identify which layer is broken |\n| 4.4 | **Checkpoint** | Find and diagnose bugs across all three layers in a realistic codebase |\n\n## The mental model\n\nThink of a webpage like a stage production. HTML is the set — the physical structures on stage. CSS is the lighting and costumes — how everything looks. JavaScript is the stage direction — it tells actors when to move, when the lights change, and when the set pieces shift.\n\nWhen an audience member says \"something looked wrong in Act 2,\" the stage manager needs to figure out: Was the set piece in the wrong place? Was the lighting cue missed? Did an actor miss their mark? That is exactly what you will learn to do with webpages.\n\nYou do not need to build the set, design the lighting, or direct the actors. You need to watch the show and figure out which department to call when something goes wrong."
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "Real webpages are a collaboration between HTML (structure), CSS (appearance), and JavaScript (behavior). When something breaks, your job is to figure out which layer is responsible — and that requires understanding how they connect."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "Let's start by understanding the connection point between all three layers: the DOM. Module 4.1 will show you how JavaScript finds HTML elements and uses CSS to change what you see."
+    }
+  ]
+}

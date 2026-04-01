@@ -19,7 +19,7 @@
     },
     {
       "type": "markdown",
-      "content": "## The Evaluation Challenge\n\nAI system evaluation is one of the hardest problems in the field. Unlike traditional software where you can assert exact outputs, AI evaluation must handle:\n\n- Multiple valid outputs for the same input\n- Quality that exists on a spectrum, not binary pass/fail\n- Context-dependent standards (a medical summary has different quality requirements than a casual chat)\n- The need to evaluate both **capability** (what the model can do) and **reliability** (how consistently it does it)\n\n## Automated Metrics\n\n### Perplexity\n\nPerplexity measures how well a language model predicts text. It is the exponential of the average negative log-likelihood:\n\n```\nPerplexity = exp(-1/N × Σ log P(token_i | context))\n```\n\nIntuitively, perplexity answers: \"How surprised is the model by this text?\"\n\n| Perplexity | Interpretation |\n|-----------|---------------|\n| 1 | Perfect prediction (model is never surprised) |\n| 10 | Model sees ~10 equally likely options per token |\n| 100 | Model sees ~100 equally likely options per token |\n| 1000+ | Model is very confused by the text |\n\nA well-trained language model might have perplexity of 10-30 on standard English text. **Lower is better.** Perplexity is most useful for comparing versions of the same model or measuring domain adaptation quality.\n\n### BLEU (Bilingual Evaluation Understudy)\n\nBLEU measures how much a generated text overlaps with a reference text using n-gram precision. Originally designed for machine translation:\n\n```\nBLEU = BP × exp(Σ wₙ × log pₙ)\n\nWhere:\n  pₙ = n-gram precision (what fraction of generated n-grams appear in reference)\n  wₙ = weight for each n-gram size (typically uniform: 1/4 each)\n  BP = brevity penalty (penalizes outputs shorter than reference)\n```\n\nBLEU scores range from 0 to 1 (often reported as 0-100):\n\n| BLEU Score | Quality |\n|-----------|---------|\n| < 10 | Almost useless |\n| 10-19 | Hard to understand gist |\n| 20-29 | Clear enough to understand |\n| 30-39 | Understandable to good |\n| 40-49 | High quality |\n| 50+ | Very high quality (often close to human) |\n\n### ROUGE (Recall-Oriented Understudy for Gisting Evaluation)\n\nROUGE measures text summarization quality by comparing overlap with reference summaries. Unlike BLEU (precision-focused), ROUGE emphasizes **recall** -- how much of the reference content appears in the generated text.\n\nThree common variants:\n\n- **ROUGE-1**: Unigram overlap (individual words)\n- **ROUGE-2**: Bigram overlap (two-word phrases)\n- **ROUGE-L**: Longest common subsequence\n\n```python\n# Example calculation\nreference = \"The cat sat on the mat\"\ngenerated = \"The cat was sitting on a mat\"\n\n# ROUGE-1 recall: 5 matching unigrams / 6 reference unigrams = 0.83\n# ROUGE-1 precision: 5 matching unigrams / 7 generated unigrams = 0.71\n# ROUGE-1 F1: 2 × (0.83 × 0.71) / (0.83 + 0.71) = 0.77\n```"
+      "content": "## The Evaluation Challenge\n\nAI system evaluation is one of the hardest problems in the field. Unlike traditional software where you can assert exact outputs, AI evaluation must handle:\n\n- Multiple valid outputs for the same input\n- Quality that exists on a spectrum, not binary pass/fail\n- Context-dependent standards (a medical summary has different quality requirements than a casual chat)\n- The need to evaluate both **capability** (what the model can do) and **reliability** (how consistently it does it)\n\n## Automated Metrics\n\n### Perplexity\n\nPerplexity measures how well a language model predicts text. It is the exponential of the average negative log-likelihood:\n\n```\nPerplexity = exp(-1/N \u00d7 \u03a3 log P(token_i | context))\n```\n\nIntuitively, perplexity answers: \"How surprised is the model by this text?\"\n\n| Perplexity | Interpretation |\n|-----------|---------------|\n| 1 | Perfect prediction (model is never surprised) |\n| 10 | Model sees ~10 equally likely options per token |\n| 100 | Model sees ~100 equally likely options per token |\n| 1000+ | Model is very confused by the text |\n\nA well-trained language model might have perplexity of 10-30 on standard English text. **Lower is better.** Perplexity is most useful for comparing versions of the same model or measuring domain adaptation quality.\n\n### BLEU (Bilingual Evaluation Understudy)\n\nBLEU measures how much a generated text overlaps with a reference text using n-gram precision. Originally designed for machine translation:\n\n```\nBLEU = BP \u00d7 exp(\u03a3 w\u2099 \u00d7 log p\u2099)\n\nWhere:\n  p\u2099 = n-gram precision (what fraction of generated n-grams appear in reference)\n  w\u2099 = weight for each n-gram size (typically uniform: 1/4 each)\n  BP = brevity penalty (penalizes outputs shorter than reference)\n```\n\nBLEU scores range from 0 to 1 (often reported as 0-100):\n\n| BLEU Score | Quality |\n|-----------|---------|\n| < 10 | Almost useless |\n| 10-19 | Hard to understand gist |\n| 20-29 | Clear enough to understand |\n| 30-39 | Understandable to good |\n| 40-49 | High quality |\n| 50+ | Very high quality (often close to human) |\n\n### ROUGE (Recall-Oriented Understudy for Gisting Evaluation)\n\nROUGE measures text summarization quality by comparing overlap with reference summaries. Unlike BLEU (precision-focused), ROUGE emphasizes **recall** -- how much of the reference content appears in the generated text.\n\nThree common variants:\n\n- **ROUGE-1**: Unigram overlap (individual words)\n- **ROUGE-2**: Bigram overlap (two-word phrases)\n- **ROUGE-L**: Longest common subsequence\n\n```python\n# Example calculation\nreference = \"The cat sat on the mat\"\ngenerated = \"The cat was sitting on a mat\"\n\n# ROUGE-1 recall: 5 matching unigrams / 6 reference unigrams = 0.83\n# ROUGE-1 precision: 5 matching unigrams / 7 generated unigrams = 0.71\n# ROUGE-1 F1: 2 \u00d7 (0.83 \u00d7 0.71) / (0.83 + 0.71) = 0.77\n```"
     },
     {
       "type": "calibrationCheck",
@@ -58,6 +58,32 @@
         "How do you evaluate a model on tasks where there is no single 'correct' answer?",
         "What risks arise when you optimize a model heavily for a specific benchmark?"
       ]
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Why is evaluating AI systems harder than evaluating traditional software?",
+      "options": [
+        "Because AI runs slower",
+        "Because AI outputs are non-deterministic and 'correct' is often subjective",
+        "Because AI uses more memory"
+      ],
+      "correctIndex": 1,
+      "explanation": "AI outputs vary across runs and multiple different outputs can all be valid, making traditional pass/fail testing insufficient.",
+      "encourageCorrect": "Right! Non-determinism and subjective quality make AI evaluation uniquely challenging.",
+      "encourageIncorrect": "AI evaluation is harder because outputs are non-deterministic and often subjective -- you can't just check for an exact answer like traditional software."
+    },
+    {
+      "question": "What is the purpose of using human evaluation as the gold standard for AI metrics?",
+      "options": [
+        "Because humans are always right",
+        "To calibrate automated metrics against real-world quality judgments",
+        "Because automated metrics are always wrong"
+      ],
+      "correctIndex": 1,
+      "explanation": "Human evaluation provides the ground truth that automated metrics are calibrated against -- automated metrics are useful only insofar as they correlate with human judgment.",
+      "encourageCorrect": "Exactly! Human evaluation is the benchmark that automated metrics need to correlate with.",
+      "encourageIncorrect": "Human evaluation provides the ground truth for calibrating automated metrics -- without it, you can't know if your automated scores actually reflect quality."
     }
   ]
 }

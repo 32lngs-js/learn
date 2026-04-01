@@ -47,5 +47,31 @@
       "type": "connectPrompt",
       "prompt": "Specificity gets you most of the way to great results. But there is one habit that multiplies everything else: giving Claude something to verify its own work against. That is the single highest-leverage technique in all of Claude Code, and it is the subject of the next module."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is the 'sweet spot' for prompting Claude Code?",
+      "options": [
+        "Very detailed step-by-step instructions",
+        "Precise constraints on the outcome, freedom on the approach",
+        "Keeping prompts as short as possible"
+      ],
+      "correctIndex": 1,
+      "explanation": "Be specific about what you want (outcome), but let Claude decide how to get there (approach).",
+      "encourageCorrect": "Exactly right! Constrain the what, free the how.",
+      "encourageIncorrect": "The sweet spot is precise constraints on the outcome with freedom on the approach — tell Claude what you want, not how to do it."
+    },
+    {
+      "question": "Why is over-specifying the 'how' a problem?",
+      "options": [
+        "It makes the prompt too long",
+        "It prevents Claude from finding the best approach",
+        "It costs more tokens"
+      ],
+      "correctIndex": 1,
+      "explanation": "Over-specifying the process limits Claude's ability to find the best approach — you might write a worse plan than Claude would create.",
+      "encourageCorrect": "That's it! Let Claude use its intelligence to find the best path.",
+      "encourageIncorrect": "Over-specifying the how prevents Claude from finding potentially better approaches — you turn an autonomous agent into a command executor."
+    }
   ]
 }

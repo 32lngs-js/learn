@@ -118,5 +118,31 @@
       "type": "connectPrompt",
       "prompt": "The next module explores **Fixed-Income Cash Flows and Types**, where we examine how different bond structures (bullet, amortizing, sinking fund, inflation-linked) create distinct cash flow patterns that affect pricing and risk characteristics."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is a bond's coupon rate?",
+      "options": [
+        "The bond's yield to maturity",
+        "The annual interest payment expressed as a percentage of par value",
+        "The bond's market price divided by par value"
+      ],
+      "correctIndex": 1,
+      "explanation": "The coupon rate determines the periodic interest payment: Coupon payment = Coupon rate x Par value.",
+      "encourageCorrect": "Right! Coupon rate is the stated interest rate based on par value.",
+      "encourageIncorrect": "The coupon rate is the annual interest rate applied to the bond's par value. It's fixed at issuance and determines the periodic interest payment."
+    },
+    {
+      "question": "A callable bond gives which party the right to redeem the bond early?",
+      "options": [
+        "The bondholder",
+        "The issuer",
+        "The rating agency"
+      ],
+      "correctIndex": 1,
+      "explanation": "A call provision gives the issuer the right to redeem (buy back) the bond before maturity, typically when interest rates fall.",
+      "encourageCorrect": "Correct! Callable means the issuer can retire the bond early.",
+      "encourageIncorrect": "A callable bond lets the issuer redeem it before maturity. Issuers typically call bonds when rates fall so they can refinance at a lower rate."
+    }
   ]
 }

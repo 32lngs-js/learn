@@ -1,0 +1,106 @@
+{
+  "meta": {
+    "title": "2.1 Props Are Arguments",
+    "description": "Components receive data the same way functions receive arguments.",
+    "level": "level-2",
+    "slug": "props-are-arguments",
+    "order": 1,
+    "isCheckpoint": false,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "predictPrompt",
+      "prompt": "In Level 1, you saw components like <MemberCard name=\"Alice\" role=\"Engineer\" />. Those name and role values had to get inside the MemberCard component somehow. Before reading this module, write down your best guess: how does a React component receive and use the data passed to it?"
+    },
+    {
+      "type": "markdown",
+      "content": "## Props: how components receive data\n\nIn Level 1, you learned that a React component is a function that returns JSX. Now we add one critical detail: that function can accept **arguments**. In React, these arguments are called **props** (short for \"properties\").\n\nHere is the simplest example:\n\n```jsx\nfunction Greeting({ name }) {\n  return <h1>Hello, {name}</h1>;\n}\n```\n\nThis component receives a prop called `name` and uses it in the JSX. When someone uses this component, they pass the name like this:\n\n```jsx\n<Greeting name=\"Sarah\" />\n```\n\nThe result on screen: **Hello, Sarah**.\n\nThat is the entire mechanism. Props are how a parent component sends data to a child component. The parent decides what data to pass. The child decides how to display it.\n\n### Destructuring: unpacking the props object\n\nTechnically, React passes all props as a single object. The `{ name }` syntax in the function parameter is called **destructuring** -- it is JavaScript shorthand for \"take the `name` property out of the object.\"\n\nThese two versions are identical:\n\n```jsx\n// Version 1: Destructuring (more common)\nfunction Greeting({ name }) {\n  return <h1>Hello, {name}</h1>;\n}\n\n// Version 2: Using the props object directly\nfunction Greeting(props) {\n  return <h1>Hello, {props.name}</h1>;\n}\n```\n\nIn the wild, you will see both styles, but destructuring is far more common in modern React code. The advantage is readability -- you can see immediately what data the component needs by looking at the function parameter:\n\n```jsx\nfunction UserCard({ name, email, role, avatarUrl }) {\n  // You can immediately see this component needs\n  // name, email, role, and avatarUrl\n  return (\n    <div className=\"user-card\">\n      <img src={avatarUrl} alt={name} />\n      <h3>{name}</h3>\n      <p>{email}</p>\n      <span className=\"badge\">{role}</span>\n    </div>\n  );\n}\n```\n\nThe destructured parameter `{ name, email, role, avatarUrl }` is essentially a contract: \"Give me these four pieces of data and I will render a user card.\"\n\n### Passing different types of data\n\nProps are not limited to strings. Here is how different data types are passed:\n\n**Strings** use quotes:\n```jsx\n<Greeting name=\"Sarah\" />\n<Button label=\"Submit\" />\n```\n\n**Numbers, booleans, and JavaScript expressions** use curly braces:\n```jsx\n<Counter count={42} />\n<Toggle active={true} />\n<PriceTag amount={29.99 * 0.8} />\n```\n\n**Objects and arrays** also use curly braces:\n```jsx\n<UserProfile user={{ name: \"Sarah\", role: \"PM\" }} />\n<TagList tags={[\"react\", \"javascript\", \"design\"]} />\n```\n\nThe rule is consistent with what you learned in Module 1.1: **quotes for strings, curly braces for everything else**. The curly braces mean \"this is a JavaScript expression\" -- just like in JSX content.\n\nHere is a common pattern that combines multiple prop types:\n\n```jsx\n<ProductCard\n  title=\"Wireless Headphones\"\n  price={79.99}\n  inStock={true}\n  rating={4.5}\n  category=\"Electronics\"\n/>\n```\n\nReading this, you can see that ProductCard receives a string title, a numeric price, a boolean stock status, a numeric rating, and a string category.\n\n### Default values\n\nSometimes a component defines fallback values for props that might not be provided. This is done with the `=` sign in the destructuring:\n\n```jsx\nfunction Badge({ label, color = \"gray\", size = \"medium\" }) {\n  return (\n    <span className={`badge badge-${color} badge-${size}`}>\n      {label}\n    </span>\n  );\n}\n```\n\nThis component requires a `label` prop but has defaults for `color` and `size`. You can use it in several ways:\n\n```jsx\n// Uses defaults: color=\"gray\", size=\"medium\"\n<Badge label=\"New\" />\n\n// Overrides color, uses default size\n<Badge label=\"Sale\" color=\"red\" />\n\n// Overrides both\n<Badge label=\"Featured\" color=\"blue\" size=\"large\" />\n```\n\nWhen you see `= \"someValue\"` in a prop destructuring, it means \"use this value if the parent does not provide one.\" This is useful for reading code because it tells you which props are optional and what their fallback behavior is.\n\n### Reading props in a real component\n\nHere is a realistic notification component:\n\n```jsx\nfunction Notification({ type = \"info\", title, message, dismissible = true }) {\n  const icons = {\n    info: \"ℹ️\",\n    success: \"✅\",\n    warning: \"⚠️\",\n    error: \"❌\",\n  };\n\n  return (\n    <div className={`notification notification-${type}`}>\n      <span className=\"icon\">{icons[type]}</span>\n      <div className=\"content\">\n        <strong>{title}</strong>\n        <p>{message}</p>\n      </div>\n      {dismissible && <button className=\"close\">Dismiss</button>}\n    </div>\n  );\n}\n```\n\nReading the props: `type` defaults to \"info\" if not provided. `title` and `message` are required (no defaults). `dismissible` defaults to `true`.\n\nReading the logic: the `icons` object maps types to emoji. The JSX uses the type to pick the right icon and CSS class.\n\nReading the conditional: `{dismissible && <button>Dismiss</button>}` means the Dismiss button only appears when `dismissible` is true. (You will learn more about this pattern in Module 2.3.)\n\nA parent might use this component like:\n\n```jsx\n<Notification\n  type=\"success\"\n  title=\"Payment received\"\n  message=\"Your order has been confirmed.\"\n/>\n```\n\nSince `dismissible` is not passed, it defaults to `true`, and the Dismiss button appears.\n\n### The mental model\n\nThink of props like filling out a form:\n\n- The **component definition** is the form template -- it lists what fields exist and which ones have default values\n- The **component usage** (the JSX tag with attributes) is the filled-out form -- it provides values for each field\n- The **rendered output** is the result of processing the filled-out form\n\nWhen you see a component and want to understand it, start with the function parameter to see what data it expects, then look at the JSX to see how it uses that data."
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "What does this component render when used as `<Price amount={100} currency=\"EUR\" />`?\n\n```jsx\nfunction Price({ amount, currency = \"USD\", showCents = true }) {\n  const formatted = showCents ? amount.toFixed(2) : Math.round(amount);\n  return <span>{formatted} {currency}</span>;\n}\n```",
+      "answer": "It renders '100.00 EUR'. The amount prop is 100, currency is 'EUR' (overriding the default 'USD'), and showCents is not passed so it defaults to true. Since showCents is true, the amount is formatted with toFixed(2), giving '100.00'. The currency 'EUR' is appended after a space."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Reading Props",
+      "problems": [
+        {
+          "id": "rl2-1-1",
+          "question": "What does this component display when used as `<Avatar name=\"Kim\" size={48} />`?\n\n```jsx\nfunction Avatar({ name, size = 32, shape = \"circle\" }) {\n  return (\n    <img\n      src={`/avatars/${name.toLowerCase()}.jpg`}\n      alt={name}\n      width={size}\n      height={size}\n      className={`avatar avatar-${shape}`}\n    />\n  );\n}\n```",
+          "options": [
+            "A) A 48x48 circular image loaded from /avatars/kim.jpg",
+            "B) A 32x32 circular image loaded from /avatars/Kim.jpg",
+            "C) A 48x48 square image loaded from /avatars/kim.jpg"
+          ],
+          "correctAnswer": "A",
+          "explanation": "name is 'Kim' and size is 48 (explicitly passed). shape is not passed, so it defaults to 'circle'. The src uses a template literal that lowercases the name: /avatars/kim.jpg. Width and height are both set to 48 (the size prop). The className includes 'avatar-circle' because shape defaults to 'circle'.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "rl2-1-2",
+          "question": "Which props are required (have no default value) in this component?\n\n```jsx\nfunction Alert({ severity = \"info\", title, message, onClose, autoHide = false }) {\n  return (\n    <div className={`alert alert-${severity}`}>\n      <strong>{title}</strong>\n      <p>{message}</p>\n      {onClose && <button onClick={onClose}>Close</button>}\n    </div>\n  );\n}\n```",
+          "options": [
+            "A) severity, title, message, onClose, autoHide -- all are required",
+            "B) title, message, and onClose -- they have no default values",
+            "C) title and message -- onClose is optional because the button only shows when it is provided"
+          ],
+          "correctAnswer": "B",
+          "explanation": "Props without a default value (no = sign) are effectively required: title, message, and onClose. severity defaults to 'info' and autoHide defaults to false, so they are optional. While onClose is technically optional in the sense that the component will not crash without it (the button just will not render), it has no default value in the destructuring, which means the component definition treats it as expected input.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "rl2-1-3",
+          "question": "What is wrong with how this component is being used?\n\n```jsx\nfunction PriceDisplay({ amount, label }) {\n  return (\n    <div>\n      <span className=\"label\">{label}</span>\n      <span className=\"amount\">${amount.toFixed(2)}</span>\n    </div>\n  );\n}\n\n// Used like this:\n<PriceDisplay label=\"Total\" amount=\"49.99\" />\n```",
+          "options": [
+            "A) Nothing is wrong -- this will work fine",
+            "B) amount is passed as a string '49.99' instead of a number {49.99}, so .toFixed(2) will crash",
+            "C) label and amount are in the wrong order"
+          ],
+          "correctAnswer": "B",
+          "explanation": "When amount is written as amount=\"49.99\", it is passed as the string '49.99', not the number 49.99. The component calls amount.toFixed(2), which is a number method -- calling it on a string causes an error. The fix is to pass it as amount={49.99} using curly braces, which passes it as a JavaScript number. Prop order does not matter in React.",
+          "difficulty": "advanced"
+        }
+      ]
+    },
+    {
+      "type": "explainBack",
+      "prompt": "Explain props in your own words. What is destructuring, and why is it useful for reading React code? How do default values work, and how can you tell which props are optional versus required?"
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "Props are how parent components pass data to child components. Destructuring in the function parameter shows you exactly what data a component expects. Strings use quotes, everything else uses curly braces. Default values (with =) make props optional; props without defaults are effectively required."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "Now you know how a single component receives props. But where do those prop values come from? The next module traces the flow: how a parent component's data becomes a child component's props, and what happens when props need to pass through multiple levels."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "In React, what are props?",
+      "options": ["CSS styles applied to a component", "Data passed from a parent component to a child component", "JavaScript functions that run on page load"],
+      "correctIndex": 1,
+      "explanation": "Props (short for properties) are how a parent component sends data to a child component -- like arguments to a function.",
+      "encourageCorrect": "Nailed it! Props are the way data flows from parent to child in React.",
+      "encourageIncorrect": "Not quite -- props are data passed from parent to child, like arguments to a function. The parent decides what to send, and the child decides how to display it."
+    },
+    {
+      "question": "What does a default value (like color = 'gray') in a prop destructuring mean?",
+      "options": ["The prop can never be changed", "If the parent does not provide that prop, this fallback value is used", "The prop is required and must always be 'gray'"],
+      "correctIndex": 1,
+      "explanation": "A default value with = means 'use this if the parent does not pass anything for this prop.' It makes the prop optional.",
+      "encourageCorrect": "That's right! Default values make props optional by providing a sensible fallback.",
+      "encourageIncorrect": "Close! A default value like color = 'gray' means that if the parent doesn't provide a color prop, the component uses 'gray' as a fallback."
+    },
+    {
+      "question": "When passing a number as a prop, which syntax is correct?",
+      "options": ["count=\"42\"", "count={42}", "count=42"],
+      "correctIndex": 1,
+      "explanation": "Numbers (and all non-string values) are passed using curly braces. Quotes pass strings, so count=\"42\" would be the string '42', not the number 42.",
+      "encourageCorrect": "Perfect! Curly braces for numbers, quotes for strings -- you've got the pattern down.",
+      "encourageIncorrect": "Remember: quotes are for strings, curly braces are for everything else. count={42} passes the number 42, while count=\"42\" would pass the string '42'."
+    }
+  ]
+}

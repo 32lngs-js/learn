@@ -104,5 +104,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Real Estate Investment**, where you will apply similar valuation frameworks (DCF, income-based methods) to property assets. Like PE, real estate involves illiquidity premiums, leverage, and the distinction between direct investment and fund structures (REITs)."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Distributions to paid-in capital (DPI) measures:",
+      "options": [
+        "How much capital has been called",
+        "How much cash has been returned to investors relative to the capital they contributed",
+        "The fund's unrealized gains"
+      ],
+      "correctIndex": 1,
+      "explanation": "DPI = Cumulative distributions / Paid-in capital. It measures the actual cash-on-cash return, only counting realized returns.",
+      "encourageCorrect": "Right! DPI tells you how much cash you've actually gotten back relative to what you put in.",
+      "encourageIncorrect": "DPI measures cumulative distributions divided by paid-in capital. It only counts realized (actual cash) returns, not paper gains."
+    },
+    {
+      "question": "A GP (general partner) clawback provision protects LPs by:",
+      "options": [
+        "Guaranteeing a minimum return",
+        "Requiring the GP to return excess carried interest if the fund underperforms overall",
+        "Preventing the GP from investing in risky assets"
+      ],
+      "correctIndex": 1,
+      "explanation": "If the GP received carry on early winners but the fund's overall return falls below the hurdle, the clawback forces the GP to return excess fees.",
+      "encourageCorrect": "That's the safety net! Clawback prevents GPs from keeping carry they didn't truly earn over the fund's life.",
+      "encourageIncorrect": "A clawback requires the GP to return carried interest if the fund's final overall performance doesn't justify the carry received on earlier exits."
+    }
   ]
 }

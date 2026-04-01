@@ -100,5 +100,31 @@
       "type": "connectPrompt",
       "prompt": "This completes the Private Wealth Pathway content modules. The checkpoint assessment ahead will test your ability to integrate tax planning, estate strategies, concentrated position management, risk management, goals-based investing, and behavioral finance into comprehensive client solutions."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "The most important skill in client management for private wealth advisors is:",
+      "options": [
+        "Maximizing investment returns",
+        "Understanding and communicating effectively about the client's goals, fears, and circumstances",
+        "Minimizing taxes above all else"
+      ],
+      "correctIndex": 1,
+      "explanation": "Understanding the client's full situation \u2014 emotional, financial, and personal \u2014 and communicating clearly is fundamental to effective private wealth management.",
+      "encourageCorrect": "Exactly! Great client management starts with understanding the whole person.",
+      "encourageIncorrect": "Effective client management requires deeply understanding the client's goals, fears, and circumstances, and communicating clearly and empathetically."
+    },
+    {
+      "question": "A client's risk tolerance should be assessed based on:",
+      "options": [
+        "Only their stated preferences",
+        "Both their willingness to take risk (emotional) and ability to take risk (financial capacity)",
+        "Only their portfolio size"
+      ],
+      "correctIndex": 1,
+      "explanation": "Risk tolerance has two dimensions: willingness (psychological comfort with risk) and ability (financial capacity to absorb losses). When they conflict, the advisor must resolve the mismatch.",
+      "encourageCorrect": "Right! Both willingness and ability must be assessed, and conflicts resolved.",
+      "encourageIncorrect": "Risk tolerance combines willingness (emotional comfort) and ability (financial capacity). Both must be evaluated, and mismatches must be addressed."
+    }
   ]
 }

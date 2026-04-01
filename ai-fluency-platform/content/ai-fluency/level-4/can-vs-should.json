@@ -55,5 +55,31 @@
       "type": "keyTakeaway",
       "content": "The best AI engineers are not the ones who use AI for everything -- they are the ones who know when **not** to use it. Run every feature request through the decision framework: is the problem ambiguous, are simpler alternatives insufficient, is the failure cost acceptable, and does the total cost of ownership justify the AI tax? The right answer is often a regex, a SQL query, or a rule engine."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is the 'AI tax' that every AI component adds to a system?",
+      "options": [
+        "A government fee for using AI",
+        "Non-determinism, latency, cost per call, and harder testing/debugging",
+        "The cost of training a custom model"
+      ],
+      "correctIndex": 1,
+      "explanation": "Every AI component introduces non-determinism, API latency, per-token costs, and harder testing -- costs that traditional software doesn't carry.",
+      "encourageCorrect": "Right! Understanding the AI tax helps you decide when AI is worth it and when simpler solutions are better.",
+      "encourageIncorrect": "The AI tax includes non-determinism, added latency, per-token costs, and harder testing/debugging -- costs you should weigh before choosing AI over simpler alternatives."
+    },
+    {
+      "question": "When a product manager asks for an AI feature, what should you consider first?",
+      "options": [
+        "Which AI model to use",
+        "Whether a simpler solution (like regex, SQL, or rules) could solve the problem",
+        "How to make the AI as accurate as possible"
+      ],
+      "correctIndex": 1,
+      "explanation": "The best AI engineers know when not to use AI -- start simple, measure, and only escalate to AI when data proves simpler approaches are insufficient.",
+      "encourageCorrect": "Great perspective! The right answer is often a regex, a SQL query, or a rule engine.",
+      "encourageIncorrect": "Always start by asking if a simpler solution would work. A regex or rule engine that achieves 85%+ accuracy is often better than an AI solution with all its added complexity."
+    }
   ]
 }

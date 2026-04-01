@@ -46,5 +46,31 @@
       "type": "connectPrompt",
       "prompt": "Teams parallelize investigation. But sometimes you do not need investigation — you need the same change applied across many targets. That is batch mode, and it is a different kind of parallel power."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is the key requirement for tasks to benefit from agent teams?",
+      "options": [
+        "Tasks must be sequential",
+        "Subtasks must be genuinely independent and parallelizable",
+        "You must use the SDK"
+      ],
+      "correctIndex": 1,
+      "explanation": "Agent teams only help when subtasks are independent. Sequential tasks (write then proofread) can't be parallelized.",
+      "encourageCorrect": "Right! Parallel subtasks are the requirement for teams to add value.",
+      "encourageIncorrect": "Subtasks must be genuinely independent — a writer can't work without the researcher's findings, so research and writing can't be parallelized."
+    },
+    {
+      "question": "How do agent teams differ from worktrees?",
+      "options": [
+        "They are the same thing",
+        "Teams have a lead agent that coordinates and synthesizes, worktrees are independent",
+        "Worktrees are faster"
+      ],
+      "correctIndex": 1,
+      "explanation": "Worktrees are independent sessions you manage separately. Teams have a lead agent that decomposes, assigns, and synthesizes results.",
+      "encourageCorrect": "That's the distinction! Teams add coordination that worktrees lack.",
+      "encourageIncorrect": "The key difference: agent teams have a lead that coordinates and synthesizes, while worktrees are fully independent sessions."
+    }
   ]
 }

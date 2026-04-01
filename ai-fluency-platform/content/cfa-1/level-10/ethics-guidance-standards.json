@@ -136,5 +136,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers the **Global Investment Performance Standards (GIPS)**, which provide a standardized framework for presenting investment performance. GIPS builds on Standard III(D) (Performance Presentation) by creating an industry-wide, verifiable standard that goes far beyond the minimum ethical requirements."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Under Standard II(A) Material Nonpublic Information, what must a member do if they possess material nonpublic information?",
+      "options": [
+        "Share it only with their supervisor",
+        "Not act or cause others to act on it",
+        "Report it to the CFA Institute"
+      ],
+      "correctIndex": 1,
+      "explanation": "Members must not trade on or cause others to trade on material nonpublic information. This is the 'mosaic theory' boundary.",
+      "encourageCorrect": "Correct! You cannot act or cause others to act on material nonpublic information.",
+      "encourageIncorrect": "The rule is clear: do not act or cause others to act on material nonpublic information. No trading, no tipping."
+    },
+    {
+      "question": "Standard III(A) Loyalty, Prudence, and Care requires members to act for the benefit of:",
+      "options": [
+        "Their employer first",
+        "Their clients first",
+        "Themselves and their clients equally"
+      ],
+      "correctIndex": 1,
+      "explanation": "Members must act for the benefit of their clients and place client interests before their own or their employer's interests.",
+      "encourageCorrect": "That's the key principle! Clients always come first.",
+      "encourageIncorrect": "Standard III(A) requires acting for clients' benefit first. Client interests take priority over the member's and the employer's interests."
+    }
   ]
 }

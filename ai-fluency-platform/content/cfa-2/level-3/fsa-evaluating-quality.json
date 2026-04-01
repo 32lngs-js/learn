@@ -106,5 +106,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Integration of FSA Techniques**, where you'll bring together all the analytical tools from previous modules into a comprehensive company analysis framework \u2014 combining ratio analysis, quality assessment, and cross-company comparison."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Cash flow from operations that exceeds net income generally suggests:",
+      "options": [
+        "Aggressive revenue recognition",
+        "Higher earnings quality because earnings are backed by cash",
+        "The company is about to go bankrupt"
+      ],
+      "correctIndex": 1,
+      "explanation": "When CFO exceeds net income, it means earnings are well-supported by actual cash generation, which is a positive quality signal.",
+      "encourageCorrect": "Right! Cash-backed earnings are higher quality earnings.",
+      "encourageIncorrect": "When cash flow from operations exceeds net income, earnings are well-supported by cash. This is a positive sign of earnings quality."
+    },
+    {
+      "question": "A key warning sign of low financial reporting quality is:",
+      "options": [
+        "Consistent revenue growth",
+        "A large and growing gap between net income and cash flow from operations",
+        "High profit margins"
+      ],
+      "correctIndex": 1,
+      "explanation": "If net income is growing but cash flow isn't keeping pace, the company may be using aggressive accruals to inflate earnings.",
+      "encourageCorrect": "That's a classic red flag! Income without cash support is suspicious.",
+      "encourageIncorrect": "A widening gap between net income and CFO suggests earnings may be boosted by aggressive accruals rather than real cash generation."
+    }
   ]
 }

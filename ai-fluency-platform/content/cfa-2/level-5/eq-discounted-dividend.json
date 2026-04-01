@@ -121,5 +121,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Free Cash Flow Valuation** \u2014 an alternative to DDM that values the firm based on cash flows available to equity holders (FCFE) or to all capital providers (FCFF). This approach is essential for companies that don't pay dividends or whose dividends don't reflect underlying value creation."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "The Gordon Growth Model (constant growth DDM) assumes dividends grow at:",
+      "options": [
+        "An increasing rate each year",
+        "A constant rate forever",
+        "Zero percent"
+      ],
+      "correctIndex": 1,
+      "explanation": "The Gordon Growth Model: V = D1 / (r - g), where g is the constant dividend growth rate. It requires that g < r.",
+      "encourageCorrect": "That's the assumption! Constant growth forever, with g less than r.",
+      "encourageIncorrect": "The Gordon Growth Model assumes dividends grow at a constant rate (g) forever. The formula is V = D1 / (r - g), and g must be less than r."
+    },
+    {
+      "question": "The sustainable growth rate estimates how fast a company can grow without:",
+      "options": [
+        "Hiring new employees",
+        "Issuing new equity or changing its capital structure",
+        "Increasing revenue"
+      ],
+      "correctIndex": 1,
+      "explanation": "Sustainable growth rate = ROE x (1 - payout ratio). It measures growth funded purely from retained earnings.",
+      "encourageCorrect": "Right! It's the maximum growth from retained earnings alone.",
+      "encourageIncorrect": "The sustainable growth rate = ROE x retention ratio. It shows how fast the company can grow using only retained earnings without changing capital structure."
+    }
   ]
 }

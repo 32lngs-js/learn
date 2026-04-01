@@ -43,5 +43,31 @@
       "type": "connectPrompt",
       "prompt": "Research produces findings. The next module covers what you do with those findings: writing. You will learn how to use Claude Code as a writing partner across the full drafting process — from outline to final revision."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is the most common research mistake with Claude Code?",
+      "options": [
+        "Using Plan Mode",
+        "Skipping the explore and plan phases — jumping to 'research everything'",
+        "Reading too few files"
+      ],
+      "correctIndex": 1,
+      "explanation": "Jumping straight to 'research everything' produces vague, unfocused results. Define your questions first, then find answers.",
+      "encourageCorrect": "Exactly! Define questions first, then search for answers.",
+      "encourageIncorrect": "The most common mistake is skipping explore and plan — 'research everything' produces vague results. Define specific questions first."
+    },
+    {
+      "question": "Why should you ask Claude for evidence rather than opinions during research?",
+      "options": [
+        "Opinions are always wrong",
+        "Evidence comes from your actual files, not from Claude's training data",
+        "Opinions take more tokens"
+      ],
+      "correctIndex": 1,
+      "explanation": "Asking for evidence with specific numbers ensures findings come from your data, not from Claude's general knowledge.",
+      "encourageCorrect": "Important distinction! Your data should drive the findings, not Claude's training.",
+      "encourageIncorrect": "Ask for evidence so findings come from your actual files — not from Claude's training data. Always ask Claude to cite specific sources."
+    }
   ]
 }

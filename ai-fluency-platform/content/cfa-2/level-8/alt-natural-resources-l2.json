@@ -104,5 +104,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Hedge Fund Strategies**, where you will study how managers use long/short positions, leverage, and derivatives across multiple asset classes \u2014 including commodities \u2014 to generate alpha. Many hedge fund strategies exploit the very mispricings and structural features you have just studied."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Backwardation in a commodity futures market means:",
+      "options": [
+        "Futures prices are higher than spot prices",
+        "Futures prices are lower than spot prices",
+        "Spot and futures prices are equal"
+      ],
+      "correctIndex": 1,
+      "explanation": "In backwardation, futures prices are below the current spot price. This can occur when there is strong current demand or a convenience yield.",
+      "encourageCorrect": "Right! Backwardation means futures trade below spot \u2014 often a sign of tight current supply.",
+      "encourageIncorrect": "Backwardation means futures prices are below the spot price. Contango is the opposite \u2014 futures above spot."
+    },
+    {
+      "question": "The convenience yield from holding physical commodities represents:",
+      "options": [
+        "The storage cost savings",
+        "The benefit of having the physical commodity available for immediate use",
+        "The interest earned on commodity investments"
+      ],
+      "correctIndex": 1,
+      "explanation": "The convenience yield is the non-monetary benefit of holding the physical commodity \u2014 having it on hand to meet unexpected demand or production needs.",
+      "encourageCorrect": "That's it! Having the physical goods available when you need them has real value.",
+      "encourageIncorrect": "The convenience yield is the benefit of holding the actual commodity \u2014 for example, a manufacturer having raw materials on hand to avoid production disruptions."
+    }
   ]
 }

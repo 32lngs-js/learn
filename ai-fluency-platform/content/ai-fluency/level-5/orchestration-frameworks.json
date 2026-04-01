@@ -72,5 +72,31 @@
         "What would need to be true for you to confidently deploy a framework-based agentic system to production?"
       ]
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is the fundamental difference between a 'chain' and a 'graph' approach to AI orchestration?",
+      "options": [
+        "Chains are faster than graphs",
+        "Chains are linear sequences; graphs support conditional branching and loops as first-class constructs",
+        "Graphs use more memory"
+      ],
+      "correctIndex": 1,
+      "explanation": "Chains flow linearly from step to step. Graphs define nodes and edges including conditional branches and cycles, making loops and decisions explicit and testable.",
+      "encourageCorrect": "Exactly! Graphs make branching and looping visible and testable, which matters for complex workflows.",
+      "encourageIncorrect": "Chains are linear (step to step), while graphs explicitly define nodes and edges including conditional branches and cycles -- making complex workflows with loops first-class."
+    },
+    {
+      "question": "Why might you isolate an orchestration framework behind your own interfaces?",
+      "options": [
+        "To make the code more complex",
+        "To preserve flexibility and avoid lock-in as the framework landscape evolves",
+        "To make the code run faster"
+      ],
+      "correctIndex": 1,
+      "explanation": "Isolating frameworks behind your own interfaces lets you swap frameworks without rewriting application logic -- protecting against lock-in in a rapidly evolving landscape.",
+      "encourageCorrect": "Smart thinking! Framework abstraction protects your investment as the ecosystem changes.",
+      "encourageIncorrect": "Isolating the framework behind your own interfaces lets you swap frameworks without rewriting application code -- important since the orchestration landscape is evolving fast."
+    }
   ]
 }

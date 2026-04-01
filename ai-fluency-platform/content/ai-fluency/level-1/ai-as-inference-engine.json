@@ -55,5 +55,31 @@
       "type": "connectPrompt",
       "prompt": "In the next module on the probabilistic nature of AI, you will see why this inference process produces different outputs each time. The frozen weights are deterministic, but the sampling process adds controlled randomness -- and that is a feature, not a bug."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is the difference between training and inference in AI?",
+      "options": [
+        "Training is when you chat with AI; inference is when it learns",
+        "Training is when the model learns patterns; inference is when it generates responses using frozen weights",
+        "There is no difference -- they are the same process"
+      ],
+      "correctIndex": 1,
+      "explanation": "Training is the phase where models learn by adjusting weights on massive datasets. Inference is when those frozen weights are used to generate predictions.",
+      "encourageCorrect": "Great job! This training vs. inference distinction is one of the most important concepts in AI fluency.",
+      "encourageIncorrect": "Training is when the model learns patterns by adjusting its weights. Inference is when those weights are frozen and used to generate responses -- the model doesn't learn from your conversations."
+    },
+    {
+      "question": "Does an AI model learn from your conversations?",
+      "options": [
+        "Yes, it remembers everything you tell it",
+        "No, its weights are frozen during inference",
+        "Only if you ask it to remember"
+      ],
+      "correctIndex": 1,
+      "explanation": "During inference, the model's weights are frozen. Your conversation does not modify the model -- it generates responses from fixed parameters.",
+      "encourageCorrect": "Exactly! The model's weights are frozen during inference -- your chats don't change it.",
+      "encourageIncorrect": "The model's weights are frozen during inference, so it does not learn from your conversations. Each response is a statistical prediction from fixed parameters."
+    }
   ]
 }

@@ -118,5 +118,31 @@
       "type": "connectPrompt",
       "prompt": "The next module is the **Alternative Investments Checkpoint**, where you will be tested across all seven modules \u2014 from fund structures and fees to private equity, real estate, commodities, hedge funds, and digital assets. Review your key takeaways before proceeding."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is blockchain technology in the context of digital assets?",
+      "options": [
+        "A type of encryption algorithm",
+        "A distributed ledger that records transactions across a network of computers",
+        "A government-issued digital currency"
+      ],
+      "correctIndex": 1,
+      "explanation": "Blockchain is a decentralized, distributed ledger where transactions are recorded across many computers, making it transparent and resistant to tampering.",
+      "encourageCorrect": "That's it! Blockchain is a distributed ledger \u2014 decentralized and tamper-resistant.",
+      "encourageIncorrect": "Blockchain is a distributed ledger that records transactions across a network of computers. It's decentralized and resistant to tampering."
+    },
+    {
+      "question": "What is a key risk specific to investing in cryptocurrencies?",
+      "options": [
+        "They are too well-regulated",
+        "Extreme price volatility and regulatory uncertainty",
+        "They always produce negative returns"
+      ],
+      "correctIndex": 1,
+      "explanation": "Cryptocurrencies exhibit very high volatility and face evolving, uncertain regulatory frameworks across different jurisdictions.",
+      "encourageCorrect": "Right! Volatility and regulatory uncertainty are the headline risks.",
+      "encourageIncorrect": "Key risks of cryptocurrencies include extreme price volatility and uncertain, evolving regulations across different countries."
+    }
   ]
 }

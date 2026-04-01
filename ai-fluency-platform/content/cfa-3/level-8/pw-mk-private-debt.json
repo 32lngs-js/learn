@@ -100,5 +100,31 @@
       "type": "connectPrompt",
       "prompt": "Next, we examine **Private Real Estate** -- one of the largest and most accessible private market asset classes. Real estate investing combines elements of debt analysis (leverage, cash flow coverage) with equity analysis (growth, valuation multiples) in a tangible asset context."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Private debt (direct lending) can offer higher yields than public bonds because:",
+      "options": [
+        "It has no credit risk",
+        "It carries an illiquidity premium and involves more complex, customized structures",
+        "It is backed by the government"
+      ],
+      "correctIndex": 1,
+      "explanation": "Private debt offers higher yields to compensate for illiquidity, complexity, and the custom structuring involved. Lenders accept these constraints for better returns.",
+      "encourageCorrect": "Right! The extra yield compensates for illiquidity and complexity.",
+      "encourageIncorrect": "Private debt yields more because investors accept illiquidity and complexity in exchange for an illiquidity premium above what public bonds offer."
+    },
+    {
+      "question": "Mezzanine debt sits between senior debt and equity in the capital structure, meaning it:",
+      "options": [
+        "Is the safest form of debt",
+        "Has higher risk than senior debt but lower risk than equity, with correspondingly higher yields",
+        "Has no priority claims"
+      ],
+      "correctIndex": 1,
+      "explanation": "Mezzanine is subordinated to senior debt but senior to equity. Its risk/return profile falls between the two, often carrying equity-like features (warrants, conversion rights).",
+      "encourageCorrect": "That's the mezzanine position! Between senior debt and equity in both risk and return.",
+      "encourageIncorrect": "Mezzanine debt ranks below senior debt but above equity. It carries higher yields than senior debt and often includes equity-like features."
+    }
   ]
 }

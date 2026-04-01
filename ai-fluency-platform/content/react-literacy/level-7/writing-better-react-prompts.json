@@ -1,0 +1,98 @@
+{
+  "meta": {
+    "title": "7.3 Writing Better React Prompts",
+    "description": "The more precisely you describe what you want, the better the output.",
+    "level": "level-7",
+    "slug": "writing-better-react-prompts",
+    "order": 3,
+    "isCheckpoint": false,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "predictPrompt",
+      "prompt": "You want an AI to build a login form for your app. Write the prompt you would use right now, before reading this module. We will compare it to what you write after learning these techniques."
+    },
+    {
+      "type": "markdown",
+      "content": "## Your React vocabulary is your prompt vocabulary\n\nHere is the secret of this entire course: every technical concept you have learned — components, props, state, effects, controlled forms, dependency arrays, loading states, error handling, accessibility — is a word you can now use to tell AI exactly what you want.\n\nVague prompts produce vague code. Precise prompts produce precise code. The difference between the two is vocabulary, and you now have that vocabulary.\n\nLet us see the difference.\n\n---\n\n### Before and after: a login form\n\n**Vague prompt:**\n\n> \"Make a login form\"\n\nWhat AI produces: a bare form with email and password inputs, maybe a submit button. No loading state, no error display, no validation, no accessibility, no TypeScript types. You will spend more time fixing it than you saved.\n\n**Precise prompt:**\n\n> \"Create a controlled form component with email and password fields. Use useState for each field and a loading boolean. The form should call `onSubmit({ email, password })` passed as a prop from the parent. Add `e.preventDefault()` to the submit handler. Show a loading spinner and disable the submit button while loading. If the parent passes an `error` string prop, display it in red below the form. Use semantic HTML with labels for accessibility. TypeScript types for all props.\"\n\nWhat AI produces: exactly what you described. Loading state, error handling, controlled inputs, preventDefault, accessibility, prop types — all there because you asked for them.\n\nNotice what happened. You did not write the code yourself. You described the code using React vocabulary, and the AI filled in the implementation details. That is the power of literacy.\n\n---\n\n### The five elements of a good React prompt\n\n#### 1. Specify the component contract (props)\n\nTell the AI what data goes in and what events come out.\n\n**Vague:** \"Make a user card\"\n\n**Precise:** \"Create a UserCard component that accepts a `user` prop with `name`, `email`, and `avatarUrl` fields, and an optional `onEdit` callback prop\"\n\nWhen you specify props, the AI knows the component's boundaries. It will not invent random state that should come from the parent, and it will not forget to wire up the callback.\n\n```\nGood prompt pattern:\n\"Create a [ComponentName] that accepts [prop1: type], [prop2: type], \nand calls [onEvent(data)] when [action happens]\"\n```\n\n#### 2. Specify the state you need\n\nTell the AI exactly what should be in state — and what should not.\n\n**Vague:** \"It should remember the user's input\"\n\n**Precise:** \"Use useState for the search query string and a loading boolean. The filtered results should be calculated directly from the query and the items prop — do not put filtered results in state.\"\n\nThis one sentence prevents the number one AI mistake (derived state). You are telling the AI: \"I know about derived state, and I do not want it.\"\n\n```\nGood prompt pattern:\n\"Use useState for [specific values]. Derive [computed values] directly \nfrom state/props — do not store them in separate state.\"\n```\n\n#### 3. Specify the data flow\n\nTell the AI how the component connects to its parent and to the rest of the app.\n\n**Vague:** \"The form should save the data\"\n\n**Precise:** \"The form should call `onSubmit(formData)` which is passed as a prop from the parent. The parent handles the API call. This component should not fetch data itself.\"\n\nThis prevents the AI from putting API calls directly in the form component, which would make it harder to reuse and test.\n\n```\nGood prompt pattern:\n\"The component receives [data] as props and calls [callback props] \nwhen [events happen]. It does not make API calls itself.\"\n```\n\n#### 4. Specify error and loading states\n\nAI almost never adds these unless you ask.\n\n**Vague:** \"Load the users\"\n\n**Precise:** \"Fetch users from `/api/users` in a useEffect with an empty dependency array. Add loading, error, and data states. Check `res.ok` before parsing JSON. Show a spinner while loading and an error message with a retry button if the fetch fails.\"\n\nEvery word of that prompt maps to a concept you learned in this course. Loading state from Level 3. Dependency arrays from Level 3. Error handling from Level 4. The `res.ok` check from Level 4.\n\n```\nGood prompt pattern:\n\"Add loading state (show spinner), error state (show message with retry), \nand check res.ok before parsing the response.\"\n```\n\n#### 5. Specify accessibility requirements\n\nBe explicit about it, because AI will not add it otherwise.\n\n**Vague:** \"Add a close button\"\n\n**Precise:** \"Add a close button using a `<button>` element (not a div) with `aria-label='Close dialog'` and an onClick handler that calls the `onClose` prop\"\n\n```\nGood prompt pattern:\n\"Use semantic HTML elements. Add aria-label to icon-only buttons. \nEnsure all interactive elements are keyboard accessible.\"\n```\n\n---\n\n### Complete prompt examples\n\nHere are three complete prompts that demonstrate how vocabulary transforms AI output.\n\n#### Example 1: A search component\n\n**Before (vague):**\n> \"Make a search box that filters a list of products\"\n\n**After (precise):**\n> \"Create a ProductSearch component that accepts a `products: Product[]` prop. Use a controlled input with useState for the search query. Filter the products array directly in the render — do not store filtered products in a separate useState. Each product in the filtered list should render with `key={product.id}`, not the array index. If the filtered list is empty, show 'No products found.' Add a label element for the search input for accessibility.\"\n\n#### Example 2: A data dashboard card\n\n**Before (vague):**\n> \"Make a card that shows user stats\"\n\n**After (precise):**\n> \"Create a StatsCard component that accepts `title: string`, `value: number`, `previousValue: number`, and an optional `format: 'number' | 'currency' | 'percent'` prop. Calculate the percentage change from previousValue to value directly — do not store it in state. Display an up or down arrow based on whether the change is positive or negative. Use semantic HTML: the title should be a heading element. TypeScript types for all props.\"\n\n#### Example 3: A comment form\n\n**Before (vague):**\n> \"Add a comment form\"\n\n**After (precise):**\n> \"Create a CommentForm component that accepts `onSubmit: (text: string) => Promise<void>` as a prop. Use useState for the comment text and a submitting boolean. The form handler should call `e.preventDefault()`, set submitting to true, await the onSubmit call, then clear the text and set submitting to false. Wrap the await in try/catch — if it throws, show the error message below the form. Disable the submit button and textarea while submitting. The submit button should be a `<button type='submit'>`, not a div.\"\n\n---\n\n### A prompt template you can reuse\n\nHere is a template that hits all five elements:\n\n```\nCreate a [ComponentName] component.\n\nProps:\n- [propName]: [type] — [what it is for]\n- [onEvent]: [callback signature] — [when it fires]\n\nState:\n- Use useState for [specific values]\n- Calculate [derived values] directly, not in state\n\nBehavior:\n- [What happens when the user does X]\n- [What happens when data loads/fails]\n- Add loading and error states for any async operations\n\nAccessibility:\n- Use semantic HTML elements\n- Add aria-labels for icon-only buttons\n- Ensure keyboard navigability\n\nUse TypeScript for all props and state.\n```\n\nYou do not have to use this template every time. For simple components, a single sentence might be enough. But for anything with forms, data fetching, or complex interactions, this template prevents the most common AI mistakes before they happen.\n\n---\n\n### The vocabulary cheat sheet\n\nHere are the React terms from this course that are most useful in prompts:\n\n| Term | Use in a prompt |\n| :-- | :-- |\n| Controlled input | \"Use controlled inputs with value and onChange\" |\n| Derived state | \"Calculate X directly, do not store in state\" |\n| Dependency array | \"Add [variable] to the useEffect dependency array\" |\n| Loading state | \"Show a spinner/skeleton while loading\" |\n| Error state | \"Display an error message if the fetch fails\" |\n| preventDefault | \"Add e.preventDefault() to the form submit handler\" |\n| Semantic HTML | \"Use button elements, not div onClick\" |\n| aria-label | \"Add aria-label to icon-only buttons\" |\n| key prop | \"Use unique IDs as keys, not array index\" |\n| Optional chaining | \"Handle cases where data might be null or undefined\" |\n| Cleanup function | \"Add cleanup to the useEffect for the timer/subscription\" |\n| Props interface | \"Define a TypeScript interface for the props\" |"
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "You want AI to build a component that shows a list of notifications with an unread count badge. Write the key phrases you would include in your prompt to prevent the top three AI mistakes.",
+      "answer": "To prevent the top three mistakes: (1) 'Calculate the unread count directly from the notifications array — do not store it in a separate useState' (prevents derived state). (2) 'If notifications are fetched, add the fetch URL parameters to the useEffect dependency array, add loading and error states, and check res.ok' (prevents missing dependencies and missing error handling). (3) 'Use key={notification.id} in the list, not the array index' (prevents bad keys)."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Writing Better Prompts",
+      "problems": [
+        {
+          "id": "rl7-3-1",
+          "question": "Which prompt would produce better AI output for a todo list component?\n\n```\nPrompt A: \"Make a todo list with add and delete\"\n\nPrompt B: \"Create a TodoList component. Use useState \nfor an array of todos (each with id, text, and \ncompleted fields). The add form should use a controlled \ninput with preventDefault on submit. Each todo should \nrender with key={todo.id}. Add a delete button (semantic \n<button> element) for each item.\"\n```",
+          "options": [
+            "A) Prompt A — it gives the AI more creative freedom",
+            "B) Prompt B — it specifies state shape, controlled input, preventDefault, keys, and semantic HTML",
+            "C) Both prompts produce the same output since AI understands intent"
+          ],
+          "correctAnswer": "B",
+          "explanation": "Prompt B explicitly addresses five common AI mistakes: it specifies the state shape (preventing wrong data structures), requests controlled inputs (preventing uncontrolled form bugs), includes preventDefault (preventing page reloads), specifies key={todo.id} (preventing index keys), and asks for semantic <button> elements (preventing accessibility issues). Prompt A leaves all of these to chance.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "rl7-3-2",
+          "question": "A designer asks you to help them write a prompt for a product filter sidebar. They wrote: \"Make a filter sidebar for products.\" What is the most important addition to this prompt?\n\n```tsx\n// The component receives products as props from a parent\n// and needs to filter by category and price range\n```",
+          "options": [
+            "A) \"Add smooth CSS animations to the filter transitions\"",
+            "B) \"Use useState for the selected category and price range. Filter the products array directly in the render — do not store filtered products in a separate state. Call onFilterChange(filteredProducts) to notify the parent.\"",
+            "C) \"Use Redux for state management instead of useState\""
+          ],
+          "correctAnswer": "B",
+          "explanation": "The most important addition specifies the state management and explicitly prevents derived state — the #1 AI mistake. It tells the AI which values need state (category, price range), which should be computed (filtered products), and how data flows to the parent (callback prop). Animations and Redux are not relevant to the core functionality.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "rl7-3-3",
+          "question": "You need a component that fetches and displays a user profile with an edit mode. Which prompt element is MISSING from this otherwise good prompt?\n\n> \"Create an EditableProfile component that accepts userId as a prop. Fetch user data from `/api/users/${userId}` in a useEffect with [userId] in the dependency array. Use useState for isEditing boolean and form fields. Add loading and error states. Use controlled inputs in edit mode. The save handler should call onSave(updatedUser) passed as a prop.\"",
+          "options": [
+            "A) Missing: accessibility requirements (form labels, semantic buttons)",
+            "B) Missing: the CSS class names to use",
+            "C) Missing: which JavaScript framework to use"
+          ],
+          "correctAnswer": "A",
+          "explanation": "This prompt covers state, effects, data flow, loading/error states, and controlled inputs — but it does not mention accessibility. It should include: 'Use semantic HTML elements, add labels for all form inputs, and ensure the edit/save buttons are <button> elements with descriptive text or aria-labels.' CSS class names and framework choice are not necessary prompt elements.",
+          "difficulty": "advanced"
+        }
+      ]
+    },
+    {
+      "type": "explainBack",
+      "prompt": "Write a complete prompt for an AI to build a React component of your choice — a shopping cart, a chat message list, a settings page, anything. Include all five elements: component contract (props), state, data flow, error/loading states, and accessibility. Then mark which part of your prompt prevents each of the top AI mistakes."
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "Every React concept you learned in this course is a word you can use in AI prompts. The five elements of a good React prompt are: component contract (props), state specification, data flow description, error/loading handling, and accessibility requirements. Precise prompts prevent AI mistakes before they happen."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "Even the best prompt does not guarantee perfect code on the first try. The next module teaches you how to iterate — how to describe what is wrong using React vocabulary and know when to ask for a fix versus starting over."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What phrase in a prompt prevents the #1 AI mistake (derived state)?",
+      "options": ["\"Use useEffect to sync the values\"", "\"Calculate X directly from state, do not store it in a separate useState\"", "\"Add a dependency array to the useEffect\""],
+      "correctIndex": 1,
+      "explanation": "Explicitly telling the AI to calculate derived values directly — not store them in state — prevents the most common AI React mistake.",
+      "encourageCorrect": "Yes! Being explicit about derived values is the single most impactful prompt improvement.",
+      "encourageIncorrect": "The key phrase is telling AI to calculate values directly rather than storing them in state. This prevents the useState + useEffect anti-pattern."
+    },
+    {
+      "question": "What are the five elements of a good React prompt?",
+      "options": ["HTML, CSS, JavaScript, TypeScript, testing", "Component contract (props), state, data flow, error/loading states, accessibility", "File name, imports, function, return statement, export"],
+      "correctIndex": 1,
+      "explanation": "A complete React prompt specifies the component contract (what props go in/out), what state to use, how data flows, how errors and loading are handled, and accessibility requirements.",
+      "encourageCorrect": "Nailed it! Those five elements cover the vast majority of what AI needs to generate good React code.",
+      "encourageIncorrect": "The five elements are: component contract (props), state specification, data flow, error/loading handling, and accessibility. Each one prevents a category of AI mistakes."
+    }
+  ]
+}

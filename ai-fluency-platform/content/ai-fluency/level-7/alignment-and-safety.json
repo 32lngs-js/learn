@@ -59,5 +59,31 @@
       "type": "keyTakeaway",
       "content": "Alignment is not a solved problem but an active research frontier. Current techniques like RLHF and Constitutional AI represent practical compromises, not final solutions. Every AI practitioner should understand alignment challenges because the systems they build today shape what becomes possible -- and what becomes dangerous -- tomorrow."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is RLHF and what does it do?",
+      "options": [
+        "A type of neural network architecture",
+        "Reinforcement Learning from Human Feedback -- it trains models to produce outputs that humans prefer",
+        "A testing framework for AI systems"
+      ],
+      "correctIndex": 1,
+      "explanation": "RLHF uses human preference data to train a reward model, which then guides the AI model toward producing outputs that align with human values.",
+      "encourageCorrect": "That's right! RLHF is one of the key techniques for steering AI behavior toward what humans actually want.",
+      "encourageIncorrect": "RLHF stands for Reinforcement Learning from Human Feedback -- it trains models to produce outputs humans prefer by learning from human preference rankings."
+    },
+    {
+      "question": "What is reward hacking in the context of RLHF?",
+      "options": [
+        "Breaking into the reward system",
+        "When the model finds ways to score highly on the reward model without genuinely improving quality",
+        "A technique for faster training"
+      ],
+      "correctIndex": 1,
+      "explanation": "Reward hacking occurs when models exploit gaps between the reward model's predictions and genuine human satisfaction -- like producing verbose answers that score well but aren't actually better.",
+      "encourageCorrect": "Great understanding! Reward hacking is a fundamental challenge because any proxy metric can be gamed.",
+      "encourageIncorrect": "Reward hacking is when models exploit the reward signal without genuine improvement -- like learning to be verbose or sycophantic because those patterns scored well in training."
+    }
   ]
 }

@@ -106,5 +106,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Credit Default Swaps (CDS)** \u2014 the primary instrument for trading credit risk. CDS pricing is directly linked to the hazard rates and recovery assumptions you just learned, and understanding CDS is essential for basis trades and credit curve analysis."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "In structural credit models (like Merton's), a company's equity can be viewed as:",
+      "options": [
+        "A put option on the firm's assets",
+        "A call option on the firm's assets with the debt face value as the strike",
+        "A forward contract on the company's revenue"
+      ],
+      "correctIndex": 1,
+      "explanation": "In Merton's model, equity holders own a call on the firm's assets \u2014 if assets exceed debt, they keep the surplus; if not, they walk away (limited liability).",
+      "encourageCorrect": "Brilliant! Equity as a call option on assets is one of the most powerful ideas in credit analysis.",
+      "encourageIncorrect": "In the Merton model, equity is a call option on the firm's assets. If assets > debt at maturity, equity holders get the residual. If not, they walk away."
+    },
+    {
+      "question": "Reduced-form credit models differ from structural models in that they:",
+      "options": [
+        "Model the asset value of the firm directly",
+        "Treat default as a random event driven by a statistical process rather than firm fundamentals",
+        "Are always more accurate"
+      ],
+      "correctIndex": 1,
+      "explanation": "Reduced-form models don't model firm assets. Instead, they use market data (like credit spreads) to estimate default probabilities statistically.",
+      "encourageCorrect": "Right! Reduced-form models take a statistical approach to default.",
+      "encourageIncorrect": "Reduced-form models treat default as a random event estimated from market data, unlike structural models that derive default from the firm's asset value."
+    }
   ]
 }

@@ -106,5 +106,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Arbitrage-Free Valuation** using binomial interest rate trees. While the term structure gives us today's spot and forward rates, binomial trees model how rates might evolve, enabling us to value bonds whose cash flows depend on the path of interest rates."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "The expectations theory of the term structure says:",
+      "options": [
+        "Long-term rates always exceed short-term rates",
+        "Forward rates reflect expected future short-term rates",
+        "The yield curve shape is determined by investor preferences alone"
+      ],
+      "correctIndex": 1,
+      "explanation": "Under expectations theory, long-term rates are the geometric average of expected future short-term rates. Forward rates are unbiased estimates of future spot rates.",
+      "encourageCorrect": "That's the pure expectations view! Forwards predict future spots.",
+      "encourageIncorrect": "The expectations theory says forward rates equal expected future short-term rates. Long-term rates are averages of expected future short rates."
+    },
+    {
+      "question": "The liquidity preference theory explains why:",
+      "options": [
+        "The yield curve is always flat",
+        "The yield curve typically slopes upward, as investors demand a premium for holding longer-term bonds",
+        "Short-term bonds always yield more"
+      ],
+      "correctIndex": 1,
+      "explanation": "Investors prefer shorter, more liquid bonds. To hold longer-term bonds, they demand a liquidity premium, which adds to yields and creates an upward slope.",
+      "encourageCorrect": "Right! The liquidity premium explains the typical upward slope.",
+      "encourageIncorrect": "Liquidity preference theory says investors demand a premium for longer maturities (less liquidity), explaining why yield curves typically slope upward."
+    }
   ]
 }

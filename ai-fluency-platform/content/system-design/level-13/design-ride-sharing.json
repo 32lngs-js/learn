@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "13.7 Design a Ride-Sharing Service",
-    "description": "Design a ride-sharing platform like Uber or Lyft — geospatial indexing, real-time driver matching, ETA calculation, and surge pricing.",
+    "description": "Design a ride-sharing platform like Uber or Lyft \u2014 geospatial indexing, real-time driver matching, ETA calculation, and surge pricing.",
     "level": "level-13",
     "slug": "design-ride-sharing",
     "order": 7,
@@ -20,7 +20,7 @@
     {
       "type": "calibrationCheck",
       "question": "Your Location Service receives 1.67M GPS updates per second from drivers. Each update needs to: (1) update the driver's position in Redis, (2) update the driver's position on the real-time map for any riders tracking that driver. How do you handle this write throughput without Redis becoming a bottleneck?",
-      "answer": "**Shard by geography.** Partition the Redis cluster by city or region. A driver in San Francisco writes to the SF shard; a driver in New York writes to the NY shard. Since ride matching is always local (you never match a rider in SF with a driver in NY), all queries are single-shard. With 50 cities and roughly equal driver distribution, each shard handles ~33K updates/sec — well within a single Redis instance's capacity (Redis handles 100K+ operations/sec).\n\n**Batch and buffer writes.** Instead of writing every GPS update to Redis immediately, the Location Service batches updates in memory over a 1-second window and writes them in a pipeline (Redis PIPELINE). This reduces round trips by 100x.\n\n**For real-time map updates to riders:** Do not poll Redis for every map refresh. Instead, use a pub/sub pattern. When a rider is tracking a specific driver, subscribe to a channel for that driver_id. The Location Service publishes location updates to the driver's channel. Only active tracking sessions receive updates. Most drivers are not being tracked by any rider at any given moment, so the actual pub/sub volume is much smaller than the total update volume.\n\n**Tiered freshness:** The spatial index (for matching) can tolerate 3-5 second staleness. The tracking feed (for map display) needs 1-2 second freshness. Use separate update paths: bulk index updates every 3 seconds, streaming pub/sub for tracked drivers."
+      "answer": "**Shard by geography.** Partition the Redis cluster by city or region. A driver in San Francisco writes to the SF shard; a driver in New York writes to the NY shard. Since ride matching is always local (you never match a rider in SF with a driver in NY), all queries are single-shard. With 50 cities and roughly equal driver distribution, each shard handles ~33K updates/sec \u2014 well within a single Redis instance's capacity (Redis handles 100K+ operations/sec).\n\n**Batch and buffer writes.** Instead of writing every GPS update to Redis immediately, the Location Service batches updates in memory over a 1-second window and writes them in a pipeline (Redis PIPELINE). This reduces round trips by 100x.\n\n**For real-time map updates to riders:** Do not poll Redis for every map refresh. Instead, use a pub/sub pattern. When a rider is tracking a specific driver, subscribe to a channel for that driver_id. The Location Service publishes location updates to the driver's channel. Only active tracking sessions receive updates. Most drivers are not being tracked by any rider at any given moment, so the actual pub/sub volume is much smaller than the total update volume.\n\n**Tiered freshness:** The spatial index (for matching) can tolerate 3-5 second staleness. The tracking feed (for map display) needs 1-2 second freshness. Use separate update paths: bulk index updates every 3 seconds, streaming pub/sub for tracked drivers."
     },
     {
       "type": "tryItYourself",
@@ -33,7 +33,33 @@
     },
     {
       "type": "connectPrompt",
-      "prompt": "Ride-sharing matches supply with demand in real-time. The next system — a notification service — faces a different delivery challenge: getting the right message to the right user through the right channel at the right time, across billions of devices."
+      "prompt": "Ride-sharing matches supply with demand in real-time. The next system \u2014 a notification service \u2014 faces a different delivery challenge: getting the right message to the right user through the right channel at the right time, across billions of devices."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What data structure is commonly used for nearby driver lookups?",
+      "options": [
+        "B-tree index",
+        "Geohash-based spatial index in Redis",
+        "Standard hash map"
+      ],
+      "correctIndex": 1,
+      "explanation": "Geohash-based spatial indexing in Redis enables sub-millisecond proximity queries.",
+      "encourageCorrect": "Nice! Geohashes turn 2D location queries into efficient string-prefix lookups.",
+      "encourageIncorrect": "Geohash-based spatial indexing in Redis enables sub-millisecond proximity queries for driver matching."
+    },
+    {
+      "question": "How frequently do active drivers send GPS updates in a ride-sharing system?",
+      "options": [
+        "Every 30 seconds",
+        "Every 3 seconds",
+        "Every 60 seconds"
+      ],
+      "correctIndex": 1,
+      "explanation": "Active drivers send location updates every 3 seconds to keep the spatial index fresh.",
+      "encourageCorrect": "That is right! Every 3 seconds keeps location data fresh for real-time matching.",
+      "encourageIncorrect": "Active drivers send GPS updates about every 3 seconds for real-time tracking and matching."
     }
   ]
 }

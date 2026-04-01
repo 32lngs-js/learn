@@ -43,5 +43,31 @@
       "type": "connectPrompt",
       "prompt": "Evolving your setup addresses personal configuration. But Claude Code has a full settings architecture with multiple layers and precedence rules. Understanding this architecture gives you precise control — that is the next module."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is 'configuration debt'?",
+      "options": [
+        "The cost of running Claude Code",
+        "The gap between how your setup is configured and how you actually work",
+        "Money owed for API usage"
+      ],
+      "correctIndex": 1,
+      "explanation": "Configuration debt is when your CLAUDE.md, skills, and hooks no longer match your current workflows — like all debt, it compounds.",
+      "encourageCorrect": "Great concept to keep in mind! Regular pruning prevents debt accumulation.",
+      "encourageIncorrect": "Configuration debt is the gap between your setup and reality — outdated instructions confuse Claude, unused skills clutter, stale hooks slow you down."
+    },
+    {
+      "question": "How often should you review your Claude Code configuration?",
+      "options": [
+        "Never — set it and forget it",
+        "Monthly or quarterly",
+        "Every single session"
+      ],
+      "correctIndex": 1,
+      "explanation": "Set a recurring reminder — monthly or quarterly — to prune CLAUDE.md, review skills and hooks, and check usage stats.",
+      "encourageCorrect": "A quick review goes a long way! 30 minutes saves hours of frustration.",
+      "encourageIncorrect": "Review monthly or quarterly — it takes about 30 minutes to prune CLAUDE.md, check skills and hooks, and optimize based on usage stats."
+    }
   ]
 }

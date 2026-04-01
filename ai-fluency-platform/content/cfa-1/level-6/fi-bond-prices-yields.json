@@ -103,5 +103,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Duration and Convexity**, which quantify exactly how much a bond's price changes for a given yield change. Duration builds directly on the price-yield relationship you just learned \u2014 it answers 'by how many dollars does the price change per 1% yield move?'"
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "When market interest rates rise, what happens to existing bond prices?",
+      "options": [
+        "They increase",
+        "They decrease",
+        "They stay the same"
+      ],
+      "correctIndex": 1,
+      "explanation": "Bond prices and interest rates move inversely. When rates rise, the present value of a bond's fixed cash flows decreases.",
+      "encourageCorrect": "That's the fundamental inverse relationship! Rates up, prices down.",
+      "encourageIncorrect": "Bond prices and interest rates move inversely. When rates rise, existing bonds with lower coupons become less attractive, so their prices fall."
+    },
+    {
+      "question": "A bond trading at a premium has a coupon rate that is:",
+      "options": [
+        "Below the market yield",
+        "Equal to the market yield",
+        "Above the market yield"
+      ],
+      "correctIndex": 2,
+      "explanation": "A premium bond has a coupon rate above the current market yield, so investors pay more than par for the higher income stream.",
+      "encourageCorrect": "Right! A higher coupon than the market yield makes the bond worth more than par.",
+      "encourageIncorrect": "A bond trades at a premium when its coupon rate exceeds the market yield. Investors pay above par for the extra income."
+    }
   ]
 }

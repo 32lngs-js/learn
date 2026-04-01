@@ -1,0 +1,83 @@
+{
+  "meta": {
+    "title": "7.5 Checkpoint",
+    "description": "Review a complete AI-generated React feature and write the prompts to fix it.",
+    "level": "level-7",
+    "slug": "checkpoint",
+    "order": 5,
+    "isCheckpoint": true,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "markdown",
+      "content": "## Level 7 Checkpoint: The AI Code Review\n\nYou asked an AI to build a team member directory for a company intranet. The prompt you gave was:\n\n> \"Build a team directory that loads employees from an API, lets users search by name, and shows a detail card when you click on someone.\"\n\nThe AI generated the following component. Your job: review it using the checklist from Module 7.2, identify every issue, and write the prompt you would use to fix them.\n\nTake your time. Read the code carefully. There are **five distinct issues** embedded in this component.\n\n---\n\n```tsx\nimport { useState, useEffect, useCallback, useMemo } from \"react\";\n\ninterface Employee {\n  id: string;\n  name: string;\n  role: string;\n  department: string;\n  email: string;\n  avatarUrl: string;\n}\n\nconst TeamDirectory = () => {\n  const [employees, setEmployees] = useState<Employee[]>([]);\n  const [filteredEmployees, setFilteredEmployees] = useState<Employee[]>([]);\n  const [searchTerm, setSearchTerm] = useState(\"\");\n  const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);\n\n  useEffect(() => {\n    fetch(\"/api/employees\")\n      .then(res => res.json())\n      .then(data => setEmployees(data));\n  }, []);\n\n  useEffect(() => {\n    const filtered = employees.filter(emp =>\n      emp.name.toLowerCase().includes(searchTerm.toLowerCase())\n    );\n    setFilteredEmployees(filtered);\n  }, [employees, searchTerm]);\n\n  return (\n    <div className=\"directory\">\n      <h1>Team Directory</h1>\n      <input\n        placeholder=\"Search employees...\"\n        value={searchTerm}\n        onChange={e => setSearchTerm(e.target.value)}\n      />\n\n      <div className=\"employee-grid\">\n        {filteredEmployees.map((emp, index) => (\n          <div\n            key={index}\n            className=\"employee-card\"\n            onClick={() => setSelectedEmployee(emp)}\n          >\n            <img src={emp.avatarUrl} />\n            <h3>{emp.name}</h3>\n            <p>{emp.role}</p>\n            <p>{emp.department}</p>\n          </div>\n        ))}\n      </div>\n\n      {selectedEmployee && (\n        <div className=\"detail-panel\">\n          <h2>{selectedEmployee.name}</h2>\n          <p>{selectedEmployee.role}</p>\n          <p>{selectedEmployee.department}</p>\n          <p>{selectedEmployee.email}</p>\n          <div onClick={() => setSelectedEmployee(null)} className=\"close-btn\">\n            X\n          </div>\n        </div>\n      )}\n    </div>\n  );\n};\n\nexport default TeamDirectory;\n```"
+    },
+    {
+      "type": "practiceSet",
+      "title": "Identifying the Issues",
+      "problems": [
+        {
+          "id": "rl7-5-1",
+          "question": "Look at the state declarations (lines with useState) and the effects (useEffect blocks). What is the first issue?\n\n```tsx\nconst [employees, setEmployees] = useState<Employee[]>([]);\nconst [filteredEmployees, setFilteredEmployees] = useState<Employee[]>([]);\nconst [searchTerm, setSearchTerm] = useState(\"\");\n\nuseEffect(() => {\n  const filtered = employees.filter(emp =>\n    emp.name.toLowerCase().includes(searchTerm.toLowerCase())\n  );\n  setFilteredEmployees(filtered);\n}, [employees, searchTerm]);\n```",
+          "options": [
+            "A) filteredEmployees is derived state — it should be calculated directly from employees and searchTerm, not stored in useState with a useEffect",
+            "B) The useEffect is missing searchTerm in its dependency array",
+            "C) The filter function should use .find() instead of .filter()"
+          ],
+          "correctAnswer": "A",
+          "explanation": "filteredEmployees is 100% derived from employees and searchTerm. It should be: `const filteredEmployees = employees.filter(emp => emp.name.toLowerCase().includes(searchTerm.toLowerCase()))`. The separate useState and useEffect add unnecessary complexity and an extra render cycle. The dependency array actually does include searchTerm, so B is wrong.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "rl7-5-2",
+          "question": "Look at the data fetching. What is missing?\n\n```tsx\nuseEffect(() => {\n  fetch(\"/api/employees\")\n    .then(res => res.json())\n    .then(data => setEmployees(data));\n}, []);\n```",
+          "options": [
+            "A) The dependency array should include employees",
+            "B) Loading and error states — there is no feedback while data loads and no handling if the API fails",
+            "C) The fetch should use async/await syntax instead of .then()"
+          ],
+          "correctAnswer": "B",
+          "explanation": "The fetch has no loading state (users see an empty grid while data loads), no error handling (if the API fails, the grid stays empty with no explanation), and no res.ok check (a 404 or 500 response would be silently parsed as JSON, likely causing a crash). The dependency array [] is correct for a one-time fetch on mount. The .then() syntax works fine — async/await is a style preference, not a bug fix.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "rl7-5-3",
+          "question": "Look at the employee grid rendering and the detail panel close button. What two issues exist?\n\n```tsx\n{filteredEmployees.map((emp, index) => (\n  <div\n    key={index}\n    className=\"employee-card\"\n    onClick={() => setSelectedEmployee(emp)}\n  >\n    <img src={emp.avatarUrl} />\n    ...\n  </div>\n))}\n\n...\n\n<div onClick={() => setSelectedEmployee(null)} className=\"close-btn\">\n  X\n</div>\n```",
+          "options": [
+            "A) The key uses index instead of emp.id, and the close button is a div instead of a button element",
+            "B) The onClick handler should use onDoubleClick instead, and the close button needs a confirm dialog",
+            "C) The map function should use forEach instead, and the close button should use a Link component"
+          ],
+          "correctAnswer": "A",
+          "explanation": "Two issues: (1) key={index} should be key={emp.id} — if the search filters the list, index keys will cause React to mix up which card is which. (2) The close button is a <div>, which is not keyboard-accessible and not announced as a button by screen readers. It should be <button onClick={() => setSelectedEmployee(null)} aria-label='Close detail panel'>. The img is also missing an alt attribute.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "rl7-5-4",
+          "question": "Look at the imports and the search input. What additional issues can you identify?\n\n```tsx\nimport { useState, useEffect, useCallback, useMemo } from \"react\";\n...\n<input\n  placeholder=\"Search employees...\"\n  value={searchTerm}\n  onChange={e => setSearchTerm(e.target.value)}\n/>\n```",
+          "options": [
+            "A) useCallback and useMemo are imported but never used, and the search input has no associated label element for accessibility",
+            "B) The imports should come from 'react-dom' instead of 'react'",
+            "C) The input should use defaultValue instead of value"
+          ],
+          "correctAnswer": "A",
+          "explanation": "useCallback and useMemo are imported but unused — a sign the AI generated more complex code initially and simplified without cleaning up imports. The search input uses placeholder text as its only description, but has no <label> element — screen readers may not announce what the field is for. It should have `<label htmlFor='search'>Search employees</label>` and `id='search'` on the input.",
+          "difficulty": "advanced"
+        }
+      ]
+    },
+    {
+      "type": "explainBack",
+      "prompt": "Now write the complete follow-up prompt you would send to the AI to fix all five issues in this TeamDirectory component. Use the four-part feedback format (what, where, why, how) for each issue. Number them clearly so the AI can address each one."
+    },
+    {
+      "type": "markdown",
+      "content": "### The complete fix prompt\n\nHere is an example of a well-written fix prompt for this component:\n\n> Fix these five issues in the TeamDirectory component:\n>\n> 1. **Derived state**: Remove the `filteredEmployees` useState and the useEffect that filters employees. Calculate filtered employees directly: `const filteredEmployees = employees.filter(emp => emp.name.toLowerCase().includes(searchTerm.toLowerCase()))`. This eliminates an unnecessary render cycle.\n>\n> 2. **Missing error handling**: Add `isLoading` (default true) and `error` (default null) state. In the fetch, check `res.ok` before parsing JSON, add `.catch(err => setError(err.message))` and `.finally(() => setIsLoading(false))`. Show a loading spinner when isLoading is true and an error message with a retry button when error is set.\n>\n> 3. **Index keys**: Change `key={index}` to `key={emp.id}` in the employee grid `.map()`. Index keys cause bugs when the list is filtered.\n>\n> 4. **Accessibility**: (a) Change the close button from a `<div>` to a `<button>` with `aria-label=\"Close detail panel\"`. (b) Add `alt={emp.name}` to the `<img>` tag. (c) Add a `<label>` element for the search input. (d) The employee cards are clickable divs — add `role=\"button\"`, `tabIndex={0}`, and an `onKeyDown` handler that triggers on Enter.\n>\n> 5. **Unused imports**: Remove `useCallback` and `useMemo` from the import statement.\n\nNotice how this prompt is specific, numbered, and gives the AI exact instructions for each fix. This is the review-to-fix pipeline in action."
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "Reviewing AI-generated React code is a skill you now have. The process is: (1) run the nine-point checklist, (2) identify every issue, (3) write a precise fix prompt using the four-part feedback format. This is what it looks like to be the human in the loop — the person who ensures AI-generated code actually works correctly."
+    }
+  ]
+}

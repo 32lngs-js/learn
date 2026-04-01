@@ -43,5 +43,31 @@
       "type": "connectPrompt",
       "prompt": "You now know how to get data in and results out. The last module before the checkpoint covers the most important topic for confident use: the safety net. /rewind, /diff, permissions, and Esc — the guardrails that let you experiment freely."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What does /copy do in Claude Code?",
+      "options": [
+        "Copies a file to a new location",
+        "Copies Claude's last response to your clipboard",
+        "Copies the entire session"
+      ],
+      "correctIndex": 1,
+      "explanation": "/copy puts Claude's last response on your clipboard, ready to paste wherever you need it.",
+      "encourageCorrect": "That's it! /copy is the fastest way to grab Claude's output.",
+      "encourageIncorrect": "/copy puts Claude's last response on your clipboard — much faster than manually selecting text in the terminal."
+    },
+    {
+      "question": "How do you save Claude's output directly to a file using print mode?",
+      "options": [
+        "claude -p 'prompt' > output.md",
+        "claude --save output.md",
+        "claude -p 'prompt' --file output.md"
+      ],
+      "correctIndex": 0,
+      "explanation": "Use shell redirection with print mode: claude -p 'prompt' > output.md saves the result directly to a file.",
+      "encourageCorrect": "Perfect! Shell redirection with -p is a powerful combo.",
+      "encourageIncorrect": "Use claude -p 'prompt' > output.md — print mode sends output to stdout, and > redirects it to a file."
+    }
   ]
 }

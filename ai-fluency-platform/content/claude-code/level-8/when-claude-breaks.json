@@ -43,5 +43,31 @@
       "type": "connectPrompt",
       "prompt": "Handling failures is reactive. The next module is proactive: evolving your setup over time so that your Claude Code configuration grows with your usage patterns, becoming more efficient and more tailored with each iteration."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What are the three main failure modes of Claude Code?",
+      "options": [
+        "Crashes, freezes, errors",
+        "Loops, hallucinations, and misunderstandings",
+        "Slow, expensive, wrong"
+      ],
+      "correctIndex": 1,
+      "explanation": "The three failure modes: loops (repeating the same approach), hallucinations (confident falsehoods), and misunderstandings (doing the wrong thing well).",
+      "encourageCorrect": "That's the trio! Recognizing them fast is the key skill.",
+      "encourageIncorrect": "The three modes are loops (trying the same thing repeatedly), hallucinations (stating falsehoods confidently), and misunderstandings (wrong task, correct execution)."
+    },
+    {
+      "question": "When Claude tries the same fix four times and it keeps failing, what should you do?",
+      "options": [
+        "Let it try a fifth time",
+        "Interrupt immediately — it's in a loop",
+        "Restart your computer"
+      ],
+      "correctIndex": 1,
+      "explanation": "You should have interrupted after the second attempt. Claude repeating the same approach is a loop, not persistence.",
+      "encourageCorrect": "Right! Intervene early — it won't suddenly work on try five.",
+      "encourageIncorrect": "Interrupt immediately — this is a loop, not persistence. You should have intervened after the second failed attempt."
+    }
   ]
 }

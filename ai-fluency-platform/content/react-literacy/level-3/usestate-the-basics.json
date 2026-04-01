@@ -1,0 +1,109 @@
+{
+  "meta": {
+    "title": "3.1 useState: The Basics",
+    "description": "The most common hook. It gives a component a piece of memory that triggers a re-render when it changes.",
+    "level": "level-3",
+    "slug": "usestate-the-basics",
+    "order": 1,
+    "isCheckpoint": false,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "predictPrompt",
+      "prompt": "Think about a simple counter button on a webpage -- you click it and the number goes up. Where do you think that number is stored? The component receives props from its parent, but the parent does not know about every click. How does the component keep track of the count on its own?"
+    },
+    {
+      "type": "markdown",
+      "content": "## A component's own memory\n\nIn Level 2, you learned that props are data passed into a component from the outside -- like arguments to a function. But what about data that the component needs to track on its own? A toggle that is open or closed. A counter that goes up. A text field that tracks what the user is typing.\n\nThis is **state** -- data that belongs to the component, that the component can change, and that causes the component to re-render when it changes.\n\nThe tool React gives you for this is called `useState`.\n\n### The pattern\n\nHere is the most important line of code in React:\n\n```jsx\nconst [count, setCount] = useState(0);\n```\n\nLet us break this apart piece by piece.\n\n**`useState(0)`** -- This calls the useState hook with an initial value of `0`. It is saying: \"I need a piece of memory, and it should start at zero.\"\n\n**`const [count, setCount]`** -- useState returns two things packed into an array:\n1. **`count`** -- the current value (right now, `0`)\n2. **`setCount`** -- a function to update that value\n\nThis `[value, setValue]` pattern is called **array destructuring**. You will see it in every single component that uses state. The names are chosen by the developer -- they could be `[isOpen, setIsOpen]` or `[username, setUsername]` or `[items, setItems]`. The convention is always `[thing, setThing]`.\n\n### An analogy\n\nThink of `useState` like giving a component a whiteboard. The whiteboard starts with whatever you write on it initially (the initial value). The component can look at the whiteboard anytime (reading the value). And it has an eraser and marker to change what is written (the setter function). Every time the whiteboard changes, the component redraws itself to reflect the new information.\n\n### A complete example\n\nHere is a simple counter component:\n\n```jsx\nfunction Counter() {\n  const [count, setCount] = useState(0);\n\n  return (\n    <div>\n      <p>You clicked {count} times</p>\n      <button onClick={() => setCount(count + 1)}>\n        Click me\n      </button>\n    </div>\n  );\n}\n```\n\nLet us trace what happens:\n\n1. The component renders for the first time. `count` is `0`. The screen shows \"You clicked 0 times.\"\n2. The user clicks the button. This calls `setCount(count + 1)`, which is `setCount(0 + 1)`, which is `setCount(1)`.\n3. React sees that state changed. It **re-renders** the component -- calls the function again from the top.\n4. This time, `useState(0)` returns `1` as the current value (React remembers the update). The screen shows \"You clicked 1 times.\"\n5. The user clicks again. `setCount(1 + 1)` is called. React re-renders. `count` is now `2`.\n\nThis is the fundamental cycle of React: **state changes trigger re-renders, and re-renders show the new state.**\n\n### The initial value only matters once\n\nA common point of confusion: the `0` in `useState(0)` is the **initial** value. It is only used the very first time the component renders. After that, React remembers the current value and ignores the initial value argument.\n\nThis means `useState(0)` does not reset count to 0 every time the component re-renders. It only starts at 0.\n\n### Common initial values and what they mean\n\nWhen you are reading React code, the initial value tells you a lot about what the state is for:\n\n```jsx\n// A toggle (open/closed, on/off, shown/hidden)\nconst [isOpen, setIsOpen] = useState(false);\n\n// A text input (starts empty)\nconst [searchQuery, setSearchQuery] = useState('');\n\n// A list of items (starts empty)\nconst [todos, setTodos] = useState([]);\n\n// Data that has not loaded yet\nconst [user, setUser] = useState(null);\n\n// A numeric value\nconst [page, setPage] = useState(1);\n```\n\n| Initial value | What it usually means |\n| :-- | :-- |\n| `false` | A toggle, visibility flag, or feature that starts off |\n| `true` | Something that starts enabled or visible |\n| `''` | A text input waiting for the user to type |\n| `[]` | A list that will be populated later |\n| `null` | Data that has not been fetched or calculated yet |\n| `0` | A counter or index starting at zero |\n| `1` | A page number or counter starting at one |\n\n### Reading useState in real components\n\nHere is a slightly more realistic component -- a toggle for showing and hiding a sidebar:\n\n```jsx\nfunction Dashboard() {\n  const [sidebarOpen, setSidebarOpen] = useState(true);\n\n  return (\n    <div className=\"dashboard\">\n      <button onClick={() => setSidebarOpen(!sidebarOpen)}>\n        {sidebarOpen ? 'Hide Sidebar' : 'Show Sidebar'}\n      </button>\n      {sidebarOpen && <Sidebar />}\n      <MainContent />\n    </div>\n  );\n}\n```\n\nReading this component:\n- **State**: `sidebarOpen` starts as `true`, so the sidebar is visible when the page loads.\n- **Update**: Clicking the button calls `setSidebarOpen(!sidebarOpen)` -- this flips the boolean. If it was `true`, it becomes `false`. If `false`, it becomes `true`.\n- **Rendering**: The button text changes based on state. The `<Sidebar />` component only appears when `sidebarOpen` is `true` (remember the `&&` pattern from Level 2).\n\n### Multiple useState calls\n\nComponents often have more than one piece of state:\n\n```jsx\nfunction LoginForm() {\n  const [email, setEmail] = useState('');\n  const [password, setPassword] = useState('');\n  const [isLoading, setIsLoading] = useState(false);\n  const [error, setError] = useState(null);\n\n  // ... rest of component\n}\n```\n\nEach `useState` call creates an independent piece of memory. This component tracks four things:\n1. The email the user typed\n2. The password the user typed\n3. Whether a login request is in progress\n4. Any error message from a failed login attempt\n\nWhen you encounter a component with multiple useState calls, read them as a group first. They tell you the component's \"shape\" -- all the things it needs to remember.\n\n### What triggers a re-render?\n\nThis is critical: **calling the setter function is what causes the component to re-render.** If you never call `setCount`, the count never changes and the component never re-renders (for that reason).\n\nThis is why you will never see state changed directly:\n\n```jsx\n// WRONG -- this does nothing visible\ncount = 5;\n\n// RIGHT -- this triggers a re-render\nsetCount(5);\n```\n\nAssigning to `count` directly just changes a local variable. React does not know about it. Only calling `setCount` tells React: \"the value changed, please re-render.\"\n\n### Your reading strategy\n\nWhen you encounter `useState` in a component:\n\n1. **Read the variable name** -- it tells you what the state represents (`isOpen`, `items`, `currentPage`)\n2. **Read the initial value** -- it tells you what the starting condition is (`false`, `[]`, `1`)\n3. **Search for the setter** -- find where `setValue` is called to understand when and how state changes\n4. **Look at the JSX** -- see how the current value is used in what the user sees"
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "If a component has `const [isVisible, setIsVisible] = useState(true)` and nowhere in the component does anyone call `setIsVisible`, will `isVisible` ever change?",
+      "answer": "No. If the setter function is never called, the state stays at its initial value forever. The component will always render with `isVisible` equal to `true`. This sometimes happens when a developer (or AI) creates state but forgets to wire up the setter to a button or event -- a common bug to watch for."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Reading useState",
+      "problems": [
+        {
+          "id": "rl3-1-1",
+          "question": "What does this component render when it first appears on screen?\n\n```jsx\nfunction Greeting() {\n  const [name, setName] = useState('World');\n\n  return (\n    <div>\n      <h1>Hello, {name}!</h1>\n      <input\n        value={name}\n        onChange={(e) => setName(e.target.value)}\n      />\n    </div>\n  );\n}\n```",
+          "options": [
+            "A) An h1 saying \"Hello, World!\" and an input field containing \"World\"",
+            "B) An h1 saying \"Hello, !\" and an empty input field",
+            "C) An h1 saying \"Hello, {name}!\" and an input field",
+            "D) Nothing -- the component crashes because name is not defined"
+          ],
+          "correctAnswer": "A",
+          "explanation": "The initial value of `name` is 'World' (from `useState('World')`). On the first render, `name` is 'World', so the h1 shows \"Hello, World!\" and the input's value attribute is also 'World'. When the user types in the input, `setName` updates the state and both the h1 and input reflect the new value.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "rl3-1-2",
+          "question": "A product manager reports: \"The notification badge always shows 0 even after new notifications arrive.\" Look at this component. What is wrong?\n\n```jsx\nfunction NotificationBadge({ notifications }) {\n  const [count, setCount] = useState(0);\n\n  return (\n    <span className=\"badge\">\n      {count > 0 ? count : ''}\n    </span>\n  );\n}\n```",
+          "options": [
+            "A) The component uses `count` (state initialized to 0) instead of `notifications.length` (the prop). The setter `setCount` is never called, so count stays at 0 forever.",
+            "B) The ternary expression is wrong -- it should use `!=` instead of `>`",
+            "C) The badge needs an onClick handler to update the count",
+            "D) useState(0) resets the count to 0 on every render"
+          ],
+          "correctAnswer": "A",
+          "explanation": "The component receives `notifications` as a prop but never uses it. Instead, it creates its own state `count` starting at 0 and never updates it. The fix is either to use `notifications.length` directly in the JSX (no state needed), or to add logic that calls `setCount` when `notifications` changes. This is a classic case of unnecessary state -- the data is already available as a prop.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "rl3-1-3",
+          "question": "You are reviewing AI-generated code for a settings panel. The client reports that toggling dark mode does not work. What would you tell the AI to fix?\n\n```jsx\nfunction SettingsPanel() {\n  const [darkMode, setDarkMode] = useState(false);\n  const [fontSize, setFontSize] = useState(16);\n  const [language, setLanguage] = useState('en');\n\n  return (\n    <div className={darkMode ? 'dark' : 'light'}>\n      <label>\n        <input\n          type=\"checkbox\"\n          checked={darkMode}\n          onChange={() => setDarkMode(true)}\n        />\n        Dark Mode\n      </label>\n      <select\n        value={language}\n        onChange={(e) => setLanguage(e.target.value)}\n      >\n        <option value=\"en\">English</option>\n        <option value=\"es\">Spanish</option>\n      </select>\n    </div>\n  );\n}\n```",
+          "options": [
+            "A) The onChange handler for dark mode always sets it to `true`. It should toggle: `setDarkMode(!darkMode)` or `setDarkMode(prev => !prev)`.",
+            "B) The checkbox needs an onClick handler instead of onChange.",
+            "C) The fontSize state is unused, so the component crashes.",
+            "D) The className logic is backwards -- 'dark' and 'light' are swapped."
+          ],
+          "correctAnswer": "A",
+          "explanation": "The bug is in `onChange={() => setDarkMode(true)}`. This always sets dark mode to true. The first click works (false becomes true), but unchecking the box still sets it to true. The fix is `onChange={() => setDarkMode(!darkMode)}` which flips the boolean each time. You would tell the AI: \"The dark mode toggle onChange handler always sets darkMode to true. Change it to toggle the value with setDarkMode(!darkMode).\" The unused `fontSize` state is sloppy but does not cause a crash.",
+          "difficulty": "advanced"
+        }
+      ]
+    },
+    {
+      "type": "explainBack",
+      "prompt": "In your own words, explain the useState pattern. What are the two things it returns? What happens when you call the setter function? Why does the initial value only matter on the first render?"
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "useState gives a component its own memory. It returns the current value and a setter function. Calling the setter triggers a re-render with the new value. The initial value only applies on the first render. When reading a component, the useState calls at the top tell you everything the component needs to remember."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "Think about a feature you have seen in a web app -- a dropdown that opens and closes, a shopping cart counter, a search field. Which pieces of that feature would need their own useState? Try to name the state variable and its initial value for each one."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What two things does useState return?",
+      "options": ["A component and a prop", "The current value and a setter function to update it", "An error message and a loading flag"],
+      "correctIndex": 1,
+      "explanation": "useState returns an array with two items: the current state value and a function to update it. The convention is [value, setValue].",
+      "encourageCorrect": "Perfect! The [value, setValue] pair is the foundation of state management in React.",
+      "encourageIncorrect": "useState returns two things: the current value and a setter function. For example, const [count, setCount] = useState(0) gives you the count and a way to change it."
+    },
+    {
+      "question": "What happens when you call the setter function from useState?",
+      "options": ["It updates the variable instantly in the same line of code", "It tells React the value changed and triggers a re-render with the new value", "It sends the new value to the server"],
+      "correctIndex": 1,
+      "explanation": "Calling the setter function (like setCount) tells React that state changed. React then re-renders the component so the UI reflects the new value.",
+      "encourageCorrect": "Exactly! State change triggers re-render -- that's the fundamental cycle of React.",
+      "encourageIncorrect": "When you call a setter like setCount(5), React schedules a re-render. The component function runs again, and this time useState returns the new value."
+    },
+    {
+      "question": "Does the initial value in useState(0) reset the state to 0 on every re-render?",
+      "options": ["Yes, it resets every time", "No, the initial value is only used on the very first render", "It depends on the component's props"],
+      "correctIndex": 1,
+      "explanation": "The initial value is only used once -- when the component first appears. After that, React remembers the current value and ignores the initial value argument.",
+      "encourageCorrect": "Right! The initial value is a one-time setup. React remembers the actual value after that.",
+      "encourageIncorrect": "The initial value only matters the first time. After that, React tracks the real value internally and ignores the argument you passed to useState."
+    }
+  ]
+}

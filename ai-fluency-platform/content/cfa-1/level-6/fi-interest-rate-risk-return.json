@@ -104,5 +104,31 @@
       "type": "connectPrompt",
       "prompt": "The next module introduces **Yield-Based Bond Duration** \u2014 the formal measure of a bond's price sensitivity to yield changes. Duration quantifies exactly how much a bond's price changes per unit change in yield."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "For a bond investor holding to maturity, what is the main source of interest rate risk?",
+      "options": [
+        "The bond's price will fluctuate",
+        "Coupon reinvestment rates may differ from the original yield",
+        "The bond may be called early"
+      ],
+      "correctIndex": 1,
+      "explanation": "A hold-to-maturity investor receives par at maturity regardless of price changes. The risk is that coupons may be reinvested at rates higher or lower than expected.",
+      "encourageCorrect": "Spot on! Reinvestment risk is the key concern for hold-to-maturity investors.",
+      "encourageIncorrect": "For hold-to-maturity investors, price changes don't matter (you get par back). The risk is that coupon reinvestment rates may differ from the original yield."
+    },
+    {
+      "question": "What does Macaulay duration represent?",
+      "options": [
+        "The bond's maturity date",
+        "The weighted average time until the bond's cash flows are received",
+        "The bond's credit rating"
+      ],
+      "correctIndex": 1,
+      "explanation": "Macaulay duration is the weighted average time (in years) to receive the bond's cash flows, weighted by their present values.",
+      "encourageCorrect": "That's right! It's the weighted-average time to get your money back.",
+      "encourageIncorrect": "Macaulay duration is the weighted average time until the bond's cash flows are received, with weights being the present value of each cash flow."
+    }
   ]
 }

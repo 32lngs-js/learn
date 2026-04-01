@@ -118,5 +118,31 @@
       "type": "connectPrompt",
       "prompt": "Capital investment decisions depend on the cost of capital used to discount cash flows. The next module covers **Capital Structure** \u2014 how a company's mix of debt and equity financing determines its weighted average cost of capital (WACC) and affects firm value."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What does a positive NPV indicate about a capital project?",
+      "options": [
+        "The project will break even",
+        "The project is expected to add value to the firm",
+        "The project has no risk"
+      ],
+      "correctIndex": 1,
+      "explanation": "A positive NPV means the present value of expected cash inflows exceeds the investment cost, adding value to shareholders.",
+      "encourageCorrect": "That's the rule! Positive NPV means the project creates shareholder value.",
+      "encourageIncorrect": "A positive NPV means the project's cash inflows (in present value) exceed its cost, so it adds value to the firm."
+    },
+    {
+      "question": "What is the IRR of a project?",
+      "options": [
+        "The discount rate that makes the NPV equal to zero",
+        "The project's expected annual profit margin",
+        "The minimum return required by shareholders"
+      ],
+      "correctIndex": 0,
+      "explanation": "The internal rate of return (IRR) is the discount rate at which a project's NPV equals zero. Accept if IRR exceeds the required rate of return.",
+      "encourageCorrect": "Perfect! IRR is the breakeven discount rate for the project.",
+      "encourageIncorrect": "The IRR is the discount rate that makes NPV exactly zero. A project is accepted when its IRR exceeds the required rate of return."
+    }
   ]
 }

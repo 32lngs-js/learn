@@ -1,0 +1,99 @@
+{
+  "meta": {
+    "title": "5.5 Checkpoint",
+    "description": "Read TypeScript React code and navigate project structures.",
+    "level": "level-5",
+    "slug": "checkpoint",
+    "order": 5,
+    "isCheckpoint": true,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "markdown",
+      "content": "## Level 5 Checkpoint: The Shape of Code\n\nYou have covered a lot of ground in this level. You can now read TypeScript annotations, understand typed component interfaces, recognize custom hooks, and navigate project structures. This checkpoint tests all of those skills together.\n\nThe questions below reflect what you would actually encounter in a real codebase. Take your time and read the code carefully."
+    },
+    {
+      "type": "explainBack",
+      "prompt": "In your own words, explain why TypeScript interfaces on React components are useful for someone who reads code but does not write it. What do they tell you that plain JavaScript does not?"
+    },
+    {
+      "type": "explainBack",
+      "prompt": "Describe the difference between a custom hook and a regular function. What makes `useAuth` a hook and `formatDate` just a utility function?"
+    },
+    {
+      "type": "practiceSet",
+      "title": "Level 5 Checkpoint",
+      "problems": [
+        {
+          "id": "rl5-5-1",
+          "question": "Read this typed component interface. A designer asks: can this card show an image? What would you tell them?\n\n```typescript\ninterface ContentCardProps {\n  title: string;\n  body: string;\n  author: {\n    name: string;\n    avatarUrl: string;\n  };\n  publishedAt: string;\n  imageUrl?: string;\n  tags?: string[];\n  onBookmark?: () => void;\n}\n```",
+          "options": [
+            "A) No, images are not supported by this component",
+            "B) Yes, but the image is required -- it must always be provided",
+            "C) Yes, an image can be provided via the `imageUrl` prop, but it is optional -- the card works without one too"
+          ],
+          "correctAnswer": "C",
+          "explanation": "`imageUrl?: string` -- the `?` means optional. The card supports an image but does not require one. The required props are `title`, `body`, `author` (with name and avatar), and `publishedAt`. Tags and a bookmark action are also optional.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "rl5-5-2",
+          "question": "What does this custom hook return, and how would a component use it?\n\n```typescript\ninterface UsePaginationReturn {\n  currentPage: number;\n  totalPages: number;\n  nextPage: () => void;\n  prevPage: () => void;\n  goToPage: (page: number) => void;\n  hasNext: boolean;\n  hasPrev: boolean;\n}\n\nfunction usePagination(totalItems: number, itemsPerPage: number): UsePaginationReturn {\n  // ... implementation\n}\n```",
+          "options": [
+            "A) It returns a single page number and nothing else",
+            "B) It returns the current page, total pages, navigation functions (next, previous, go-to-page), and booleans indicating whether next/previous pages exist",
+            "C) It returns an array of page content"
+          ],
+          "correctAnswer": "B",
+          "explanation": "The return type interface tells you everything: `currentPage` and `totalPages` for display, `nextPage`, `prevPage`, and `goToPage` for navigation, and `hasNext`/`hasPrev` to know when to disable navigation buttons. You pass it the total number of items and how many per page.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "rl5-5-3",
+          "question": "You open a new React project and see this structure. The PM asks: where would you find the code for the checkout flow?\n\n```\nsrc/\n  components/\n    Button/\n    Input/\n    Modal/\n  features/\n    auth/\n      LoginForm.tsx\n      useAuth.ts\n    products/\n      ProductList.tsx\n      ProductDetail.tsx\n      useProducts.ts\n    checkout/\n      CheckoutPage.tsx\n      CartSummary.tsx\n      PaymentForm.tsx\n      useCart.ts\n      usePayment.ts\n      checkoutApi.ts\n      index.ts\n  hooks/\n    useDebounce.ts\n    useLocalStorage.ts\n  utils/\n    formatCurrency.ts\n    validateEmail.ts\n```",
+          "options": [
+            "A) src/components/Modal/ -- the checkout is probably a modal",
+            "B) src/features/checkout/ -- this folder contains the checkout page, cart summary, payment form, related hooks, and API layer",
+            "C) src/hooks/useLocalStorage.ts -- the cart data is stored in local storage"
+          ],
+          "correctAnswer": "B",
+          "explanation": "The project uses feature folders. Everything related to checkout is grouped in `src/features/checkout/`: the main page (`CheckoutPage.tsx`), the cart display (`CartSummary.tsx`), the payment form (`PaymentForm.tsx`), custom hooks for cart and payment logic, and the API integration. The `components/` folder has generic reusable components. The `hooks/` folder has generic utility hooks.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "rl5-5-4",
+          "question": "You are reviewing this component that uses generics. What would you tell a developer who asks what this component does?\n\n```typescript\ninterface SelectProps<T> {\n  options: T[];\n  value: T | null;\n  onChange: (selected: T) => void;\n  getLabel: (item: T) => string;\n  getKey: (item: T) => string;\n  placeholder?: string;\n  disabled?: boolean;\n}\n\nfunction Select<T>({\n  options,\n  value,\n  onChange,\n  getLabel,\n  getKey,\n  placeholder = \"Select an option\",\n  disabled = false,\n}: SelectProps<T>) {\n  return (\n    <select\n      value={value ? getKey(value) : ''}\n      onChange={(e) => {\n        const selected = options.find((opt) => getKey(opt) === e.target.value);\n        if (selected) onChange(selected);\n      }}\n      disabled={disabled}\n    >\n      <option value=\"\">{placeholder}</option>\n      {options.map((opt) => (\n        <option key={getKey(opt)} value={getKey(opt)}>\n          {getLabel(opt)}\n        </option>\n      ))}\n    </select>\n  );\n}\n```",
+          "options": [
+            "A) It is a dropdown select component that only works with string arrays",
+            "B) It is a generic dropdown select that works with any data type -- you provide functions to extract the display label and unique key from each item",
+            "C) It is a multi-select component that allows picking multiple options"
+          ],
+          "correctAnswer": "B",
+          "explanation": "The `<T>` generic means this select works with any type of object -- users, products, categories, anything. The caller provides `getLabel` (how to get display text from an item) and `getKey` (how to get a unique identifier). The component handles rendering the dropdown and calling `onChange` with the full selected object. Despite the generics looking complex, the component is just a flexible dropdown.",
+          "difficulty": "advanced"
+        },
+        {
+          "id": "rl5-5-5",
+          "question": "This component has a bug related to TypeScript. What is wrong?\n\n```typescript\ninterface NotificationProps {\n  message: string;\n  type: \"info\" | \"success\" | \"warning\" | \"error\";\n  actions?: {\n    label: string;\n    onClick: () => void;\n  }[];\n}\n\nfunction Notification({ message, type, actions }: NotificationProps) {\n  return (\n    <div className={`notification notification-${type}`}>\n      <p>{message}</p>\n      <div className=\"actions\">\n        {actions.map((action) => (\n          <button key={action.label} onClick={action.onClick}>\n            {action.label}\n          </button>\n        ))}\n      </div>\n    </div>\n  );\n}\n```",
+          "options": [
+            "A) The `type` prop should accept more values",
+            "B) The `actions` prop is optional (has `?`) but the code calls `.map()` on it without checking if it exists -- this will crash when no actions are passed",
+            "C) The `key` on the button should be a number, not a string"
+          ],
+          "correctAnswer": "B",
+          "explanation": "The `actions?` prop has the `?` marker, meaning it can be `undefined`. But the JSX calls `actions.map(...)` without first checking if `actions` exists. If someone uses `<Notification message=\"Done\" type=\"success\" />` without passing actions, it will crash with \"Cannot read properties of undefined (reading 'map')\". The fix: `actions?.map(...)` or `{actions && actions.map(...)}`.",
+          "difficulty": "advanced"
+        }
+      ]
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "Level 5 gave you the tools to read real-world React code: TypeScript annotations are documentation, not behavior. Props interfaces are component contracts. Custom hooks are reusable logic packages. Project structures follow predictable patterns. With these skills, you can navigate and understand any professional React codebase."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "You now have the skills to open a real React project and find your way around. Think about a product you use or a project at your company. If you opened its codebase right now, what would you look for first? What questions could you now answer just by reading the code?"
+    }
+  ]
+}

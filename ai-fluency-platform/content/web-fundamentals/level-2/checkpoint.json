@@ -1,0 +1,94 @@
+{
+  "meta": {
+    "title": "2.5 Checkpoint",
+    "description": "Debug CSS problems by reading the code and identifying what went wrong.",
+    "level": "level-2",
+    "slug": "checkpoint",
+    "order": 5,
+    "isCheckpoint": true,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "calibrationCheck",
+      "question": "Before starting: how confident are you that you could look at a broken webpage, read the CSS, and identify which rule is causing the visual problem?",
+      "answer": "By this point, you should feel moderately confident. You can read CSS rules in plain English, understand the box model (padding vs. margin), recognize flex and grid layouts, and know about media queries. If you are not feeling confident yet, review the modules before continuing — there is no penalty for going back."
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "How comfortable are you using browser DevTools to inspect an element and look at its CSS and box model?",
+      "answer": "You should be able to right-click an element, select Inspect, and find the Styles panel and box model diagram. If you have not tried this yet, take two minutes to do it on any webpage before continuing. It is the single most useful skill for understanding CSS problems."
+    },
+    {
+      "type": "practiceSet",
+      "title": "CSS Debugging Scenarios",
+      "problems": [
+        {
+          "id": "wf2-13",
+          "question": "A button on a page has white text that is invisible because the background is also white. The CSS is:\n\n```css\n.btn {\n  background-color: white;\n  color: white;\n  padding: 12px 24px;\n}\n```\n\nWhat would you tell AI to fix?",
+          "options": [
+            "A) \"Change the `color` property on `.btn` to a dark color so the text is visible against the white background\"",
+            "B) \"Add more padding so the text has more room\"",
+            "C) \"Change the font-size to make the text bigger and more visible\""
+          ],
+          "correctAnswer": "A",
+          "explanation": "The `color` property sets the text color. Both the background and text are white, making the text invisible. The fix is to change either the `color` to a dark shade or the `background-color` to something that contrasts with white text. Precise language: reference the property name and the selector.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "wf2-14",
+          "question": "A three-column card layout works on desktop but on a phone all three cards overflow off the right side of the screen. The CSS is:\n\n```css\n.cards {\n  display: flex;\n  gap: 24px;\n}\n\n.card {\n  width: 350px;\n}\n```\n\nThere are no media queries. What is the problem and what would you tell AI?",
+          "options": [
+            "A) \"The cards have a fixed width of 350px. Add a media query to make them full-width on mobile, or use `flex-wrap: wrap` so they wrap to the next line instead of overflowing\"",
+            "B) \"The `gap` is too large — reduce it to 8px and the cards will fit\"",
+            "C) \"Change `display: flex` to `display: block` for mobile devices\""
+          ],
+          "correctAnswer": "A",
+          "explanation": "The cards each have a fixed width of 350px. Three cards at 350px plus gaps is over 1000px — wider than any phone screen. The fix is either: (1) use flexible widths instead of fixed (`flex: 1` or percentage widths), (2) add `flex-wrap: wrap` so cards wrap to the next line, or (3) add a media query that changes the layout to a single column on small screens.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "wf2-15",
+          "question": "A navigation bar should have the logo on the left and links on the right, but everything is bunched together on the left. The CSS is:\n\n```css\n.navbar {\n  display: flex;\n  padding: 16px;\n}\n```\n\nWhat is missing?",
+          "options": [
+            "A) The navbar needs `justify-content: space-between` to push items to opposite ends",
+            "B) The navbar needs `align-items: center` to fix the horizontal layout",
+            "C) The navbar needs `flex-direction: column` to separate the logo and links"
+          ],
+          "correctAnswer": "A",
+          "explanation": "`display: flex` puts items in a row, but by default they all start from the left (`flex-start`). To push the logo to the left and links to the right, the navbar needs `justify-content: space-between`. This distributes the available space between the items, pushing the first item to the left edge and the last to the right.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "wf2-16",
+          "question": "A hero section should have centered text, but the text is stuck at the top-left. The CSS is:\n\n```css\n.hero {\n  display: flex;\n  height: 500px;\n  background-color: #1a1a2e;\n  color: white;\n}\n```\n\nWhat would you tell AI to fix?",
+          "options": [
+            "A) \"Add `text-align: center` to the hero section\"",
+            "B) \"Add `justify-content: center` and `align-items: center` to center the content both horizontally and vertically within the flex container\"",
+            "C) \"Change the height to `auto` so the content centers itself\""
+          ],
+          "correctAnswer": "B",
+          "explanation": "The hero has `display: flex` but no alignment properties, so content defaults to the top-left. Adding `justify-content: center` centers content horizontally, and `align-items: center` centers it vertically. Together they center the content both ways — the most common flex centering pattern. `text-align: center` would only center text horizontally, not vertically.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "wf2-17",
+          "question": "A link is supposed to change color smoothly on hover, but it changes instantly with no animation. The CSS is:\n\n```css\n.link {\n  color: blue;\n}\n\n.link:hover {\n  color: red;\n}\n```\n\nWhat is missing?",
+          "options": [
+            "A) A `transition` property on `.link` to animate the color change smoothly",
+            "B) An `animation` property on `.link:hover` to trigger the change",
+            "C) A `delay` property on `.link:hover` to slow down the change"
+          ],
+          "correctAnswer": "A",
+          "explanation": "Without a `transition` property, CSS changes happen instantly. Adding `transition: color 0.3s ease;` to the base `.link` rule (not the hover rule) tells the browser to smoothly animate the color change over 0.3 seconds. The transition goes on the base rule so it works both when hovering in and hovering out.",
+          "difficulty": "intermediate"
+        }
+      ]
+    },
+    {
+      "type": "tryItYourself",
+      "title": "Open any webpage in your browser (a news site, your company's site, anything). Right-click on an interesting element — a button, a card, a navigation bar — and select 'Inspect.' In the Styles panel, find and identify: (1) what selector targets this element, (2) at least one box model property (padding or margin), (3) any layout property (display: flex or grid). Then click the box model diagram to see all four layers. Change one value temporarily (double-click a value in DevTools to edit it) and watch the page update live.",
+      "solution": "You should have been able to find the element's CSS rules in the Styles panel, identify selectors like class names, and see properties like padding, margin, display, etc. When you edit a value in DevTools, the page updates instantly — this is a great way to experiment without breaking anything. The changes are temporary and disappear when you refresh the page."
+    }
+  ]
+}

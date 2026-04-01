@@ -59,5 +59,31 @@
       "type": "keyTakeaway",
       "content": "The frontier of AI research is defined by hard, unsolved problems: genuine reasoning, interpretability, alignment, efficiency, and multimodal understanding. Engaging with these frontiers -- even as a practitioner rather than a researcher -- is essential for making informed decisions about the AI systems you build and deploy."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Is AI 'reasoning' the same as human reasoning?",
+      "options": [
+        "Yes, modern AI reasons just like humans",
+        "This is an open question -- models may be mimicking reasoning patterns rather than genuinely reasoning",
+        "No, AI cannot reason at all"
+      ],
+      "correctIndex": 1,
+      "explanation": "Whether AI truly reasons or mimics reasoning patterns is an active research question. The practical implication either way: never trust model reasoning without verification on high-stakes tasks.",
+      "encourageCorrect": "That's a nuanced and accurate answer! This is one of the biggest open questions in AI research.",
+      "encourageIncorrect": "It's actually an open question. Models show some generalization beyond training data, but also fail unpredictably on novel problems. Either way, verify reasoning on high-stakes tasks."
+    },
+    {
+      "question": "What is interpretability in AI research?",
+      "options": [
+        "Making AI output easier to read",
+        "Understanding what happens inside a model -- why it produces specific outputs from specific inputs",
+        "Translating AI output into multiple languages"
+      ],
+      "correctIndex": 1,
+      "explanation": "Interpretability research aims to understand the internal mechanisms of AI models -- how they represent knowledge and make decisions.",
+      "encourageCorrect": "Exactly! Interpretability is about opening the 'black box' to understand how AI actually works inside.",
+      "encourageIncorrect": "Interpretability means understanding what's happening inside a model -- why it produces the outputs it does. It's about opening the black box, not just making output readable."
+    }
   ]
 }

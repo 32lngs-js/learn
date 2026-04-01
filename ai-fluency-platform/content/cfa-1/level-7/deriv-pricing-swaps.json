@@ -100,5 +100,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Pricing Options** \u2014 understanding option value as intrinsic value plus time value, the factors that affect option prices, and the upper and lower bounds on option values."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "In a plain vanilla interest rate swap, the two parties exchange:",
+      "options": [
+        "Fixed-rate payments for floating-rate payments on a notional amount",
+        "Equity shares for bonds",
+        "Different currencies at agreed exchange rates"
+      ],
+      "correctIndex": 0,
+      "explanation": "A plain vanilla interest rate swap involves one party paying a fixed rate and receiving a floating rate, while the other does the opposite.",
+      "encourageCorrect": "That's the classic swap! Fixed for floating (or vice versa).",
+      "encourageIncorrect": "In a plain vanilla interest rate swap, one party pays a fixed rate and receives a floating rate, and the other party does the opposite."
+    },
+    {
+      "question": "A swap can be viewed as a series of:",
+      "options": [
+        "Stock options",
+        "Forward contracts",
+        "Futures contracts only"
+      ],
+      "correctIndex": 1,
+      "explanation": "Each periodic payment in a swap is like a separate forward contract. A swap is equivalent to a portfolio of forward agreements.",
+      "encourageCorrect": "Well done! A swap is essentially a bundle of forwards.",
+      "encourageIncorrect": "A swap can be decomposed into a series of forward contracts, one for each payment date. Each forward settles the difference between fixed and floating."
+    }
   ]
 }

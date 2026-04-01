@@ -1,0 +1,110 @@
+{
+  "meta": {
+    "title": "2.4 Reading Real CSS",
+    "description": "Media queries, hover states, transitions \u2014 decoding CSS you will actually encounter.",
+    "level": "level-2",
+    "slug": "reading-real-css",
+    "order": 4,
+    "isCheckpoint": false,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "predictPrompt",
+      "prompt": "Websites often look different on your phone than on your laptop \u2014 different layouts, different font sizes, sometimes different menus. What do you think makes the same CSS work differently on different screen sizes?"
+    },
+    {
+      "type": "markdown",
+      "content": "## Reading Real CSS\n\nThe basics \u2014 selectors, properties, values, the box model, layout \u2014 cover most of what you will encounter. But real-world CSS has a few additional patterns that show up constantly. None of them are hard to read once you know what to look for.\n\n### Media queries: CSS that adapts to screen size\n\n```css\n@media (max-width: 768px) {\n  .nav {\n    flex-direction: column;\n  }\n}\n```\n\n> \"When the screen is 768 pixels wide or smaller, change the navigation from a row to a column.\"\n\nMedia queries are CSS instructions that only activate under certain conditions \u2014 usually screen size. They are how websites become \"responsive\" (work on both desktop and mobile).\n\nThe pattern is always the same:\n\n```css\n@media (condition) {\n  /* CSS rules that only apply when the condition is true */\n}\n```\n\nCommon breakpoints you will see:\n- `max-width: 768px` \u2014 tablets and smaller\n- `max-width: 480px` \u2014 phones\n- `min-width: 1024px` \u2014 desktop and larger\n\nWhen a layout looks fine on desktop but breaks on mobile, the media queries are where you look.\n\n### Hover states: CSS that responds to the mouse\n\n```css\n.button:hover {\n  background-color: darkblue;\n}\n```\n\n> \"When the user hovers their mouse over a `.button`, change the background to dark blue.\"\n\nThe `:hover` pseudo-class is added after a selector to define what happens when you hover over that element. You will also see:\n\n- `:focus` \u2014 when an element is selected (like clicking into an input field)\n- `:active` \u2014 the brief moment when you are clicking/pressing an element\n- `:first-child`, `:last-child` \u2014 targets the first or last element in a group\n\nThese always follow the pattern `selector:state`.\n\n### Transitions: smooth changes\n\n```css\n.button {\n  background-color: blue;\n  transition: background-color 0.3s ease;\n}\n\n.button:hover {\n  background-color: darkblue;\n}\n```\n\n> \"The button is blue. When hovered, it changes to dark blue. The `transition` makes that change happen smoothly over 0.3 seconds instead of instantly.\"\n\nWithout `transition`, changes happen instantly (one frame it is blue, the next it is dark blue). With `transition`, the browser smoothly animates between the two states.\n\nThe pattern: `transition: [what to animate] [how long] [easing];`\n\n### CSS variables: reusable values\n\n```css\n:root {\n  --primary-color: #3b82f6;\n  --spacing: 16px;\n}\n\n.button {\n  background-color: var(--primary-color);\n  padding: var(--spacing);\n}\n```\n\n> \"Define a primary color and spacing value once, then use them anywhere with `var()`.\"\n\nCSS variables (custom properties) start with `--` and are used with `var()`. They let you change a color or spacing value in one place and have it update everywhere. If a client says \"change the brand color,\" you only need to update the variable, not every rule that uses that color.\n\nWhen you see `var(--something)` in CSS, it is referencing a variable defined somewhere else \u2014 usually at the top of the stylesheet in `:root`.\n\n### The strategy for unknown properties\n\nYou will encounter CSS properties you do not recognize. That is completely normal \u2014 there are hundreds of them. Here is your strategy:\n\n1. **Read the property name.** CSS properties are usually descriptive: `border-radius` rounds corners, `text-transform` changes capitalization, `box-shadow` adds a shadow.\n2. **Read the value.** Values often give context: `uppercase`, `none`, `hidden`, `auto`.\n3. **If still unclear, search for it.** Searching \"CSS [property-name]\" gives you an answer in seconds.\n\nDo not try to memorize CSS properties. The ones you encounter frequently will become familiar. For the rest, knowing how to look them up is the skill."
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "If you saw `@media (max-width: 768px)` in a stylesheet, could you explain what it means and when the CSS inside it would take effect?",
+      "answer": "This is a media query that activates when the screen (or browser window) is 768 pixels wide or smaller \u2014 roughly tablet-sized or smaller. Any CSS rules inside this block only apply when that condition is true. On a wider screen, those rules are ignored. This is how websites adapt their layout for mobile devices."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Reading Real CSS",
+      "problems": [
+        {
+          "id": "wf2-10",
+          "question": "What does this CSS do?\n\n```css\n@media (max-width: 768px) {\n  .grid {\n    grid-template-columns: 1fr;\n  }\n}\n```",
+          "options": [
+            "A) On screens 768px or smaller, the grid switches from multiple columns to a single column",
+            "B) The grid is always one column wide regardless of screen size",
+            "C) On screens larger than 768px, the grid becomes one column"
+          ],
+          "correctAnswer": "A",
+          "explanation": "The `@media (max-width: 768px)` condition means this rule only applies when the screen is 768px wide or smaller. `grid-template-columns: 1fr` sets the grid to a single column. So on mobile/tablet, the layout becomes one column. On desktop (wider than 768px), the grid uses whatever columns are defined outside this media query.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "wf2-11",
+          "question": "What happens when a user hovers over this link?\n\n```css\n.link {\n  color: blue;\n  text-decoration: none;\n  transition: color 0.2s ease;\n}\n\n.link:hover {\n  color: darkblue;\n}\n```",
+          "options": [
+            "A) The link instantly changes from blue to dark blue",
+            "B) The link smoothly changes from blue to dark blue over 0.2 seconds",
+            "C) The link blinks between blue and dark blue repeatedly"
+          ],
+          "correctAnswer": "B",
+          "explanation": "The `.link:hover` rule changes the color to dark blue when the user hovers. The `transition: color 0.2s ease` on the base rule makes that color change happen smoothly over 0.2 seconds instead of instantly switching. When the user moves the mouse away, it smoothly transitions back to blue.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "wf2-12",
+          "question": "A page looks perfect on desktop but the layout is broken on mobile \u2014 cards are overflowing off the right side of the screen. Where in the CSS would you look first?",
+          "options": [
+            "A) Check the JavaScript for mobile-specific bugs",
+            "B) Look for `@media` queries that handle smaller screen sizes \u2014 there may be a missing or incorrect breakpoint",
+            "C) Check if the HTML has mobile-specific tags"
+          ],
+          "correctAnswer": "B",
+          "explanation": "When something looks fine on desktop but breaks on mobile, the issue is almost always in the CSS media queries (or the lack of them). The layout may be using fixed widths that work on desktop but overflow on narrow screens. You would look for `@media` rules that adjust the layout for smaller screens, or check if such rules are missing entirely.",
+          "difficulty": "intermediate"
+        }
+      ]
+    },
+    {
+      "type": "reflectPrompt",
+      "questions": [
+        "Think about a website you use regularly. Can you identify one thing that probably uses a media query (something that changes between desktop and mobile) and one thing that probably uses a :hover state?",
+        "When you encounter a CSS property you do not recognize, what is your strategy for understanding it?",
+        "How does knowing about CSS variables change how you might describe a 'change the brand color' request to a developer or AI?"
+      ]
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "Media queries (`@media`) make CSS conditional \u2014 usually based on screen size, which is how responsive design works. Hover states (`:hover`) change styling when the user moves their mouse over an element. Transitions make those changes smooth instead of instant. CSS variables (`var(--name)`) let you define values once and reuse them everywhere. For unknown properties, read the name, read the value, and search if needed \u2014 do not memorize."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "You have now covered the core of CSS \u2014 how to read rules, understand spacing, decode layouts, and recognize real-world patterns like media queries and hover states. Time to put it all together. The Level 2 Checkpoint will test your ability to look at CSS and figure out what is going wrong."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "A media query like @media (max-width: 768px) { ... } means:",
+      "options": [
+        "The CSS inside always applies",
+        "The CSS inside only applies when the screen is 768 pixels wide or narrower",
+        "The page will only load on mobile devices"
+      ],
+      "correctIndex": 1,
+      "explanation": "Media queries make CSS conditional. max-width: 768px means the styles apply only on screens up to 768px wide \u2014 this is how responsive design works.",
+      "encourageCorrect": "That's responsive design! Different styles for different screen sizes.",
+      "encourageIncorrect": "The @media query makes CSS conditional based on screen size. max-width: 768px means the styles inside only apply on screens 768px wide or narrower."
+    },
+    {
+      "question": "The :hover pseudo-class in CSS applies styles when:",
+      "options": [
+        "The page first loads",
+        "The user moves their mouse over the element",
+        "The element is clicked"
+      ],
+      "correctIndex": 1,
+      "explanation": ":hover triggers when the mouse pointer moves over an element. It's commonly used for button and link hover effects.",
+      "encourageCorrect": "Right! :hover activates on mouse-over.",
+      "encourageIncorrect": ":hover styles apply when the user moves their mouse over the element. It's the most common way to add interactive visual feedback."
+    }
+  ]
+}

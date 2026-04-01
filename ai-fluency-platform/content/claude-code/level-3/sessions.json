@@ -43,5 +43,31 @@
       "type": "connectPrompt",
       "prompt": "You now know how sessions work. The next two modules focus on the practical mechanics of moving information in and out of Claude Code — getting data in (Module 3.5) and getting results out (Module 3.6). Module 3.5 expands on the input methods from Level 2 with additional techniques."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What command lets you browse and select from past sessions?",
+      "options": [
+        "claude --history",
+        "claude --resume",
+        "claude --sessions"
+      ],
+      "correctIndex": 1,
+      "explanation": "Use 'claude --resume' to browse a list of recent sessions and select one to reopen.",
+      "encourageCorrect": "That's right! --resume lets you pick from your session history.",
+      "encourageIncorrect": "Use 'claude --resume' (or -r) to browse and select from your recent sessions."
+    },
+    {
+      "question": "What does /fork do in Claude Code?",
+      "options": [
+        "Splits a file into two",
+        "Creates a copy of the current session to explore alternatives",
+        "Merges two sessions together"
+      ],
+      "correctIndex": 1,
+      "explanation": "/fork creates a branch of your session with all conversation history preserved, letting you explore different approaches.",
+      "encourageCorrect": "Exactly! Forking lets you explore two paths without committing to either.",
+      "encourageIncorrect": "/fork creates a copy of your current session — you can explore one approach in the fork and a different one in the original."
+    }
   ]
 }

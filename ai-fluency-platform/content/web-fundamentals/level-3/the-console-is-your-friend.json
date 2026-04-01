@@ -1,0 +1,107 @@
+{
+  "meta": {
+    "title": "3.3 The Console Is Your Friend",
+    "description": "Learn to open the browser console, read error messages in plain English, and understand the most common JavaScript errors.",
+    "level": "level-3",
+    "slug": "the-console-is-your-friend",
+    "order": 3,
+    "isCheckpoint": false,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "predictPrompt",
+      "prompt": "When a website feature breaks \u2014 a button does nothing, a form does not validate, a section does not load \u2014 how do you think developers figure out what went wrong? Where would they look?"
+    },
+    {
+      "type": "markdown",
+      "content": "## The Console: JavaScript's Answering Machine\n\nEvery browser has a built-in tool called the **console**. Think of it as JavaScript's answering machine \u2014 when something goes wrong, JavaScript leaves an error message there. When developers want to check what is happening, they leave notes there too.\n\nThe console is part of **DevTools**, the same tool you may have used to inspect HTML and CSS.\n\n### Opening the Console\n\n| Browser | Shortcut |\n| :-- | :-- |\n| Chrome / Edge | `Ctrl+Shift+J` (Windows/Linux) or `Cmd+Option+J` (Mac) |\n| Firefox | `Ctrl+Shift+K` (Windows/Linux) or `Cmd+Option+K` (Mac) |\n| Safari | `Cmd+Option+C` (enable Developer menu in Preferences first) |\n\nOr: right-click anywhere on a page, choose **Inspect**, then click the **Console** tab.\n\n---\n\n## Reading Error Messages in Plain English\n\nError messages look intimidating, but they follow a consistent pattern:\n\n```\nUncaught ReferenceError: handleClick is not defined\n    at HTMLButtonElement.<anonymous> (app.js:15)\n```\n\nThere are three pieces of information here:\n\n1. **Error type** \u2014 `ReferenceError` (what kind of problem)\n2. **Message** \u2014 `handleClick is not defined` (what specifically went wrong)\n3. **Location** \u2014 `app.js:15` (which file and which line number)\n\nYou do not need to understand every word. The **message** tells you the problem in near-plain English, and the **location** tells you where to look.\n\n---\n\n## The Three Errors You Will See Most Often\n\n### ReferenceError: \"I cannot find that name\"\n\n```\nUncaught ReferenceError: handleClick is not defined\n```\n\n**Plain English:** \"You told me to use something called `handleClick`, but I have no idea what that is. It does not exist.\"\n\n**Common causes:**\n- The function was never created\n- The function name has a typo\n- The script file containing the function was not loaded\n\n**Analogy:** You tell someone to call \"Dr. Smithe\" but the name in the phone book is \"Dr. Smith.\" The name does not match, so the call cannot be made.\n\n### TypeError: Cannot read properties of null \u2014 \"I found nothing\"\n\n```\nUncaught TypeError: Cannot read properties of null (reading 'textContent')\n```\n\n**Plain English:** \"You told me to find an element and change its text, but the element does not exist. I found `null` (nothing) instead.\"\n\n**Common causes:**\n- The element ID has a typo (`geElementById('header')` looking for an element with id `header` that is actually called `main-header`)\n- The script runs before the HTML has finished loading\n- The element was removed from the page\n\n**Analogy:** You reach into a mailbox to grab a letter, but the mailbox is empty. You cannot read a letter that is not there.\n\n### SyntaxError: \"I cannot understand your code\"\n\n```\nUncaught SyntaxError: Unexpected token ')'\n```\n\n**Plain English:** \"There is a typo or formatting mistake in your code. I found a `)` where I was not expecting one.\"\n\n**Common causes:**\n- Missing or extra brackets, parentheses, or braces\n- Missing quotation marks around text\n- A comma in the wrong place\n\n**Analogy:** A sentence like \"The dog chased the the cat)\" \u2014 the reader stops because something is obviously wrong with the structure.\n\n---\n\n## console.log(): Leaving Notes for Yourself\n\nDevelopers use `console.log()` to leave breadcrumbs \u2014 little messages that show what the code is doing at each step.\n\n```javascript\nfunction calculateTotal(price, quantity) {\n  console.log('Price:', price);\n  console.log('Quantity:', quantity);\n  let total = price * quantity;\n  console.log('Total:', total);\n  return total;\n}\n```\n\nWhen this function runs, the console shows:\n```\nPrice: 29.99\nQuantity: 3\nTotal: 89.97\n```\n\nThink of `console.log()` as the developer saying \"at this point in the code, here is what this value is.\" If a bug report says \"the total is wrong,\" these logs help trace exactly where the calculation goes off track.\n\nYou will sometimes see `console.log` statements left in production code by accident. They are harmless \u2014 they just write to the console \u2014 but they tell you the developer was debugging something in that area."
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "If you saw `TypeError: Cannot read properties of null (reading 'style')` in the console, could you explain in plain English what went wrong?",
+      "answer": "JavaScript tried to change the style of an element, but the element was not found on the page \u2014 it got 'null' (nothing) instead. Most likely, the element ID in the code does not match any element in the HTML, or the code ran before that element was loaded."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Reading Console Errors",
+      "problems": [
+        {
+          "id": "wf3-7",
+          "question": "You see this error in the console:\n\n```\nUncaught ReferenceError: handleClick is not defined\n    at HTMLButtonElement.<anonymous> (main.js:23)\n```\n\nWhat does this mean?",
+          "options": [
+            "A) A button was clicked and tried to run a function called `handleClick`, but that function does not exist anywhere in the code",
+            "B) The button with id `handleClick` was not found on the page",
+            "C) The click event is not supported in this browser"
+          ],
+          "correctAnswer": "A",
+          "explanation": "ReferenceError means JavaScript cannot find something by name. 'handleClick is not defined' means a function called handleClick was referenced but never created. The location (main.js:23) tells you exactly where to look. This is a missing-function problem, not a missing-element problem.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "wf3-8",
+          "question": "You see this error in the console:\n\n```\nUncaught TypeError: Cannot read properties of null (reading 'addEventListener')\n    at app.js:8\n```\n\nWhat went wrong?",
+          "options": [
+            "A) The `addEventListener` function has a bug in it",
+            "B) The code on line 8 tried to attach an event listener to an element, but that element was not found on the page (it returned null)",
+            "C) The event type passed to `addEventListener` is not a valid event"
+          ],
+          "correctAnswer": "B",
+          "explanation": "TypeError: Cannot read properties of null means JavaScript tried to do something with null \u2014 which means it expected to find an element but found nothing instead. The code probably used getElementById with an ID that does not match any element in the HTML. It could not attach the listener because there was no element to attach it to.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "wf3-9",
+          "question": "Which error message tells you a function or variable does not exist, versus an HTML element was not found?\n\n- Error A: `ReferenceError: toggleMenu is not defined`\n- Error B: `TypeError: Cannot read properties of null (reading 'classList')`",
+          "options": [
+            "A) Error A = missing function/variable, Error B = missing element",
+            "B) Error A = missing element, Error B = missing function/variable",
+            "C) Both errors mean the same thing \u2014 something was not found"
+          ],
+          "correctAnswer": "A",
+          "explanation": "ReferenceError always means a name (function or variable) does not exist in the code. TypeError with 'null' means an element lookup returned nothing \u2014 the element was not found in the HTML. They are different kinds of 'not found': one is a missing instruction, the other is a missing page element.",
+          "difficulty": "intermediate"
+        }
+      ]
+    },
+    {
+      "type": "tryItYourself",
+      "title": "Open the console (Ctrl+Shift+J or Cmd+Option+J) on any website you use regularly. Do you see any messages or errors? Red messages are errors, yellow are warnings, and gray are informational logs. You do not need to fix anything \u2014 just observe what is there. Most major websites have at least a few console messages.",
+      "solution": "You should see the console panel at the bottom or side of your browser. Many websites will show some combination of errors (red), warnings (yellow), and log messages (gray). It is completely normal for even major websites to have some console messages. If you see red errors, try reading the message portion \u2014 you now know that ReferenceError means a missing name, TypeError with null means a missing element, and SyntaxError means a code typo."
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "The browser console is where JavaScript reports errors. The three most common errors are: ReferenceError (a function or variable does not exist), TypeError with null (an HTML element was not found), and SyntaxError (a typo in the code structure). Each error message tells you the type of problem, what went wrong, and exactly which file and line to look at."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "You can now read basic JavaScript and understand console errors. Module 3.4 will level you up to reading real-world JavaScript patterns \u2014 form validation, API calls, and show/hide toggles \u2014 the code that powers the features you interact with every day."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "If you see 'TypeError: Cannot read properties of null' in the browser console, it usually means:",
+      "options": [
+        "The internet connection is down",
+        "JavaScript tried to use an HTML element that doesn't exist (wasn't found on the page)",
+        "The CSS is invalid"
+      ],
+      "correctIndex": 1,
+      "explanation": "This error means JavaScript looked for an element (using querySelector or getElementById) but found null \u2014 the element doesn't exist in the HTML, or the script ran before the element loaded.",
+      "encourageCorrect": "Exactly! 'null' means the element wasn't found. Check the ID or class name.",
+      "encourageIncorrect": "This TypeError means JavaScript tried to access a property on null \u2014 the element it was looking for doesn't exist in the HTML. Check the selector."
+    },
+    {
+      "question": "You can open the browser console by pressing:",
+      "options": [
+        "Ctrl+P",
+        "F12 (or Ctrl+Shift+I)",
+        "Alt+Tab"
+      ],
+      "correctIndex": 1,
+      "explanation": "F12 or Ctrl+Shift+I opens DevTools in most browsers. The Console tab shows JavaScript errors and log messages.",
+      "encourageCorrect": "Right! F12 is your shortcut to the developer console.",
+      "encourageIncorrect": "Press F12 or Ctrl+Shift+I to open DevTools. The Console tab shows JavaScript errors, warnings, and log output."
+    }
+  ]
+}

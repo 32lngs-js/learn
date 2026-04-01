@@ -51,5 +51,31 @@
       "type": "connectPrompt",
       "prompt": "Local or cloud, you still need to communicate clearly with the model. In Module 2.8, you will learn how to get models to produce structured output -- JSON, CSV, and formatted tables -- that you can feed directly into other tools and workflows."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is the main reason to run AI models locally instead of using cloud services?",
+      "options": [
+        "Local models are always more capable",
+        "Your data never leaves your machine, preserving privacy",
+        "Local models are faster than cloud models"
+      ],
+      "correctIndex": 1,
+      "explanation": "The primary benefit of local models is data privacy -- sensitive information never leaves your infrastructure.",
+      "encourageCorrect": "Exactly! Privacy is the number one reason to run models locally.",
+      "encourageIncorrect": "The main advantage is privacy -- when you run models locally, sensitive data never leaves your machine. This matters for regulated or proprietary information."
+    },
+    {
+      "question": "What does quantization do for local AI models?",
+      "options": [
+        "It makes models more accurate",
+        "It reduces model size so they can run on consumer hardware",
+        "It adds new training data to the model"
+      ],
+      "correctIndex": 1,
+      "explanation": "Quantization reduces the precision of model weights (e.g., from 16-bit to 4-bit), shrinking the model size enough to run on regular hardware with a modest quality tradeoff.",
+      "encourageCorrect": "Right! Quantization is what makes it possible to run large models on your laptop.",
+      "encourageIncorrect": "Quantization reduces model weight precision (like 16-bit to 4-bit), making models small enough to run on consumer hardware -- with only a modest quality tradeoff."
+    }
   ]
 }

@@ -100,5 +100,31 @@
       "type": "connectPrompt",
       "prompt": "Next, we explore **Estate Planning** -- how to transfer wealth across generations while minimizing transfer taxes. Estate planning builds directly on the tax concepts you've learned here and adds the dimensions of control, timing, and family governance."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Tax-loss harvesting is a strategy that involves:",
+      "options": [
+        "Avoiding all taxes by never selling",
+        "Selling investments at a loss to offset capital gains and reduce current tax liability",
+        "Only investing in tax-exempt bonds"
+      ],
+      "correctIndex": 1,
+      "explanation": "Tax-loss harvesting realizes losses to offset gains, reducing current taxes. The proceeds are typically reinvested in a similar (but not identical) asset.",
+      "encourageCorrect": "That's the strategy! Harvest losses to reduce your tax bill now.",
+      "encourageIncorrect": "Tax-loss harvesting sells losing investments to create tax deductions that offset capital gains. The funds are reinvested to maintain market exposure."
+    },
+    {
+      "question": "Tax-deferred accounts (like traditional IRAs or 401(k)s) benefit investors because:",
+      "options": [
+        "Investments are never taxed",
+        "Taxes are postponed until withdrawal, allowing investments to compound pre-tax",
+        "Contributions are not allowed"
+      ],
+      "correctIndex": 1,
+      "explanation": "Tax deferral allows the full investment to compound without annual tax drag. Taxes are paid upon withdrawal, typically in retirement when the rate may be lower.",
+      "encourageCorrect": "Right! Compounding without annual tax drag is a powerful advantage.",
+      "encourageIncorrect": "Tax-deferred accounts let investments grow without being reduced by annual taxes. Taxes are paid later at withdrawal, potentially at a lower rate in retirement."
+    }
   ]
 }

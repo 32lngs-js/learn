@@ -104,5 +104,31 @@
       "type": "connectPrompt",
       "prompt": "This completes the Derivatives and Risk Management section. The **checkpoint** follows to assess your integrated understanding of option strategies, derivatives overlay, and currency management in portfolio construction."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "A passive currency hedging strategy aims to:",
+      "options": [
+        "Profit from currency movements",
+        "Neutralize the currency exposure in an international portfolio",
+        "Increase portfolio volatility"
+      ],
+      "correctIndex": 1,
+      "explanation": "Passive hedging (typically using forward contracts) removes or reduces currency risk from international investments, focusing on asset returns only.",
+      "encourageCorrect": "Exactly! Passive hedging removes currency noise so you can focus on asset selection.",
+      "encourageIncorrect": "Passive currency hedging aims to neutralize (hedge away) the currency exposure in international portfolios, typically using currency forwards."
+    },
+    {
+      "question": "The cost of a currency hedge using forward contracts is approximately:",
+      "options": [
+        "The bid-ask spread on the spot rate",
+        "The interest rate differential between the two currencies",
+        "Always zero"
+      ],
+      "correctIndex": 1,
+      "explanation": "The forward premium/discount reflects the interest rate differential between currencies. This is the economic cost of hedging via forwards.",
+      "encourageCorrect": "Right! The interest rate differential determines the hedging cost.",
+      "encourageIncorrect": "Currency hedging cost via forwards is driven by the interest rate differential between the two currencies (covered interest rate parity)."
+    }
   ]
 }

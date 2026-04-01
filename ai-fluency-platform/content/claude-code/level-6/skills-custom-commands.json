@@ -43,5 +43,31 @@
       "type": "connectPrompt",
       "prompt": "You now understand what skills are and why they matter. In the next module, you will actually build one from scratch — step by step — and test it in a live session. Think about which of your repetitive tasks you want to tackle first."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Where do skill files live?",
+      "options": [
+        "In CLAUDE.md",
+        "In the .claude/skills/ directory",
+        "In the system settings"
+      ],
+      "correctIndex": 1,
+      "explanation": "Skills are Markdown files in the .claude/skills/ directory (project-specific) or ~/.claude/skills/ (global).",
+      "encourageCorrect": "That's the spot! Skills live alongside your other Claude config.",
+      "encourageIncorrect": "Skills live in .claude/skills/ for project-specific skills or ~/.claude/skills/ for global ones."
+    },
+    {
+      "question": "What does $ARGUMENTS do in a skill file?",
+      "options": [
+        "Lists all available arguments",
+        "Acts as a placeholder for whatever the user types after the command",
+        "Defines required arguments"
+      ],
+      "correctIndex": 1,
+      "explanation": "$ARGUMENTS gets replaced with whatever you type after the skill name — e.g., '/review report.md' replaces $ARGUMENTS with 'report.md'.",
+      "encourageCorrect": "Exactly! $ARGUMENTS makes skills flexible and reusable.",
+      "encourageIncorrect": "$ARGUMENTS is a placeholder — when you type '/review report.md', $ARGUMENTS becomes 'report.md' in the skill instructions."
+    }
   ]
 }

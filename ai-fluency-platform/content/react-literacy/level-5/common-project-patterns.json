@@ -1,0 +1,106 @@
+{
+  "meta": {
+    "title": "5.4 Common Project Patterns",
+    "description": "Real projects organize code in recognizable ways.",
+    "level": "level-5",
+    "slug": "common-project-patterns",
+    "order": 4,
+    "isCheckpoint": false,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "predictPrompt",
+      "prompt": "If you had a React project with 200 files, how would you organize them? Would you put all components in one folder? Group them by page? By feature? What would help you find things quickly?"
+    },
+    {
+      "type": "markdown",
+      "content": "## Common Project Patterns\n\nSo far in this course, we have focused on reading individual files -- components, hooks, state, effects, types. But real React projects have dozens or hundreds of files. When you open a codebase for the first time, you need to know where to look.\n\nThe good news: React projects follow a small number of organizational patterns. Once you learn them, you can navigate almost any codebase.\n\n### The Standard src/ Structure\n\nMost React projects start from the same basic layout:\n\n```\nmy-app/\n  package.json\n  tsconfig.json\n  .env\n  public/\n    index.html\n    favicon.ico\n  src/\n    index.tsx          (entry point)\n    App.tsx            (root component)\n    components/        (reusable UI pieces)\n    pages/             (full-page components)\n    hooks/             (custom hooks)\n    utils/ or lib/     (helper functions)\n    types/             (TypeScript type definitions)\n    styles/            (CSS or style files)\n    assets/            (images, fonts)\n```\n\nLet us walk through what each part does:\n\n- **`package.json`** -- the project's ID card. It lists every library the project uses, along with scripts for running, building, and testing. When you want to know \"does this project use Redux? React Query? Tailwind?\" -- check `package.json`.\n- **`tsconfig.json`** -- TypeScript configuration. You rarely need to read this.\n- **`.env`** -- environment variables like API URLs, keys, and feature flags. These are configuration values that change between development, staging, and production. **Never commit these to git.**\n- **`src/index.tsx`** -- the entry point. This file renders the root `<App />` component into the HTML page.\n- **`src/App.tsx`** -- the root component. Usually contains the router, global providers (theme, auth), and the overall page layout.\n\n### Components vs Pages\n\nMost projects distinguish between **components** and **pages**:\n\n```\nsrc/\n  components/\n    Button.tsx\n    Modal.tsx\n    SearchBar.tsx\n    UserAvatar.tsx\n  pages/\n    HomePage.tsx\n    DashboardPage.tsx\n    SettingsPage.tsx\n    ProfilePage.tsx\n```\n\n**Components** are reusable building blocks -- a button, a modal, a search bar. They can be used on any page.\n\n**Pages** are full-screen views that correspond to a URL route. `DashboardPage` is what you see at `/dashboard`. Pages are composed of components.\n\nWhen you need to find the code for a specific screen, look in `pages/`. When you need to find a reusable UI element, look in `components/`.\n\n### Feature Folders\n\nAs projects grow, the `components/` and `pages/` folders get unwieldy. Many teams switch to **feature folders** -- grouping files by feature instead of file type:\n\n```\nsrc/\n  features/\n    auth/\n      LoginForm.tsx\n      SignUpForm.tsx\n      useAuth.ts\n      authApi.ts\n      authTypes.ts\n    dashboard/\n      DashboardPage.tsx\n      MetricsCard.tsx\n      useDashboardData.ts\n      dashboardApi.ts\n    settings/\n      SettingsPage.tsx\n      ProfileForm.tsx\n      NotificationPreferences.tsx\n      useSettings.ts\n```\n\nWith feature folders, everything related to authentication lives in `features/auth/`. Everything related to the dashboard lives in `features/dashboard/`. When a designer asks \"where is the login form code?\", you go straight to `features/auth/LoginForm.tsx`.\n\nThis pattern is increasingly popular because it keeps related code together. You do not have to jump between `components/`, `hooks/`, `api/`, and `types/` to understand one feature.\n\n### Barrel Exports (index.ts)\n\nYou will often see `index.ts` files in folders:\n\n```\nsrc/\n  components/\n    Button/\n      Button.tsx\n      Button.styles.ts\n      Button.test.tsx\n      index.ts\n```\n\nThe `index.ts` file usually looks like this:\n\n```typescript\nexport { Button } from './Button';\nexport type { ButtonProps } from './Button';\n```\n\nThis is a **barrel export**. It lets other files import from the folder name instead of the specific file:\n\n```typescript\n// Without barrel export:\nimport { Button } from '../components/Button/Button';\n\n// With barrel export:\nimport { Button } from '../components/Button';\n```\n\nWhen you see an import from a folder (no specific file), there is an `index.ts` inside that folder handling the re-export. It is just a convenience pattern.\n\n### Container vs Presentational Components\n\nAnother pattern you will encounter is the split between **container** and **presentational** components:\n\n**Presentational components** handle how things look:\n```typescript\ninterface UserCardProps {\n  name: string;\n  email: string;\n  avatarUrl: string;\n}\n\nfunction UserCard({ name, email, avatarUrl }: UserCardProps) {\n  return (\n    <div className=\"user-card\">\n      <img src={avatarUrl} alt={name} />\n      <h3>{name}</h3>\n      <p>{email}</p>\n    </div>\n  );\n}\n```\n\n**Container components** handle data and logic:\n```typescript\nfunction UserCardContainer({ userId }: { userId: string }) {\n  const { data: user, loading, error } = useFetch<User>(`/api/users/${userId}`);\n\n  if (loading) return <UserCardSkeleton />;\n  if (error) return <ErrorMessage message=\"Could not load user\" />;\n\n  return (\n    <UserCard\n      name={user.name}\n      email={user.email}\n      avatarUrl={user.avatarUrl}\n    />\n  );\n}\n```\n\nThe presentational component (`UserCard`) is pure display -- give it data and it renders. The container component (`UserCardContainer`) handles fetching data, loading states, and error handling, then passes the clean data to the presentational component.\n\nThis separation makes code easier to test, reuse, and understand. When you see a component that only renders JSX from props, it is presentational. When you see a component full of hooks and logic that passes data to another component, it is a container.\n\n### Reading package.json\n\nThe `package.json` file is your map to the project's dependencies. Here is a real-world example:\n\n```json\n{\n  \"dependencies\": {\n    \"react\": \"^18.2.0\",\n    \"react-dom\": \"^18.2.0\",\n    \"react-router-dom\": \"^6.20.0\",\n    \"@tanstack/react-query\": \"^5.8.0\",\n    \"axios\": \"^1.6.0\",\n    \"zustand\": \"^4.4.0\",\n    \"tailwindcss\": \"^3.3.0\",\n    \"date-fns\": \"^2.30.0\"\n  }\n}\n```\n\nFrom this you can immediately tell:\n- **React Router** is used for navigation\n- **React Query** handles data fetching and caching\n- **Axios** is used for HTTP requests (instead of plain `fetch`)\n- **Zustand** is used for global state management\n- **Tailwind CSS** is used for styling\n- **date-fns** is used for date formatting\n\nThis context is incredibly valuable. If you see `useQuery` in a component, you now know it comes from React Query. If you see `className=\"flex items-center\"`, you know that is Tailwind CSS.\n\n### Environment Variables (.env)\n\nThe `.env` file holds configuration that changes between environments:\n\n```\nREACT_APP_API_URL=https://api.example.com\nREACT_APP_STRIPE_KEY=pk_test_abc123\nREACT_APP_FEATURE_NEW_DASHBOARD=true\n```\n\nIn the code, these are accessed as:\n```typescript\nconst apiUrl = process.env.REACT_APP_API_URL;\n```\n\nTwo important things to know:\n1. Environment variables in React must start with `REACT_APP_` (or `VITE_` in Vite projects) to be accessible in the browser\n2. `.env` files should never be committed to git -- they often contain secrets. You will see `.env.example` files that show the required variables without the actual values.\n\n### Putting It Together: Navigating a New Codebase\n\nWhen you open a React project for the first time, follow this sequence:\n\n1. **Read `package.json`** -- what libraries does it use?\n2. **Look at `src/` structure** -- is it organized by file type or feature?\n3. **Open `App.tsx`** -- what is the top-level layout and routing?\n4. **Find the page you care about** -- follow the route to the page component\n5. **Trace the components** -- what components does the page use, and where are they defined?\n\nThis sequence works for any React project, regardless of its size or architecture."
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "You open a React project and see a `src/features/` folder with subfolders like `auth/`, `billing/`, `dashboard/`. What organizational pattern is this project using?",
+      "answer": "Feature folders. The project groups files by feature (authentication, billing, dashboard) rather than by file type (components, hooks, utils). Everything related to one feature lives in its own folder."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Navigating Project Structure",
+      "problems": [
+        {
+          "id": "rl5-4-1",
+          "question": "You need to find where the login form code lives. Given this project structure, which file would you open?\n\n```\nsrc/\n  components/\n    Button.tsx\n    Input.tsx\n  features/\n    auth/\n      LoginForm.tsx\n      SignUpForm.tsx\n      useAuth.ts\n      index.ts\n    dashboard/\n      DashboardPage.tsx\n```",
+          "options": [
+            "A) src/components/Input.tsx",
+            "B) src/features/auth/LoginForm.tsx",
+            "C) src/features/auth/index.ts"
+          ],
+          "correctAnswer": "B",
+          "explanation": "The project uses feature folders. Login is an authentication feature, so the login form lives in `features/auth/LoginForm.tsx`. The `index.ts` is just a barrel export file. `Input.tsx` is a generic input component, not the login form itself.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "rl5-4-2",
+          "question": "You see this in a component file:\n\n```typescript\nimport { Button } from '@/components/Button';\nimport { useAuth } from '@/features/auth';\nimport { formatDate } from '@/utils/date';\n```\n\nThe `@/` prefix resolves to `src/`. Based on these imports, where is the `useAuth` hook defined?",
+          "options": [
+            "A) In a file called `src/features/auth/useAuth.ts`, re-exported through `src/features/auth/index.ts`",
+            "B) In `src/components/Button.tsx`",
+            "C) In `src/utils/date.ts`"
+          ],
+          "correctAnswer": "A",
+          "explanation": "The import `from '@/features/auth'` imports from the folder, which means there is a barrel export (`index.ts`) inside `src/features/auth/` that re-exports `useAuth`. The actual hook is likely defined in `src/features/auth/useAuth.ts`. The `@/` is a path alias for `src/`.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "rl5-4-3",
+          "question": "You are reviewing a PR and see this `package.json` change:\n\n```json\n{\n  \"dependencies\": {\n    \"react\": \"^18.2.0\",\n    \"react-router-dom\": \"^6.20.0\",\n    \"@tanstack/react-query\": \"^5.8.0\",\n    \"zustand\": \"^4.4.0\",\n+   \"socket.io-client\": \"^4.7.0\",\n+   \"@tanstack/react-table\": \"^8.10.0\"\n  }\n}\n```\n\nWhat do the two new dependencies suggest about the feature being added?",
+          "options": [
+            "A) The feature involves real-time data (WebSockets via socket.io) and displaying data in a table",
+            "B) The feature replaces React Router with a new routing library",
+            "C) The feature adds authentication and form handling"
+          ],
+          "correctAnswer": "A",
+          "explanation": "`socket.io-client` is a library for real-time communication via WebSockets -- data pushed from the server without the user refreshing. `@tanstack/react-table` is a library for building powerful data tables. Together, they suggest a feature that displays real-time data in a table -- perhaps a live dashboard, an admin panel, or a monitoring tool.",
+          "difficulty": "advanced"
+        }
+      ]
+    },
+    {
+      "type": "explainBack",
+      "prompt": "If a new team member asked you how to find their way around a React project they have never seen before, what steps would you tell them to follow? What files should they read first?"
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "React projects follow predictable patterns: src/ for source code, components/ or features/ for organization, package.json for dependencies, .env for configuration. Start with package.json to understand the tech stack, then App.tsx for the top-level structure, then follow the routes to find specific pages."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "Think about a building you know well -- an office, a school, a hospital. It has a standard layout: entrance, reception, hallways, rooms grouped by purpose. React projects are organized the same way. The entry point is the front door. App.tsx is the reception. Feature folders are departments."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is a 'feature folder' in a React project?",
+      "options": ["A folder that contains only test files", "A folder that groups all files related to one feature together (components, hooks, API, types)", "A folder that stores environment variables"],
+      "correctIndex": 1,
+      "explanation": "Feature folders organize files by feature rather than file type. Everything related to authentication lives in features/auth/, everything for the dashboard lives in features/dashboard/, and so on.",
+      "encourageCorrect": "That's right! Feature folders keep related code together, making it easy to find everything for a given feature.",
+      "encourageIncorrect": "Feature folders group all files for one feature in the same place -- components, hooks, API calls, and types all live together. This makes it easy to find code by feature."
+    },
+    {
+      "question": "What is the first file you should read when opening a new React project?",
+      "options": ["package.json -- to see what libraries the project uses", "The largest component file", "The CSS files"],
+      "correctIndex": 0,
+      "explanation": "package.json lists every dependency the project uses. It tells you the tech stack at a glance -- routing library, state management, styling approach, and more.",
+      "encourageCorrect": "Smart move! package.json is like the project's ID card -- it tells you what tools are in play.",
+      "encourageIncorrect": "Start with package.json! It lists all dependencies, so you immediately know the project's tech stack -- what router, state manager, and styling tools it uses."
+    },
+    {
+      "question": "What does a barrel export (index.ts) in a folder do?",
+      "options": ["It runs the folder's tests", "It re-exports items so you can import from the folder name instead of specific files", "It defines environment variables for the folder"],
+      "correctIndex": 1,
+      "explanation": "A barrel export re-exports items from files inside the folder. This lets you write 'import { Button } from '../components/Button'' instead of needing the full file path.",
+      "encourageCorrect": "Exactly! Barrel exports are a convenience that keeps import paths clean and short.",
+      "encourageIncorrect": "A barrel export (index.ts) re-exports items so other files can import from the folder name directly, rather than specifying the exact file inside the folder."
+    }
+  ]
+}

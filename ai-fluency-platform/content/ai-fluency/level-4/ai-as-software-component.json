@@ -37,7 +37,7 @@
     },
     {
       "type": "markdown",
-      "content": "## The Component Boundary Pattern\n\nThe most important architectural decision is **where you draw the AI boundary** in your system. A clean boundary means:\n\n1. **Inputs are validated** before reaching the model\n2. **Outputs are parsed and typed** before leaving the component\n3. **Retries and fallbacks** are handled inside the component\n4. **The rest of your system does not know it is talking to AI** -- it just sees a function with typed inputs and outputs\n\n```\n┌─────────────────────────────────────────────┐\n│           AI Component Boundary             │\n│                                             │\n│  Input ──> Validate ──> Build Prompt ──>    │\n│            Format       + Context           │\n│                            │                │\n│                      Call Model             │\n│                            │                │\n│  Output <── Type <── Parse Response <──     │\n│             Check     + Validate            │\n│                                             │\n└─────────────────────────────────────────────┘\n```\n\nThis boundary pattern means the rest of your application treats the AI component like any other service -- testable, mockable, and replaceable."
+      "content": "## The Component Boundary Pattern\n\nThe most important architectural decision is **where you draw the AI boundary** in your system. A clean boundary means:\n\n1. **Inputs are validated** before reaching the model\n2. **Outputs are parsed and typed** before leaving the component\n3. **Retries and fallbacks** are handled inside the component\n4. **The rest of your system does not know it is talking to AI** -- it just sees a function with typed inputs and outputs\n\n```\n\u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n\u2502           AI Component Boundary             \u2502\n\u2502                                             \u2502\n\u2502  Input \u2500\u2500> Validate \u2500\u2500> Build Prompt \u2500\u2500>    \u2502\n\u2502            Format       + Context           \u2502\n\u2502                            \u2502                \u2502\n\u2502                      Call Model             \u2502\n\u2502                            \u2502                \u2502\n\u2502  Output <\u2500\u2500 Type <\u2500\u2500 Parse Response <\u2500\u2500     \u2502\n\u2502             Check     + Validate            \u2502\n\u2502                                             \u2502\n\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n```\n\nThis boundary pattern means the rest of your application treats the AI component like any other service -- testable, mockable, and replaceable."
     },
     {
       "type": "explainBack",
@@ -58,6 +58,32 @@
         "What failure modes would be most dangerous in your domain (healthcare, finance, consumer, etc.)?",
         "How does treating AI as a component change the way you think about testing?"
       ]
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Why should you validate AI outputs at the boundary before passing them to the rest of your application?",
+      "options": [
+        "To make the output look better",
+        "Because raw AI outputs are untyped strings that could contain unexpected formats, hallucinations, or partial responses",
+        "To reduce the model's response time"
+      ],
+      "correctIndex": 1,
+      "explanation": "Raw AI outputs could contain anything -- validating at the boundary ensures failures are caught early rather than propagating through your system.",
+      "encourageCorrect": "That's right! The AI boundary is where you convert probabilistic output into reliable, typed data.",
+      "encourageIncorrect": "Raw AI outputs are untyped strings that could contain anything unexpected. Validating at the boundary catches problems before they propagate through your system."
+    },
+    {
+      "question": "What does treating AI as a software component mean in practice?",
+      "options": [
+        "Using AI for every feature",
+        "Defining typed interfaces, output validation, and failure handling -- just like any service dependency",
+        "Running AI on dedicated hardware"
+      ],
+      "correctIndex": 1,
+      "explanation": "Treating AI as a component means applying the same engineering rigor as any other service: defined interfaces, contracts, validation, and failure mode handling.",
+      "encourageCorrect": "Exactly! AI deserves the same engineering rigor as any other service your code depends on.",
+      "encourageIncorrect": "It means defining typed interfaces, validating outputs, and handling failures -- applying the same rigor you'd use for any other service dependency."
     }
   ]
 }

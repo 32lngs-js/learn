@@ -21,10 +21,10 @@
       "type": "providerContent",
       "context": "### Built-in Prompt Systems\n\nYour tool may already have a prompt library built in:",
       "providers": {
-        "claude-code": "Claude Code has a **skills system** — built-in prompt templates with tool access that you invoke with slash commands. For example, `/commit` analyzes your staged changes and generates a commit message, while `/review-pr` reviews a pull request and provides feedback. These skills are essentially pre-built, tested prompts packaged with the right tool permissions.\n\nYou can also create **custom skills** by defining them in `.claude/agents/` directories within your project. A custom skill is a markdown file with instructions that Claude follows when the skill is invoked. This means your team can build a shared library of project-specific skills — a `/deploy` skill that follows your deployment checklist, a `/review` skill that applies your team's code standards, or a `/document` skill that generates documentation in your preferred format. Since skills live in your repository, they are version-controlled and shared automatically with every team member who uses Claude Code.",
-        "codex": "Codex supports **saved prompts and instruction templates** that you can reuse across sessions. You can define frequently used prompts in your configuration and invoke them quickly without rewriting from scratch.\n\nFor teams, Codex offers **organization-shared prompt libraries** that ensure consistent usage patterns across developers. An engineering lead can define approved prompt templates for common tasks — code review, documentation generation, test writing — and every team member has access to the same library. This solves the governance challenge discussed in this module: standardized templates prevent prompt drift and ensure quality remains consistent even as the team grows. The saved prompts integrate with Codex's instruction system, so they can include system-level context alongside the task-specific prompt.",
-        "cline": "Cline supports **custom commands and prompt templates** that you can define and reuse. These let you create shortcuts for common prompt patterns — a code review template, a test generation prompt, or a refactoring instruction set — that you invoke with a simple command.\n\nThe Cline ecosystem also includes **community-shared prompt packs** available through the VS Code extension marketplace. These are curated prompt collections for specific workflows — React development, Python data science, DevOps automation — that you can install and customize for your needs. This gives you a head start on building your prompt library: install a community pack as a baseline, then customize and extend it with your own templates. The combination of personal templates and community packs means you rarely need to write common prompts from scratch.",
-        "gemini": "Gemini's **Gems** are the most direct implementation of a built-in prompt library. Each Gem is a saved instruction set that acts as a reusable persona or prompt template. You can create Gems for specific tasks — a \"Code Reviewer\" Gem, a \"Technical Writer\" Gem, a \"Data Analyst\" Gem — and switch between them instantly.\n\nGems can be **shared within Google Workspace organizations**, making them a team prompt library out of the box. An engineering team can maintain a collection of approved Gems that embody their standards and practices. Gems persist across conversations and are accessible from any Gemini interface, so your prompt library follows you across devices and sessions. For the Gemini CLI, system instruction configurations serve a similar purpose — define your commonly used instruction sets and load them as needed."
+        "claude-code": "Claude Code has a **skills system** \u2014 built-in prompt templates with tool access that you invoke with slash commands. For example, `/commit` analyzes your staged changes and generates a commit message, while `/review-pr` reviews a pull request and provides feedback. These skills are essentially pre-built, tested prompts packaged with the right tool permissions.\n\nYou can also create **custom skills** by defining them in `.claude/agents/` directories within your project. A custom skill is a markdown file with instructions that Claude follows when the skill is invoked. This means your team can build a shared library of project-specific skills \u2014 a `/deploy` skill that follows your deployment checklist, a `/review` skill that applies your team's code standards, or a `/document` skill that generates documentation in your preferred format. Since skills live in your repository, they are version-controlled and shared automatically with every team member who uses Claude Code.",
+        "codex": "Codex supports **saved prompts and instruction templates** that you can reuse across sessions. You can define frequently used prompts in your configuration and invoke them quickly without rewriting from scratch.\n\nFor teams, Codex offers **organization-shared prompt libraries** that ensure consistent usage patterns across developers. An engineering lead can define approved prompt templates for common tasks \u2014 code review, documentation generation, test writing \u2014 and every team member has access to the same library. This solves the governance challenge discussed in this module: standardized templates prevent prompt drift and ensure quality remains consistent even as the team grows. The saved prompts integrate with Codex's instruction system, so they can include system-level context alongside the task-specific prompt.",
+        "cline": "Cline supports **custom commands and prompt templates** that you can define and reuse. These let you create shortcuts for common prompt patterns \u2014 a code review template, a test generation prompt, or a refactoring instruction set \u2014 that you invoke with a simple command.\n\nThe Cline ecosystem also includes **community-shared prompt packs** available through the VS Code extension marketplace. These are curated prompt collections for specific workflows \u2014 React development, Python data science, DevOps automation \u2014 that you can install and customize for your needs. This gives you a head start on building your prompt library: install a community pack as a baseline, then customize and extend it with your own templates. The combination of personal templates and community packs means you rarely need to write common prompts from scratch.",
+        "gemini": "Gemini's **Gems** are the most direct implementation of a built-in prompt library. Each Gem is a saved instruction set that acts as a reusable persona or prompt template. You can create Gems for specific tasks \u2014 a \"Code Reviewer\" Gem, a \"Technical Writer\" Gem, a \"Data Analyst\" Gem \u2014 and switch between them instantly.\n\nGems can be **shared within Google Workspace organizations**, making them a team prompt library out of the box. An engineering team can maintain a collection of approved Gems that embody their standards and practices. Gems persist across conversations and are accessible from any Gemini interface, so your prompt library follows you across devices and sessions. For the Gemini CLI, system instruction configurations serve a similar purpose \u2014 define your commonly used instruction sets and load them as needed."
       }
     },
     {
@@ -60,6 +60,32 @@
     {
       "type": "connectPrompt",
       "prompt": "A prompt library keeps your best work accessible. But some tasks require more than prompts -- they require running models under your direct control. In Module 2.7, you will learn how to run AI models locally for privacy, cost savings, and offline access."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Why should you include a 'last tested' date in your saved prompts?",
+      "options": [
+        "To track when you created the prompt",
+        "Because model updates can change how a prompt performs over time",
+        "To remember when you last used it"
+      ],
+      "correctIndex": 1,
+      "explanation": "Model updates and version changes can alter prompt behavior, so periodic testing ensures your saved prompts still work as expected.",
+      "encourageCorrect": "Exactly! Prompts can break when models are updated -- tracking test dates helps you catch drift.",
+      "encourageIncorrect": "Model updates can change how prompts perform, so a 'last tested' date tells you when to retest. Treat your prompt library as a living document."
+    },
+    {
+      "question": "Why is a provider-agnostic prompt toolkit valuable?",
+      "options": [
+        "It makes prompts shorter",
+        "It lets you switch between models and providers without rewriting prompts",
+        "It makes prompts run faster"
+      ],
+      "correctIndex": 1,
+      "explanation": "A provider-agnostic toolkit with templated variables gives you portability across models and providers as the AI landscape changes.",
+      "encourageCorrect": "That's right! Portability protects your investment as the AI landscape evolves.",
+      "encourageIncorrect": "A provider-agnostic toolkit lets you switch models and providers without rewriting everything -- important since the AI landscape changes rapidly."
     }
   ]
 }

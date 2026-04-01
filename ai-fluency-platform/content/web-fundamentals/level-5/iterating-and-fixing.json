@@ -1,0 +1,110 @@
+{
+  "meta": {
+    "title": "5.3 Iterating and Fixing",
+    "description": "Learn to describe visual and functional problems in code terms so AI fixes them precisely on the first try.",
+    "level": "level-5",
+    "slug": "iterating-and-fixing",
+    "order": 3,
+    "isCheckpoint": false,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "predictPrompt",
+      "prompt": "You got code from AI and the heading has way too much space above it. Which do you think would get a better fix: telling AI \"the heading is too low on the page\" or telling it \"the margin-top on the h1 is too large \u2014 reduce it to 20px\"? Why?"
+    },
+    {
+      "type": "markdown",
+      "content": "## The feedback loop\n\nWorking with AI is not a one-shot process. You prompt, you get code, you review it, and then you iterate. The quality of your iteration determines how quickly you get to a finished result.\n\nThe single biggest mistake people make at this stage is being vague about what is wrong. \"Make it look better\" is the worst possible follow-up prompt. It tells the AI nothing specific, so it changes things at random \u2014 and often makes the situation worse by altering parts you were happy with.\n\n## Describe problems in code terms\n\nYou already know how to read the code. Now use that ability to describe problems precisely:\n\n| What you see | Vague description | Precise description |\n| :-- | :-- | :-- |\n| Heading has too much space above it | \"The heading is too low\" | \"Reduce the `margin-top` on the `<h1>` to `20px`\" |\n| Button text is hard to read | \"The button looks off\" | \"Change the `<button>` `color` to `#ffffff` \u2014 current text is too low contrast against the background\" |\n| Card layout breaks on mobile | \"Doesn't work on phones\" | \"The `.card-grid` needs a media query at `max-width: 768px` to switch from `grid-template-columns: repeat(3, 1fr)` to `1fr`\" |\n| Menu does not close after clicking a link | \"Menu is broken\" | \"The click event listener on `.nav-links a` should also toggle the `.nav-open` class on the `<nav>` to close the mobile menu\" |\n\nThe pattern is: **identify the element, name the property or behavior, and state what it should be.**\n\n## The screenshot-plus-description pattern\n\nWhen a problem is visual and hard to describe in words alone, combine a screenshot with a code-level description:\n\n> [Screenshot attached] The three cards are overlapping on tablet-sized screens. The `.card-grid` is using `grid-template-columns: repeat(3, 1fr)` which does not have enough space below 900px. Add a media query at `max-width: 900px` to change to `repeat(2, 1fr)` and another at `max-width: 600px` for `1fr`.\n\nThis gives the AI both the visual context and the specific fix. It is dramatically more effective than \"the cards look weird on some screens.\"\n\n## Point to specific lines\n\nIf the AI gave you a large block of code, reference the specific area:\n\n> In the CSS for `.hero`, the `padding: 120px 20px` is creating too much vertical space. Change it to `padding: 60px 20px`.\n\n> In the JavaScript, the `addEventListener` on line 15 targets `.menu-btn` but the HTML uses the class `.menu-toggle`. Change the selector to `.menu-toggle`.\n\nThis prevents the AI from re-reading and potentially rewriting code that was already correct.\n\n## When to tweak directly vs. ask AI to regenerate\n\nSometimes the fix is so small that it is faster to change it yourself:\n\n- Changing a color value? Just edit it.\n- Swapping `max-width` for `min-width`? One word change.\n- Fixing a class name typo? Find and replace.\n\nAsk AI to regenerate when:\n\n- The structural approach is wrong (it used float layout when you need grid)\n- Multiple interconnected things need to change\n- You need new functionality added, not just a value tweak\n\n## Avoid the \"make it look better\" trap\n\nEvery time you want to type \"make it look better\" or \"improve the design,\" stop and ask yourself: what specifically is wrong? Then describe that specific thing. Even \"the font feels too small on the hero section \u2014 increase the `<h1>` `font-size` to `3rem`\" is infinitely better than \"make it look better.\"\n\nIf you genuinely do not know what is wrong \u2014 only that something feels off \u2014 try describing what you want the result to look like: \"I want the hero section to feel more spacious. Try increasing `padding` to `80px 40px` and adding `letter-spacing: 0.05em` to the `<h1>`.\" That is still specific enough for the AI to act on."
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "On a scale of 1-5, how confident are you that you could look at a visual problem on a webpage, identify which CSS property or HTML element is causing it, and describe the fix to AI in one sentence?",
+      "answer": "If you rated yourself 3 or higher, you have the core skill. If you are lower, that is normal \u2014 this gets easier with practice. The key is to train yourself to translate visual observations into code vocabulary: 'too much space' becomes 'margin or padding is too large,' 'text is hard to read' becomes 'color contrast is too low.'"
+    },
+    {
+      "type": "practiceSet",
+      "title": "Writing Fix Prompts",
+      "problems": [
+        {
+          "id": "wf5-3-1",
+          "question": "The button on your landing page has white text on a white background, making it invisible. Which follow-up prompt to AI would fix this most effectively?\n\n**Prompt A:** \"The button is broken, fix it.\"\n\n**Prompt B:** \"Change the `.cta-button` `background-color` to `#2563eb` so the white text is visible against it.\"\n\n**Prompt C:** \"Make it look better.\"",
+          "options": [
+            "A) Prompt A",
+            "B) Prompt B",
+            "C) Prompt C"
+          ],
+          "correctAnswer": "B",
+          "explanation": "Prompt B names the exact element (.cta-button), the exact property (background-color), and the exact value (#2563eb). The AI knows precisely what to change without touching anything else. Prompts A and C are vague \u2014 the AI might change the text color instead, alter the font, or restructure the entire button.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "wf5-3-2",
+          "question": "You told the AI \"make it look better\" and it completely redesigned the nav bar, changed the color scheme, and moved the hero section. You liked the original design except for one thing: the nav links were too close together. What should you do?\n\n**Option A:** Ask AI to undo everything and start over.\n\n**Option B:** Ask AI to restore the previous version, then send a specific follow-up: \"Add `gap: 24px` to the `.nav-links` flex container to space out the navigation links.\"\n\n**Option C:** Accept the new design since AI probably knows best.",
+          "options": [
+            "A) Option A",
+            "B) Option B",
+            "C) Option C"
+          ],
+          "correctAnswer": "B",
+          "explanation": "Option B restores what was working and then makes the one specific change you actually wanted. The lesson: \"make it look better\" invited the AI to change everything. A precise prompt like \"add gap: 24px to .nav-links\" changes only the thing that needed fixing. Always be specific about what is wrong rather than giving the AI creative freedom over things you were already happy with.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "wf5-3-3",
+          "question": "Match the visual problem to the best follow-up prompt.\n\n**Problem:** The three-column card layout stacks into a single column too early \u2014 it still has plenty of room for two columns on tablet screens.\n\n**Prompt A:** \"Change the media query breakpoint on `.card-grid` from `max-width: 1024px` to `max-width: 600px` for the single-column layout, and add a new breakpoint at `max-width: 900px` for `grid-template-columns: repeat(2, 1fr)`.\"\n\n**Prompt B:** \"Fix the cards on tablet.\"\n\n**Prompt C:** \"Make the layout responsive.\"",
+          "options": [
+            "A) Prompt A",
+            "B) Prompt B",
+            "C) Prompt C"
+          ],
+          "correctAnswer": "A",
+          "explanation": "Prompt A identifies the element (.card-grid), the current breakpoint that is wrong (1024px), the new breakpoint values (900px and 600px), and the exact grid-template-columns values for each. The AI can implement this fix precisely without guessing. Prompts B and C leave the AI guessing what \"fix\" or \"responsive\" means in this specific context.",
+          "difficulty": "intermediate"
+        }
+      ]
+    },
+    {
+      "type": "reflectPrompt",
+      "questions": [
+        "Think about the last time you asked AI to generate or fix something and the result was not what you wanted. What was vague about your request, and how would you rephrase it now using specific code terms?",
+        "When you see a visual problem on a webpage, what is your process for figuring out which HTML element or CSS property is responsible? How has that process changed since you started this course?",
+        "Where do you draw the line between fixing something yourself in the code and asking AI to regenerate it? What factors influence that decision?"
+      ]
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "Effective iteration means describing problems in code terms: name the element, name the property, state what it should be. Avoid vague prompts like \"make it look better\" \u2014 they invite unwanted changes to code you were happy with. For small fixes, edit the code directly. For structural changes, give AI a precise description. Combine screenshots with code-level descriptions for visual problems that are hard to put into words."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "You now have the full workflow: prompt precisely, verify the output, iterate with specific fix requests. The checkpoint will put it all together \u2014 you will review a complete AI-generated landing page, find every issue, and write the prompts to fix them."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "When asking AI to fix a visual problem, you should describe the fix by:",
+      "options": [
+        "Saying 'make it look better'",
+        "Naming the specific element and CSS property that needs to change",
+        "Asking AI to redesign the entire page"
+      ],
+      "correctIndex": 1,
+      "explanation": "Precise prompts like 'increase the padding on the .card element to 24px' get better results than vague ones like 'make it look better.'",
+      "encourageCorrect": "Exactly! Name the element, name the property, state the desired value.",
+      "encourageIncorrect": "Be specific: name the element and the CSS property. 'Increase padding on .card to 24px' is much better than 'make it look better.'"
+    },
+    {
+      "question": "When iterating on AI-generated code, why should you avoid vague prompts?",
+      "options": [
+        "Because AI can't process long prompts",
+        "Because vague prompts invite unwanted changes to code you were happy with",
+        "Because vague prompts are faster"
+      ],
+      "correctIndex": 1,
+      "explanation": "Vague prompts like 'improve this' cause AI to change things you didn't want changed. Specific prompts target only the issue you want fixed.",
+      "encourageCorrect": "Right! Vague prompts risk breaking things you already liked.",
+      "encourageIncorrect": "Vague prompts let AI change things you were happy with. Specific prompts (naming the element and property) prevent unwanted side effects."
+    }
+  ]
+}

@@ -114,5 +114,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Pricing Futures** \u2014 how daily settlement (mark-to-market) causes futures prices to differ slightly from forward prices, and the mechanics of margin accounts, convergence, contango, and backwardation."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "The forward price of an asset is determined by:",
+      "options": [
+        "Supply and demand only",
+        "The spot price compounded at the risk-free rate, adjusted for carry costs and benefits",
+        "The expected future spot price"
+      ],
+      "correctIndex": 1,
+      "explanation": "Forward price = Spot price x (1 + rf)^T, adjusted for storage costs, dividends, and other carry factors. This is cost-of-carry pricing.",
+      "encourageCorrect": "Well done! Cost-of-carry is the key to forward pricing.",
+      "encourageIncorrect": "Forward price is based on the spot price compounded at the risk-free rate, plus carry costs minus carry benefits. This is the no-arbitrage (cost-of-carry) approach."
+    },
+    {
+      "question": "At inception, the value of a forward contract to both parties is:",
+      "options": [
+        "Equal to the forward price",
+        "Zero",
+        "Equal to the spot price"
+      ],
+      "correctIndex": 1,
+      "explanation": "The forward price is set so that neither party needs to pay the other at initiation \u2014 the contract value starts at zero.",
+      "encourageCorrect": "Exactly! The forward price is set to make the initial value zero.",
+      "encourageIncorrect": "At inception, a forward contract has zero value to both parties. The forward price is specifically set to achieve this no-arbitrage condition."
+    }
   ]
 }

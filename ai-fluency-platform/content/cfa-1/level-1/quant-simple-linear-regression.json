@@ -118,5 +118,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Big Data Techniques**, which extend beyond traditional statistical methods to explore machine learning, natural language processing, and data visualization. These modern tools complement the regression and hypothesis testing foundations you have built."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "In the regression equation Y = b0 + b1*X, what does R-squared measure?",
+      "options": [
+        "The slope of the regression line",
+        "The proportion of Y's variation explained by X",
+        "The statistical significance of the intercept"
+      ],
+      "correctIndex": 1,
+      "explanation": "R-squared (coefficient of determination) measures the fraction of total variation in Y that is explained by the regression model.",
+      "encourageCorrect": "Right! R-squared tells you how much of Y's movement is explained by X.",
+      "encourageIncorrect": "R-squared measures the proportion of Y's total variation that is explained by X. An R-squared of 0.80 means X explains 80% of Y's variation."
+    },
+    {
+      "question": "In a regression of fund returns on benchmark returns, what does the slope coefficient represent?",
+      "options": [
+        "The fund's alpha",
+        "The fund's beta (sensitivity to the benchmark)",
+        "The fund's R-squared"
+      ],
+      "correctIndex": 1,
+      "explanation": "The slope measures how much the fund's return changes for a one-unit change in the benchmark return \u2014 this is the fund's beta.",
+      "encourageCorrect": "Exactly! The slope is the fund's beta \u2014 its sensitivity to the benchmark.",
+      "encourageIncorrect": "The slope coefficient is the fund's beta, measuring sensitivity to the benchmark. The intercept (b0) represents alpha."
+    }
   ]
 }

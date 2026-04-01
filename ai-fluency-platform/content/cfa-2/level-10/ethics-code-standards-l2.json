@@ -104,5 +104,31 @@
       "type": "connectPrompt",
       "prompt": "The next module provides **Guidance for Standards L2**, with advanced application scenarios covering all seven Standards. You will work through gray-area situations where the correct course of action requires careful judgment \u2014 exactly the skill tested on the CFA Level II exam."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Standard V(A) Diligence and Reasonable Basis requires analysts to:",
+      "options": [
+        "Rely on management guidance without independent verification",
+        "Have a reasonable and adequate basis for investment recommendations",
+        "Only recommend securities they personally own"
+      ],
+      "correctIndex": 1,
+      "explanation": "Analysts must conduct thorough research and have a reasonable basis before making recommendations. Third-party research can supplement but must be evaluated.",
+      "encourageCorrect": "Right! Every recommendation needs a solid, well-researched foundation.",
+      "encourageIncorrect": "Standard V(A) requires a reasonable and adequate basis for all recommendations. Analysts can't just rely on tips or unverified information."
+    },
+    {
+      "question": "Under Standard VI(B) Priority of Transactions, the correct transaction priority is:",
+      "options": [
+        "Personal accounts first, then clients",
+        "Clients first, then employer, then personal accounts",
+        "Employer first, then clients, then personal"
+      ],
+      "correctIndex": 1,
+      "explanation": "Client interests come first. Employer accounts come second. The member's personal transactions must not disadvantage clients.",
+      "encourageCorrect": "Exactly! Clients always come first in transaction priority.",
+      "encourageIncorrect": "The priority is clients first, then employer, then personal accounts. Personal trading should never disadvantage clients."
+    }
   ]
 }

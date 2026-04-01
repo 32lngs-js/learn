@@ -104,5 +104,31 @@
       "type": "connectPrompt",
       "prompt": "This completes the Asset Allocation section. The **checkpoint** that follows will test your ability to integrate all six modules \u2014 from developing CMEs through behavioral considerations \u2014 in comprehensive asset allocation scenarios."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Overconfidence bias causes investors to:",
+      "options": [
+        "Trade too little",
+        "Overestimate their knowledge and ability, leading to excessive trading and underdiversification",
+        "Always pick the best investments"
+      ],
+      "correctIndex": 1,
+      "explanation": "Overconfident investors trade too much, hold concentrated portfolios, and underestimate risk because they believe they know more than they do.",
+      "encourageCorrect": "That's it! Overconfidence leads to too much trading and too little diversification.",
+      "encourageIncorrect": "Overconfidence makes investors trade excessively and hold underdiversified portfolios. They overestimate their ability to pick winners."
+    },
+    {
+      "question": "Status quo bias in portfolio management leads investors to:",
+      "options": [
+        "Rebalance too frequently",
+        "Keep their current allocation unchanged even when circumstances have changed",
+        "Take on too much risk"
+      ],
+      "correctIndex": 1,
+      "explanation": "Status quo bias makes investors stick with their existing portfolio, avoiding rebalancing or changes even when their situation warrants adjustment.",
+      "encourageCorrect": "Right! The comfort of doing nothing can be a costly bias.",
+      "encourageIncorrect": "Status quo bias means favoring the current state of affairs. Investors fail to rebalance or adjust even when their goals or market conditions change."
+    }
   ]
 }

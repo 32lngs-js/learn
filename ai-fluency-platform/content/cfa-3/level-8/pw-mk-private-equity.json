@@ -100,5 +100,31 @@
       "type": "connectPrompt",
       "prompt": "Next, we explore **Private Debt** -- the credit counterpart to private equity. Where PE seeks equity upside, private debt targets steady income with downside protection through covenants and security interests."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "The value creation strategies in private equity typically include:",
+      "options": [
+        "Only financial engineering (adding leverage)",
+        "Operational improvements, strategic repositioning, and financial engineering",
+        "Only buying and holding companies passively"
+      ],
+      "correctIndex": 1,
+      "explanation": "PE firms create value through operational improvements (cost cutting, revenue growth), strategic changes (acquisitions, market expansion), and financial engineering (leverage).",
+      "encourageCorrect": "Right! PE value creation is multi-pronged: operations, strategy, and financial structure.",
+      "encourageIncorrect": "PE firms use three value creation levers: operational improvements, strategic repositioning, and financial engineering (leverage optimization)."
+    },
+    {
+      "question": "Total value to paid-in capital (TVPI) measures:",
+      "options": [
+        "Only the cash returned to investors",
+        "The total value (distributions plus remaining NAV) relative to invested capital",
+        "The annual return on the fund"
+      ],
+      "correctIndex": 1,
+      "explanation": "TVPI = (Distributions + Remaining NAV) / Paid-in capital. It includes both realized (cash) and unrealized (paper) value.",
+      "encourageCorrect": "That's the complete picture! TVPI captures both what you've received and what's still invested.",
+      "encourageIncorrect": "TVPI includes both distributions received and the remaining net asset value, divided by paid-in capital. It shows total return including unrealized gains."
+    }
   ]
 }

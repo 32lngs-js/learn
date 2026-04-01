@@ -1,0 +1,106 @@
+{
+  "meta": {
+    "title": "4.1 The Three Layers",
+    "description": "Understand the DOM and trace how a user interaction flows through JavaScript, HTML, and CSS.",
+    "level": "level-4",
+    "slug": "the-three-layers",
+    "order": 1,
+    "isCheckpoint": false,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "predictPrompt",
+      "prompt": "When you click a button on a webpage and something changes visually \u2014 say a menu slides open \u2014 what do you think is happening behind the scenes? Which of the three languages (HTML, CSS, JS) do you think is involved, and in what order?"
+    },
+    {
+      "type": "markdown",
+      "content": "## The DOM: the browser's live version of the page\n\nWhen the browser loads an HTML file, it does not keep working with the raw text. It converts the HTML into a live, structured representation in memory called the **DOM** (Document Object Model).\n\nThink of it this way:\n- The **HTML file** is like an architect's blueprint \u2014 a static document\n- The **DOM** is the actual building \u2014 a living thing that can be modified after construction\n\nWhen JavaScript changes a webpage, it is not editing the HTML file. It is modifying the DOM \u2014 the live version in the browser's memory. This is why changes you see on a page disappear when you refresh: the browser rebuilds the DOM from the original HTML file every time.\n\n## How JavaScript finds elements\n\nBefore JavaScript can change anything, it needs to find the right element in the DOM. There are two common ways you will see this in code:\n\n```javascript\n// Find one element by its id attribute\nconst button = document.getElementById('signup-btn');\n\n// Find one element using a CSS selector\nconst button = document.querySelector('.hero .signup-btn');\n```\n\nBoth lines do the same basic thing: reach into the DOM and grab a specific element. The names are descriptive:\n- `getElementById` \u2014 finds the element with a specific `id`\n- `querySelector` \u2014 finds the first element matching a CSS selector (the same selectors you learned in Level 2)\n\nYou do not need to memorize the syntax. You need to recognize the pattern: **JavaScript is reaching into the page to grab something.**\n\n## How JavaScript changes appearance with CSS classes\n\nHere is the key connection between all three layers. JavaScript rarely changes styles directly. Instead, it **adds or removes CSS classes** \u2014 and the CSS rules for those classes do the visual work.\n\n```html\n<!-- HTML -->\n<div id=\"menu\" class=\"sidebar\">\n  <a href=\"/home\">Home</a>\n  <a href=\"/about\">About</a>\n</div>\n```\n\n```css\n/* CSS */\n.sidebar {\n  transform: translateX(-100%);\n  transition: transform 0.3s;\n}\n\n.sidebar.open {\n  transform: translateX(0);\n}\n```\n\n```javascript\n// JavaScript\nconst menu = document.getElementById('menu');\nmenuButton.addEventListener('click', function() {\n  menu.classList.toggle('open');\n});\n```\n\nHere is what happens when the user clicks the menu button:\n\n1. **User action** \u2014 the user clicks the button\n2. **JS event** \u2014 JavaScript's event listener fires\n3. **DOM change** \u2014 `classList.toggle('open')` adds the class `open` to the `<div>`\n4. **CSS applies** \u2014 the browser sees that `.sidebar.open` now matches, so it applies `transform: translateX(0)`\n5. **Visual update** \u2014 the sidebar slides into view (the `transition` makes it animate)\n\nThis is the fundamental flow: **User action \u2192 JS event \u2192 DOM change \u2192 CSS applies \u2192 Visual update.**\n\nNotice how each layer has a clear job:\n- **HTML** defines the element and its initial class\n- **CSS** defines what each class looks like\n- **JavaScript** decides when to add or remove classes\n\n## What breaks when a layer is missing\n\nIf the JavaScript runs but nothing changes visually, the problem is often that the **CSS class does not exist**. JavaScript successfully adds the class `open` to the element, but if no CSS rule targets `.sidebar.open`, nothing happens.\n\nIf the CSS exists but JavaScript never adds the class, the element will never change. And if the HTML element does not have the right `id` or class, JavaScript cannot find it in the first place.\n\nEvery layer depends on the others being correct."
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "On a scale of 1-5, how confident are you that you could look at a button click interaction and trace which part is HTML, which is CSS, and which is JavaScript?",
+      "answer": "If you rated yourself 3 or higher, you are in good shape. The key insight is the flow: JS finds the element, changes a class, and CSS rules for that class handle the visual result. If you are below 3, re-read the sidebar example above \u2014 that one pattern covers most interactive behavior on the web."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Tracing Interactions Across Layers",
+      "problems": [
+        {
+          "id": "wf4-1-1",
+          "question": "A toggle button should show/hide a dropdown. Here is the code:\n\n```html\n<button id=\"toggle\">Menu</button>\n<ul id=\"dropdown\" class=\"dropdown\">\n  <li>Home</li>\n  <li>About</li>\n</ul>\n```\n\n```css\n.dropdown { display: none; }\n.dropdown.visible { display: block; }\n```\n\n```javascript\nconst btn = document.getElementById('toggle');\nconst dropdown = document.getElementById('dropdown');\nbtn.addEventListener('click', function() {\n  dropdown.classList.toggle('visible');\n});\n```\n\nWhat is the correct sequence when the user clicks the button?",
+          "options": [
+            "A) Click \u2192 JS adds 'visible' class \u2192 CSS rule `.dropdown.visible` applies \u2192 dropdown appears",
+            "B) Click \u2192 CSS detects the click \u2192 dropdown appears \u2192 JS records the change",
+            "C) Click \u2192 HTML changes the class \u2192 CSS applies \u2192 JS logs the event"
+          ],
+          "correctAnswer": "A",
+          "explanation": "JavaScript handles the click event and adds the 'visible' class to the dropdown element. The browser then sees that .dropdown.visible matches, applies display: block, and the dropdown becomes visible. CSS does not detect clicks \u2014 that is JavaScript's job.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "wf4-1-2",
+          "question": "A developer wrote JavaScript that adds the class `active` to a button when clicked. The class gets added (you can see it in DevTools), but the button does not change appearance. What is the most likely problem?",
+          "options": [
+            "A) JavaScript is adding the wrong class name",
+            "B) There is no CSS rule for the `.active` class, so nothing visual happens",
+            "C) The button's HTML is missing a `style` attribute"
+          ],
+          "correctAnswer": "B",
+          "explanation": "If DevTools shows the class being added successfully, JavaScript is doing its job. The problem is in CSS \u2014 there is no rule that says what .active should look like. Adding a CSS rule like .active { background-color: blue; } would fix it.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "wf4-1-3",
+          "question": "A contact form has a \"Submit\" button that is supposed to send data when clicked. The button appears on the page and is styled correctly, but clicking it does nothing at all. Which layer is most likely the problem?",
+          "options": [
+            "A) HTML \u2014 the button is probably missing from the page",
+            "B) CSS \u2014 the button's styles are preventing the click",
+            "C) JavaScript \u2014 there is no event listener attached to the button"
+          ],
+          "correctAnswer": "C",
+          "explanation": "The button is visible (HTML is fine) and looks correct (CSS is fine). If clicking does nothing, JavaScript is the most likely culprit \u2014 either there is no event listener for the click, or the listener has an error that prevents it from running.",
+          "difficulty": "intermediate"
+        }
+      ]
+    },
+    {
+      "type": "explainBack",
+      "prompt": "In your own words, explain the flow of what happens when a user clicks a button and something changes visually on a webpage. Walk through each layer's role."
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "The DOM is the browser's live representation of the page. JavaScript modifies the DOM (often by adding or removing CSS classes), and CSS rules respond to those changes with visual updates. The flow is: User action \u2192 JS event \u2192 DOM change \u2192 CSS applies \u2192 Visual update. When something breaks, one of those links in the chain is missing."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "Now you understand how the three layers connect in theory. But how do you actually see this happening on a real page? Next, we will look at the most powerful tool non-developers have for understanding webpages: browser DevTools."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "The DOM (Document Object Model) is:",
+      "options": [
+        "The raw HTML file saved on disk",
+        "The browser's live, in-memory representation of the page that JavaScript can modify",
+        "A CSS styling engine"
+      ],
+      "correctIndex": 1,
+      "explanation": "The DOM is the live version of the page in the browser's memory. JavaScript modifies the DOM, not the original HTML file.",
+      "encourageCorrect": "Exactly! The DOM is the live page \u2014 JavaScript changes the DOM, not the file.",
+      "encourageIncorrect": "The DOM is the browser's live representation of the page. JavaScript modifies this live version, not the original HTML file."
+    },
+    {
+      "question": "The typical interaction flow on a webpage is:",
+      "options": [
+        "CSS event -> HTML update -> JS render",
+        "User action -> JS event -> DOM change -> CSS applies -> Visual update",
+        "HTML loads -> Page is static forever"
+      ],
+      "correctIndex": 1,
+      "explanation": "A user does something -> JavaScript listens for the event -> JS modifies the DOM -> CSS rules respond to the new state -> the user sees the change.",
+      "encourageCorrect": "That's the flow! User action, JS event, DOM change, CSS responds, visual update.",
+      "encourageIncorrect": "The interaction flow: User action -> JavaScript event fires -> DOM is modified -> CSS applies to new state -> User sees the visual change."
+    }
+  ]
+}

@@ -104,5 +104,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Industry and Competitive Analysis**, which provides the framework for understanding the industry context that shapes every company's prospects. Porter's five forces and industry life cycle analysis give you the tools to assess whether an industry is attractive and how a company is positioned within it."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is the goal of company analysis in equity research?",
+      "options": [
+        "To time the market for short-term trades",
+        "To estimate the intrinsic value of a company's stock",
+        "To predict exact future stock prices"
+      ],
+      "correctIndex": 1,
+      "explanation": "Company analysis aims to estimate intrinsic value by understanding the business, its financials, and its growth prospects.",
+      "encourageCorrect": "Right! The goal is intrinsic value \u2014 what the stock is really worth.",
+      "encourageIncorrect": "Company analysis aims to estimate intrinsic value. If the intrinsic value exceeds the market price, the stock may be undervalued."
+    },
+    {
+      "question": "Which approach to equity analysis starts with the broad economy and narrows to a specific stock?",
+      "options": [
+        "Bottom-up",
+        "Top-down",
+        "Technical analysis"
+      ],
+      "correctIndex": 1,
+      "explanation": "Top-down analysis starts with macroeconomic factors, then sectors/industries, then individual companies.",
+      "encourageCorrect": "Correct! Top-down goes from macro to sector to company.",
+      "encourageIncorrect": "Top-down analysis starts with the big picture (economy), then narrows to sectors, then to individual companies."
+    }
   ]
 }

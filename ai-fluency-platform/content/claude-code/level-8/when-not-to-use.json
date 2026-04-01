@@ -43,5 +43,31 @@
       "type": "connectPrompt",
       "prompt": "Knowing when not to use Claude is one kind of judgment. Knowing what to do when Claude goes wrong is another. The next module covers failure modes — loops, hallucinations, and misunderstandings — and how to recognize and recover from them."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is the '2-minute rule' for Claude Code usage?",
+      "options": [
+        "Always spend 2 minutes on your prompt",
+        "If you can do the task in under 2 minutes, just do it yourself",
+        "Wait 2 minutes between prompts"
+      ],
+      "correctIndex": 1,
+      "explanation": "If you can do it in 2 minutes, the overhead of prompting, executing, and verifying almost never beats doing it manually.",
+      "encourageCorrect": "Simple and effective! Not every task needs Claude.",
+      "encourageIncorrect": "The 2-minute rule: if you can do it manually in under 2 minutes, the overhead of using Claude Code isn't worth it."
+    },
+    {
+      "question": "What is 'automation theater'?",
+      "options": [
+        "Using Claude for presentations",
+        "Using Claude for tasks where the overhead exceeds the effort of doing it yourself",
+        "Automating CI/CD pipelines"
+      ],
+      "correctIndex": 1,
+      "explanation": "Automation theater is the appearance of productivity through tool use, without actual productivity gains.",
+      "encourageCorrect": "Good awareness! Mastery means knowing when NOT to use the tool.",
+      "encourageIncorrect": "Automation theater is using Claude for tasks where prompting + waiting + verifying takes longer than just doing it yourself."
+    }
   ]
 }

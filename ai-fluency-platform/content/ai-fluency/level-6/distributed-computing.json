@@ -55,5 +55,31 @@
       "type": "keyTakeaway",
       "content": "Distributed computing for AI is not about adding hardware -- it is about decomposing deeply interdependent computations across devices while minimizing communication overhead. Data, tensor, and pipeline parallelism each address different constraints, and production systems typically combine all three. Understanding hardware memory hierarchies and interconnect topologies is essential for making sound capacity-planning decisions."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Why can't you just add more GPUs to scale AI training?",
+      "options": [
+        "GPUs are too expensive",
+        "Communication overhead between GPUs becomes the bottleneck, and large models may not fit in a single GPU's memory",
+        "GPUs don't work in parallel"
+      ],
+      "correctIndex": 1,
+      "explanation": "Adding GPUs requires each to hold the full model (memory limit) and introduces communication overhead that can exceed compute time at scale.",
+      "encourageCorrect": "That's right! Distributed AI is fundamentally harder than scaling web servers.",
+      "encourageIncorrect": "You can't just add GPUs because: (1) large models may exceed a single GPU's memory, and (2) communication overhead for synchronization grows with GPU count and becomes the bottleneck."
+    },
+    {
+      "question": "What are the three main parallelism strategies for distributed AI?",
+      "options": [
+        "CPU, GPU, TPU parallelism",
+        "Data parallelism, tensor parallelism, and pipeline parallelism",
+        "Input, processing, output parallelism"
+      ],
+      "correctIndex": 1,
+      "explanation": "Data parallelism splits data across devices, tensor parallelism splits layers, and pipeline parallelism splits the model into stages -- production systems combine all three.",
+      "encourageCorrect": "Exactly! Each addresses different constraints, and production systems typically combine all three.",
+      "encourageIncorrect": "The three strategies are: data parallelism (split data), tensor parallelism (split layers), and pipeline parallelism (split model into stages). Production systems combine them."
+    }
   ]
 }

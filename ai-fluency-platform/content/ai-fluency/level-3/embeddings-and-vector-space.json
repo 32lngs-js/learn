@@ -15,7 +15,7 @@
     },
     {
       "type": "markdown",
-      "content": "## From words to numbers\n\nIn Level 1, you learned that models process tokens -- numeric representations of text fragments. **Embeddings** take this further: they represent entire words, sentences, or documents as **vectors** (lists of numbers) in a high-dimensional space.\n\nAn embedding might look like this (simplified to 5 dimensions):\n\n```\n\"cat\"  → [0.82, -0.14, 0.53, 0.21, -0.67]\n\"dog\"  → [0.79, -0.11, 0.48, 0.25, -0.72]\n\"car\"  → [-0.31, 0.67, -0.22, 0.81, 0.15]\n```\n\nIn reality, embeddings have hundreds or thousands of dimensions (768, 1024, or 1536 are common). Each dimension captures some aspect of meaning, though individual dimensions do not map neatly to human-understandable concepts.\n\n### Semantic similarity\n\nThe key insight: **words with similar meanings are close together in vector space**. \"Cat\" and \"dog\" are close because they share semantic properties (animals, pets, four-legged). \"Car\" is far away because it represents a completely different concept.\n\nThis closeness is measured mathematically using **cosine similarity** -- the angle between two vectors. A cosine similarity of 1.0 means identical meaning, 0.0 means unrelated, and -1.0 means opposite.\n\n| Pair | Cosine similarity | Interpretation |\n| :-- | :-- | :-- |\n| \"happy\" vs. \"joyful\" | ~0.92 | Near-synonyms |\n| \"happy\" vs. \"sad\" | ~0.35 | Related (emotions) but different |\n| \"happy\" vs. \"database\" | ~0.05 | Unrelated |\n\n### The famous example: vector arithmetic\n\nEmbeddings capture **relational** meaning, not just similarity. The classic example:\n\n```\nking - man + woman ≈ queen\n```\n\nThis works because the vector difference between \"king\" and \"man\" captures the concept of \"royalty.\" Adding that difference to \"woman\" lands near \"queen.\" This demonstrates that embeddings encode relationships, not just categories."
+      "content": "## From words to numbers\n\nIn Level 1, you learned that models process tokens -- numeric representations of text fragments. **Embeddings** take this further: they represent entire words, sentences, or documents as **vectors** (lists of numbers) in a high-dimensional space.\n\nAn embedding might look like this (simplified to 5 dimensions):\n\n```\n\"cat\"  \u2192 [0.82, -0.14, 0.53, 0.21, -0.67]\n\"dog\"  \u2192 [0.79, -0.11, 0.48, 0.25, -0.72]\n\"car\"  \u2192 [-0.31, 0.67, -0.22, 0.81, 0.15]\n```\n\nIn reality, embeddings have hundreds or thousands of dimensions (768, 1024, or 1536 are common). Each dimension captures some aspect of meaning, though individual dimensions do not map neatly to human-understandable concepts.\n\n### Semantic similarity\n\nThe key insight: **words with similar meanings are close together in vector space**. \"Cat\" and \"dog\" are close because they share semantic properties (animals, pets, four-legged). \"Car\" is far away because it represents a completely different concept.\n\nThis closeness is measured mathematically using **cosine similarity** -- the angle between two vectors. A cosine similarity of 1.0 means identical meaning, 0.0 means unrelated, and -1.0 means opposite.\n\n| Pair | Cosine similarity | Interpretation |\n| :-- | :-- | :-- |\n| \"happy\" vs. \"joyful\" | ~0.92 | Near-synonyms |\n| \"happy\" vs. \"sad\" | ~0.35 | Related (emotions) but different |\n| \"happy\" vs. \"database\" | ~0.05 | Unrelated |\n\n### The famous example: vector arithmetic\n\nEmbeddings capture **relational** meaning, not just similarity. The classic example:\n\n```\nking - man + woman \u2248 queen\n```\n\nThis works because the vector difference between \"king\" and \"man\" captures the concept of \"royalty.\" Adding that difference to \"woman\" lands near \"queen.\" This demonstrates that embeddings encode relationships, not just categories."
     },
     {
       "type": "calibrationCheck",
@@ -50,6 +50,32 @@
     {
       "type": "connectPrompt",
       "prompt": "Now that you understand how text becomes vectors, Module 3.2 covers where those vectors live: vector databases -- specialized storage systems designed for fast similarity search across millions of embeddings."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What are embeddings in AI?",
+      "options": [
+        "A type of AI model",
+        "Mathematical vectors that represent text meaning in high-dimensional space",
+        "A technique for compressing large documents"
+      ],
+      "correctIndex": 1,
+      "explanation": "Embeddings convert text into vectors (lists of numbers) in high-dimensional space, where proximity corresponds to semantic similarity.",
+      "encourageCorrect": "That's right! Embeddings are the mathematical bridge between human language and AI computation.",
+      "encourageIncorrect": "Embeddings are vectors (lists of numbers) that represent text meaning -- words with similar meanings end up as nearby points in vector space."
+    },
+    {
+      "question": "Do embeddings actually 'understand' meaning the way humans do?",
+      "options": [
+        "Yes, they capture full human understanding",
+        "No, they capture statistical co-occurrence patterns, not true meaning",
+        "Only for simple words"
+      ],
+      "correctIndex": 1,
+      "explanation": "Embeddings capture statistical co-occurrence patterns from training data -- 'cat' and 'dog' are close because they appear in similar contexts, not because the model understands animals.",
+      "encourageCorrect": "Exactly! It's a statistical echo of meaning, not meaning itself -- an important distinction.",
+      "encourageIncorrect": "Embeddings capture statistical patterns, not true understanding. 'Cat' and 'dog' are close in vector space because they appear in similar contexts, not because the model knows about animals."
     }
   ]
 }

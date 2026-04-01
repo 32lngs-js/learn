@@ -1,0 +1,98 @@
+{
+  "meta": {
+    "title": "5.3 Custom Hooks",
+    "description": "When you see useXyz(), someone built a reusable piece of logic. Learn to read what it does.",
+    "level": "level-5",
+    "slug": "custom-hooks",
+    "order": 3,
+    "isCheckpoint": false,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "predictPrompt",
+      "prompt": "You have used `useState` and `useEffect` -- React's built-in hooks. What do you think happens when you see a hook called `useAuth()` or `useLocalStorage()`? Who wrote that hook, and what might it do?"
+    },
+    {
+      "type": "markdown",
+      "content": "## Custom Hooks\n\nIn Level 3, you learned React's built-in hooks: `useState` for memory, `useEffect` for side effects, `useContext` for shared data. These are the building blocks. But in real codebases, you will constantly see hooks you do not recognize -- `useAuth`, `useFetch`, `useDebounce`, `useMediaQuery`, `useLocalStorage`, `useForm`.\n\nThese are **custom hooks**, and they follow one simple rule: any function whose name starts with `use` is a hook. That is it. A custom hook is just a regular function that uses other hooks inside it.\n\n### Why Custom Hooks Exist\n\nCustom hooks exist for the same reason functions exist: to avoid repeating yourself. If three different components all need to fetch data from an API, handle loading state, and handle errors, you could copy that logic into each component. Or you could put it in a custom hook called `useFetch` and use it everywhere.\n\n```typescript\n// Without a custom hook: repeated in every component\nfunction UserProfile({ userId }: { userId: string }) {\n  const [user, setUser] = useState<User | null>(null);\n  const [loading, setLoading] = useState(true);\n  const [error, setError] = useState<string | null>(null);\n\n  useEffect(() => {\n    setLoading(true);\n    fetch(`/api/users/${userId}`)\n      .then((res) => res.json())\n      .then((data) => { setUser(data); setLoading(false); })\n      .catch((err) => { setError(err.message); setLoading(false); });\n  }, [userId]);\n\n  if (loading) return <p>Loading...</p>;\n  if (error) return <p>Error: {error}</p>;\n  return <div>{user?.name}</div>;\n}\n```\n\n```typescript\n// With a custom hook: clean and reusable\nfunction UserProfile({ userId }: { userId: string }) {\n  const { data: user, loading, error } = useFetch<User>(`/api/users/${userId}`);\n\n  if (loading) return <p>Loading...</p>;\n  if (error) return <p>Error: {error}</p>;\n  return <div>{user?.name}</div>;\n}\n```\n\nThe second version is shorter, cleaner, and you can use `useFetch` in any component that needs to load data. The messy details are hidden inside the hook.\n\n### The Reading Strategy: Look at What It Returns\n\nHere is the key skill for reading custom hooks: **focus on what the hook returns, not what it does internally.**\n\nWhen you see:\n\n```typescript\nconst { data, loading, error } = useFetch('/api/users');\n```\n\nYou know everything you need to know:\n- `data` -- the fetched data (or null if still loading)\n- `loading` -- a boolean indicating if the request is in progress\n- `error` -- any error that occurred (or null if things went fine)\n\nYou do not need to open the `useFetch` file and read its implementation. The return value tells you what it provides. The hook name tells you what it does.\n\n### Common Custom Hooks You Will See\n\nHere are custom hooks you will encounter in real codebases. For each one, notice how the name and return value tell you everything:\n\n**useAuth -- authentication state**\n```typescript\nconst { user, isLoggedIn, login, logout } = useAuth();\n```\nProvides the current user, whether they are logged in, and functions to log in or out.\n\n**useLocalStorage -- persisted state**\n```typescript\nconst [theme, setTheme] = useLocalStorage('theme', 'light');\n```\nWorks like `useState`, but the value persists in the browser's local storage. Notice it returns the same `[value, setValue]` pattern as `useState`.\n\n**useDebounce -- delayed updates**\n```typescript\nconst debouncedSearch = useDebounce(searchQuery, 300);\n```\nReturns the value, but only updates after 300ms of no changes. Used to avoid firing an API call on every keystroke.\n\n**useMediaQuery -- responsive design**\n```typescript\nconst isMobile = useMediaQuery('(max-width: 768px)');\n```\nReturns true or false based on the screen size. Used to show different layouts on mobile vs desktop.\n\n**useForm -- form management**\n```typescript\nconst { values, errors, handleChange, handleSubmit, isValid } = useForm({\n  initialValues: { email: '', password: '' },\n  validate: validateLogin,\n});\n```\nManages form state, validation, and submission. Returns everything a form needs.\n\n### Reading a Custom Hook's Implementation\n\nSometimes you will need to read inside a custom hook -- perhaps to understand a bug or review a PR. Here is what a custom hook looks like inside:\n\n```typescript\nfunction useWindowSize() {\n  const [size, setSize] = useState({\n    width: window.innerWidth,\n    height: window.innerHeight,\n  });\n\n  useEffect(() => {\n    function handleResize() {\n      setSize({\n        width: window.innerWidth,\n        height: window.innerHeight,\n      });\n    }\n\n    window.addEventListener('resize', handleResize);\n    return () => window.removeEventListener('resize', handleResize);\n  }, []);\n\n  return size;\n}\n```\n\nThis hook:\n1. Creates state to hold the window width and height\n2. Sets up an effect that listens for window resize events\n3. Updates the state when the window is resized\n4. Cleans up the event listener when the component unmounts\n5. Returns the current size\n\nNotice it is just regular hooks (`useState`, `useEffect`) composed together. Custom hooks are not magic -- they are functions that combine built-in hooks into reusable packages.\n\n### Typed Custom Hooks\n\nWith TypeScript, custom hooks often have explicit return types:\n\n```typescript\ninterface UseFetchReturn<T> {\n  data: T | null;\n  loading: boolean;\n  error: string | null;\n  refetch: () => void;\n}\n\nfunction useFetch<T>(url: string): UseFetchReturn<T> {\n  // ... implementation\n}\n```\n\nThe return type interface tells you exactly what the hook gives back. When you see a typed custom hook, read the return type first -- it is the hook's API.\n\n### Hooks That Accept Configuration\n\nSome custom hooks accept configuration objects:\n\n```typescript\ninterface UseQueryOptions {\n  enabled?: boolean;\n  refetchInterval?: number;\n  onSuccess?: (data: unknown) => void;\n  onError?: (error: Error) => void;\n}\n\nconst { data, isLoading } = useQuery('/api/users', {\n  enabled: isLoggedIn,\n  refetchInterval: 30000,\n  onSuccess: (data) => console.log('Fetched!', data),\n});\n```\n\nThis is a common pattern in libraries like React Query. The options interface tells you exactly what configuration the hook supports -- enabled flag, polling interval, success and error callbacks.\n\n### The Rules of Hooks (Quick Review)\n\nCustom hooks follow the same rules as built-in hooks:\n\n1. **Only call hooks at the top level** -- not inside conditions, loops, or nested functions\n2. **Only call hooks from React components or other hooks** -- not from regular functions\n3. **Names must start with `use`** -- this is how React knows it is a hook\n\nIf you see a function called `useXyz` being called inside an `if` statement, that is a bug. Hooks must always be called in the same order on every render."
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "When you encounter a custom hook you have never seen before, like `useDebounce(searchQuery, 300)`, what is the most efficient way to understand what it does?",
+      "answer": "Look at what it returns and read the hook name. The name tells you the concept (debouncing -- delaying updates), and the return value tells you what data or functions it provides. You usually do not need to read the hook's internal implementation."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Reading Custom Hooks",
+      "problems": [
+        {
+          "id": "rl5-3-1",
+          "question": "What does this custom hook usage tell you about what the component has access to?\n\n```typescript\nfunction SettingsPage() {\n  const { user, isLoggedIn, logout } = useAuth();\n  const [theme, setTheme] = useLocalStorage('theme', 'dark');\n  const isMobile = useMediaQuery('(max-width: 768px)');\n\n  // ... rest of component\n}\n```",
+          "options": [
+            "A) The component can access user data, login status, a logout function, a persisted theme preference, and whether the screen is mobile-sized",
+            "B) The component can only access the user data -- the other hooks are just for decoration",
+            "C) The component creates a new user, theme, and screen size every time it renders"
+          ],
+          "correctAnswer": "A",
+          "explanation": "Each hook provides specific data: `useAuth` gives user info, login status, and a logout function. `useLocalStorage` gives a theme value that persists across browser sessions, with a setter to change it. `useMediaQuery` gives a boolean for responsive layout decisions. The component has access to all of these.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "rl5-3-2",
+          "question": "Look at this custom hook. What does it do, and what does it return?\n\n```typescript\nfunction useOnlineStatus() {\n  const [isOnline, setIsOnline] = useState(navigator.onLine);\n\n  useEffect(() => {\n    function handleOnline() { setIsOnline(true); }\n    function handleOffline() { setIsOnline(false); }\n\n    window.addEventListener('online', handleOnline);\n    window.addEventListener('offline', handleOffline);\n\n    return () => {\n      window.removeEventListener('online', handleOnline);\n      window.removeEventListener('offline', handleOffline);\n    };\n  }, []);\n\n  return isOnline;\n}\n```",
+          "options": [
+            "A) It tracks whether the user's internet connection is active and returns a boolean",
+            "B) It fetches data from an API and returns the response",
+            "C) It creates a WebSocket connection and returns the socket"
+          ],
+          "correctAnswer": "A",
+          "explanation": "The hook initializes state from `navigator.onLine` (the browser's online status), then listens for the browser's `online` and `offline` events to update the state. It cleans up the listeners on unmount. It returns a single boolean: `isOnline`. A component would use it as `const isOnline = useOnlineStatus()`.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "rl5-3-3",
+          "question": "A component is using a custom hook from a library, and something seems off. What would you tell the AI to investigate?\n\n```typescript\nfunction ProductList() {\n  const { data, isLoading, error, refetch } = useQuery(\n    ['products'],\n    () => fetch('/api/products').then(res => res.json()),\n    {\n      staleTime: 5 * 60 * 1000,\n      retry: 3,\n      onError: (err) => console.error('Failed to load products', err),\n    }\n  );\n\n  if (isLoading) return <div>Loading products...</div>;\n  if (error) return <button onClick={refetch}>Retry</button>;\n\n  return (\n    <ul>\n      {data.map((product) => (\n        <li>{product.name} - ${product.price}</li>\n      ))}\n    </ul>\n  );\n}\n```\n\nWhat potential issue do you see?",
+          "options": [
+            "A) The `staleTime` option is too long",
+            "B) The list items in the `.map()` are missing a `key` prop",
+            "C) The `useQuery` hook should not accept three arguments"
+          ],
+          "correctAnswer": "B",
+          "explanation": "Each `<li>` rendered by `.map()` needs a unique `key` prop. It should be `<li key={product.id}>` or similar. The useQuery usage is correct -- it takes a query key, a fetch function, and an options object. The staleTime of 5 minutes is a reasonable choice. The missing key would cause a React warning and potential rendering bugs.",
+          "difficulty": "advanced"
+        }
+      ]
+    },
+    {
+      "type": "explainBack",
+      "prompt": "Explain what a custom hook is using a real-world analogy. What is the relationship between a custom hook and the built-in hooks (useState, useEffect) it uses inside?"
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "A custom hook is a function starting with `use` that combines built-in hooks into a reusable package. To read one, focus on its name (what it does) and its return value (what it provides). You rarely need to read a custom hook's implementation to use the component that depends on it."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "Think about custom hooks like power tools in a workshop. `useState` and `useEffect` are the basic tools -- a hammer and screwdriver. `useFetch` is a power drill that combines multiple steps into one action. When you see a custom hook, ask: what task is this tool designed for?"
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What makes a function a custom hook in React?",
+      "options": ["It must be exported from a hooks/ folder", "Its name starts with 'use'", "It must return JSX"],
+      "correctIndex": 1,
+      "explanation": "Any function whose name starts with 'use' is a hook. That naming convention is how React identifies hooks and enforces the rules of hooks.",
+      "encourageCorrect": "You got it! The 'use' prefix is the only requirement for a custom hook.",
+      "encourageIncorrect": "The key rule is simple: any function starting with 'use' is a hook. That naming convention is what makes it a hook, not where it lives or what it returns."
+    },
+    {
+      "question": "What is the best way to understand what an unfamiliar custom hook does?",
+      "options": ["Read its entire implementation line by line", "Look at its name and what it returns", "Check the package.json for documentation"],
+      "correctIndex": 1,
+      "explanation": "The hook's name tells you what it does (useAuth = authentication), and the return value tells you what data and functions it provides. You rarely need to read the implementation.",
+      "encourageCorrect": "Great instinct! Name + return value tells you everything you need in most cases.",
+      "encourageIncorrect": "The fastest approach is to read the hook's name and return value. The name tells you the concept, and the return value tells you what it provides. No need to dig into the implementation."
+    }
+  ]
+}

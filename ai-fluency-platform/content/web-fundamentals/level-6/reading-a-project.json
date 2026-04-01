@@ -1,0 +1,107 @@
+{
+  "meta": {
+    "title": "6.2 Reading a Project",
+    "description": "Navigate a project's folder structure, understand package.json, and know which files matter for content changes.",
+    "level": "level-6",
+    "slug": "reading-a-project",
+    "order": 2,
+    "isCheckpoint": false,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "predictPrompt",
+      "prompt": "You open a real project and see 30+ files and folders in the root directory alone \u2014 src/, public/, node_modules/, package.json, .eslintrc, tsconfig.json, vite.config.js, and many more. If you needed to change the text on the About page, how would you even start finding the right file?"
+    },
+    {
+      "type": "markdown",
+      "content": "## The anatomy of a real project\n\nWhen you open a real web project, it looks overwhelming. Here is a typical project structure:\n\n```\nmy-app/\n\u251c\u2500\u2500 node_modules/       \u2190 ignore this (thousands of files)\n\u251c\u2500\u2500 public/             \u2190 static files (images, favicon)\n\u251c\u2500\u2500 src/                \u2190 the actual code lives here\n\u2502   \u251c\u2500\u2500 components/     \u2190 reusable UI pieces\n\u2502   \u251c\u2500\u2500 pages/          \u2190 one file per page/route\n\u2502   \u251c\u2500\u2500 assets/         \u2190 images, fonts, icons\n\u2502   \u251c\u2500\u2500 styles/         \u2190 CSS files\n\u2502   \u251c\u2500\u2500 App.jsx         \u2190 the main component\n\u2502   \u2514\u2500\u2500 main.jsx        \u2190 the entry point\n\u251c\u2500\u2500 package.json        \u2190 the project manifest\n\u251c\u2500\u2500 .eslintrc           \u2190 code style rules (ignore)\n\u251c\u2500\u2500 tsconfig.json       \u2190 TypeScript config (ignore)\n\u251c\u2500\u2500 vite.config.js      \u2190 build tool config (ignore)\n\u2514\u2500\u2500 README.md           \u2190 project documentation\n```\n\nThis looks like a lot. But for content changes, you only care about a handful of these. Let's sort them into three categories.\n\n## Category 1: Where the content lives\n\nThese are the folders and files you will actually work with:\n\n- **`src/`** \u2014 Short for \"source.\" This is where all the application code lives. Nearly everything you care about is in here.\n- **`src/components/`** \u2014 Reusable UI pieces like headers, footers, buttons, and cards.\n- **`src/pages/`** \u2014 Each file typically corresponds to a page or route in the app. If you need to change the About page, look for `About.jsx` or `about/index.jsx` here.\n- **`src/assets/`** or **`public/`** \u2014 Images, fonts, and other static files.\n- **`src/styles/`** \u2014 CSS files that control how things look.\n\n## Category 2: The project manifest\n\n**`package.json`** is the single most informative file in any JavaScript project. It tells you:\n\n```json\n{\n  \"name\": \"my-app\",\n  \"version\": \"1.0.0\",\n  \"scripts\": {\n    \"dev\": \"vite\",\n    \"build\": \"vite build\",\n    \"preview\": \"vite preview\"\n  },\n  \"dependencies\": {\n    \"react\": \"^18.2.0\",\n    \"react-dom\": \"^18.2.0\"\n  }\n}\n```\n\n- **`scripts`** \u2014 Commands the team uses. `npm run dev` starts the local development server. `npm run build` creates the production version. You do not need to run these, but knowing what they do helps you follow conversations.\n- **`dependencies`** \u2014 The libraries the project uses. If you see `react` in dependencies, it is a React project. If you see `vue`, it is Vue. This is the fastest way to identify which framework a project uses.\n\n## Category 3: The stuff you can safely ignore\n\nThis is most of the files in a project:\n\n- **`node_modules/`** \u2014 A folder containing every library the project depends on. It can have 50,000+ files. Never open it, never edit it, never worry about it. It gets recreated automatically from `package.json`.\n- **`.eslintrc`**, **`.prettierrc`** \u2014 Code formatting and style rules. They help developers write consistent code. Irrelevant for content changes.\n- **`tsconfig.json`** \u2014 TypeScript configuration. Tells the compiler how strict to be. Ignore it.\n- **`vite.config.js`**, **`webpack.config.js`**, **`next.config.js`** \u2014 Build tool configuration. These control how the project gets compiled and bundled. Ignore them unless a developer specifically asks you to look at one.\n- **`.gitignore`**, **`.env.example`**, **`docker-compose.yml`** \u2014 Infrastructure and tooling files.\n\nThe ratio of \"files you care about\" to \"files that exist\" in a typical project is roughly 10% to 90%. Most of the project is plumbing.\n\n## The shortcut: how to find what you need\n\nWhen you need to make a content change in an unfamiliar project:\n\n1. **Check `package.json`** \u2014 What framework is this? (React, Vue, Next.js, etc.)\n2. **Go to `src/`** \u2014 All application code is here.\n3. **Look at `pages/` or `components/`** \u2014 Find the file named after the page or feature you need to change.\n4. **Open it and look at the return statement** \u2014 That is where the visible content lives.\n\nThat is the entire process. You do not need to understand the other 90% of the project."
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "On a scale of 1-5, how confident are you that you could open a new project and identify which folder contains the files you would need to edit for a content change?",
+      "answer": "If you rated yourself 3 or higher, great. The key insight is: go to src/, then look for pages/ or components/. The file you need is almost always named after the page or feature. Everything else \u2014 config files, node_modules, build tools \u2014 is plumbing you can ignore."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Reading a Project",
+      "problems": [
+        {
+          "id": "wf6-4",
+          "question": "A designer asks you to update the footer text. The project has this structure:\n\n```\nsrc/\n\u251c\u2500\u2500 components/\n\u2502   \u251c\u2500\u2500 Header.jsx\n\u2502   \u251c\u2500\u2500 Footer.jsx\n\u2502   \u2514\u2500\u2500 Sidebar.jsx\n\u251c\u2500\u2500 pages/\n\u2502   \u251c\u2500\u2500 Home.jsx\n\u2502   \u2514\u2500\u2500 About.jsx\n```\n\nWhich file do you open?",
+          "options": [
+            "A) src/components/Footer.jsx",
+            "B) src/pages/Home.jsx",
+            "C) package.json"
+          ],
+          "correctAnswer": "A",
+          "explanation": "The footer is a reusable component (it appears on every page), so it lives in the components/ folder. The file is named Footer.jsx \u2014 open that and look at the return statement to find the text to change.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "wf6-5",
+          "question": "You see this in a project's `package.json`:\n\n```json\n\"scripts\": {\n  \"dev\": \"vite\",\n  \"build\": \"vite build\",\n  \"test\": \"vitest\"\n}\n```\n\nWhat does running `npm run build` do?",
+          "options": [
+            "A) It runs the test suite to check for bugs",
+            "B) It creates a production-ready version of the project by running `vite build`",
+            "C) It installs all the project dependencies from the internet"
+          ],
+          "correctAnswer": "B",
+          "explanation": "The scripts section maps short command names to longer commands. \"build\" maps to \"vite build\", which compiles and bundles the project for production deployment. \"dev\" starts a local development server, and \"test\" runs the tests. Installing dependencies is done with npm install, which is separate from scripts.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "wf6-6",
+          "question": "You open a new project and see 47 config files in the root directory (.eslintrc, tsconfig.json, babel.config.js, jest.config.js, .prettierrc, postcss.config.js, and more). How many of these do you need to understand to make a content change?",
+          "options": [
+            "A) All of them \u2014 each one affects how the page looks and behaves",
+            "B) At least the top 5 most important ones",
+            "C) Zero \u2014 config files are developer plumbing and irrelevant for content changes"
+          ],
+          "correctAnswer": "C",
+          "explanation": "Config files control code formatting, build tools, testing frameworks, and other developer concerns. None of them affect the visible text, images, or layout that you would change for content updates. Go straight to src/ and find the component or page file you need.",
+          "difficulty": "basic"
+        }
+      ]
+    },
+    {
+      "type": "tryItYourself",
+      "title": "Go to any open-source project on GitHub (such as github.com/facebook/react or any project you find interesting). Look at its folder structure. Can you identify: (1) where the source code lives, (2) what framework it uses (check package.json), and (3) which folders you would explore for content changes?",
+      "solution": "Most projects have a src/ or packages/ folder for source code. The framework is listed in package.json under dependencies. Content-related files are usually in components/, pages/, or views/ folders. Everything else \u2014 config files, test setup, CI/CD files \u2014 is plumbing you can ignore for content work."
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "A real project has hundreds of files, but only about 10% matter for content changes. Check package.json to identify the framework, go to src/, and look in pages/ or components/ for the file named after what you need to change. The node_modules folder, config files, and build tool settings are developer plumbing \u2014 safe to ignore entirely."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "You can now navigate a project and find the right file. But once you open that file, you will encounter patterns you have not seen yet \u2014 environment variables, API calls, responsive breakpoints, and more. Module 6.3 will show you the most common patterns in real-world code so nothing catches you off guard."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "When opening a new web project for the first time, you should start by:",
+      "options": [
+        "Reading every file in node_modules",
+        "Checking package.json to identify the framework, then looking in src/ for pages and components",
+        "Deleting files you don't recognize"
+      ],
+      "correctIndex": 1,
+      "explanation": "package.json reveals the framework. Then go to src/ and find pages/ or components/ \u2014 that's where the editable content lives. Ignore node_modules.",
+      "encourageCorrect": "Right! package.json first, then src/ for the actual code. Ignore node_modules.",
+      "encourageIncorrect": "Start with package.json (to identify the framework), then navigate to src/ for pages and components. The node_modules folder should be ignored."
+    },
+    {
+      "question": "The node_modules folder in a web project contains:",
+      "options": [
+        "The main source code you need to edit",
+        "Third-party library code that should be ignored (it's managed by package managers)",
+        "Image and media assets"
+      ],
+      "correctIndex": 1,
+      "explanation": "node_modules contains thousands of dependency files managed by npm/yarn. You never need to read or edit anything in this folder.",
+      "encourageCorrect": "Correct! node_modules is off-limits \u2014 it's auto-managed dependency code.",
+      "encourageIncorrect": "node_modules holds third-party library code managed by npm or yarn. It can contain thousands of files but none that you need to read or edit."
+    }
+  ]
+}

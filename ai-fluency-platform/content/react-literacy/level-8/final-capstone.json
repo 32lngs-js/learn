@@ -1,0 +1,179 @@
+{
+  "meta": {
+    "title": "8.3 Final Capstone",
+    "description": "A comprehensive exercise: navigate a realistic React project, identify bugs, review AI output, and communicate fixes.",
+    "level": "level-8",
+    "slug": "final-capstone",
+    "order": 3,
+    "isCheckpoint": true,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "markdown",
+      "content": "## Final Capstone: The TaskFlow Codebase\n\nCongratulations — you have reached the final exercise of the entire React Literacy course.\n\nHere is the scenario: you have just joined a team that is building **TaskFlow**, a project management app. A developer hands you the codebase and says, \"We have some bugs, some new features to plan, and some AI-generated code that needs review. Can you help?\"\n\nBelow is the project. Take your time reading through it. This capstone tests everything you have learned across all eight levels.\n\n---\n\n## The project structure\n\n```\ntaskflow/\n├── package.json\n├── .env\n├── src/\n│   ├── main.tsx\n│   ├── App.tsx\n│   ├── api/\n│   │   ├── client.ts\n│   │   ├── projects.ts\n│   │   └── tasks.ts\n│   ├── components/\n│   │   ├── Header.tsx\n│   │   ├── ProjectCard.tsx\n│   │   ├── TaskList.tsx\n│   │   ├── TaskItem.tsx\n│   │   ├── CreateTaskForm.tsx\n│   │   └── StatusBadge.tsx\n│   ├── context/\n│   │   └── AuthContext.tsx\n│   ├── hooks/\n│   │   ├── useProjects.ts\n│   │   ├── useTasks.ts\n│   │   └── useAuth.ts\n│   ├── pages/\n│   │   ├── Dashboard.tsx\n│   │   ├── ProjectDetail.tsx\n│   │   ├── Settings.tsx\n│   │   └── Login.tsx\n│   ├── types/\n│   │   └── index.ts\n│   └── utils/\n│       ├── formatDate.ts\n│       └── prioritySort.ts\n```\n\n---\n\n## The code\n\n### types/index.ts\n\n```tsx\nexport interface User {\n  id: string;\n  name: string;\n  email: string;\n  role: \"admin\" | \"member\";\n}\n\nexport interface Project {\n  id: string;\n  name: string;\n  description: string;\n  ownerId: string;\n  memberIds: string[];\n  createdAt: string;\n}\n\nexport interface Task {\n  id: string;\n  projectId: string;\n  title: string;\n  description: string;\n  status: \"todo\" | \"in-progress\" | \"done\";\n  priority: \"low\" | \"medium\" | \"high\";\n  assigneeId: string;\n  dueDate: string;\n}\n```\n\n### App.tsx\n\n```tsx\nimport { BrowserRouter, Routes, Route } from \"react-router-dom\";\nimport { AuthProvider } from \"./context/AuthContext\";\nimport { Header } from \"./components/Header\";\nimport { Dashboard } from \"./pages/Dashboard\";\nimport { ProjectDetail } from \"./pages/ProjectDetail\";\nimport { Settings } from \"./pages/Settings\";\nimport { Login } from \"./pages/Login\";\n\nconst App = () => {\n  return (\n    <AuthProvider>\n      <BrowserRouter>\n        <Header />\n        <Routes>\n          <Route path=\"/\" element={<Dashboard />} />\n          <Route path=\"/projects/:projectId\" element={<ProjectDetail />} />\n          <Route path=\"/settings\" element={<Settings />} />\n          <Route path=\"/login\" element={<Login />} />\n        </Routes>\n      </BrowserRouter>\n    </AuthProvider>\n  );\n};\n\nexport default App;\n```\n\n### hooks/useTasks.ts\n\n```tsx\nimport { useState, useEffect } from \"react\";\nimport { Task } from \"../types\";\nimport { fetchTasks, createTask } from \"../api/tasks\";\n\nexport const useTasks = (projectId: string) => {\n  const [tasks, setTasks] = useState<Task[]>([]);\n  const [filteredTasks, setFilteredTasks] = useState<Task[]>([]);\n  const [statusFilter, setStatusFilter] = useState<string>(\"all\");\n  const [isLoading, setIsLoading] = useState(true);\n  const [error, setError] = useState<string | null>(null);\n\n  useEffect(() => {\n    setIsLoading(true);\n    fetchTasks(projectId)\n      .then(data => setTasks(data))\n      .catch(err => setError(err.message))\n      .finally(() => setIsLoading(false));\n  }, []);\n\n  useEffect(() => {\n    if (statusFilter === \"all\") {\n      setFilteredTasks(tasks);\n    } else {\n      setFilteredTasks(tasks.filter(t => t.status === statusFilter));\n    }\n  }, [tasks, statusFilter]);\n\n  const addTask = async (taskData: Omit<Task, \"id\">) => {\n    const newTask = await createTask(taskData);\n    setTasks([...tasks, newTask]);\n  };\n\n  return {\n    tasks: filteredTasks,\n    isLoading,\n    error,\n    statusFilter,\n    setStatusFilter,\n    addTask,\n  };\n};\n```\n\n### pages/ProjectDetail.tsx\n\n```tsx\nimport { useParams } from \"react-router-dom\";\nimport { useTasks } from \"../hooks/useTasks\";\nimport { TaskList } from \"../components/TaskList\";\nimport { CreateTaskForm } from \"../components/CreateTaskForm\";\n\nexport const ProjectDetail = () => {\n  const { projectId } = useParams<{ projectId: string }>();\n  const { tasks, isLoading, error, statusFilter, setStatusFilter, addTask } =\n    useTasks(projectId!);\n\n  if (isLoading) return <p>Loading tasks...</p>;\n  if (error) return <p>Error: {error}</p>;\n\n  return (\n    <div className=\"project-detail\">\n      <div className=\"filter-bar\">\n        <select\n          value={statusFilter}\n          onChange={e => setStatusFilter(e.target.value)}\n        >\n          <option value=\"all\">All Tasks</option>\n          <option value=\"todo\">To Do</option>\n          <option value=\"in-progress\">In Progress</option>\n          <option value=\"done\">Done</option>\n        </select>\n      </div>\n\n      <TaskList tasks={tasks} />\n      <CreateTaskForm projectId={projectId!} onSubmit={addTask} />\n    </div>\n  );\n};\n```\n\n### components/CreateTaskForm.tsx (AI-generated)\n\n```tsx\nimport { useState, useEffect, useReducer, useCallback } from \"react\";\nimport { Task } from \"../types\";\n\ninterface CreateTaskFormProps {\n  projectId: string;\n  onSubmit: (task: Omit<Task, \"id\">) => Promise<void>;\n}\n\nexport const CreateTaskForm = ({ projectId, onSubmit }: CreateTaskFormProps) => {\n  const [title, setTitle] = useState(\"\");\n  const [description, setDescription] = useState(\"\");\n  const [priority, setPriority] = useState<\"low\" | \"medium\" | \"high\">(\"medium\");\n  const [isValid, setIsValid] = useState(false);\n\n  useEffect(() => {\n    setIsValid(title.trim().length > 0);\n  }, [title]);\n\n  const handleSubmit = () => {\n    onSubmit({\n      projectId,\n      title,\n      description,\n      priority,\n      status: \"todo\",\n      assigneeId: \"\",\n      dueDate: new Date().toISOString(),\n    });\n    setTitle(\"\");\n    setDescription(\"\");\n  };\n\n  return (\n    <form onSubmit={handleSubmit}>\n      <input\n        placeholder=\"Task title\"\n        value={title}\n        onChange={e => setTitle(e.target.value)}\n      />\n      <textarea\n        placeholder=\"Description\"\n        value={description}\n        onChange={e => setDescription(e.target.value)}\n      />\n      <select value={priority} onChange={e => setPriority(e.target.value as any)}>\n        <option value=\"low\">Low</option>\n        <option value=\"medium\">Medium</option>\n        <option value=\"high\">High</option>\n      </select>\n      <div onClick={handleSubmit} className=\"submit-btn\">\n        {isValid ? \"Create Task\" : \"Enter a title\"}\n      </div>\n    </form>\n  );\n};\n```\n\n### components/TaskList.tsx\n\n```tsx\nimport { Task } from \"../types\";\nimport { TaskItem } from \"./TaskItem\";\n\ninterface TaskListProps {\n  tasks: Task[];\n}\n\nexport const TaskList = ({ tasks }: TaskListProps) => {\n  return (\n    <ul className=\"task-list\">\n      {tasks.map((task, index) => (\n        <TaskItem key={index} task={task} />\n      ))}\n    </ul>\n  );\n};\n```"
+    },
+    {
+      "type": "markdown",
+      "content": "---\n\n## Part 1: Navigate the project\n\nUse the file tree and code above to answer the following questions."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Navigating the Codebase",
+      "problems": [
+        {
+          "id": "rl8-3-1",
+          "question": "A PM asks: \"Where would I look to change the text in the header?\" Based on the project structure, what is the correct answer?",
+          "options": [
+            "A) src/components/Header.tsx — the Header component is imported in App.tsx and rendered above the routes",
+            "B) src/pages/Dashboard.tsx — the header is part of the dashboard",
+            "C) src/main.tsx — the entry point controls what appears at the top of the page"
+          ],
+          "correctAnswer": "A",
+          "explanation": "Looking at App.tsx, <Header /> is rendered above the <Routes>, meaning it appears on every page. It is imported from ./components/Header, so the file is src/components/Header.tsx. That is where you would change the header text. The Dashboard is just one page. main.tsx only renders <App /> and does not contain UI text.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "rl8-3-2",
+          "question": "A user reports that tasks show stale data when they navigate from one project to another. Looking at the useTasks hook, what is the bug?\n\n```tsx\nuseEffect(() => {\n  setIsLoading(true);\n  fetchTasks(projectId)\n    .then(data => setTasks(data))\n    .catch(err => setError(err.message))\n    .finally(() => setIsLoading(false));\n}, []);\n```",
+          "options": [
+            "A) The fetchTasks function is not awaited properly",
+            "B) The dependency array is empty [] — it should include projectId so the effect re-fetches when the user navigates to a different project",
+            "C) The setIsLoading should be called inside the .then() instead of before the fetch"
+          ],
+          "correctAnswer": "B",
+          "explanation": "The useEffect uses projectId to fetch tasks, but the dependency array is empty []. This means it only fetches once when the component first mounts. When the user navigates to a different project (and projectId changes), the effect does not re-run — so the tasks from the previous project remain on screen. The fix is to change [] to [projectId].",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "rl8-3-3",
+          "question": "Looking at the useTasks hook, what is the derived state issue?\n\n```tsx\nconst [tasks, setTasks] = useState<Task[]>([]);\nconst [filteredTasks, setFilteredTasks] = useState<Task[]>([]);\nconst [statusFilter, setStatusFilter] = useState<string>(\"all\");\n\nuseEffect(() => {\n  if (statusFilter === \"all\") {\n    setFilteredTasks(tasks);\n  } else {\n    setFilteredTasks(tasks.filter(t => t.status === statusFilter));\n  }\n}, [tasks, statusFilter]);\n```",
+          "options": [
+            "A) statusFilter should be a number, not a string",
+            "B) filteredTasks is derived from tasks and statusFilter — it should be calculated directly instead of stored in state with a useEffect",
+            "C) The useEffect should use useCallback instead"
+          ],
+          "correctAnswer": "B",
+          "explanation": "filteredTasks is 100% derived from tasks and statusFilter. It should be: `const filteredTasks = statusFilter === 'all' ? tasks : tasks.filter(t => t.status === statusFilter)`. The separate useState and useEffect are unnecessary — they add complexity and cause an extra render cycle where filteredTasks is briefly out of sync with tasks.",
+          "difficulty": "intermediate"
+        }
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "---\n\n## Part 2: Review the AI-generated component\n\nThe `CreateTaskForm` component was generated by AI. Run the review checklist on it and identify every issue."
+    },
+    {
+      "type": "practiceSet",
+      "title": "AI Code Review",
+      "problems": [
+        {
+          "id": "rl8-3-4",
+          "question": "Look at the CreateTaskForm imports and state. What issues do you see?\n\n```tsx\nimport { useState, useEffect, useReducer, useCallback } from \"react\";\n...\nconst [isValid, setIsValid] = useState(false);\n\nuseEffect(() => {\n  setIsValid(title.trim().length > 0);\n}, [title]);\n```",
+          "options": [
+            "A) useReducer and useCallback are imported but unused, and isValid is derived state that should be calculated directly as `const isValid = title.trim().length > 0`",
+            "B) The useEffect needs more dependencies",
+            "C) useReducer should be used instead of multiple useState calls"
+          ],
+          "correctAnswer": "A",
+          "explanation": "Two issues. First, useReducer and useCallback are imported but never used — the AI included them unnecessarily. Second, isValid is derived from title — it should be `const isValid = title.trim().length > 0` with no useState or useEffect. The current implementation causes an extra render cycle and is more complex than needed.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "rl8-3-5",
+          "question": "Look at the form submission and the submit button in CreateTaskForm:\n\n```tsx\nconst handleSubmit = () => {\n  onSubmit({ ... });\n  setTitle(\"\");\n  setDescription(\"\");\n};\n\nreturn (\n  <form onSubmit={handleSubmit}>\n    ...\n    <div onClick={handleSubmit} className=\"submit-btn\">\n      {isValid ? \"Create Task\" : \"Enter a title\"}\n    </div>\n  </form>\n);\n```\n\nHow many issues are in this code?",
+          "options": [
+            "A) One: the div should be a button",
+            "B) Three: missing e.preventDefault(), the submit div should be a <button> element, and there is no loading state to prevent double-submission",
+            "C) Two: missing e.preventDefault() and no error handling"
+          ],
+          "correctAnswer": "B",
+          "explanation": "Three issues. (1) handleSubmit is missing the event parameter and e.preventDefault() — the form will reload the page on submit. (2) The submit 'button' is a <div>, not a <button> — it is not keyboard-accessible or announced by screen readers. (3) There is no loading state — if the user clicks quickly, multiple tasks could be created. The function should also handle errors from the onSubmit promise (it currently ignores rejections).",
+          "difficulty": "advanced"
+        },
+        {
+          "id": "rl8-3-6",
+          "question": "Look at the TaskList component. What is the issue?\n\n```tsx\nexport const TaskList = ({ tasks }: TaskListProps) => {\n  return (\n    <ul className=\"task-list\">\n      {tasks.map((task, index) => (\n        <TaskItem key={index} task={task} />\n      ))}\n    </ul>\n  );\n};\n```",
+          "options": [
+            "A) The component should use a <div> instead of a <ul>",
+            "B) key={index} should be key={task.id} — index keys cause bugs when tasks are filtered, reordered, or deleted",
+            "C) TaskItem should be imported from a different path"
+          ],
+          "correctAnswer": "B",
+          "explanation": "The key prop uses the array index instead of the task's unique ID. This is especially problematic here because the project has status filtering — when the user switches from 'All Tasks' to 'In Progress', the list changes and index-based keys cause React to mix up which TaskItem corresponds to which task. The fix: key={task.id}.",
+          "difficulty": "basic"
+        }
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "---\n\n## Part 3: Trace the bug\n\nA user reports: \"When I create a new task using the form, it appears in the list. But when I change the status filter, the new task disappears even though its status matches the filter.\"\n\nTrace this bug using the code above."
+    },
+    {
+      "type": "explainBack",
+      "prompt": "Trace the 'disappearing task' bug step by step. Start from the CreateTaskForm, follow the data through the useTasks hook, and explain why a newly added task might disappear when the filter changes. Hint: look at how addTask updates state versus how the useEffect fetches tasks."
+    },
+    {
+      "type": "markdown",
+      "content": "### Bug trace explanation\n\nHere is what happens:\n\n1. User submits the form → `handleSubmit` calls `onSubmit(taskData)` → which calls `addTask` in useTasks\n2. `addTask` calls `createTask` (API) and adds the new task to the `tasks` state: `setTasks([...tasks, newTask])`\n3. The new task appears in the list. Everything looks fine.\n4. User changes the status filter → `setStatusFilter` updates → the filter useEffect runs\n5. The filter useEffect filters `tasks` — and the new task IS in `tasks`, so it should appear...\n\n**But wait.** Look at `addTask` more carefully:\n\n```tsx\nconst addTask = async (taskData: Omit<Task, \"id\">) => {\n  const newTask = await createTask(taskData);\n  setTasks([...tasks, newTask]);\n};\n```\n\nThis uses `tasks` directly (a stale closure). If the user has a filter active when they add the task, `tasks` in this closure refers to the `tasks` value at the time `addTask` was created — not the current value. This could cause issues, but it is not the primary bug here.\n\nThe actual root cause is the combination of the empty dependency array on the fetch effect and the derived state pattern:\n\n- The fetch effect `[]` only runs once — if the user navigates away and back, or if the server state changes, the client does not know\n- The `filteredTasks` state can get out of sync with `tasks` during the extra render cycle caused by the derived state pattern\n- And critically: because `filteredTasks` is in its own useState, there is a render where `tasks` has been updated but `filteredTasks` has not yet been recalculated\n\nThe fix is threefold:\n1. Change the fetch dependency array from `[]` to `[projectId]`\n2. Replace `filteredTasks` state with a direct calculation\n3. Use the updater function in addTask: `setTasks(prev => [...prev, newTask])`"
+    },
+    {
+      "type": "markdown",
+      "content": "---\n\n## Part 4: Write the fix prompt\n\nYou have identified all the issues across the codebase. Now write the prompts to fix them."
+    },
+    {
+      "type": "explainBack",
+      "prompt": "Write a complete fix prompt for the useTasks hook. Address the empty dependency array, the derived state, and the stale closure in addTask. Use the four-part format (what, where, why, how) for each issue."
+    },
+    {
+      "type": "explainBack",
+      "prompt": "Write a complete fix prompt for the AI-generated CreateTaskForm component. Address every issue you found: unused imports, derived state, missing preventDefault, the div that should be a button, missing loading state, and missing error handling."
+    },
+    {
+      "type": "markdown",
+      "content": "---\n\n## Part 5: The big picture\n\nFinal questions that test your understanding of the whole project."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Understanding the Codebase",
+      "problems": [
+        {
+          "id": "rl8-3-7",
+          "question": "Looking at App.tsx, the `<Header />` is rendered outside the `<Routes>`. What does this mean for the user experience?",
+          "options": [
+            "A) The Header component appears on every page, including the login page — this might be wrong since logged-out users should not see navigation",
+            "B) The Header only appears on the Dashboard page",
+            "C) The Header is hidden on all pages because it is outside the Routes"
+          ],
+          "correctAnswer": "A",
+          "explanation": "Because <Header /> is rendered above <Routes>, it appears on every route — including /login. This is likely a bug: the login page probably should not show the full navigation header. A common fix is to move the Header inside a layout route that wraps the authenticated pages, and keep the login route separate (similar to the nested route pattern you saw in Module 8.1).",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "rl8-3-8",
+          "question": "The types/index.ts file shows that Task has an `assigneeId: string` field, but the CreateTaskForm hardcodes `assigneeId: \"\"`. A PM asks: \"How would we add an assignee dropdown to the form?\" What would you need?\n\n```tsx\n// Current in CreateTaskForm:\nonSubmit({\n  projectId,\n  title,\n  description,\n  priority,\n  status: \"todo\",\n  assigneeId: \"\",   // Hardcoded empty\n  dueDate: new Date().toISOString(),\n});\n```",
+          "options": [
+            "A) Add a new useState for assigneeId, add a <select> dropdown populated with team members, and pass the selected assigneeId in the onSubmit call — the team member list would need to come as a prop or from a hook",
+            "B) Change the assigneeId type from string to number in the types file",
+            "C) Remove assigneeId from the Task interface since it is not being used"
+          ],
+          "correctAnswer": "A",
+          "explanation": "To add an assignee dropdown, you would need: (1) a list of team members — either passed as a prop to the form, or fetched via a hook like useProjectMembers(projectId), (2) a new useState for the selected assigneeId, (3) a <select> element with <option> tags for each team member, and (4) pass the selected assigneeId in the onSubmit data instead of the empty string. The types are already correct — assigneeId is a string matching the User.id type.",
+          "difficulty": "advanced"
+        }
+      ]
+    },
+    {
+      "type": "explainBack",
+      "prompt": "Write a summary of every bug and issue you found across the TaskFlow codebase. Organize them by file and severity (critical, moderate, minor). For each issue, write one sentence explaining the user impact."
+    },
+    {
+      "type": "markdown",
+      "content": "---\n\n## Complete issue summary\n\nHere is the full list of issues across the TaskFlow codebase:\n\n### Critical\n1. **useTasks.ts — missing dependency**: The fetch useEffect has `[]` instead of `[projectId]`. Users see stale tasks when navigating between projects.\n2. **CreateTaskForm.tsx — missing preventDefault**: The form reloads the page when submitted, wiping out all state.\n\n### Moderate\n3. **useTasks.ts — derived state**: `filteredTasks` is stored in state when it should be calculated directly. Causes extra renders and potential sync issues.\n4. **useTasks.ts — stale closure**: `addTask` uses `tasks` directly instead of the updater function `prev => [...prev, newTask]`.\n5. **TaskList.tsx — index keys**: Using `key={index}` causes rendering bugs when tasks are filtered or reordered.\n6. **CreateTaskForm.tsx — div as button**: The submit button is a `<div>`, making it inaccessible to keyboard and screen reader users.\n7. **CreateTaskForm.tsx — no loading state**: No protection against double-submission.\n8. **App.tsx — Header on login**: The Header shows on the login page, which likely should not have the full navigation.\n\n### Minor\n9. **CreateTaskForm.tsx — derived state**: `isValid` is stored in state when it should be `const isValid = title.trim().length > 0`.\n10. **CreateTaskForm.tsx — unused imports**: `useReducer` and `useCallback` are imported but unused.\n11. **CreateTaskForm.tsx — missing form labels**: No `<label>` elements for the inputs (accessibility).\n12. **CreateTaskForm.tsx — missing error handling**: The `onSubmit` promise rejection is not caught.\n\n---\n\n## You did it.\n\nYou just navigated a multi-file React codebase, identified twelve issues across five files, traced a bug across components, reviewed AI-generated code, and wrote fix prompts using precise React vocabulary.\n\nThis is what React literacy looks like. You are not writing the code — you are reading it, understanding it, catching problems, and communicating fixes. That is an incredibly valuable skill in a world where AI writes the first draft and humans ensure it is correct.\n\nEvery technical concept from this course — JSX, components, props, state, hooks, effects, data fetching, forms, routing, TypeScript, debugging patterns, AI review checklists — came together in this exercise. You used all of it.\n\nWelcome to React literacy."
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "React literacy means reading code, tracing features across files, catching bugs, reviewing AI output, and communicating fixes using precise vocabulary. You do not need to write React code to be an effective reviewer, debugger, and AI director. The skills from this course make you a more effective PM, designer, founder, or team lead working alongside developers and AI tools."
+    }
+  ]
+}

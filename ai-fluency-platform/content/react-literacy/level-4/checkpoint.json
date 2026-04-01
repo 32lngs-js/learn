@@ -1,0 +1,112 @@
+{
+  "meta": {
+    "title": "4.5 Checkpoint",
+    "description": "Trace what happens when a user submits a form, navigates, or triggers a data fetch.",
+    "level": "level-4",
+    "slug": "checkpoint",
+    "order": 5,
+    "isCheckpoint": true,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "markdown",
+      "content": "## Checkpoint: The Side Effects\n\nThis checkpoint tests whether you can read the patterns that connect React components to the outside world -- data fetching, forms, routing, and async behaviors. Try to answer **without scrolling back** to the modules.\n\n### Concept recall"
+    },
+    {
+      "type": "explainBack",
+      "prompt": "Describe the tri-state data fetching pattern. What three states does every data-fetching component manage? What is the typical sequence of events from the moment the component appears to when data is displayed?"
+    },
+    {
+      "type": "explainBack",
+      "prompt": "Explain what a controlled component is. What two attributes make an input controlled? What happens if one is missing? Why is e.preventDefault() essential in a form submission handler?"
+    },
+    {
+      "type": "explainBack",
+      "prompt": "What is the difference between `<Link to=\"/about\">` and `<a href=\"/about\">` in a React app? When would you use each? What does useParams() do?"
+    },
+    {
+      "type": "markdown",
+      "content": "### Applied exercises"
+    },
+    {
+      "type": "practiceSet",
+      "title": "Level 4 Checkpoint",
+      "problems": [
+        {
+          "id": "rl4-5-1",
+          "question": "Trace the loading, error, and success flow in this component. What does the user see at each stage when they select a different category?\n\n```jsx\nfunction CategoryProducts({ categoryId }) {\n  const [products, setProducts] = useState([]);\n  const [loading, setLoading] = useState(true);\n  const [error, setError] = useState(null);\n\n  useEffect(() => {\n    setLoading(true);\n    setError(null);\n\n    fetch(`/api/categories/${categoryId}/products`)\n      .then(res => {\n        if (!res.ok) throw new Error('Failed to load products');\n        return res.json();\n      })\n      .then(data => {\n        setProducts(data);\n        setLoading(false);\n      })\n      .catch(err => {\n        setError(err.message);\n        setLoading(false);\n      });\n  }, [categoryId]);\n\n  if (loading) return <div className=\"skeleton-grid\" />;\n  if (error) return <ErrorBanner message={error} />;\n\n  return (\n    <div className=\"product-grid\">\n      {products.map(p => (\n        <ProductCard key={p.id} product={p} />\n      ))}\n    </div>\n  );\n}\n```",
+          "options": [
+            "A) When categoryId changes: (1) loading resets to true, error resets to null, skeleton grid appears. (2) Fetch starts. (3a) On success: products update, loading becomes false, product grid shows. (3b) On failure: error is set, loading becomes false, error banner shows.",
+            "B) The component only fetches once and never re-fetches when categoryId changes.",
+            "C) The skeleton grid and product grid both show simultaneously.",
+            "D) The error state is never cleared between category switches."
+          ],
+          "correctAnswer": "A",
+          "explanation": "The useEffect has `[categoryId]` in its dependency array, so it re-runs when the category changes. At the start of each run: `setLoading(true)` shows the skeleton grid, `setError(null)` clears any previous error. Then the fetch either succeeds (products display) or fails (error banner appears). The skeleton grid is a nice touch -- it is a skeleton screen loading pattern rather than a plain spinner.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "rl4-5-2",
+          "question": "A client reports: \"When I submit the feedback form, the page refreshes and my message is lost.\" Find the bug.\n\n```jsx\nfunction FeedbackForm() {\n  const [rating, setRating] = useState(5);\n  const [comment, setComment] = useState('');\n  const [submitted, setSubmitted] = useState(false);\n\n  async function handleSubmit(e) {\n    const res = await fetch('/api/feedback', {\n      method: 'POST',\n      headers: { 'Content-Type': 'application/json' },\n      body: JSON.stringify({ rating, comment }),\n    });\n    if (res.ok) setSubmitted(true);\n  }\n\n  if (submitted) return <p>Thank you for your feedback!</p>;\n\n  return (\n    <form onSubmit={handleSubmit}>\n      <select value={rating} onChange={e => setRating(Number(e.target.value))}>\n        {[1,2,3,4,5].map(n => <option key={n} value={n}>{n} stars</option>)}\n      </select>\n      <textarea\n        value={comment}\n        onChange={e => setComment(e.target.value)}\n        placeholder=\"Your feedback...\"\n      />\n      <button type=\"submit\">Submit</button>\n    </form>\n  );\n}\n```",
+          "options": [
+            "A) `handleSubmit` receives the event `e` but never calls `e.preventDefault()`. The browser performs a default form submission (page reload) before the fetch can complete.",
+            "B) The textarea onChange handler is wrong.",
+            "C) The select should use strings instead of numbers.",
+            "D) The submitted state should be checked in useEffect."
+          ],
+          "correctAnswer": "A",
+          "explanation": "The handleSubmit function accepts `e` as a parameter but never calls `e.preventDefault()`. The browser's default form behavior fires immediately, reloading the page. The fetch may start but the page reload aborts it. Fix: add `e.preventDefault()` as the first line of handleSubmit. This is the single most common form bug in AI-generated React code.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "rl4-5-3",
+          "question": "Given these routes, what does the user see at the URL `/projects/42/settings`, and what parameters does the SettingsPage component have access to?\n\n```jsx\nfunction App() {\n  return (\n    <BrowserRouter>\n      <Routes>\n        <Route path=\"/\" element={<Layout />}>\n          <Route index element={<Dashboard />} />\n          <Route path=\"projects\" element={<ProjectList />} />\n          <Route path=\"projects/:projectId\" element={<ProjectDetail />} />\n          <Route path=\"projects/:projectId/settings\" element={<SettingsPage />} />\n        </Route>\n        <Route path=\"*\" element={<NotFound />} />\n      </Routes>\n    </BrowserRouter>\n  );\n}\n```",
+          "options": [
+            "A) The Layout component renders (header/sidebar), and the Outlet shows SettingsPage. useParams() inside SettingsPage returns `{ projectId: '42' }`.",
+            "B) Only SettingsPage renders, without the Layout.",
+            "C) ProjectDetail renders because it matches first.",
+            "D) NotFound renders because the path has too many segments."
+          ],
+          "correctAnswer": "A",
+          "explanation": "The URL `/projects/42/settings` matches the nested route `projects/:projectId/settings`. Since it is nested under `<Route path=\"/\" element={<Layout />}>`, the Layout component renders and its `<Outlet />` displays the SettingsPage. Inside SettingsPage, `useParams()` returns `{ projectId: '42' }` -- the `:projectId` captures \"42\" from the URL.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "rl4-5-4",
+          "question": "You are reviewing AI-generated code for a comment section. The client says: \"Posting a comment works, but it takes 2 seconds before my comment appears in the list. It feels broken.\" The AI used a standard fetch-then-reload approach. What pattern would you suggest to make it feel instant, and what would you tell the AI?\n\n```jsx\nfunction CommentSection({ postId }) {\n  const [comments, setComments] = useState([]);\n  const [newComment, setNewComment] = useState('');\n\n  useEffect(() => {\n    fetch(`/api/posts/${postId}/comments`)\n      .then(res => res.json())\n      .then(data => setComments(data));\n  }, [postId]);\n\n  async function handleSubmit(e) {\n    e.preventDefault();\n    await fetch(`/api/posts/${postId}/comments`, {\n      method: 'POST',\n      headers: { 'Content-Type': 'application/json' },\n      body: JSON.stringify({ text: newComment }),\n    });\n    // Re-fetch all comments after posting\n    const res = await fetch(`/api/posts/${postId}/comments`);\n    const data = await res.json();\n    setComments(data);\n    setNewComment('');\n  }\n\n  return (\n    <div>\n      {comments.map(c => <p key={c.id}>{c.text}</p>)}\n      <form onSubmit={handleSubmit}>\n        <textarea\n          value={newComment}\n          onChange={e => setNewComment(e.target.value)}\n        />\n        <button type=\"submit\">Post Comment</button>\n      </form>\n    </div>\n  );\n}\n```",
+          "options": [
+            "A) Use an optimistic update: add the new comment to the local list immediately with `setComments(prev => [...prev, { id: Date.now(), text: newComment }])`, clear the input, and send the fetch in the background. Revert if the server fails.",
+            "B) Add a loading spinner to the submit button.",
+            "C) Use debouncing on the submit handler.",
+            "D) Remove the re-fetch and only keep the local state update."
+          ],
+          "correctAnswer": "A",
+          "explanation": "The current code waits for two round trips to the server (POST + GET) before updating the UI. An optimistic update would add the new comment to the list immediately, clear the input, then POST to the server. If the server fails, remove the optimistic comment and show an error. This makes the comment appear instantly. You would tell the AI: \"Add an optimistic update: add the comment to the comments array immediately after submit, clear the input, then POST to the server in the background. If the POST fails, remove the optimistic comment and show an error.\"",
+          "difficulty": "advanced"
+        },
+        {
+          "id": "rl4-5-5",
+          "question": "This component has multiple bugs. Identify ALL of them.\n\n```jsx\nfunction UserSearch() {\n  const [query, setQuery] = useState('');\n  const [users, setUsers] = useState([]);\n\n  useEffect(() => {\n    fetch(`/api/users?search=${query}`)\n      .then(res => res.json())\n      .then(data => setUsers(data));\n  });\n\n  return (\n    <div>\n      <input value={query} onChange={e => setQuery(e.target.value)} />\n      <ul>\n        {users.map(user => (\n          <li>\n            <a href={`/users/${user.id}`}>{user.name}</a>\n          </li>\n        ))}\n      </ul>\n    </div>\n  );\n}\n```",
+          "options": [
+            "A) Three bugs: (1) useEffect has no dependency array -- infinite loop. (2) No debouncing -- fires a request on every keystroke. (3) Uses `<a href>` instead of `<Link>` -- page will reload on click. Also missing: key prop on li elements, loading state, and error handling.",
+            "B) Only one bug: the missing dependency array.",
+            "C) Only one bug: the missing key prop.",
+            "D) The component is correct but could be optimized."
+          ],
+          "correctAnswer": "A",
+          "explanation": "This component has several issues. The most critical: (1) Missing dependency array on useEffect means it runs after every render, and since setUsers triggers a re-render, this creates an infinite fetch loop. Fix: add `[query]`. (2) No debouncing means typing triggers a fetch on every single keystroke. Fix: add debouncing. (3) `<a href>` for internal navigation causes page reloads. Fix: use `<Link to>`. Additionally: no `key` prop on `<li>`, no loading state, and no error handling. In a review, you would prioritize the infinite loop fix first.",
+          "difficulty": "advanced"
+        }
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "### Self-assessment\n\nRate your confidence on each Level 4 concept from 1 (cannot explain it) to 5 (could teach it):\n\n| Concept | Confidence (1-5) |\n| :-- | :-- |\n| Tri-state data fetching (loading / error / success) | |\n| Guard clauses and early returns | |\n| fetch with .then() chains and async/await | |\n| Controlled components (value + onChange) | |\n| e.preventDefault() in form handlers | |\n| Link vs. anchor tags for navigation | |\n| Route parameters and useParams | |\n| Debouncing | |\n| Optimistic updates | |\n| Error boundaries | |\n\nIf any concept is below a 3, revisit that module before continuing."
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "Level 4 fluency means you can trace what happens when a user interacts with a React app beyond just viewing content: loading data (tri-state pattern), submitting forms (controlled components + preventDefault), navigating between pages (Link + routes + useParams), and handling the uncertainty of async operations (debouncing, optimistic updates, error boundaries). You now understand the patterns behind virtually every user interaction on the web."
+    }
+  ]
+}

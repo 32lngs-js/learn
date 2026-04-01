@@ -121,5 +121,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Market-Based Valuation** using price multiples. While DCF models estimate absolute value from fundamentals, market-based approaches compare a company's pricing to its peers \u2014 providing a valuable cross-check on your DCF results."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Free cash flow to equity (FCFE) represents:",
+      "options": [
+        "Cash flow before any expenses",
+        "Cash available to common shareholders after all obligations",
+        "Total revenue minus cost of goods sold"
+      ],
+      "correctIndex": 1,
+      "explanation": "FCFE is the cash left for equity holders after operating expenses, capital expenditures, and debt payments. It can be paid as dividends or retained.",
+      "encourageCorrect": "Exactly! FCFE is what's left for shareholders after everyone else is paid.",
+      "encourageIncorrect": "FCFE is the cash available to equity shareholders after all obligations (operating costs, capex, debt payments) are met."
+    },
+    {
+      "question": "When is a free cash flow model more appropriate than a dividend discount model?",
+      "options": [
+        "When a company pays a large, stable dividend",
+        "When a company pays no dividends or dividends don't reflect the firm's ability to pay",
+        "When the company is in bankruptcy"
+      ],
+      "correctIndex": 1,
+      "explanation": "FCF models work for companies that don't pay dividends or whose dividends don't reflect their true earnings power.",
+      "encourageCorrect": "Right! FCF models capture value that dividend models miss for non-dividend payers.",
+      "encourageIncorrect": "Free cash flow models are better when companies don't pay dividends or when dividends don't reflect the company's true capacity to pay shareholders."
+    }
   ]
 }

@@ -1,0 +1,86 @@
+{
+  "meta": {
+    "title": "1.4 Checkpoint",
+    "description": "Test your HTML reading and troubleshooting skills with realistic scenarios covering everything from Level 1.",
+    "level": "level-1",
+    "slug": "checkpoint",
+    "order": 4,
+    "isCheckpoint": true,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "calibrationCheck",
+      "question": "Before we start the checkpoint: on a scale of 1-5, how confident are you that you could look at a block of HTML and explain what a user would see on screen?",
+      "answer": "Whatever you rated yourself, this checkpoint will help you calibrate. Pay attention to which problems feel easy and which feel tricky — that tells you where to focus if you revisit this level."
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "On a scale of 1-5, how confident are you that you could spot a common HTML mistake — like a missing closing tag, a wrong file path, or a missing attribute?",
+      "answer": "Debugging is a different skill from reading. You might be great at understanding what correct HTML does but still find it hard to spot what is wrong. Both skills improve with practice."
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "On a scale of 1-5, how confident are you that you could describe an HTML problem clearly enough for AI (or a developer) to fix it?",
+      "answer": "This is the ultimate code literacy skill — not fixing the code yourself, but communicating the problem precisely. If you can say \"the src attribute on the img tag points to the wrong folder\" instead of \"the image is broken,\" you are already ahead."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Level 1 Checkpoint",
+      "problems": [
+        {
+          "id": "wf1-4-1",
+          "question": "Read this HTML and describe what the user sees:\n\n```html\n<!DOCTYPE html>\n<html>\n<head>\n  <title>Bella's Bakery</title>\n</head>\n<body>\n  <header>\n    <nav>\n      <a href=\"/\">Home</a>\n      <a href=\"/menu\">Menu</a>\n      <a href=\"/contact\">Contact</a>\n    </nav>\n  </header>\n  <main>\n    <h1>Welcome to Bella's Bakery</h1>\n    <p>We have been baking fresh bread since 1985.</p>\n    <h2>Today's Specials</h2>\n    <ul>\n      <li>Sourdough Loaf</li>\n      <li>Cinnamon Rolls</li>\n      <li>Blueberry Muffins</li>\n    </ul>\n  </main>\n  <footer>\n    <p>Copyright 2025 Bella's Bakery</p>\n  </footer>\n</body>\n</html>\n```\n\nWhat does the user see?",
+          "options": [
+            "A) A page with navigation links (Home, Menu, Contact) at the top, a heading \"Welcome to Bella's Bakery,\" a paragraph, a subheading \"Today's Specials,\" a bulleted list of three items, and copyright text at the bottom. The browser tab says \"Bella's Bakery.\"",
+            "B) A page that only shows \"Bella's Bakery\" as a heading, with the rest of the content hidden in the head section",
+            "C) A page with three numbered specials and a clickable image of the bakery"
+          ],
+          "correctAnswer": "A",
+          "explanation": "Reading top to bottom: the <title> sets the browser tab text. The <header> contains a <nav> with three links. The <main> has an <h1> heading, a <p> paragraph, an <h2> subheading, and a <ul> (bulleted, not numbered) list with three items. The <footer> has a copyright paragraph. No images or numbered lists appear in this code.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "wf1-4-2",
+          "question": "A marketing team member reports two issues with this page:\n1. The browser tab says \"Untitled Document\"\n2. There is a broken image where the hero photo should be\n\n```html\n<html>\n<head>\n  <link rel=\"stylesheet\" href=\"styles.css\">\n</head>\n<body>\n  <h1>Summer Sale - 50% Off</h1>\n  <img src=\"/banners/summer-sale.jpg\">\n  <p>Shop our biggest sale of the year.</p>\n</body>\n</html>\n```\n\nWhich two problems can you identify in the HTML?",
+          "options": [
+            "A) Missing <title> tag in the <head>, and the <img> tag has no alt attribute (but the broken image is likely a wrong file path on the server, not visible in this code alone)",
+            "B) The <h1> should be in the <head>, and the <img> needs a closing tag",
+            "C) The <link> tag is causing the title to disappear, and the <img> src needs to use http://"
+          ],
+          "correctAnswer": "A",
+          "explanation": "The \"Untitled Document\" problem is caused by a missing <title> tag in the <head>. The <img> tag is also missing an alt attribute, which is an accessibility issue. As for the broken image — the src path looks reasonable in the HTML, so the actual file might be missing or in a different folder on the server. You can identify the missing <title> and alt directly from the code; the broken image path would need further investigation.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "wf1-4-3",
+          "question": "You asked AI to build a FAQ section. It generated this:\n\n```html\n<div>\n  <h2>Frequently Asked Questions</h2>\n  <h3>How do I reset my password?<h3>\n  <p>Go to Settings and click \"Reset Password.\"</p>\n  <h3>Can I change my email?</h3>\n  <p>Yes, under Account Settings.</p>\n</div>\n```\n\nThe first question and its answer are displaying on the same line in a weird large font. What is wrong?",
+          "options": [
+            "A) The first <h3> closing tag is missing the forward slash — it says <h3> instead of </h3>, so the browser thinks it is opening another heading instead of closing the first one",
+            "B) The <div> tag should be a <section> tag",
+            "C) The <p> tag cannot come after an <h3> tag"
+          ],
+          "correctAnswer": "A",
+          "explanation": "Look closely at the first closing tag: <h3> instead of </h3>. Without the forward slash, the browser reads it as a second opening <h3> tag. That means everything after it — including the paragraph — gets treated as heading content, explaining the large font and merged layout. This is a subtle typo that is easy to miss and exactly the kind of thing AI sometimes generates.",
+          "difficulty": "advanced"
+        },
+        {
+          "id": "wf1-4-4",
+          "question": "A colleague sends you this HTML and asks: \"Does this page have good structure for accessibility and SEO?\"\n\n```html\n<body>\n  <div id=\"top\">\n    <div class=\"logo\">Acme Inc</div>\n    <div class=\"menu\">\n      <a href=\"/\">Home</a>\n      <a href=\"/about\">About</a>\n    </div>\n  </div>\n  <div id=\"middle\">\n    <div class=\"title\">About Us</div>\n    <div class=\"text\">We build great products.</div>\n  </div>\n  <div id=\"bottom\">\n    <div class=\"copy\">Copyright 2025</div>\n  </div>\n</body>\n```\n\nWhat is the main structural problem?",
+          "options": [
+            "A) The class names are too short and should be more descriptive",
+            "B) Everything uses <div> tags — there are no semantic elements (<header>, <nav>, <main>, <footer>, <h1>) for screen readers or search engines to understand the page structure",
+            "C) The page is missing a <head> section with a stylesheet"
+          ],
+          "correctAnswer": "B",
+          "explanation": "While this page would look fine visually (especially with CSS), it uses only <div> tags with class names. Screen readers and search engines cannot tell that \"top\" is a header, \"menu\" is navigation, or \"title\" is a heading. Replacing these with <header>, <nav>, <main>, <h1>, and <footer> would make the page accessible and SEO-friendly without changing its appearance."
+        }
+      ]
+    },
+    {
+      "type": "tryItYourself",
+      "title": "Open a webpage you use for work — your company's homepage, a tool you use daily, or a competitor's site. View the page source (Ctrl+U / Cmd+Option+U) and answer these questions: (1) What does the <title> tag say? Does it match the browser tab? (2) Can you find the <header>, <main>, or <footer> sections? Or is it mostly <div> tags? (3) Find one <a> tag and read where the href points. Find one <img> tag and check if it has alt text.",
+      "solution": "You should be able to locate the <title> tag in the <head> section and confirm it matches the browser tab text. For the body, many professional sites use semantic elements — look for <header>, <nav>, <main>, <footer>. If you found links with readable href values and images with (or without) alt text, you have just performed a basic HTML audit. This is a real skill that marketers, PMs, and designers use."
+    }
+  ]
+}

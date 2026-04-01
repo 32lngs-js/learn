@@ -43,5 +43,31 @@
       "type": "connectPrompt",
       "prompt": "Clearing and compacting are reactive strategies — you use them when the context is already strained. The next module covers a proactive approach: using subagents to investigate things without bloating your main context window at all."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Why is /clear described as 'starting ahead' rather than 'starting over'?",
+      "options": [
+        "Because it saves your files",
+        "Because you now know what a better briefing looks like from the failed attempt",
+        "Because it's faster than /compact"
+      ],
+      "correctIndex": 1,
+      "explanation": "After a failed attempt, you understand the problem better. A fresh session with that improved understanding produces better results than fighting through clutter.",
+      "encourageCorrect": "Right! Every failed attempt teaches you what was missing from the original briefing.",
+      "encourageIncorrect": "/clear + a better prompt is starting ahead because the failed attempt taught you what the original briefing was missing."
+    },
+    {
+      "question": "What is the '20-minute rule'?",
+      "options": [
+        "Sessions should never exceed 20 minutes",
+        "After 20+ minutes of active work, check if quality is dropping and consider /clear",
+        "Wait 20 minutes before using /clear"
+      ],
+      "correctIndex": 1,
+      "explanation": "After 20+ minutes of active work, if quality is dropping, consider /clear as a strategic upgrade rather than pushing through.",
+      "encourageCorrect": "That's the heuristic! It's a trigger for awareness, not a strict timer.",
+      "encourageIncorrect": "The 20-minute rule is a check: if quality drops after 20+ minutes of active work, consider clearing and starting fresh."
+    }
   ]
 }

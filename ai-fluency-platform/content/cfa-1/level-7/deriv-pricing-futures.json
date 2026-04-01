@@ -114,5 +114,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Pricing Swaps** \u2014 extending the forward pricing framework to understand interest rate swaps, currency swaps, and equity swaps as portfolios of forward contracts."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "How do futures prices differ from forward prices in practice?",
+      "options": [
+        "They are always identical",
+        "Futures have daily settlement (mark-to-market) which can cause small differences due to the correlation between rates and futures prices",
+        "Futures are always higher than forwards"
+      ],
+      "correctIndex": 1,
+      "explanation": "Daily mark-to-market in futures creates a timing difference in cash flows. The convexity bias means futures and forward prices can differ slightly.",
+      "encourageCorrect": "Right! Daily settlement creates the key difference between futures and forward prices.",
+      "encourageIncorrect": "Futures have daily mark-to-market settlement, which can cause their prices to differ slightly from forward prices due to the reinvestment of daily gains/losses."
+    },
+    {
+      "question": "What does 'marking to market' mean in futures trading?",
+      "options": [
+        "Setting the initial futures price",
+        "Daily settlement of gains and losses through margin accounts",
+        "Comparing futures prices to spot prices"
+      ],
+      "correctIndex": 1,
+      "explanation": "Mark-to-market means gains and losses are settled daily. Winners receive cash and losers must pay, keeping credit risk minimal.",
+      "encourageCorrect": "That's it! Daily cash settlement keeps everyone honest and reduces credit risk.",
+      "encourageIncorrect": "Marking to market means daily settlement of profits and losses through margin accounts. Gains are credited and losses are debited each day."
+    }
   ]
 }

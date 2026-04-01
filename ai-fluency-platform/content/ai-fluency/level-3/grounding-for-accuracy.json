@@ -35,10 +35,10 @@
       "type": "providerContent",
       "context": "### Grounding Tools in Practice\n\nYour tool provides specific grounding mechanisms:",
       "providers": {
-        "claude-code": "Claude Code provides **WebSearch and WebFetch tools** for real-time grounding. Claude can search the web and fetch page content to verify claims against current information. MCP tools connect to domain-specific data sources — databases, APIs, and internal documentation — providing grounding beyond what web search alone offers.\n\nThe tool-use architecture means grounding happens naturally: when Claude recognizes it needs current information or verification, it automatically reaches for the appropriate tool. You can also explicitly instruct Claude to verify its claims by searching or reading specific sources. This makes Claude Code particularly strong for grounding in codebases, where it can read actual source files to verify statements about how code works.",
-        "codex": "Codex offers **web browsing capability** for real-time information retrieval, allowing it to ground responses in current data. Uploaded files provide document-level grounding — Codex can reference specific passages and verify claims against your source material.\n\nThe **sandbox environment** provides a controlled grounding context where Codex can verify its claims against real files and even execute code to check its own outputs. This execution-based grounding is particularly powerful for technical claims: instead of just asserting that code works, Codex can run it and verify the results.",
-        "cline": "Cline grounds its responses through **tool-based verification** — it can read files, run terminal commands, and check its own outputs against real system state. Workspace file context is automatically included, providing grounding in the actual codebase.\n\nMCP servers can provide additional grounding sources, connecting Cline to databases, APIs, or documentation systems. A distinctive strength is that Cline can **run verification commands** to check its own outputs — for example, executing a test suite after making changes, or running a linter to verify code quality claims. This execution-based grounding closes the loop between generation and verification.",
-        "gemini": "Gemini's **Google Search grounding** is built-in and first-class — one of its strongest differentiators. When grounding is enabled, Gemini automatically searches Google when it needs current information, and the results are woven into the response with citations.\n\nThis is particularly valuable for questions about recent events, current pricing, or evolving documentation. Gemini also provides **fact-checking tools and citation support** that help verify accuracy. For enterprise use cases, Vertex AI's grounding features connect to your own data sources. The key advantage is that grounding is not an afterthought — it is deeply integrated into Gemini's generation process."
+        "claude-code": "Claude Code provides **WebSearch and WebFetch tools** for real-time grounding. Claude can search the web and fetch page content to verify claims against current information. MCP tools connect to domain-specific data sources \u2014 databases, APIs, and internal documentation \u2014 providing grounding beyond what web search alone offers.\n\nThe tool-use architecture means grounding happens naturally: when Claude recognizes it needs current information or verification, it automatically reaches for the appropriate tool. You can also explicitly instruct Claude to verify its claims by searching or reading specific sources. This makes Claude Code particularly strong for grounding in codebases, where it can read actual source files to verify statements about how code works.",
+        "codex": "Codex offers **web browsing capability** for real-time information retrieval, allowing it to ground responses in current data. Uploaded files provide document-level grounding \u2014 Codex can reference specific passages and verify claims against your source material.\n\nThe **sandbox environment** provides a controlled grounding context where Codex can verify its claims against real files and even execute code to check its own outputs. This execution-based grounding is particularly powerful for technical claims: instead of just asserting that code works, Codex can run it and verify the results.",
+        "cline": "Cline grounds its responses through **tool-based verification** \u2014 it can read files, run terminal commands, and check its own outputs against real system state. Workspace file context is automatically included, providing grounding in the actual codebase.\n\nMCP servers can provide additional grounding sources, connecting Cline to databases, APIs, or documentation systems. A distinctive strength is that Cline can **run verification commands** to check its own outputs \u2014 for example, executing a test suite after making changes, or running a linter to verify code quality claims. This execution-based grounding closes the loop between generation and verification.",
+        "gemini": "Gemini's **Google Search grounding** is built-in and first-class \u2014 one of its strongest differentiators. When grounding is enabled, Gemini automatically searches Google when it needs current information, and the results are woven into the response with citations.\n\nThis is particularly valuable for questions about recent events, current pricing, or evolving documentation. Gemini also provides **fact-checking tools and citation support** that help verify accuracy. For enterprise use cases, Vertex AI's grounding features connect to your own data sources. The key advantage is that grounding is not an afterthought \u2014 it is deeply integrated into Gemini's generation process."
       }
     },
     {
@@ -64,6 +64,32 @@
     {
       "type": "connectPrompt",
       "prompt": "You have now built the core retrieval and grounding toolkit. Next, you will explore how different model architectures -- Mixture of Experts, Mixture of Agents, and reasoning models -- change the way you apply these techniques."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "If a model cites a specific source in its RAG response, does that guarantee the citation is accurate?",
+      "options": [
+        "Yes, RAG models always cite correctly",
+        "No, the model can fabricate citations or attribute claims to the wrong document",
+        "Only if the source was in the retrieved context"
+      ],
+      "correctIndex": 1,
+      "explanation": "Models can fabricate plausible-looking citations or misattribute information, even in RAG systems. Always verify citations against the actual source material.",
+      "encourageCorrect": "That's an important lesson -- always verify citations, especially for high-stakes applications.",
+      "encourageIncorrect": "Even in RAG systems, models can fabricate citations or misattribute claims. Always verify citations against the actual source material."
+    },
+    {
+      "question": "What approach asks the model to rate its confidence as HIGH, MEDIUM, or LOW for each part of its answer?",
+      "options": [
+        "Chain-of-thought reasoning",
+        "Confidence signaling",
+        "Few-shot prompting"
+      ],
+      "correctIndex": 1,
+      "explanation": "Confidence signaling asks the model to tag each part of its answer with a confidence level, creating transparency about which parts may need verification.",
+      "encourageCorrect": "Right! Confidence signaling doesn't prevent hallucination, but it creates useful transparency.",
+      "encourageIncorrect": "That technique is called confidence signaling -- it helps users identify which parts of the answer to verify, even though it doesn't prevent hallucination."
     }
   ]
 }

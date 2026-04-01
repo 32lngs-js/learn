@@ -106,5 +106,31 @@
       "type": "connectPrompt",
       "prompt": "You've now completed the Corporate Issuers section for Level II. The **Corporate Issuers Checkpoint** is next, testing your integrated understanding of dividend policy, ESG, M&A, and restructuring in comprehensive vignette-based questions."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "A spin-off creates value by:",
+      "options": [
+        "Merging two companies together",
+        "Separating a subsidiary into an independent company, allowing each to be valued on its own merits",
+        "Eliminating all debt"
+      ],
+      "correctIndex": 1,
+      "explanation": "Spin-offs separate a business unit into a standalone company. This can unlock hidden value and allow focused management.",
+      "encourageCorrect": "Right! Separating businesses can unlock value that was hidden in a conglomerate.",
+      "encourageIncorrect": "A spin-off separates a subsidiary into an independent company. This can unlock hidden value and allow each entity to be managed and valued independently."
+    },
+    {
+      "question": "Bankruptcy reorganization (Chapter 11 in the US) allows a company to:",
+      "options": [
+        "Immediately liquidate all assets",
+        "Continue operations while restructuring its debts under court protection",
+        "Avoid all debt obligations permanently"
+      ],
+      "correctIndex": 1,
+      "explanation": "Chapter 11 provides breathing room \u2014 the company operates under court protection while negotiating with creditors to restructure its obligations.",
+      "encourageCorrect": "That's it! Chapter 11 is about reorganization, not liquidation.",
+      "encourageIncorrect": "Chapter 11 lets a company continue operations while restructuring debt under court protection. It's reorganization, not liquidation (which is Chapter 7)."
+    }
   ]
 }

@@ -100,5 +100,31 @@
       "type": "connectPrompt",
       "prompt": "Next, we cover **Institutional Portfolio Management** \u2014 how different institutions (pensions, endowments, foundations, insurance, sovereign wealth) construct portfolios based on their unique objectives, constraints, and governance structures."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "The primary motivation for including alternatives in a portfolio is:",
+      "options": [
+        "To increase liquidity",
+        "Diversification benefits and potential for higher risk-adjusted returns",
+        "To simplify the portfolio"
+      ],
+      "correctIndex": 1,
+      "explanation": "Alternatives often have low correlation with traditional assets, improving diversification. They may also offer higher returns as compensation for illiquidity.",
+      "encourageCorrect": "That's the case for alternatives! Diversification and potentially better risk-adjusted returns.",
+      "encourageIncorrect": "Alternatives improve diversification (low correlation with stocks/bonds) and may offer a return premium for accepting illiquidity."
+    },
+    {
+      "question": "A challenge of allocating to alternatives in mean-variance optimization is:",
+      "options": [
+        "Alternatives always dominate the allocation",
+        "Smoothed returns and stale pricing understate true risk, leading to overallocation",
+        "Alternatives are too risky to include"
+      ],
+      "correctIndex": 1,
+      "explanation": "Appraisal-based valuations smooth returns, understating volatility and correlation. MVO then overallocates because alternatives look less risky than they really are.",
+      "encourageCorrect": "Right! Smoothed data fools the optimizer into over-allocating to alternatives.",
+      "encourageIncorrect": "Smoothed returns from infrequent valuations understate alternative risk. This tricks MVO into recommending too large an allocation to alternatives."
+    }
   ]
 }

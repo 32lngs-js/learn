@@ -100,5 +100,31 @@
       "type": "connectPrompt",
       "prompt": "Next, we dive deep into **Taxes and Private Wealth** -- the most impactful and underappreciated aspect of wealth management. Tax management can add 1-3% annually to after-tax returns, making it potentially the highest-value activity for private wealth advisors."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "The financial planning process for private clients begins with:",
+      "options": [
+        "Selecting investments immediately",
+        "Understanding the client's current situation, goals, and values",
+        "Maximizing tax deductions"
+      ],
+      "correctIndex": 1,
+      "explanation": "Good financial planning starts by understanding where the client is now, what they want to achieve, and what matters most to them.",
+      "encourageCorrect": "Exactly! Understanding the client comes before any investment decisions.",
+      "encourageIncorrect": "The planning process starts with understanding the client: their current situation, goals, values, and concerns. Investment decisions come later."
+    },
+    {
+      "question": "The personal balance sheet differs from a corporate balance sheet in that it includes:",
+      "options": [
+        "Only financial assets",
+        "Human capital, personal use assets, and tax liabilities",
+        "Only liquid investments"
+      ],
+      "correctIndex": 1,
+      "explanation": "A personal balance sheet should include human capital (PV of future earnings), personal use assets (home), and tax liabilities \u2014 items not found in corporate statements.",
+      "encourageCorrect": "Right! Personal balance sheets capture human capital and other personal assets.",
+      "encourageIncorrect": "Personal balance sheets include human capital (future earnings), personal-use assets (home, car), and tax liabilities alongside investment assets."
+    }
   ]
 }

@@ -104,5 +104,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Interest Rate Risk and Return**, examining how the three components of bond return (coupon income, reinvestment income, and price change) interact over different investment horizons."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "The yield curve plots:",
+      "options": [
+        "Credit spreads across different issuers",
+        "Bond yields against their maturities for similar-quality bonds",
+        "Stock returns over time"
+      ],
+      "correctIndex": 1,
+      "explanation": "The yield curve shows the relationship between bond yields and maturities, typically for government bonds of similar credit quality.",
+      "encourageCorrect": "That's it! Yield vs maturity for same-quality bonds.",
+      "encourageIncorrect": "The yield curve plots bond yields against their maturities for bonds of similar credit quality, typically government bonds."
+    },
+    {
+      "question": "An inverted yield curve (short-term rates higher than long-term rates) is often seen as a signal of:",
+      "options": [
+        "Strong economic growth ahead",
+        "A potential economic recession",
+        "Rising inflation expectations"
+      ],
+      "correctIndex": 1,
+      "explanation": "An inverted yield curve has historically been one of the most reliable predictors of an upcoming recession.",
+      "encourageCorrect": "Right! Yield curve inversion is one of the most watched recession indicators.",
+      "encourageIncorrect": "An inverted yield curve \u2014 where short-term rates exceed long-term rates \u2014 has historically been a reliable predictor of economic recession."
+    }
   ]
 }

@@ -1,0 +1,106 @@
+{
+  "meta": {
+    "title": "8.1 Reading a React Project",
+    "description": "package.json, src/, components/, pages/ — the map of a real React codebase.",
+    "level": "level-8",
+    "slug": "reading-a-react-project",
+    "order": 1,
+    "isCheckpoint": false,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "predictPrompt",
+      "prompt": "Someone shares a React project folder with you and says 'take a look around.' You see dozens of files and folders. Before reading further, write down: where would you look first? What file would you open to understand what the project does?"
+    },
+    {
+      "type": "markdown",
+      "content": "## The map of a React project\n\nEvery React project follows a predictable structure. Once you know the landmarks, you can navigate any project — even one with hundreds of files — without feeling lost.\n\nLet us start with what a typical React project looks like when you open the root folder:\n\n```\nmy-app/\n├── node_modules/          # Auto-generated dependencies (never look here)\n├── public/                # Static files (favicon, images)\n├── src/                   # All the code you care about\n│   ├── components/        # Reusable UI components\n│   ├── pages/             # Page-level components (one per route)\n│   ├── hooks/             # Custom hooks\n│   ├── utils/             # Helper functions\n│   ├── types/             # TypeScript type definitions\n│   ├── api/               # API call functions\n│   ├── context/           # React context providers\n│   ├── App.tsx            # Root component with routing\n│   └── main.tsx           # Entry point — renders App into the page\n├── .env                   # Environment variables (API URLs, keys)\n├── package.json           # Project ID card\n├── tsconfig.json          # TypeScript configuration\n└── vite.config.ts         # Build tool configuration\n```\n\nNot every project uses exactly these folder names, but the roles are always the same. Let us explore each landmark.\n\n---\n\n### package.json — the project's ID card\n\nThis is the first file to open in any project. It tells you three critical things:\n\n```json\n{\n  \"name\": \"acme-dashboard\",\n  \"version\": \"1.2.0\",\n  \"scripts\": {\n    \"dev\": \"vite\",\n    \"build\": \"tsc && vite build\",\n    \"preview\": \"vite preview\",\n    \"test\": \"vitest\"\n  },\n  \"dependencies\": {\n    \"react\": \"^18.2.0\",\n    \"react-dom\": \"^18.2.0\",\n    \"react-router-dom\": \"^6.20.0\",\n    \"axios\": \"^1.6.0\",\n    \"@tanstack/react-query\": \"^5.0.0\",\n    \"tailwindcss\": \"^3.4.0\"\n  },\n  \"devDependencies\": {\n    \"typescript\": \"^5.3.0\",\n    \"vitest\": \"^1.0.0\",\n    \"@types/react\": \"^18.2.0\"\n  }\n}\n```\n\n**1. Scripts — how to run the project:**\n- `\"dev\"` — starts the development server (what developers run locally)\n- `\"build\"` — creates the production version for deployment\n- `\"test\"` — runs the test suite\n\nYou run these with `npm run dev`, `npm run build`, etc.\n\n**2. Dependencies — what libraries the project uses:**\n- `react` and `react-dom` — the core framework (always present)\n- `react-router-dom` — means the app has multiple pages/routes\n- `axios` — an HTTP library for API calls (alternative to the built-in `fetch`)\n- `@tanstack/react-query` — a data fetching library that handles loading, error, and caching\n- `tailwindcss` — a CSS utility framework\n\nThe dependencies list is like a feature list. Each library tells you something about what the project does and how.\n\n**3. DevDependencies — tools used during development only:**\n- `typescript` — the project uses TypeScript\n- `vitest` — the testing framework\n- `@types/react` — TypeScript type definitions for React\n\nThese do not ship to users. They are tools for the development process.\n\n---\n\n### main.tsx — the entry point\n\nThis file is where the React app starts. It is usually very short:\n\n```tsx\nimport React from \"react\";\nimport ReactDOM from \"react-dom/client\";\nimport App from \"./App\";\nimport \"./index.css\";\n\nReactDOM.createRoot(document.getElementById(\"root\")!).render(\n  <React.StrictMode>\n    <App />\n  </React.StrictMode>\n);\n```\n\nThis file does one thing: it finds the HTML element with `id=\"root\"` and renders the `<App />` component inside it. You rarely need to modify or even read this file — but knowing it exists tells you where the app begins.\n\nSome projects call this `index.tsx` instead of `main.tsx`. The role is the same.\n\n---\n\n### App.tsx — the table of contents\n\nThis is the most important file for understanding a project's structure. It usually contains the routing configuration — which URL shows which page:\n\n```tsx\nimport { BrowserRouter, Routes, Route } from \"react-router-dom\";\nimport Layout from \"./components/Layout\";\nimport Dashboard from \"./pages/Dashboard\";\nimport UserList from \"./pages/UserList\";\nimport UserDetail from \"./pages/UserDetail\";\nimport Settings from \"./pages/Settings\";\nimport Login from \"./pages/Login\";\n\nconst App = () => {\n  return (\n    <BrowserRouter>\n      <Routes>\n        <Route path=\"/\" element={<Layout />}>\n          <Route index element={<Dashboard />} />\n          <Route path=\"users\" element={<UserList />} />\n          <Route path=\"users/:id\" element={<UserDetail />} />\n          <Route path=\"settings\" element={<Settings />} />\n        </Route>\n        <Route path=\"/login\" element={<Login />} />\n      </Routes>\n    </BrowserRouter>\n  );\n};\n```\n\nReading this, you instantly know:\n- The app has five pages: Dashboard, UserList, UserDetail, Settings, and Login\n- Most pages share a Layout component (header, sidebar)\n- The Login page has its own layout (no sidebar)\n- User detail pages use a dynamic `:id` parameter\n\n`App.tsx` is your table of contents. When someone asks \"where is the settings page?\", you look here first.\n\n---\n\n### The src/ directory — where all the code lives\n\nEverything inside `src/` is code you or the developers wrote. Let us walk through the common subfolders:\n\n**`src/components/`** — Reusable UI pieces. Buttons, cards, modals, form inputs, navigation bars. These are used across multiple pages.\n\n```\ncomponents/\n├── Button.tsx\n├── Card.tsx\n├── Modal.tsx\n├── SearchInput.tsx\n├── Layout.tsx\n└── Sidebar.tsx\n```\n\n**`src/pages/`** — One component per page/route. Each file here corresponds to a route in `App.tsx`.\n\n```\npages/\n├── Dashboard.tsx\n├── UserList.tsx\n├── UserDetail.tsx\n├── Settings.tsx\n└── Login.tsx\n```\n\n**`src/hooks/`** — Custom hooks that encapsulate reusable logic. Remember `useXyz()` from Level 5? They live here.\n\n```\nhooks/\n├── useAuth.ts\n├── useUsers.ts\n└── useDebounce.ts\n```\n\n**`src/api/`** or **`src/services/`** — Functions that call backend APIs.\n\n```\napi/\n├── users.ts        # fetchUsers(), createUser(), deleteUser()\n├── auth.ts         # login(), logout(), getSession()\n└── client.ts       # Configured axios/fetch instance\n```\n\n**`src/utils/`** — Pure helper functions. Formatters, validators, calculations.\n\n```\nutils/\n├── formatDate.ts\n├── formatCurrency.ts\n└── validateEmail.ts\n```\n\n**`src/types/`** — TypeScript type definitions shared across the project.\n\n```\ntypes/\n├── user.ts         # interface User { id: string; name: string; ... }\n├── product.ts\n└── api.ts          # interface ApiResponse<T> { data: T; error?: string }\n```\n\n---\n\n### How to find any component\n\nSomeone mentions a component name — say, `UserCard`. How do you find it?\n\n1. **Search for the file name.** Component names start with a capital letter: `UserCard.tsx`\n2. **Check `src/components/`** first — that is where reusable components live\n3. **If not there, check `src/pages/`** — it might be a page-level component\n4. **Follow the imports.** If you are looking at a file that uses `<UserCard>`, look at the `import` statements at the top — they tell you the exact file path:\n\n```tsx\nimport UserCard from \"../components/UserCard\";\n// This tells you: the file is at src/components/UserCard.tsx\n```\n\nImport statements are your navigation system. They are breadcrumbs that connect every file in the project.\n\n---\n\n### Files you can mostly ignore\n\n- **`node_modules/`** — auto-generated folder containing every library the project uses. It can have 50,000+ files. Never look here.\n- **`tsconfig.json`** — TypeScript configuration. Unless there is a build error, you do not need to touch it.\n- **`vite.config.ts`** (or `webpack.config.js`, `next.config.js`) — build tool configuration. Advanced territory.\n- **`.eslintrc`**, **`.prettierrc`** — code formatting rules. Not relevant to understanding what the app does.\n- **`package-lock.json`** (or `yarn.lock`) — exact versions of every dependency. Auto-generated, never edit.\n\n---\n\n### .env files — environment variables\n\nMost projects have a `.env` file (or `.env.local`) at the root with configuration:\n\n```\nVITE_API_URL=https://api.acme.com\nVITE_APP_NAME=Acme Dashboard\nVITE_GOOGLE_MAPS_KEY=AIzaSyB...\n```\n\nThese are referenced in code as `import.meta.env.VITE_API_URL` (in Vite projects) or `process.env.REACT_APP_API_URL` (in Create React App projects). If you see a hardcoded API URL and need to change it, the `.env` file is where it lives.\n\n---\n\n### Putting it together: your first five minutes in a new project\n\n1. **Open `package.json`** — read the scripts (how to run it) and dependencies (what libraries it uses)\n2. **Open `App.tsx`** — read the routes (what pages exist)\n3. **Browse `src/`** — note the folder structure (components, pages, hooks, api)\n4. **Pick one page and open it** — read it to see how the pieces connect\n5. **Follow the imports** — click through to components and hooks to understand the data flow\n\nIn five minutes, you have a mental map of the entire project."
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "You open a project's package.json and see `react-router-dom` in dependencies and `vitest` in devDependencies. What do these tell you about the project?",
+      "answer": "react-router-dom means the app has client-side routing — multiple pages that can be navigated without full page reloads. It also means you will find route definitions in App.tsx. vitest is in devDependencies, meaning it is a testing framework used during development only — it does not ship to users. This tells you the project has a test suite you could run with a command like `npm run test`."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Reading a React Project",
+      "problems": [
+        {
+          "id": "rl8-1-1",
+          "question": "You need to find where the navigation bar is defined. Where do you look first?\n\n```\nsrc/\n├── components/\n│   ├── Button.tsx\n│   ├── NavBar.tsx\n│   ├── Footer.tsx\n│   └── Modal.tsx\n├── pages/\n│   ├── Home.tsx\n│   └── Settings.tsx\n├── hooks/\n│   └── useAuth.ts\n└── App.tsx\n```",
+          "options": [
+            "A) src/components/NavBar.tsx — reusable UI components live in the components folder",
+            "B) src/pages/Home.tsx — the navigation is part of the home page",
+            "C) src/hooks/useAuth.ts — the navigation depends on authentication"
+          ],
+          "correctAnswer": "A",
+          "explanation": "The components/ folder is where reusable UI components live, and NavBar.tsx is the obvious match. Navigation bars are reusable — they appear on multiple pages — so they belong in components/, not pages/. The useAuth hook handles authentication logic, not the visual navigation bar.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "rl8-1-2",
+          "question": "You see this in a file:\n\n```tsx\nimport { useUsers } from \"../hooks/useUsers\";\nimport { UserCard } from \"../components/UserCard\";\nimport { formatDate } from \"../utils/formatDate\";\n```\n\nWhat can you determine about this file's dependencies?",
+          "options": [
+            "A) It uses a custom hook for user data, a reusable card component, and a date formatting utility — spanning three different parts of the project",
+            "B) It imports from node_modules",
+            "C) It is the entry point of the application"
+          ],
+          "correctAnswer": "A",
+          "explanation": "The import paths tell you exactly which parts of the project this file depends on. `../hooks/useUsers` means it uses a custom hook (probably fetches user data). `../components/UserCard` means it renders a reusable card component. `../utils/formatDate` means it uses a utility function. The `../` in each path means these files are in sibling directories to the current file. These are not node_modules imports (which would not have `../`).",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "rl8-1-3",
+          "question": "You open App.tsx and see this routing configuration. A PM asks you: \"Where do I find the code for the page that shows when someone clicks on a specific order?\" What do you tell them?\n\n```tsx\n<Routes>\n  <Route path=\"/\" element={<Layout />}>\n    <Route index element={<Dashboard />} />\n    <Route path=\"orders\" element={<OrderList />} />\n    <Route path=\"orders/:orderId\" element={<OrderDetail />} />\n    <Route path=\"customers\" element={<CustomerList />} />\n  </Route>\n</Routes>\n```",
+          "options": [
+            "A) Look in the Dashboard component — all order data is displayed there",
+            "B) Look in the OrderDetail component — the route `orders/:orderId` matches a specific order URL like `/orders/abc123`, and the OrderDetail import at the top of App.tsx tells you the file path",
+            "C) Look in the OrderList component — it contains all order-related code"
+          ],
+          "correctAnswer": "B",
+          "explanation": "The route `orders/:orderId` matches URLs like `/orders/abc123` — a specific order page. The element for that route is <OrderDetail />, so that component renders when someone clicks on a specific order. The import statement at the top of App.tsx tells you the file path, likely something like `import OrderDetail from './pages/OrderDetail'`. OrderList shows the list of all orders, not a specific one. Dashboard is the home page.",
+          "difficulty": "advanced"
+        }
+      ]
+    },
+    {
+      "type": "explainBack",
+      "prompt": "Describe the 'first five minutes in a new project' process in your own words. What do you open first, second, and third — and what are you looking for in each file?"
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "Every React project has the same landmarks: package.json (the ID card), main.tsx (the entry point), App.tsx (the table of contents with routes), and organized folders for components, pages, hooks, api, and utilities. Import statements are your navigation system — they connect every file and tell you exactly where to find any component."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "Now that you can navigate a project's structure, the next module teaches you to trace a feature across multiple files — following a user action from button click through hook, API call, and state update to screen change."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is the first file you should open when exploring a new React project?",
+      "options": ["main.tsx", "package.json", "App.tsx"],
+      "correctIndex": 1,
+      "explanation": "package.json is the project's ID card — it tells you the project name, how to run it (scripts), and what libraries it uses (dependencies).",
+      "encourageCorrect": "That's the move! package.json gives you the quickest overview of any project.",
+      "encourageIncorrect": "Start with package.json — it's the project's ID card that tells you how to run it and what libraries it uses."
+    },
+    {
+      "question": "What does App.tsx typically contain in a React project?",
+      "options": ["The CSS styles for the entire app", "The routing configuration — which URL shows which page", "The database connection setup"],
+      "correctIndex": 1,
+      "explanation": "App.tsx is the table of contents — it usually contains the routing configuration that maps URLs to page components.",
+      "encourageCorrect": "Exactly! App.tsx is your table of contents for the entire application.",
+      "encourageIncorrect": "App.tsx typically holds the routing configuration — the mapping between URLs and page components. Think of it as the table of contents."
+    },
+    {
+      "question": "Where do reusable UI components like buttons and cards typically live?",
+      "options": ["src/pages/", "src/components/", "src/hooks/"],
+      "correctIndex": 1,
+      "explanation": "Reusable UI components live in src/components/. Pages (one per route) go in src/pages/, and reusable logic goes in src/hooks/.",
+      "encourageCorrect": "Right! Components that are shared across pages live in the components folder.",
+      "encourageIncorrect": "Reusable UI pieces live in src/components/. The pages/ folder is for route-level components, and hooks/ is for reusable logic."
+    }
+  ]
+}

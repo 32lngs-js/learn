@@ -104,5 +104,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Credit Analysis for Government Issuers**, examining the framework for assessing sovereign credit quality \u2014 including institutional, economic, and fiscal factors that determine a country's ability and willingness to repay its debt."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Credit spread is the difference between:",
+      "options": [
+        "A bond's coupon rate and its yield to maturity",
+        "The yield on a credit-risky bond and a comparable risk-free bond",
+        "The bid and ask price of a bond"
+      ],
+      "correctIndex": 1,
+      "explanation": "The credit spread compensates investors for the risk that the issuer may default. It equals the bond's yield minus the risk-free rate for the same maturity.",
+      "encourageCorrect": "Exactly! The credit spread is the extra yield for bearing default risk.",
+      "encourageIncorrect": "Credit spread = yield on a risky bond minus the yield on a comparable risk-free bond. It compensates for default risk."
+    },
+    {
+      "question": "Expected loss from credit risk equals:",
+      "options": [
+        "Probability of default only",
+        "Probability of default times loss given default",
+        "The bond's coupon rate"
+      ],
+      "correctIndex": 1,
+      "explanation": "Expected loss = Probability of default (PD) x Loss given default (LGD). Both components matter for assessing credit risk.",
+      "encourageCorrect": "Right! Both the likelihood of default and the severity of loss matter.",
+      "encourageIncorrect": "Expected loss = PD x LGD. You need both the probability of default and how much you'd lose if default occurs."
+    }
   ]
 }

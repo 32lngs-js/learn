@@ -100,5 +100,31 @@
       "type": "connectPrompt",
       "prompt": "Next, we examine **Concentrated Positions** in detail -- a common challenge for HNW/UHNW clients. We'll explore equity monetization strategies, real estate techniques, and private business exit planning that integrate the tax and estate concepts from this module."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "The primary goal of estate planning is to:",
+      "options": [
+        "Maximize investment returns during the client's lifetime",
+        "Transfer wealth to beneficiaries efficiently while minimizing taxes and legal complications",
+        "Avoid having any assets at death"
+      ],
+      "correctIndex": 1,
+      "explanation": "Estate planning ensures wealth is transferred according to the client's wishes, minimizing estate/inheritance taxes and avoiding legal disputes.",
+      "encourageCorrect": "Right! Estate planning is about efficient, intentional wealth transfer.",
+      "encourageIncorrect": "Estate planning aims to transfer wealth efficiently to beneficiaries, minimizing taxes and ensuring the client's wishes are carried out."
+    },
+    {
+      "question": "A trust can be used in estate planning to:",
+      "options": [
+        "Avoid all taxes forever",
+        "Control how and when assets are distributed to beneficiaries",
+        "Guarantee investment returns for heirs"
+      ],
+      "correctIndex": 1,
+      "explanation": "Trusts provide control over asset distribution (timing, conditions), potential tax benefits, and creditor protection for beneficiaries.",
+      "encourageCorrect": "Exactly! Trusts give you control over when and how your heirs receive assets.",
+      "encourageIncorrect": "Trusts allow the grantor to control how, when, and under what conditions assets are distributed to beneficiaries. They can also provide tax and creditor protection benefits."
+    }
   ]
 }

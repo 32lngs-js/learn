@@ -104,5 +104,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Financial Analysis Techniques**, where you'll learn common-size analysis, DuPont decomposition, and comprehensive ratio analysis. These tools are essential for detecting the reporting quality issues discussed here \u2014 ratio anomalies often reveal the first signs of manipulation."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is the difference between earnings quality and reporting quality?",
+      "options": [
+        "They mean the same thing",
+        "Reporting quality is about GAAP compliance; earnings quality is about the sustainability of earnings",
+        "Earnings quality is only relevant for profitable companies"
+      ],
+      "correctIndex": 1,
+      "explanation": "Reporting quality relates to adherence to standards (GAAP/IFRS). Earnings quality measures whether reported earnings are sustainable and reflect economic reality.",
+      "encourageCorrect": "Great distinction! Compliant reporting doesn't automatically mean high-quality earnings.",
+      "encourageIncorrect": "Reporting quality = compliance with accounting standards. Earnings quality = whether earnings are sustainable and economically real. Both matter."
+    },
+    {
+      "question": "A company that aggressively recognizes revenue before it is earned is an example of:",
+      "options": [
+        "Conservative accounting",
+        "Low reporting quality",
+        "High earnings quality"
+      ],
+      "correctIndex": 1,
+      "explanation": "Premature revenue recognition violates the spirit of accounting standards and reduces reporting quality \u2014 earnings appear better than reality.",
+      "encourageCorrect": "Correct! Aggressive revenue recognition is a classic red flag for low quality.",
+      "encourageIncorrect": "Recognizing revenue before it's earned is aggressive accounting and a sign of low reporting quality. It overstates current performance."
+    }
   ]
 }

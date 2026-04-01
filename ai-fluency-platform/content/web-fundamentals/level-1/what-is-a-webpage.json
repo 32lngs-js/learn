@@ -1,0 +1,106 @@
+{
+  "meta": {
+    "title": "1.1 What Is a Webpage, Really?",
+    "description": "Discover what is behind every webpage by using View Source, and learn to read HTML tags as simple labels for content.",
+    "level": "level-1",
+    "slug": "what-is-a-webpage",
+    "order": 1,
+    "isCheckpoint": false,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "predictPrompt",
+      "prompt": "When you right-click a webpage and select \"View Source,\" what do you think you will see? What do you think HTML looks like before the browser turns it into a visual page?"
+    },
+    {
+      "type": "markdown",
+      "content": "## The simplest webpage in the world\n\nHere is a complete (tiny) webpage:\n\n```html\n<h1>Welcome to my site</h1>\n<p>This is a paragraph of text.</p>\n```\n\nThat is it. If you saved those two lines in a file and opened it in a browser, you would see a large bold heading that says \"Welcome to my site\" followed by a normal-sized paragraph below it.\n\nLet's break down what is happening.\n\n## Tags are labels\n\nThe words inside the angle brackets \u2014 `<h1>`, `<p>` \u2014 are called **tags**. They are labels that tell the browser what kind of content follows:\n\n- `<h1>` means \"this is a top-level heading\"\n- `<p>` means \"this is a paragraph\"\n- `<h2>` means \"this is a second-level heading\" (like a subheading)\n\nYou do not need to memorize a long list of tags. The important ones come up so often that you will recognize them naturally. For now, just remember: **a tag is a label that says what the content is.**\n\n## Opening and closing tags\n\nMost tags come in pairs \u2014 an **opening tag** and a **closing tag**:\n\n```html\n<p>This is a paragraph.</p>\n```\n\n- `<p>` is the opening tag \u2014 it says \"a paragraph starts here\"\n- `</p>` is the closing tag \u2014 the `/` means \"this paragraph ends here\"\n- Everything between them is the content\n\nForgetting the closing tag is one of the most common mistakes in HTML. If you see content that looks weirdly merged together or styled wrong, a missing closing tag is often the culprit.\n\n## Nesting: tags inside tags\n\nTags can go inside other tags. This is called **nesting**:\n\n```html\n<div>\n  <h1>Article Title</h1>\n  <p>First paragraph of the article.</p>\n  <p>Second paragraph of the article.</p>\n</div>\n```\n\nThe `<div>` (short for \"division\") is a container that wraps the heading and paragraphs. Think of it like a folder that groups related content.\n\nNesting has one critical rule: **tags must close in the reverse order they opened.** Like nesting bowls \u2014 the last one you put in is the first one you take out.\n\nThis is correct:\n```html\n<p>This is <strong>bold</strong> text.</p>\n```\n\nThis is broken:\n```html\n<p>This is <strong>bold</p></strong>\n```\n\nThe second example closes `<p>` before closing `<strong>`, which is like trying to pull out the outer bowl before the inner one. Browsers will try to fix this silently, but the result is often unpredictable.\n\n## Try it: View Source\n\nRight-click on any webpage and select **\"View Page Source\"** (or press `Ctrl+U` on Windows / `Cmd+Option+U` on Mac). What you see is the raw HTML that the browser received. It looks intimidating at first, but now you know the core idea: it is just content wrapped in labels.\n\nLook for tags you recognize \u2014 `<h1>`, `<p>`, `<div>`. They are there, surrounded by plenty of other tags you do not know yet. That is fine. You are reading HTML."
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "On a scale of 1-5, how confident are you that you could look at a block of HTML and identify where one element starts and ends?",
+      "answer": "If you rated yourself 3 or higher, you are on track. The core skill is spotting the opening tag, the closing tag (with the /), and the content between them. Everything else builds on that."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Reading HTML",
+      "problems": [
+        {
+          "id": "wf1-1-1",
+          "question": "What would this HTML look like in a browser?\n\n```html\n<h1>Our Products</h1>\n<p>We sell handmade candles.</p>\n<h2>Best Sellers</h2>\n```",
+          "options": [
+            "A) A large heading \"Our Products,\" a paragraph below it, then a slightly smaller heading \"Best Sellers\"",
+            "B) Three lines of text all the same size",
+            "C) A large heading \"Our Products\" with everything else inside it"
+          ],
+          "correctAnswer": "A",
+          "explanation": "Each tag defines a separate piece of content. <h1> renders as a large heading, <p> renders as normal paragraph text, and <h2> renders as a heading that is smaller than h1 but larger than regular text. They appear one after another, top to bottom.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "wf1-1-2",
+          "question": "You asked AI to generate a heading with bold text inside it. It produced this:\n\n```html\n<h1>Welcome to <strong>Our Store</h1></strong>\n```\n\nThe page looks fine in Chrome, but it is broken in another browser. What is the issue?",
+          "options": [
+            "A) The <strong> tag is not allowed inside <h1>",
+            "B) The closing tags are in the wrong order \u2014 </strong> should come before </h1>",
+            "C) The <h1> tag should be <h2> instead"
+          ],
+          "correctAnswer": "B",
+          "explanation": "Tags must close in the reverse order they opened. Since <strong> was opened inside <h1>, it must close before <h1> closes. The correct version is: <h1>Welcome to <strong>Our Store</strong></h1>. Browsers often try to silently fix this, which is why it might look fine in one browser but break in another.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "wf1-1-3",
+          "question": "A colleague says their landing page has a weird layout \u2014 the tagline and the description seem to be smashed together on one line instead of being separate. Here is the HTML:\n\n```html\n<h2>Fast. Simple. Reliable.\n<p>Our platform helps you ship faster.</p>\n```\n\nWhat is most likely causing the problem?",
+          "options": [
+            "A) The <h2> tag is missing its closing </h2> tag",
+            "B) The <p> tag should be <h3> instead",
+            "C) The text needs a <br> tag between the lines"
+          ],
+          "correctAnswer": "A",
+          "explanation": "Without a closing </h2> tag, the browser does not know where the heading ends. It may treat the paragraph as part of the heading, causing the text to merge. The fix is to add </h2> before the <p> tag: <h2>Fast. Simple. Reliable.</h2>.",
+          "difficulty": "intermediate"
+        }
+      ]
+    },
+    {
+      "type": "explainBack",
+      "prompt": "In your own words, explain what HTML tags are and how opening and closing tags work. Use an analogy from your own experience if it helps."
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "HTML is content wrapped in tags. Tags are labels \u2014 they tell the browser what each piece of content is. Most tags come in opening/closing pairs, and they must nest properly (close in reverse order). When something looks wrong on a webpage, a missing or misordered closing tag is one of the first things to check."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "Now you know what tags are and how they work. But a real webpage has more structure than just headings and paragraphs \u2014 it has a head, a body, navigation, and sections. Next, we will zoom out and look at the full anatomy of an HTML page."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "HTML tags come in pairs. What is the correct pair for a paragraph?",
+      "options": [
+        "<p> and </p>",
+        "<p> and <p/>",
+        "<para> and </para>"
+      ],
+      "correctIndex": 0,
+      "explanation": "Most HTML tags have an opening tag (<p>) and a closing tag (</p>) with a forward slash. The content goes between them.",
+      "encourageCorrect": "That's the pattern! Opening tag, content, closing tag with a slash.",
+      "encourageIncorrect": "HTML tags come in opening (<p>) and closing (</p>) pairs. The closing tag has a forward slash before the tag name."
+    },
+    {
+      "question": "What does HTML stand for and what does it do?",
+      "options": [
+        "Hyper Text Markup Language \u2014 it labels content so the browser knows what each piece is",
+        "High Tech Modern Language \u2014 it creates interactive animations",
+        "Hyperlink and Text Management Library \u2014 it manages databases"
+      ],
+      "correctIndex": 0,
+      "explanation": "HTML (HyperText Markup Language) wraps content in tags that tell the browser what each piece of content is \u2014 headings, paragraphs, links, etc.",
+      "encourageCorrect": "Perfect! HTML is markup \u2014 it labels and structures content.",
+      "encourageIncorrect": "HTML stands for HyperText Markup Language. Tags are labels that tell the browser what each piece of content is."
+    }
+  ]
+}

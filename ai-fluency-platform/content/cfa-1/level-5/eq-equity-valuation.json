@@ -118,5 +118,31 @@
       "type": "connectPrompt",
       "prompt": "The next module is the **Equity Investments Checkpoint**, where you'll test your knowledge across all eight modules \u2014 from market organization through valuation. The checkpoint integrates concepts across topics, just as the CFA exam does."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "The dividend discount model (DDM) values a stock based on:",
+      "options": [
+        "The company's book value",
+        "The present value of expected future dividends",
+        "The stock's 52-week high price"
+      ],
+      "correctIndex": 1,
+      "explanation": "The DDM values equity as the present value of all expected future dividends, discounted at the required rate of return.",
+      "encourageCorrect": "That's right! DDM says a stock is worth the present value of its future dividends.",
+      "encourageIncorrect": "The DDM values a stock as the present value of its expected future dividends, discounted at the required rate of return on equity."
+    },
+    {
+      "question": "A stock with a P/E ratio lower than its peers most likely indicates:",
+      "options": [
+        "The stock is always a better investment",
+        "The market may be pricing in lower growth or higher risk",
+        "The company has higher earnings quality"
+      ],
+      "correctIndex": 1,
+      "explanation": "A low P/E could mean the market expects lower growth, higher risk, or there may be a value opportunity \u2014 further analysis is needed.",
+      "encourageCorrect": "Right! A low P/E could be a red flag or an opportunity \u2014 context matters.",
+      "encourageIncorrect": "A lower P/E ratio often means the market expects lower growth or sees higher risk. It could also be a value opportunity, so further analysis is needed."
+    }
   ]
 }

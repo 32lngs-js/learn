@@ -133,5 +133,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Evaluating Model Fit** \u2014 how to determine whether your regression model actually explains the variation in the dependent variable well. You will learn about R-squared, adjusted R-squared, and model comparison criteria that build directly on the ANOVA decomposition introduced here."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "In multiple regression, adjusted R-squared differs from R-squared because it:",
+      "options": [
+        "Is always higher than R-squared",
+        "Penalizes for adding variables that don't improve the model",
+        "Ignores the number of independent variables"
+      ],
+      "correctIndex": 1,
+      "explanation": "Adjusted R-squared imposes a penalty for each additional variable. It only increases if the new variable improves the model enough to offset the penalty.",
+      "encourageCorrect": "Correct! Adjusted R-squared prevents you from improving fit by just adding more variables.",
+      "encourageIncorrect": "Adjusted R-squared penalizes for adding variables. Unlike R-squared (which never decreases with more variables), adjusted R-squared can fall if a variable doesn't help."
+    },
+    {
+      "question": "An F-test in multiple regression tests whether:",
+      "options": [
+        "Any individual coefficient is significant",
+        "All slope coefficients are simultaneously equal to zero",
+        "The intercept equals zero"
+      ],
+      "correctIndex": 1,
+      "explanation": "The F-test is a joint test: H0 says all slopes are zero (the model has no explanatory power). Rejecting means at least one variable matters.",
+      "encourageCorrect": "Right! The F-test checks if the overall model has any explanatory power.",
+      "encourageIncorrect": "The F-test checks whether all slope coefficients are jointly zero. Rejecting means the model as a whole has statistically significant explanatory power."
+    }
   ]
 }

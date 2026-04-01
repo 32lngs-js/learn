@@ -104,5 +104,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers the **Term Structure of Interest Rates** \u2014 yield curve shapes, spot rates, forward rates, and the theories explaining why the yield curve takes different forms. These concepts are essential for understanding bond pricing and relative value analysis."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "The quoted margin on a floating-rate note is:",
+      "options": [
+        "The total yield of the note",
+        "The fixed spread added to the reference rate to determine the coupon",
+        "The difference between the FRN's yield and a government bond yield"
+      ],
+      "correctIndex": 1,
+      "explanation": "The quoted margin is the fixed spread over the reference rate (e.g., SOFR + 150 bps) that determines the FRN's coupon at each reset.",
+      "encourageCorrect": "That's it! The quoted margin is the fixed spread over the floating reference rate.",
+      "encourageIncorrect": "The quoted margin is the fixed spread added to the reference rate (like SOFR) at each coupon reset to determine the FRN's coupon payment."
+    },
+    {
+      "question": "Discount margin on a floating-rate note measures:",
+      "options": [
+        "The spread that equates the FRN's price to its expected future cash flows",
+        "The FRN's credit rating",
+        "The minimum coupon the FRN will pay"
+      ],
+      "correctIndex": 0,
+      "explanation": "The discount margin is the constant spread over the reference rate that, when used to discount expected cash flows, produces the FRN's current market price.",
+      "encourageCorrect": "Correct! The discount margin is the market's required spread for the FRN.",
+      "encourageIncorrect": "The discount margin is the spread over the reference rate needed to discount the FRN's expected cash flows to equal its market price."
+    }
   ]
 }

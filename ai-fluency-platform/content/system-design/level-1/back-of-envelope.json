@@ -30,5 +30,39 @@
       "type": "connectPrompt",
       "prompt": "You can now estimate any system's resource requirements. Module 1.6 ties everything together by walking through the complete lifecycle of a single web request — from DNS resolution to the rendered page."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Approximately how many seconds are in a day?",
+      "options": ["~1,000 (10^3)", "~86,400 (10^5)", "~1,000,000 (10^6)"],
+      "correctIndex": 1,
+      "explanation": "There are 86,400 seconds in a day. Engineers round this to 10^5 for quick estimation.",
+      "encourageCorrect": "Nailed it! That number will come in handy for every QPS estimation.",
+      "encourageIncorrect": "Not quite — it's about 86,400 (roughly 10^5). A handy number to memorize!"
+    },
+    {
+      "question": "What's the rough number of daily active users (DAU) for a large app?",
+      "options": ["~100 thousand - 1 million", "~100 million - 1 billion", "~1 billion - 10 billion"],
+      "correctIndex": 1,
+      "explanation": "Large apps like Twitter, Instagram, or WhatsApp typically have 100M-1B daily active users. This is the starting number for most system design estimations.",
+      "encourageCorrect": "Spot on! 100M-1B DAU is the range you'll use as a starting point for most large-scale system design problems.",
+      "encourageIncorrect": "Not quite — large apps typically have 100M-1B daily active users. Memorize this range; it's your starting point for estimation."
+    },
+    {
+      "question": "How do you estimate average QPS from daily active users?",
+      "options": ["DAU x actions per user x 86,400", "DAU x actions per user / 86,400", "DAU / actions per user / 86,400"],
+      "correctIndex": 1,
+      "explanation": "Average QPS = (DAU x actions per user per day) / 86,400 seconds per day. For example, 500M users x 2 actions / 86,400 = ~11,500 QPS. Peak QPS is typically 2-5x average.",
+      "encourageCorrect": "Perfect! Divide total daily actions by 86,400 seconds to get average QPS — and remember peak is 2-5x that.",
+      "encourageIncorrect": "Remember: you divide by seconds in a day, not multiply. QPS = (DAU x actions/day) / 86,400. The 86,400 converts daily totals to per-second rates."
+    },
+    {
+      "question": "How many internet users are there worldwide (approximately)?",
+      "options": ["~500 million", "~2 billion", "~5 billion"],
+      "correctIndex": 2,
+      "explanation": "There are approximately 5 billion internet users worldwide — a key scale reference point for estimating maximum possible reach.",
+      "encourageCorrect": "That's right! 5 billion is the upper bound for global-scale systems.",
+      "encourageIncorrect": "It's actually about 5 billion — more than half the world's population is online now."
+    }
   ]
 }

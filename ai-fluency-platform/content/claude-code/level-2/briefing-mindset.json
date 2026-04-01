@@ -47,5 +47,31 @@
       "type": "connectPrompt",
       "prompt": "You now know to define what done looks like. But how specific should you be? In the next module, you will learn why precise constraints are more helpful than long explanations — and where the line is between helpful specificity and counterproductive micromanagement."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is the key difference between an 'instruction' and a 'briefing'?",
+      "options": [
+        "Briefings are longer",
+        "Instructions tell how, briefings define what done looks like",
+        "Briefings use bullet points"
+      ],
+      "correctIndex": 1,
+      "explanation": "A briefing defines the destination (what done looks like), while an instruction defines the route (how to get there).",
+      "encourageCorrect": "That's the core insight! Define the destination, not the route.",
+      "encourageIncorrect": "The key difference: instructions tell Claude how to do something, while briefings describe what the finished result looks like."
+    },
+    {
+      "question": "What are the four questions every good briefing should answer?",
+      "options": [
+        "Who, what, when, where",
+        "What is the task, what does done look like, what context is needed, how will we know it worked",
+        "Why, how, when, who"
+      ],
+      "correctIndex": 1,
+      "explanation": "The briefing checklist: What is the task? What does done look like? What context is needed? How will we know it worked?",
+      "encourageCorrect": "Perfect! Those four questions are your briefing checklist.",
+      "encourageIncorrect": "The four questions are: What is the task? What does done look like? What context is needed? How will we know it worked?"
+    }
   ]
 }

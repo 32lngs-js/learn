@@ -118,5 +118,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Fiscal Policy** \u2014 how governments use spending and taxation to influence the business cycle. You'll see how fiscal tools are deployed during recessions and expansions, and why their effectiveness is debated through concepts like the multiplier effect, crowding out, and Ricardian equivalence."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What are the four phases of a business cycle?",
+      "options": [
+        "Expansion, peak, contraction, trough",
+        "Growth, plateau, decline, recovery",
+        "Inflation, deflation, stagflation, reflation"
+      ],
+      "correctIndex": 0,
+      "explanation": "The business cycle has four phases: expansion (growing), peak (top), contraction (shrinking), and trough (bottom).",
+      "encourageCorrect": "Well done! Expansion, peak, contraction, trough \u2014 the rhythm of the economy.",
+      "encourageIncorrect": "The four phases are expansion, peak, contraction, and trough. The economy cycles through these phases repeatedly."
+    },
+    {
+      "question": "A recession is generally defined as:",
+      "options": [
+        "Any period of rising unemployment",
+        "Two or more consecutive quarters of declining real GDP",
+        "A single quarter of negative GDP growth"
+      ],
+      "correctIndex": 1,
+      "explanation": "While the official definition varies by country, the common rule of thumb is two consecutive quarters of declining real GDP.",
+      "encourageCorrect": "Right! Two consecutive quarters of declining real GDP is the standard definition.",
+      "encourageIncorrect": "A recession is commonly defined as two or more consecutive quarters of declining real GDP. A single bad quarter alone isn't usually enough."
+    }
   ]
 }

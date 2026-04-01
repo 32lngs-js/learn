@@ -1,0 +1,98 @@
+{
+  "meta": {
+    "title": "7.2 The Review Checklist",
+    "description": "A systematic process for reviewing any AI-generated React code.",
+    "level": "level-7",
+    "slug": "the-review-checklist",
+    "order": 2,
+    "isCheckpoint": false,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "predictPrompt",
+      "prompt": "Imagine an AI just generated a 100-line React component for you. You need to check it before using it. What order would you check things in? Write down your own review process — what would you look at first, second, third?"
+    },
+    {
+      "type": "markdown",
+      "content": "## The nine-point review checklist\n\nIn the last module, you learned the catalog of common AI mistakes. But knowing what can go wrong is different from having a system for catching it. When you are staring at a freshly generated component, you need a checklist — a consistent process you run every time.\n\nHere is the checklist. It is ordered from top of the file to bottom, so you can work through any component in a single pass.\n\n---\n\n### Step 1: Imports\n\n**Look at the top of the file.** Check two things:\n\n- **Are all imports used?** AI sometimes imports things it does not use. Extra imports are harmless but messy — they signal that the AI was not precise.\n- **Are there missing imports?** If the code uses `useState` but does not import it, the code will not compile. Same for components, utilities, and types.\n\n```tsx\n// AI generated this but never uses Link or useCallback\nimport { useState, useEffect, useCallback } from \"react\";\nimport { Link } from \"react-router-dom\";\nimport { Button } from \"@/components/ui/Button\";\n```\n\nUnused imports are a yellow flag. They suggest the AI started building one thing and shifted direction. Check whether the logic it abandoned was actually needed.\n\n---\n\n### Step 2: Component signature (props interface)\n\n**Look at the component function and its TypeScript interface.**\n\n- Does the props interface make sense for what this component does?\n- Are required props really required? Should some be optional?\n- Are the types reasonable? (Is a count a `number`? Is a name a `string`?)\n\n```tsx\ninterface UserCardProps {\n  user: User;           // Required — makes sense, a card needs a user\n  onEdit: () => void;   // Required — but is this always needed? Maybe optional?\n  className?: string;   // Optional — good, this is a common pattern\n}\n```\n\nAsk yourself: \"If I were using this component, would I always have all the required props?\" If not, some should be optional with `?`.\n\n---\n\n### Step 3: State — is any of it derived?\n\nThis is where you catch Mistake #1 from the catalog. **Read every `useState` line and ask: can this value be calculated from other state or props?**\n\n```tsx\n// Red flag: three pieces of state where one might be derived\nconst [items, setItems] = useState<Item[]>([]);\nconst [selectedItems, setSelectedItems] = useState<Item[]>([]);\nconst [selectedCount, setSelectedCount] = useState(0);  // Derived!\n```\n\n`selectedCount` is just `selectedItems.length`. It should not be in state. Scan for any `useState + useEffect` pairs where the effect just calculates a value from other state.\n\n**The quick test:** For each piece of state, ask: \"Can I compute this from other values I already have?\" If yes, it should not be state.\n\n---\n\n### Step 4: Effects — dependency arrays and cleanup\n\nFor every `useEffect` in the component, check three things:\n\n1. **Does it have a dependency array?** A useEffect without `[]` runs on every render — usually a bug.\n2. **Are the dependencies correct?** Every variable from the component scope that is used inside the effect should be in the array.\n3. **Is there cleanup?** If the effect sets up a subscription, timer, or event listener, it needs a cleanup function.\n\n```tsx\n// Missing cleanup — if the component unmounts before the timeout\n// fires, it will try to update state on an unmounted component\nuseEffect(() => {\n  const timer = setTimeout(() => {\n    setShowWelcome(false);\n  }, 5000);\n  // Should have: return () => clearTimeout(timer);\n}, []);\n```\n\n```tsx\n// Missing dependency — userId is used but not listed\nuseEffect(() => {\n  fetchUser(userId);\n}, []); // Should be [userId]\n```\n\nEffects are the highest-risk part of any React component. Give them extra attention.\n\n---\n\n### Step 5: Lists — keys\n\nFind every `.map()` call in the JSX. Check:\n\n- **Does the returned element have a `key` prop?**\n- **Is the key a unique, stable identifier?** Not an array index.\n\n```tsx\n// Bad: index as key\n{tasks.map((task, i) => <TaskRow key={i} task={task} />)}\n\n// Good: unique ID as key\n{tasks.map(task => <TaskRow key={task.id} task={task} />)}\n```\n\nThis check takes two seconds per `.map()` call. Make it a habit.\n\n---\n\n### Step 6: Error handling\n\nIf the component fetches data or calls an API, check:\n\n- **Is there a loading state?** What does the user see while data loads?\n- **Is there an error state?** What happens if the API returns an error?\n- **Does it check `res.ok`?** The fetch API does not throw on 404 or 500 errors — you have to check manually.\n\n```tsx\n// AI often writes this — no loading, no error, no res.ok check\nuseEffect(() => {\n  fetch(\"/api/data\")\n    .then(res => res.json())\n    .then(data => setData(data));\n}, []);\n```\n\nIf you see a bare `fetch` with no `.catch()`, no loading state, and no error state, flag it.\n\n---\n\n### Step 7: Forms\n\nIf the component has a `<form>`, check:\n\n- **Is there `preventDefault`?** Without it, the page reloads on submit.\n- **Are inputs controlled?** Each input should have a `value` tied to state and an `onChange` handler.\n- **Is there a submit loading state?** The button should be disabled while the form is submitting.\n\n```tsx\n// Controlled form with all three checks\nconst handleSubmit = (e: React.FormEvent) => {\n  e.preventDefault();                    // Check 1: preventDefault\n  setIsSubmitting(true);                  // Check 3: loading state\n  // ...\n};\n\n<input\n  value={email}                           // Check 2: controlled input\n  onChange={e => setEmail(e.target.value)}\n/>\n<button disabled={isSubmitting}>Submit</button>\n```\n\n---\n\n### Step 8: Accessibility\n\nQuickly scan for:\n\n- **Are interactive elements using semantic HTML?** Buttons should be `<button>`, not `<div onClick>`. Links should be `<a>` or router `<Link>`.\n- **Do images have `alt` text?**\n- **Do icon-only buttons have `aria-label`?**\n- **Can custom interactive elements be reached by keyboard?**\n\n```tsx\n// AI frequently does this\n<div onClick={handleClose} className=\"close-icon\">X</div>\n\n// Should be\n<button onClick={handleClose} aria-label=\"Close\">\n  <CloseIcon />\n</button>\n```\n\nAccessibility is not a nice-to-have. Screen reader users, keyboard users, and users with motor impairments rely on these patterns.\n\n---\n\n### Step 9: Edge cases\n\nThink about the data this component receives and ask:\n\n- **What happens with empty data?** An empty array, a null value, an empty string.\n- **What happens with long strings?** Does the layout break if a user name is 200 characters?\n- **What happens with missing fields?** If `user.avatar` is undefined, does the component crash?\n\n```tsx\n// Crashes if user.address is undefined\n<p>{user.address.street}</p>\n\n// Safe with optional chaining\n<p>{user.address?.street ?? \"No address provided\"}</p>\n```\n\nAI tends to write for the ideal case. Real data is messy.\n\n---\n\n### The checklist at a glance\n\n| Step | Check | Time |\n| :-- | :-- | :-- |\n| 1 | Imports — all used, none missing | 10 sec |\n| 2 | Props — types make sense, optionality is right | 15 sec |\n| 3 | State — any derived state? | 15 sec |\n| 4 | Effects — dependency arrays, cleanup | 30 sec |\n| 5 | Lists — unique keys, not index | 10 sec |\n| 6 | Error handling — loading, error, res.ok | 15 sec |\n| 7 | Forms — preventDefault, controlled, loading | 15 sec |\n| 8 | Accessibility — semantic HTML, aria labels | 15 sec |\n| 9 | Edge cases — empty, null, long strings | 15 sec |\n\nTotal: about two minutes. That is all it takes to systematically review any AI-generated component.\n\n---\n\n### Let us run the checklist on a real example\n\nHere is a component an AI generated for a notification bell:\n\n```tsx\nimport { useState, useEffect, useCallback } from \"react\";\n\ninterface Notification {\n  id: string;\n  message: string;\n  read: boolean;\n}\n\nconst NotificationBell = () => {\n  const [notifications, setNotifications] = useState<Notification[]>([]);\n  const [unreadCount, setUnreadCount] = useState(0);\n  const [isOpen, setIsOpen] = useState(false);\n\n  useEffect(() => {\n    fetch(\"/api/notifications\")\n      .then(res => res.json())\n      .then(data => setNotifications(data));\n  }, []);\n\n  useEffect(() => {\n    setUnreadCount(notifications.filter(n => !n.read).length);\n  }, [notifications]);\n\n  return (\n    <div>\n      <div onClick={() => setIsOpen(!isOpen)}>\n        Bell ({unreadCount})\n      </div>\n      {isOpen && (\n        <ul>\n          {notifications.map((n, i) => (\n            <li key={i} className={n.read ? \"\" : \"unread\"}>\n              {n.message}\n            </li>\n          ))}\n        </ul>\n      )}\n    </div>\n  );\n};\n```\n\nLet us run the checklist:\n\n1. **Imports**: `useCallback` is imported but never used. Minor.\n2. **Props**: No props — this component is self-contained. Fine.\n3. **State**: `unreadCount` is derived! It should be `const unreadCount = notifications.filter(n => !n.read).length`.\n4. **Effects**: The fetch has no error handling, no loading state, and no `res.ok` check. The dependency array `[]` is correct here since we only want to fetch once.\n5. **Lists**: Using index `i` as key. Should use `n.id`.\n6. **Error handling**: No loading state, no error state. If the API fails, the bell shows (0) with no explanation.\n7. **Forms**: No forms. Skip.\n8. **Accessibility**: The bell \"button\" is a `<div>` — not keyboard-accessible, not announced as a button.\n9. **Edge cases**: What if the API returns an empty array? The bell shows (0) and an empty dropdown. Acceptable but could show \"No notifications.\"\n\nIn two minutes, we found five issues. That is the power of a checklist."
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "You are reviewing an AI-generated component and you see a useEffect with no dependency array at all (not even an empty []). What does this mean, and is it likely a bug?",
+      "answer": "A useEffect with no dependency array runs after every single render. This is almost always a bug — especially if the effect makes a fetch call or updates state, because it would create an infinite loop (effect runs -> state updates -> re-render -> effect runs again). The fix is to add a dependency array: either [] to run once on mount, or [dep1, dep2] to run when specific values change."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Running the Checklist",
+      "problems": [
+        {
+          "id": "rl7-2-1",
+          "question": "You are reviewing this AI-generated component. Which checklist step catches the first bug?\n\n```tsx\nimport { useState, useEffect, useRef } from \"react\";\n\nconst SearchBox = ({ onSearch }: { onSearch: (q: string) => void }) => {\n  const [query, setQuery] = useState(\"\");\n  const [debouncedQuery, setDebouncedQuery] = useState(\"\");\n\n  useEffect(() => {\n    const timer = setTimeout(() => {\n      setDebouncedQuery(query);\n    }, 300);\n  }, [query]);\n\n  useEffect(() => {\n    if (debouncedQuery) onSearch(debouncedQuery);\n  }, [debouncedQuery]);\n\n  return <input value={query} onChange={e => setQuery(e.target.value)} />;\n};\n```",
+          "options": [
+            "A) Step 1 (Imports) — useRef is imported but never used",
+            "B) Step 4 (Effects) — the setTimeout effect is missing cleanup (clearTimeout)",
+            "C) Step 7 (Forms) — the input is missing preventDefault"
+          ],
+          "correctAnswer": "B",
+          "explanation": "While the unused useRef import (Step 1) is a minor issue, the more critical bug is in Step 4: the setTimeout in the first useEffect has no cleanup function. Without `return () => clearTimeout(timer)`, if the user types quickly, multiple timeouts stack up and all fire. The second useEffect is also missing onSearch in its dependency array. Both are Step 4 issues.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "rl7-2-2",
+          "question": "Which checklist step would catch the problem in this AI-generated code?\n\n```tsx\nconst ProductList = ({ products }: { products: Product[] }) => {\n  return (\n    <div>\n      <h2>Products ({products.length})</h2>\n      <ul>\n        {products.map(product => (\n          <li>\n            <img src={product.image} />\n            <span>{product.name}</span>\n            <span>${product.price}</span>\n          </li>\n        ))}\n      </ul>\n    </div>\n  );\n};\n```",
+          "options": [
+            "A) Step 5 (Lists) — missing key prop on the li element",
+            "B) Step 3 (State) — products should be in local state",
+            "C) Step 6 (Error handling) — missing try/catch around the map"
+          ],
+          "correctAnswer": "A",
+          "explanation": "Step 5 catches it: every .map() call needs a key prop on the returned element. The <li> is missing `key={product.id}`. There is also an accessibility issue (Step 8): the <img> is missing an alt attribute. Products come in as props, which is correct — they do not need local state. The .map() method does not need try/catch.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "rl7-2-3",
+          "question": "An AI generates a user settings form. You run the full checklist. Which steps flag issues?\n\n```tsx\nconst [name, setName] = useState(user.name);\nconst [email, setEmail] = useState(user.email);\nconst [isChanged, setIsChanged] = useState(false);\n\nuseEffect(() => {\n  setIsChanged(name !== user.name || email !== user.email);\n}, [name, email]);\n\nconst handleSave = () => {\n  updateUser({ name, email });\n};\n\nreturn (\n  <form onSubmit={handleSave}>\n    <input value={name} onChange={e => setName(e.target.value)} />\n    <input value={email} onChange={e => setEmail(e.target.value)} />\n    <div onClick={handleSave} className=\"btn\">Save</div>\n  </form>\n);\n```",
+          "options": [
+            "A) Steps 3, 4, 7, and 8 — derived state, missing effect dependency, missing preventDefault, and a div used as a button",
+            "B) Step 2 only — the props interface is missing",
+            "C) Steps 6 and 9 only — missing error handling and edge cases"
+          ],
+          "correctAnswer": "A",
+          "explanation": "Four checklist steps flag issues. Step 3: isChanged is derived state — it should be `const isChanged = name !== user.name || email !== user.email`. Step 4: the useEffect is missing user.name and user.email in its dependency array. Step 7: handleSave is missing `e.preventDefault()`, so the form will reload the page. Step 8: the Save 'button' is a <div>, not a <button>, making it inaccessible to keyboard users.",
+          "difficulty": "advanced"
+        }
+      ]
+    },
+    {
+      "type": "explainBack",
+      "prompt": "Without looking at the checklist, write down as many of the nine steps as you can remember. For each step, write one sentence explaining what you are looking for."
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "The nine-point review checklist — Imports, Props, State, Effects, Lists, Error Handling, Forms, Accessibility, Edge Cases — lets you systematically review any AI-generated React component in about two minutes. Work from top to bottom of the file. The checklist catches the vast majority of AI mistakes."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "The checklist helps you find problems in code that has already been generated. But what if you could prevent those problems from appearing in the first place? The next module teaches you how to write React prompts that produce better code from the start."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "In the review checklist, what should you check when you see a useEffect?",
+      "options": ["Whether it should be a useState instead", "Dependency array, correct dependencies, and cleanup function", "Whether it is imported correctly"],
+      "correctIndex": 1,
+      "explanation": "For every useEffect, check three things: does it have a dependency array, are the dependencies correct, and is there a cleanup function if needed.",
+      "encourageCorrect": "Perfect — those three checks catch the majority of effect-related bugs!",
+      "encourageIncorrect": "The key checks for useEffect are: does it have a dependency array, are the listed dependencies correct, and is there cleanup for timers/subscriptions?"
+    },
+    {
+      "question": "What is the quick test to determine if a useState should be removed?",
+      "options": ["Check if it is used in the JSX", "Ask: can I compute this value from other state or props?", "Check if it has a corresponding setter function call"],
+      "correctIndex": 1,
+      "explanation": "If a value can be calculated from existing state or props, it is derived and should be computed directly — not stored in its own useState.",
+      "encourageCorrect": "That's the key question! If the answer is yes, remove the useState and compute it directly.",
+      "encourageIncorrect": "The test is: 'Can I compute this from other values I already have?' If yes, it's derived state and the useState should be replaced with a direct calculation."
+    }
+  ]
+}

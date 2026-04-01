@@ -104,5 +104,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **International Trade** \u2014 the theory and practice of trade between nations. You'll learn why countries trade (comparative advantage), how trade barriers work, and how trade agreements and disputes reshape global economic relationships. Geopolitical dynamics directly influence trade policy."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Geopolitical risk primarily affects financial markets through:",
+      "options": [
+        "Changes in accounting standards",
+        "Increased uncertainty leading to risk premium adjustments",
+        "Improvements in technology"
+      ],
+      "correctIndex": 1,
+      "explanation": "Geopolitical events increase uncertainty, which causes investors to demand higher risk premiums, affecting asset prices and capital flows.",
+      "encourageCorrect": "Right! Uncertainty from geopolitical events reprices risk across markets.",
+      "encourageIncorrect": "Geopolitical risk increases uncertainty, which leads investors to demand higher risk premiums, directly impacting asset prices."
+    },
+    {
+      "question": "What distinguishes geopolitical risk from standard economic risk?",
+      "options": [
+        "Geopolitical risk involves political, military, or diplomatic events rather than pure economic factors",
+        "Geopolitical risk only affects emerging markets",
+        "Geopolitical risk is always predictable"
+      ],
+      "correctIndex": 0,
+      "explanation": "Geopolitical risk stems from political, military, and diplomatic events \u2014 wars, sanctions, elections \u2014 rather than standard economic variables like GDP or inflation.",
+      "encourageCorrect": "Exactly! It's about political and diplomatic events, not just economic data.",
+      "encourageIncorrect": "Geopolitical risk involves political, military, or diplomatic events (wars, sanctions, elections) rather than purely economic factors."
+    }
   ]
 }

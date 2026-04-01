@@ -133,5 +133,31 @@
       "type": "connectPrompt",
       "prompt": "The next module is the **Quantitative Methods Checkpoint** \u2014 a comprehensive assessment covering all topics from multiple regression through machine learning and big data. It uses vignette-based questions that integrate concepts across modules, just like the actual CFA Level II exam."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What are the typical steps in a big data project?",
+      "options": [
+        "Collect data, build model, deploy",
+        "Conceptualize, collect, clean, explore, model, evaluate",
+        "Plan, invest, profit"
+      ],
+      "correctIndex": 1,
+      "explanation": "Big data projects follow a structured process: conceptualizing the problem, collecting data, cleaning it, exploring patterns, modeling, and evaluating results.",
+      "encourageCorrect": "Exactly! Each step builds on the last \u2014 skipping steps leads to poor results.",
+      "encourageIncorrect": "Big data projects follow a structured pipeline: conceptualize, collect, clean, explore, model, and evaluate. Each step is essential."
+    },
+    {
+      "question": "Why is data cleaning considered the most time-consuming step in a big data project?",
+      "options": [
+        "Because data is always perfect",
+        "Because real-world data has missing values, outliers, and inconsistencies that must be addressed",
+        "Because regulators require it"
+      ],
+      "correctIndex": 1,
+      "explanation": "Raw data is messy \u2014 it contains errors, missing values, duplicates, and inconsistencies that can ruin model results if not handled properly.",
+      "encourageCorrect": "Right! Cleaning is tedious but crucial \u2014 garbage in, garbage out.",
+      "encourageIncorrect": "Real-world data is messy with missing values, outliers, and errors. Cleaning this data is essential for reliable results and typically takes the most time."
+    }
   ]
 }

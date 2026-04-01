@@ -43,5 +43,31 @@
       "type": "connectPrompt",
       "prompt": "Worktrees give you parallel sessions that you manage individually. But what if you could have multiple agents collaborating on a single complex task, with one leading and others investigating? That is agent teams, and it is next."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What does 'claude -w' do?",
+      "options": [
+        "Opens in web mode",
+        "Creates a new worktree with an isolated branch and session",
+        "Opens the desktop app"
+      ],
+      "correctIndex": 1,
+      "explanation": "claude -w creates a new worktree — an independent copy of your project on a separate branch with its own Claude session.",
+      "encourageCorrect": "That's right! -w gives you a parallel universe for your project.",
+      "encourageIncorrect": "claude -w creates a worktree — a separate branch and directory with its own Claude session, isolated from your main work."
+    },
+    {
+      "question": "When are worktrees most useful?",
+      "options": [
+        "For simple one-step tasks",
+        "For parallel independent tasks, risky experiments, or A/B approaches",
+        "For saving money on API calls"
+      ],
+      "correctIndex": 1,
+      "explanation": "Worktrees shine for parallel tasks, experiments you might discard, and comparing different approaches.",
+      "encourageCorrect": "Great use cases! Worktrees make experiments cheap and parallel work easy.",
+      "encourageIncorrect": "Worktrees are best for parallel independent tasks, risky experiments (just delete if they fail), and A/B comparisons."
+    }
   ]
 }

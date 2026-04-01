@@ -43,5 +43,31 @@
       "type": "connectPrompt",
       "prompt": "Permission modes control what happens during a session. But what about between sessions? The next module covers how your work persists — continuing sessions, resuming old ones, and forking when you want to explore two paths."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What are the three main permission modes in Claude Code?",
+      "options": [
+        "Easy, Medium, Hard",
+        "Default, Auto-Accept Edits, Plan Mode",
+        "Read, Write, Execute"
+      ],
+      "correctIndex": 1,
+      "explanation": "The three modes are Default (review everything), Auto-Accept Edits (trust file changes), and Plan Mode (think but don't act).",
+      "encourageCorrect": "That's the trio! Each serves a different level of trust.",
+      "encourageIncorrect": "The three modes are Default (review everything), Auto-Accept Edits (trust file changes, review commands), and Plan Mode (read-only)."
+    },
+    {
+      "question": "How do you switch between permission modes?",
+      "options": [
+        "Type /mode",
+        "Press Shift+Tab",
+        "Restart Claude Code"
+      ],
+      "correctIndex": 1,
+      "explanation": "Press Shift+Tab to cycle through permission modes at any point during a conversation.",
+      "encourageCorrect": "Right! Shift+Tab is the quick toggle for permission modes.",
+      "encourageIncorrect": "Press Shift+Tab to switch between permission modes — you can do this at any point during your session."
+    }
   ]
 }

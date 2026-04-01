@@ -118,5 +118,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Company Analysis and Forecasting**, where you'll apply the industry and competitive frameworks to build detailed financial forecasts. Understanding an industry's dynamics is the foundation for forecasting a company's revenue, margins, and growth trajectory."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Porter's Five Forces framework analyzes:",
+      "options": [
+        "A company's financial ratios",
+        "The competitive intensity and attractiveness of an industry",
+        "Macroeconomic trends"
+      ],
+      "correctIndex": 1,
+      "explanation": "Porter's Five Forces examines competitive rivalry, threat of new entrants, threat of substitutes, buyer power, and supplier power.",
+      "encourageCorrect": "Exactly! Five Forces is all about understanding industry competitive dynamics.",
+      "encourageIncorrect": "Porter's Five Forces analyzes industry attractiveness through: rivalry, new entrants, substitutes, buyer power, and supplier power."
+    },
+    {
+      "question": "High barriers to entry in an industry tend to:",
+      "options": [
+        "Reduce profitability for existing firms",
+        "Protect existing firms' profits by limiting new competition",
+        "Increase the number of competitors"
+      ],
+      "correctIndex": 1,
+      "explanation": "High barriers to entry (capital requirements, regulations, patents) keep new competitors out, helping existing firms maintain profitability.",
+      "encourageCorrect": "That's it! High barriers protect incumbents from new competition.",
+      "encourageIncorrect": "High barriers to entry limit new competitors, which helps protect existing firms' profitability."
+    }
   ]
 }

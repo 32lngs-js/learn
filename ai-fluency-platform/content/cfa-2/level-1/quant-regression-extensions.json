@@ -133,5 +133,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Time-Series Analysis** \u2014 a specialized regression framework for data observed over time. You will learn about autoregressive models, stationarity, unit roots, and cointegration, all of which are essential for forecasting financial variables and understanding mean reversion."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "A dummy variable in regression is used to:",
+      "options": [
+        "Replace missing data",
+        "Represent qualitative (categorical) information as 0 or 1",
+        "Eliminate multicollinearity"
+      ],
+      "correctIndex": 1,
+      "explanation": "Dummy variables convert categories (e.g., industry, gender, recession yes/no) into binary (0/1) variables that can be included in regression.",
+      "encourageCorrect": "That's it! Dummy variables turn categories into numbers regression can use.",
+      "encourageIncorrect": "Dummy variables represent categorical information (like yes/no or industry type) as 0s and 1s, allowing qualitative factors to be included in regression."
+    },
+    {
+      "question": "A logistic regression is used when the dependent variable is:",
+      "options": [
+        "Continuous (like stock returns)",
+        "Binary or categorical (like default/no default)",
+        "Always normally distributed"
+      ],
+      "correctIndex": 1,
+      "explanation": "Logistic regression models the probability of a binary outcome (e.g., default vs no default, buy vs sell) rather than a continuous variable.",
+      "encourageCorrect": "Correct! Logistic regression handles yes/no type outcomes.",
+      "encourageIncorrect": "Logistic regression is for binary dependent variables (like default/no default). It models the probability of an event occurring."
+    }
   ]
 }

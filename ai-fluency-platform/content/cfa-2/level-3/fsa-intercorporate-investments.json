@@ -106,5 +106,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Employee Compensation**, where you'll learn how defined benefit pensions and share-based compensation affect financial statements \u2014 including how unfunded pension obligations can represent hidden leverage similar to off-balance-sheet VIEs."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Under the equity method of accounting, the investor records its share of the investee's income as:",
+      "options": [
+        "Dividend income only",
+        "A proportionate share of the investee's net income, adjusting the investment account",
+        "Revenue on the income statement"
+      ],
+      "correctIndex": 1,
+      "explanation": "The equity method records the investor's share of investee net income as investment income and increases the investment balance. Dividends reduce the investment.",
+      "encourageCorrect": "That's the equity method! Record your share of income, not just dividends.",
+      "encourageIncorrect": "Under the equity method, the investor records its proportionate share of the investee's net income. Dividends reduce (not increase) the investment account."
+    },
+    {
+      "question": "Consolidation of financial statements is required when:",
+      "options": [
+        "The investor owns any amount of shares",
+        "The investor controls the investee (typically >50% ownership)",
+        "The investee is in the same industry"
+      ],
+      "correctIndex": 1,
+      "explanation": "Full consolidation is required when the investor has control, generally at ownership above 50%. The subsidiary's assets, liabilities, revenues, and expenses are combined line by line.",
+      "encourageCorrect": "Correct! Control (usually >50%) triggers full consolidation.",
+      "encourageIncorrect": "Full consolidation is required when the investor controls the investee (typically >50% ownership). The subsidiary's financials are combined line by line."
+    }
   ]
 }

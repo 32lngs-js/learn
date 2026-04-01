@@ -51,5 +51,31 @@
       "type": "connectPrompt",
       "prompt": "Now that you understand why AI output can feel authoritative without being reliable, the next module explores where this matters most: high-risk domains where trusting unverified AI output can cause real harm."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is the ELIZA effect?",
+      "options": [
+        "A type of AI training technique",
+        "Our tendency to project understanding onto systems that produce human-like output",
+        "A method for improving AI accuracy"
+      ],
+      "correctIndex": 1,
+      "explanation": "The ELIZA effect is our human tendency to attribute understanding and feelings to systems that produce human-like responses, even when we know they're programs.",
+      "encourageCorrect": "Well done! Recognizing the ELIZA effect helps you maintain healthy skepticism about AI outputs.",
+      "encourageIncorrect": "The ELIZA effect is our tendency to project understanding onto systems that produce human-like output -- named after a 1960s chatbot whose users formed emotional attachments to it."
+    },
+    {
+      "question": "When an AI says 'I think' or 'I believe,' what is actually happening?",
+      "options": [
+        "The model is expressing genuine opinions",
+        "The model is predicting statistically likely tokens from its training data",
+        "The model is accessing its memory of past experiences"
+      ],
+      "correctIndex": 1,
+      "explanation": "Phrases like 'I think' are simply tokens the model predicts as statistically likely in conversational contexts -- the model has no beliefs or opinions.",
+      "encourageCorrect": "That's right! These phrases are statistical predictions, not expressions of inner experience.",
+      "encourageIncorrect": "When AI says 'I think,' it's predicting statistically likely next tokens -- it has no actual beliefs, thoughts, or experiences."
+    }
   ]
 }

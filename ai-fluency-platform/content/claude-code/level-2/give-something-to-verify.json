@@ -47,5 +47,31 @@
       "type": "connectPrompt",
       "prompt": "So far you have learned to define done, be specific about the what, and give something to verify against. But what about tasks where you do not even know what you want yet? The next module introduces a powerful technique for ambiguous work: letting Claude interview you before it starts."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is the single highest-leverage habit for getting better Claude output?",
+      "options": [
+        "Writing longer prompts",
+        "Including something Claude can check its output against",
+        "Using the newest model"
+      ],
+      "correctIndex": 1,
+      "explanation": "Every prompt should include at least one thing Claude can verify against — an example, a test, a format reference, or a checklist.",
+      "encourageCorrect": "You nailed it! Verification criteria transform output quality.",
+      "encourageIncorrect": "The highest-leverage habit is giving Claude something to verify against — an example, test criteria, a format reference, or an acceptance checklist."
+    },
+    {
+      "question": "Which addition to a prompt most improves output quality?",
+      "options": [
+        "'Make it good and professional'",
+        "'Keep it under 100 words and mention the March deliverable'",
+        "'Use your best judgment'"
+      ],
+      "correctIndex": 1,
+      "explanation": "Concrete, verifiable constraints like word count and specific content beat subjective adjectives every time.",
+      "encourageCorrect": "Exactly! Verifiable constraints beat subjective adjectives.",
+      "encourageIncorrect": "Concrete constraints like 'under 100 words' and 'mention the March deliverable' give Claude specific things to verify against."
+    }
   ]
 }

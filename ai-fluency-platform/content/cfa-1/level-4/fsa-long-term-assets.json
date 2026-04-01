@@ -118,5 +118,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Long-Term Liabilities and Equity**, including bond accounting, lease accounting, and equity transactions. The depreciation and capitalization decisions you just learned about affect the asset side of the balance sheet \u2014 now you'll see the corresponding financing decisions on the liability and equity side."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is the difference between depreciation and amortization?",
+      "options": [
+        "Depreciation is for tangible assets; amortization is for intangible assets",
+        "They are the same thing with different names",
+        "Depreciation is for debt; amortization is for equity"
+      ],
+      "correctIndex": 0,
+      "explanation": "Depreciation allocates the cost of tangible assets (buildings, equipment) over their useful life. Amortization does the same for intangible assets (patents, licenses).",
+      "encourageCorrect": "Correct! Tangible assets get depreciated; intangible assets get amortized.",
+      "encourageIncorrect": "Depreciation is for tangible assets (like equipment) and amortization is for intangible assets (like patents). Both allocate cost over useful life."
+    },
+    {
+      "question": "Under which depreciation method is the expense the same every year?",
+      "options": [
+        "Straight-line",
+        "Declining balance",
+        "Units of production"
+      ],
+      "correctIndex": 0,
+      "explanation": "Straight-line depreciation spreads the cost evenly across the asset's useful life: (Cost - Residual value) / Useful life.",
+      "encourageCorrect": "Right! Straight-line spreads the expense evenly over the asset's life.",
+      "encourageIncorrect": "Straight-line depreciation allocates the same amount each year. Declining balance front-loads more expense in early years."
+    }
   ]
 }

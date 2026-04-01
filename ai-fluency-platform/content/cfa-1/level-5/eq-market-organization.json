@@ -118,5 +118,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Security Market Indices**, which measure the performance of entire markets or market segments. Understanding market structure helps you appreciate how index values are derived from actual trading activity and why different index construction methods can produce different results."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is the difference between a market order and a limit order?",
+      "options": [
+        "A market order specifies a price; a limit order does not",
+        "A market order executes immediately at the best available price; a limit order specifies a maximum (buy) or minimum (sell) price",
+        "There is no difference"
+      ],
+      "correctIndex": 1,
+      "explanation": "Market orders guarantee execution but not price. Limit orders guarantee price but not execution.",
+      "encourageCorrect": "Perfect! Market orders prioritize speed; limit orders prioritize price.",
+      "encourageIncorrect": "A market order executes immediately at whatever price is available. A limit order only executes at your specified price or better."
+    },
+    {
+      "question": "What role does a market maker play?",
+      "options": [
+        "They regulate the stock exchange",
+        "They provide liquidity by standing ready to buy and sell securities",
+        "They set the fundamental value of stocks"
+      ],
+      "correctIndex": 1,
+      "explanation": "Market makers quote bid and ask prices and stand ready to trade, providing liquidity to the market. They profit from the bid-ask spread.",
+      "encourageCorrect": "That's it! Market makers keep the market liquid by always being willing to trade.",
+      "encourageIncorrect": "Market makers provide liquidity by quoting both buy and sell prices. They profit from the spread between the bid and ask prices."
+    }
   ]
 }

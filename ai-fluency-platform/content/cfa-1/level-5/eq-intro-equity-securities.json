@@ -118,5 +118,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Introduction to Company Analysis**, where you'll learn how to evaluate the businesses behind these equity securities. Understanding equity characteristics helps you assess which companies are worth owning and at what price."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Common shareholders have which of the following rights?",
+      "options": [
+        "A guaranteed dividend payment",
+        "Voting rights on corporate matters",
+        "Priority over bondholders in liquidation"
+      ],
+      "correctIndex": 1,
+      "explanation": "Common shareholders can vote on major corporate matters (board elections, mergers). Dividends are not guaranteed, and bondholders have priority in liquidation.",
+      "encourageCorrect": "That's right! Voting rights are a defining feature of common stock.",
+      "encourageIncorrect": "Common shareholders have voting rights. Dividends are not guaranteed (unlike preferred stock), and bondholders get paid first in liquidation."
+    },
+    {
+      "question": "Preferred stock differs from common stock primarily in that preferred shareholders:",
+      "options": [
+        "Have greater voting rights",
+        "Receive dividends before common shareholders and have priority in liquidation",
+        "Can never lose money"
+      ],
+      "correctIndex": 1,
+      "explanation": "Preferred shareholders receive dividends before common shareholders and have higher priority in bankruptcy, but typically have limited or no voting rights.",
+      "encourageCorrect": "Exactly! Preferred gets dividends first and has higher liquidation priority.",
+      "encourageIncorrect": "Preferred shareholders get dividends first and rank above common shareholders in liquidation. However, they typically have limited voting rights."
+    }
   ]
 }

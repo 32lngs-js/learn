@@ -106,5 +106,31 @@
       "type": "connectPrompt",
       "prompt": "You've now completed the Economics section for Level II. The **Economics Checkpoint** is next, where you'll test your integrated understanding of currency markets and economic growth in a comprehensive assessment."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "According to the Solow growth model, long-run sustainable economic growth comes from:",
+      "options": [
+        "Increasing labor hours only",
+        "Technological progress (total factor productivity)",
+        "Accumulating more capital indefinitely"
+      ],
+      "correctIndex": 1,
+      "explanation": "In the Solow model, capital accumulation has diminishing returns. Only technological progress can sustain long-run per capita growth.",
+      "encourageCorrect": "Right! Technology is the only source of sustained per capita growth in the Solow model.",
+      "encourageIncorrect": "The Solow model shows that capital accumulation faces diminishing returns. Only technological progress drives long-run sustainable growth in per capita output."
+    },
+    {
+      "question": "Convergence theory predicts that developing countries will:",
+      "options": [
+        "Always grow slower than developed countries",
+        "Grow faster than developed countries, gradually closing the income gap",
+        "Never catch up to developed countries"
+      ],
+      "correctIndex": 1,
+      "explanation": "Convergence theory says poorer countries can grow faster by adopting existing technology, gradually closing the gap with richer nations \u2014 though this isn't guaranteed.",
+      "encourageCorrect": "That's the theory! Developing nations can grow faster by adopting existing technology.",
+      "encourageIncorrect": "Convergence theory suggests poorer countries grow faster by adopting existing technology, potentially closing the income gap with rich nations."
+    }
   ]
 }

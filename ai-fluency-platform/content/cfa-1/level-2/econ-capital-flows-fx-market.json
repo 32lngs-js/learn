@@ -118,5 +118,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Exchange Rate Calculations** \u2014 the practical mechanics of working with exchange rates, including direct and indirect quotes, cross rates, bid-ask spreads, and forward rates. These calculations are essential for the CFA exam and build directly on the FX market concepts covered here."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is the current account in the balance of payments?",
+      "options": [
+        "A record of all financial asset transactions",
+        "A record of trade in goods, services, income, and transfers",
+        "A record of central bank currency reserves"
+      ],
+      "correctIndex": 1,
+      "explanation": "The current account tracks trade in goods and services, income receipts, and unilateral transfers between countries.",
+      "encourageCorrect": "Right! The current account covers goods, services, income, and transfers.",
+      "encourageIncorrect": "The current account records trade in goods, services, income, and transfers. Financial asset transactions go in the capital/financial account."
+    },
+    {
+      "question": "A current account deficit must be offset by:",
+      "options": [
+        "A capital/financial account surplus",
+        "A reduction in GDP",
+        "Higher interest rates"
+      ],
+      "correctIndex": 0,
+      "explanation": "The balance of payments must balance \u2014 a current account deficit is funded by net capital inflows (financial account surplus).",
+      "encourageCorrect": "Exactly! The balance of payments always balances \u2014 deficits on one side mean surpluses on the other.",
+      "encourageIncorrect": "A current account deficit must be offset by a capital/financial account surplus. The balance of payments always nets to zero."
+    }
   ]
 }

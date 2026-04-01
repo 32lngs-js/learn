@@ -72,5 +72,31 @@
         "What governance and oversight structures should organizations put in place before deploying agentic AI?"
       ]
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is the key difference between a simple prompt-response and an agentic workflow?",
+      "options": [
+        "Agentic workflows use bigger models",
+        "Agentic workflows involve multi-step tool use with a think-act-observe loop",
+        "Agentic workflows are always faster"
+      ],
+      "correctIndex": 1,
+      "explanation": "Agentic workflows extend beyond single-turn responses -- the AI reasons, takes actions via tools, observes results, and iterates through multiple steps.",
+      "encourageCorrect": "That's right! The multi-step, tool-using loop is what makes agents so powerful.",
+      "encourageIncorrect": "Agentic workflows involve the AI reasoning through multi-step problems using tools, observing results, and iterating -- far beyond single prompt-response pairs."
+    },
+    {
+      "question": "What is the ReAct pattern in agentic AI?",
+      "options": [
+        "A JavaScript framework for AI",
+        "A pattern where the agent alternates between reasoning about what to do and taking action",
+        "A technique for faster model inference"
+      ],
+      "correctIndex": 1,
+      "explanation": "ReAct (Reason + Act) has the agent alternate between reasoning about the problem and taking actions via tools, creating a structured problem-solving loop.",
+      "encourageCorrect": "Nice! ReAct combines reasoning and action into a structured loop for complex tasks.",
+      "encourageIncorrect": "ReAct stands for Reason + Act -- the agent alternates between thinking about what to do (reasoning) and doing it (action), creating an effective problem-solving loop."
+    }
   ]
 }

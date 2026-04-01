@@ -1,0 +1,161 @@
+{
+  "meta": {
+    "title": "7.2 Real Scenarios",
+    "description": "Apply your code literacy to 8 realistic, role-specific situations \u2014 from adding tracking code to estimating feature complexity.",
+    "level": "level-7",
+    "slug": "real-scenarios",
+    "order": 2,
+    "isCheckpoint": false,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "markdown",
+      "content": "## Putting code literacy to work\n\nThis module presents 8 realistic scenarios. Each one puts you in a specific role where code literacy makes the difference. Read each scenario carefully, look at the code, and think about what you would do.\n\n---\n\n### Scenario 1: The Marketer Adding Tracking Code\n\nYou are a marketing manager. Your analytics vendor sent you a tracking snippet to add to your company's landing page. They said: \"Paste this just before the closing `</head>` tag.\"\n\nHere is the top of your page's source:\n\n```html\n<!DOCTYPE html>\n<html>\n  <head>\n    <title>Summer Sale - ShopBright</title>\n    <meta charset=\"UTF-8\">\n    <link rel=\"stylesheet\" href=\"styles.css\">\n  </head>\n  <body>\n    <header>\n      <h1>Summer Sale - 40% Off Everything</h1>\n    </header>\n```\n\nAnd here is the snippet they sent:\n\n```html\n<script>\n  (function() {\n    window.trackingId = 'SB-49201';\n    var s = document.createElement('script');\n    s.src = 'https://analytics.vendor.com/track.js';\n    document.head.appendChild(s);\n  })();\n</script>\n```\n\nYou know that `<head>` is the behind-the-scenes section and that `<script>` tags load JavaScript. The snippet goes between the `<link>` tag and the closing `</head>` \u2014 right where they told you. You can also read that it sets a tracking ID and loads an external script file. Nothing here touches the visible page.\n\n---\n\n### Scenario 2: The PM Understanding a Broken Feature\n\nYou are a product manager. Users are reporting that the \"Add to Cart\" button does nothing on mobile. A developer shares this snippet from the code:\n\n```javascript\nconst addToCartBtn = document.querySelector('.add-to-cart');\n\naddToCartBtn.addEventListener('mouseover', function() {\n  this.style.backgroundColor = '#4CAF50';\n});\n\naddToCartBtn.addEventListener('click', function() {\n  addItemToCart(this.dataset.productId);\n  showNotification('Added to cart!');\n});\n```\n\nYou can read this: there is a button selected by the class `.add-to-cart`. It has a `mouseover` event for a hover effect and a `click` event to add the item. You recall from Level 3 that `mouseover` does not fire on touch devices the same way. But the real question is: does the click handler work on mobile?\n\nYou test it yourself using DevTools' device emulation (you learned that in Level 6). The click fires fine. The issue must be elsewhere \u2014 maybe the button is hidden behind another element on small screens. You open the Styles panel and find:\n\n```css\n@media (max-width: 768px) {\n  .product-actions {\n    display: none;\n  }\n}\n```\n\nThe parent container is set to `display: none` on mobile. The button works \u2014 it is just invisible. You can now file a precise bug report: \"The `.product-actions` container is hidden at viewport widths below 768px, which hides the Add to Cart button on mobile devices.\"\n\n---\n\n### Scenario 3: The Designer Verifying AI Output\n\nYou are a designer who asked AI to build a card component matching your mockup. The mockup shows a card with rounded corners, a subtle shadow, and 16px padding. AI generated this:\n\n```html\n<div class=\"card\">\n  <img src=\"product.jpg\" alt=\"Blue running shoes\">\n  <h3>Running Shoes</h3>\n  <p class=\"price\">$89.99</p>\n  <button class=\"btn-primary\">Add to Cart</button>\n</div>\n```\n\n```css\n.card {\n  border-radius: 12px;\n  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);\n  padding: 16px;\n  background: white;\n}\n\n.card img {\n  width: 100%;\n  border-radius: 12px 12px 0 0;\n}\n```\n\nYou can verify: `border-radius: 12px` gives rounded corners (matches your mockup). `box-shadow` with low opacity (0.1) gives a subtle shadow (good). `padding: 16px` matches your spec. But you notice the image has `border-radius` only on the top corners, which means it bleeds outside the card's rounded corners on the bottom. Your mockup shows the image fully contained. You tell the AI: \"The image should have `border-radius: 12px` on all corners, or use `overflow: hidden` on the `.card` container so the image respects the card's border radius.\"\n\n---\n\n### Scenario 4: The Founder Reviewing Contractor Code\n\nYou are a startup founder. Your contractor delivered a landing page. You open the source to check what you got:\n\n```html\n<body>\n  <div class=\"a\">\n    <div class=\"b\">My Startup</div>\n    <div class=\"c\">\n      <div class=\"d\">Home</div>\n      <div class=\"d\">About</div>\n      <div class=\"d\">Pricing</div>\n    </div>\n  </div>\n  <div class=\"e\">\n    <div class=\"f\">Welcome to the Future</div>\n    <div class=\"g\">We make things better.</div>\n    <div onclick=\"window.location='signup.html'\">Get Started</div>\n  </div>\n</body>\n```\n\nRed flags you can spot:\n\n1. **No semantic HTML.** Everything is a `<div>`. The header should be `<header>`, the nav links should be `<nav>` with `<a>` tags, the heading should be `<h1>`, and the button should be a `<button>` or `<a>` tag.\n2. **Meaningless class names.** Classes like `a`, `b`, `c` tell you nothing. This makes the code nearly impossible to maintain.\n3. **No accessibility.** Without semantic elements, screen readers cannot navigate this page. The \"button\" is a `<div>` with an `onclick` \u2014 keyboard users cannot tab to it or activate it with Enter.\n4. **Inline JavaScript.** The `onclick` with `window.location` is brittle and not a proper link.\n\nYou can now tell your contractor: \"This needs semantic HTML, meaningful class names, proper link and button elements, and accessibility basics. Can you revise it?\"\n\n---\n\n### Scenario 5: The Content Creator Fixing a Broken Embed\n\nYou manage a blog and embedded a YouTube video, but it shows as a broken rectangle. Your embed code:\n\n```html\n<div class=\"video-container\">\n  <iframe src=\"https://youtube.com/watch?v=abc123\"\n    width=\"560\" height=\"315\" frameborder=\"0\"\n    allowfullscreen></iframe>\n</div>\n```\n\nYou remember from the course that `<iframe>` embeds external content, and `src` is the URL. You check YouTube's official embed code and notice the URL format is different. YouTube embed URLs use `https://www.youtube.com/embed/abc123`, not the regular watch URL. You fix the `src` attribute and the video loads.\n\n---\n\n### Scenario 6: The Product Owner Writing a Bug Report\n\nUsers report that the signup form lets them submit without entering an email. You inspect the form:\n\n```html\n<form id=\"signup\" action=\"/register\" method=\"POST\">\n  <label for=\"email\">Email</label>\n  <input type=\"text\" id=\"email\" name=\"email\" placeholder=\"you@example.com\">\n  <label for=\"password\">Password</label>\n  <input type=\"password\" id=\"password\" name=\"password\" required>\n  <button type=\"submit\">Sign Up</button>\n</form>\n```\n\nYou can read this: the form has two inputs and a submit button. The password field has the `required` attribute, but the email field does not. Also, the email input uses `type=\"text\"` instead of `type=\"email\"`, which means the browser will not validate the format.\n\nYour bug report: \"The email input in the signup form (#signup) is missing the `required` attribute and uses `type='text'` instead of `type='email'`. This allows empty submissions and does not trigger browser email format validation. The password field correctly uses `required` \u2014 the email field should match.\"\n\n---\n\n### Scenario 7: The Team Lead Estimating Effort\n\nA stakeholder asks: \"Can we just change the button color? That should be quick, right?\" You look at the CSS:\n\n```css\n.btn-primary {\n  background-color: var(--brand-primary);\n  color: white;\n  padding: 12px 24px;\n  border: none;\n  border-radius: 6px;\n}\n\n.btn-primary:hover {\n  background-color: var(--brand-primary-dark);\n}\n\n.btn-primary:disabled {\n  background-color: var(--gray-300);\n}\n```\n\nYou can read this: the button uses CSS custom properties (variables) like `--brand-primary` instead of hardcoded colors. This means the color is defined somewhere else \u2014 probably in a theme or design system file. Changing it there changes every primary button site-wide.\n\nYour answer to the stakeholder: \"The button color uses a design system variable, so changing it is technically simple but affects every primary button across the site. We need to confirm that the new color works everywhere, including hover and disabled states, and meets accessibility contrast requirements. Let's loop in design before making the change.\"\n\n---\n\n### Scenario 8: The Non-Technical Person Deploying a Static Site\n\nYou created a simple portfolio site with AI and need to put it online. Your project folder looks like:\n\n```\nmy-portfolio/\n  index.html\n  styles.css\n  script.js\n  images/\n    headshot.jpg\n    project1.png\n    project2.png\n```\n\nYou know from the course that `index.html` is the entry point \u2014 the file the browser loads first. The CSS and JS files are linked from the HTML. The images folder has files referenced in `<img>` tags.\n\nTo deploy this, you can use a free static hosting service (like Netlify, Vercel, or GitHub Pages). You drag your entire `my-portfolio` folder into the service's upload area. The service sees `index.html` at the root and serves it as the homepage. The relative paths in your HTML (`styles.css`, `script.js`, `images/headshot.jpg`) all resolve correctly because the file structure stays the same.\n\nIf something does not load after deploying, you open DevTools, check the Console for 404 errors, and verify the file paths match what is actually in the folder. Code literacy gives you the ability to debug the deploy yourself."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Scenario Check",
+      "problems": [
+        {
+          "id": "wf7-2-1",
+          "question": "In Scenario 1, the marketing manager needs to add a tracking snippet. Where should it go?\n\n```html\n<head>\n  <title>Summer Sale</title>\n  <meta charset=\"UTF-8\">\n  <link rel=\"stylesheet\" href=\"styles.css\">\n  <!-- where does the snippet go? -->\n</head>\n```",
+          "options": [
+            "A) Just before the closing </head> tag, after the existing <link> element",
+            "B) Inside the <body> tag, right after the <header>",
+            "C) Before the opening <html> tag at the very top of the file"
+          ],
+          "correctAnswer": "A",
+          "explanation": "The vendor said to paste it before the closing </head> tag, and this makes sense \u2014 tracking scripts belong in the <head> so they load early. Placing it after the existing elements in the <head> section is correct.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "wf7-2-2",
+          "question": "In Scenario 2, the PM found that the Add to Cart button is invisible on mobile. What was the actual cause?",
+          "options": [
+            "A) The click event listener does not work on touch devices",
+            "B) A CSS media query sets the button's parent container to display: none below 768px",
+            "C) The mouseover event is blocking the click event on mobile browsers"
+          ],
+          "correctAnswer": "B",
+          "explanation": "The JavaScript click handler works fine on mobile. The problem is a CSS media query that hides the entire .product-actions container on viewports below 768px. The button is functional \u2014 it is just invisible because its parent is hidden.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "wf7-2-3",
+          "question": "In Scenario 3, the designer found an issue with the AI-generated card component. What was the visual problem?",
+          "options": [
+            "A) The padding was wrong \u2014 it should be 12px instead of 16px",
+            "B) The image's border-radius only rounds the top corners, so it visually breaks the card's rounded shape at the bottom",
+            "C) The box-shadow was too strong and did not match the mockup's subtle style"
+          ],
+          "correctAnswer": "B",
+          "explanation": "The image has border-radius only on the top corners (12px 12px 0 0), which means its bottom corners are square. When the image sits inside a card with fully rounded corners, the bottom of the image can visually clash. The fix is to add overflow: hidden on the card or match the border-radius on all corners.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "wf7-2-4",
+          "question": "In Scenario 4, the founder reviewed the contractor's code. Which of these is NOT a problem with the delivery?",
+          "options": [
+            "A) The page uses only <div> elements with no semantic HTML",
+            "B) The class names are single letters like 'a', 'b', 'c' instead of meaningful names",
+            "C) The page is missing a <head> section with a <title> tag"
+          ],
+          "correctAnswer": "C",
+          "explanation": "The code snippet shows the <body> content. While a missing <head> could be a problem, the scenario specifically highlights three issues: no semantic HTML (all divs), meaningless class names, and no accessibility. The <head> section was not shown and is not one of the flagged issues in this scenario.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "wf7-2-5",
+          "question": "In Scenario 5, why was the YouTube embed broken?",
+          "options": [
+            "A) The <iframe> tag was misspelled and the browser could not render it",
+            "B) The src URL used the regular watch format instead of the /embed/ format that YouTube requires for iframes",
+            "C) The width and height attributes were too large for the container"
+          ],
+          "correctAnswer": "B",
+          "explanation": "YouTube embed URLs must use the format youtube.com/embed/VIDEO_ID, not the regular youtube.com/watch?v=VIDEO_ID format. The watch URL is for viewing in a browser tab, not for embedding in an iframe.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "wf7-2-6",
+          "question": "In Scenario 6, the product owner found two issues with the signup form's email field. What were they?",
+          "options": [
+            "A) The input uses type=\"text\" instead of type=\"email\" and is missing the required attribute",
+            "B) The input is missing a placeholder attribute and a name attribute",
+            "C) The label's for attribute does not match the input's id attribute"
+          ],
+          "correctAnswer": "A",
+          "explanation": "The email input uses type=\"text\" (which accepts any text) instead of type=\"email\" (which triggers browser format validation). It is also missing the required attribute, so the form can be submitted with an empty email field. The password field correctly has required \u2014 the email field should match.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "wf7-2-7",
+          "question": "In Scenario 7, why can't the team lead just say 'yes, changing the button color is quick'?",
+          "options": [
+            "A) CSS cannot change button colors \u2014 it requires JavaScript",
+            "B) The button color uses a CSS variable from a design system, so changing it affects every primary button site-wide",
+            "C) The button is an image, not styled with CSS, so a designer needs to create a new image"
+          ],
+          "correctAnswer": "B",
+          "explanation": "The button uses var(--brand-primary), a CSS custom property defined elsewhere (likely in a design system or theme file). Changing that variable is technically simple, but it changes the color of every element that references it \u2014 not just one button. The team lead correctly flags that this needs broader review.",
+          "difficulty": "advanced"
+        },
+        {
+          "id": "wf7-2-8",
+          "question": "In Scenario 8, after deploying the static site, images are not loading. What should you check first?",
+          "options": [
+            "A) Open DevTools and check the Console for 404 errors to see if the image file paths are wrong",
+            "B) Re-export the images from your design tool in a different format",
+            "C) Add a CDN service to host the images separately from the HTML"
+          ],
+          "correctAnswer": "A",
+          "explanation": "When resources do not load after deploying, the most common cause is incorrect file paths. The DevTools Console shows 404 (not found) errors that tell you exactly which files the browser cannot find. Check that the paths in your <img> tags match the actual file names and folder structure on the server.",
+          "difficulty": "basic"
+        }
+      ]
+    },
+    {
+      "type": "reflectPrompt",
+      "questions": [
+        "Which of the 8 scenarios felt most relevant to your actual role or daily work? Why?",
+        "In which scenario would you have been completely stuck before taking this course? What specific knowledge from the course would help you now?",
+        "Think of a real situation in your work that is similar to one of these scenarios. How would you handle it now?"
+      ]
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "Code literacy shows up in everyday work situations \u2014 not just when you are building something. Whether you are adding tracking code, filing bug reports, reviewing deliverables, or estimating effort, the ability to read and understand code gives you an informed perspective that leads to better decisions and clearer communication."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "You have seen how code literacy applies across roles and situations. Now it is time for the final challenge: a complete, buggy webpage that tests everything you have learned. Module 7.3 is your capstone \u2014 let's see what you can do."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Code literacy helps in non-developer roles by enabling you to:",
+      "options": [
+        "Write all the code yourself",
+        "File precise bug reports, review deliverables, estimate effort, and communicate with developers effectively",
+        "Replace the engineering team entirely"
+      ],
+      "correctIndex": 1,
+      "explanation": "Code literacy lets you communicate more precisely with developers, understand what's possible, estimate effort realistically, and catch issues early.",
+      "encourageCorrect": "Exactly! It's about informed communication, not doing the coding yourself.",
+      "encourageIncorrect": "Code literacy enables better bug reports, deliverable reviews, effort estimates, and developer communication \u2014 without writing code yourself."
+    },
+    {
+      "question": "When filing a bug report, saying 'the button on the checkout page returns a 404 in the Network tab' is better than 'the page is broken' because:",
+      "options": [
+        "It uses more words",
+        "It tells the developer exactly what element, what page, and what evidence you found",
+        "It sounds more professional"
+      ],
+      "correctIndex": 1,
+      "explanation": "Specific details (which element, which page, what DevTools showed) let developers reproduce and fix the issue immediately instead of guessing.",
+      "encourageCorrect": "Right! Specificity saves everyone time and leads to faster fixes.",
+      "encourageIncorrect": "Specific bug reports name the element, the page, and the evidence. This lets developers go straight to the problem instead of hunting for it."
+    }
+  ]
+}

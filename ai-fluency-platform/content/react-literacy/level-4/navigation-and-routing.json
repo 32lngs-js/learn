@@ -1,0 +1,101 @@
+{
+  "meta": {
+    "title": "4.3 Navigation and Routing",
+    "description": "How single-page apps show different pages without reloading.",
+    "level": "level-4",
+    "slug": "navigation-and-routing",
+    "order": 3,
+    "isCheckpoint": false,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "predictPrompt",
+      "prompt": "When you click a link in Gmail or Twitter, the URL changes and new content appears, but the page does not actually reload -- there is no white flash, no full refresh. How do you think that works? Is the browser loading a new HTML file, or is something else happening?"
+    },
+    {
+      "type": "markdown",
+      "content": "## Single-page applications\n\nTraditional websites work like this: you click a link, the browser requests a new HTML page from the server, the old page disappears, and the new page loads. Every navigation is a full round trip.\n\nReact applications work differently. The browser loads ONE HTML page. When you navigate, React swaps out components on that single page to show different content. The URL changes, but the browser never reloads. This is called a **single-page application** (SPA).\n\nThis is why React apps feel fast -- navigation is instant because there is no server round trip for each page.\n\nBut this raises a question: if there is only one HTML page, how does React know which components to show for each URL? That is where a **router** comes in.\n\n## React Router\n\nThe most common routing library for React is **React Router**. It provides components and hooks that match URLs to components. When you see routing code in a React project, it is almost certainly using React Router.\n\n### Route definitions\n\nRoutes are defined using `<Route>` components that map URL paths to React components:\n\n```jsx\nimport { BrowserRouter, Routes, Route } from 'react-router-dom';\n\nfunction App() {\n  return (\n    <BrowserRouter>\n      <Routes>\n        <Route path=\"/\" element={<HomePage />} />\n        <Route path=\"/about\" element={<AboutPage />} />\n        <Route path=\"/products\" element={<ProductList />} />\n        <Route path=\"/products/:id\" element={<ProductDetail />} />\n        <Route path=\"*\" element={<NotFoundPage />} />\n      </Routes>\n    </BrowserRouter>\n  );\n}\n```\n\nReading this:\n- When the URL is `/`, show `<HomePage />`\n- When the URL is `/about`, show `<AboutPage />`\n- When the URL is `/products`, show `<ProductList />`\n- When the URL is `/products/42` (or any number), show `<ProductDetail />`\n- When the URL is anything else, show `<NotFoundPage />`\n\nThe `path` attribute is the URL pattern. The `element` attribute is the component to render.\n\n### Route parameters: the `:id` pattern\n\nWhen you see a colon in a route path, that is a **route parameter** -- a placeholder for a dynamic value:\n\n```jsx\n<Route path=\"/products/:id\" element={<ProductDetail />} />\n```\n\nThis matches:\n- `/products/1`\n- `/products/42`\n- `/products/abc`\n\nThe `:id` part captures whatever is in that position of the URL. The component can then read this value.\n\n### Reading route parameters with useParams\n\nInside the component, you use the `useParams` hook to read the captured value:\n\n```jsx\nfunction ProductDetail() {\n  const { id } = useParams();\n  const [product, setProduct] = useState(null);\n\n  useEffect(() => {\n    fetch(`/api/products/${id}`)\n      .then(res => res.json())\n      .then(data => setProduct(data));\n  }, [id]);\n\n  if (!product) return <Spinner />;\n\n  return (\n    <div>\n      <h1>{product.name}</h1>\n      <p>${product.price}</p>\n    </div>\n  );\n}\n```\n\n`useParams()` returns an object with the route parameters. If the URL is `/products/42`, then `id` is `\"42\"`. Notice how `id` is used in the fetch URL and in the useEffect dependency array -- when the user navigates to a different product, the effect re-runs and fetches the new data.\n\n## Navigation: Link vs. anchor tags\n\nIn plain HTML, you navigate with `<a href=\"/about\">About</a>`. In React, using a regular anchor tag causes a full page reload -- which wipes out all your state and defeats the purpose of a single-page app.\n\nReact Router provides `<Link>` for navigation without reloading:\n\n```jsx\nimport { Link } from 'react-router-dom';\n\nfunction Navbar() {\n  return (\n    <nav>\n      <Link to=\"/\">Home</Link>\n      <Link to=\"/about\">About</Link>\n      <Link to=\"/products\">Products</Link>\n    </nav>\n  );\n}\n```\n\nThe key difference:\n\n| `<a href=\"/about\">` | `<Link to=\"/about\">` |\n| :-- | :-- |\n| Full page reload | No page reload |\n| All state is lost | State is preserved |\n| Slower (server round trip) | Instant (client-side swap) |\n| Standard HTML | React Router |\n\nWhen you see `<Link>` in code, you know: this navigates without reloading. When you see `<a href>` inside a React app, it might be intentional (linking to an external site) or it might be a bug (should have been a Link).\n\n### When `<a href>` is correct\n\n`<a href>` is still correct for links to external websites or downloadable files:\n\n```jsx\n// External link -- <a> is correct\n<a href=\"https://github.com/user/repo\">View on GitHub</a>\n\n// Internal navigation -- should use Link\n<Link to=\"/settings\">Settings</Link>\n```\n\n## Programmatic navigation with useNavigate\n\nSometimes you need to navigate in response to something other than a click -- after a form submission, after a successful login, or after a timer:\n\n```jsx\nimport { useNavigate } from 'react-router-dom';\n\nfunction LoginForm() {\n  const navigate = useNavigate();\n  const [email, setEmail] = useState('');\n  const [password, setPassword] = useState('');\n\n  async function handleSubmit(e) {\n    e.preventDefault();\n    const response = await fetch('/api/login', {\n      method: 'POST',\n      body: JSON.stringify({ email, password }),\n    });\n\n    if (response.ok) {\n      navigate('/dashboard');  // Redirect to dashboard\n    }\n  }\n\n  return (\n    <form onSubmit={handleSubmit}>\n      <input value={email} onChange={e => setEmail(e.target.value)} />\n      <input type=\"password\" value={password} onChange={e => setPassword(e.target.value)} />\n      <button type=\"submit\">Log In</button>\n    </form>\n  );\n}\n```\n\n`useNavigate()` returns a function that you can call to navigate programmatically. `navigate('/dashboard')` changes the URL and renders the component matched by the `/dashboard` route -- all without a page reload.\n\nWhen you see `useNavigate` in a component, you know it redirects the user somewhere based on logic (not just a link click).\n\n## Nested routes and layouts\n\nReal apps often have a shared layout (header, sidebar) with content that changes based on the route:\n\n```jsx\nfunction App() {\n  return (\n    <BrowserRouter>\n      <Routes>\n        <Route path=\"/\" element={<Layout />}>\n          <Route index element={<HomePage />} />\n          <Route path=\"settings\" element={<SettingsPage />} />\n          <Route path=\"profile\" element={<ProfilePage />} />\n        </Route>\n      </Routes>\n    </BrowserRouter>\n  );\n}\n\nfunction Layout() {\n  return (\n    <div>\n      <Header />\n      <Sidebar />\n      <main>\n        <Outlet />\n      </main>\n    </div>\n  );\n}\n```\n\nThe nested routes mean:\n- `Layout` always renders (it has the header and sidebar)\n- `<Outlet />` is where the child route's component appears\n- At `/`, the Outlet shows `<HomePage />`\n- At `/settings`, the Outlet shows `<SettingsPage />`\n\nWhen you see `<Outlet />` in a component, it is a placeholder that says: \"Render the matched child route here.\"\n\n## Your reading strategy for routing\n\n1. **Find the Route definitions** -- usually in App.jsx or a routes file. This is the map of your app.\n2. **Read the paths** -- these are the URLs users can visit.\n3. **Read the elements** -- these are the components rendered at each URL.\n4. **Look for `:param` patterns** -- these are dynamic segments read with `useParams()`.\n5. **Check Link vs. a tags** -- Links navigate without reloading, anchor tags reload.\n6. **Check for useNavigate** -- programmatic navigation in response to events.\n\n## Quick reference\n\n| Concept | Code | What it does |\n| :-- | :-- | :-- |\n| Define a route | `<Route path=\"/about\" element={<About />} />` | Show About component at /about |\n| Dynamic route | `<Route path=\"/users/:id\" element={<User />} />` | Capture a URL parameter |\n| Read URL param | `const { id } = useParams()` | Access the captured parameter |\n| Navigate (link) | `<Link to=\"/about\">` | Navigate without reload |\n| Navigate (code) | `navigate('/dashboard')` | Redirect programmatically |\n| Catch-all route | `<Route path=\"*\" element={<NotFound />} />` | Handle unknown URLs |\n| Layout outlet | `<Outlet />` | Render child route content |"
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "If you see `<a href=\"/settings\">Settings</a>` inside a React single-page application, is it definitely a bug?",
+      "answer": "Not definitely, but probably. Using `<a href>` for internal navigation in a React SPA causes a full page reload, which loses all state and is slower. It should almost certainly be `<Link to=\"/settings\">Settings</Link>` instead. However, if the link points to an external URL or a non-React page on the same domain, `<a href>` is correct. The context matters -- but for internal app navigation, Link is almost always what you want."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Navigation and Routing",
+      "problems": [
+        {
+          "id": "rl4-3-1",
+          "question": "Given these route definitions, what component is displayed when the URL is `/users/55/posts`?\n\n```jsx\n<Routes>\n  <Route path=\"/\" element={<HomePage />} />\n  <Route path=\"/users\" element={<UserList />} />\n  <Route path=\"/users/:userId\" element={<UserProfile />} />\n  <Route path=\"/users/:userId/posts\" element={<UserPosts />} />\n  <Route path=\"*\" element={<NotFound />} />\n</Routes>\n```",
+          "options": [
+            "A) UserPosts, with userId parameter equal to \"55\"",
+            "B) UserProfile, with userId parameter equal to \"55\"",
+            "C) UserList",
+            "D) NotFound"
+          ],
+          "correctAnswer": "A",
+          "explanation": "The URL `/users/55/posts` matches the path `/users/:userId/posts` most specifically. The `:userId` parameter captures \"55\". Inside the UserPosts component, `useParams()` would return `{ userId: \"55\" }`. React Router matches the most specific path.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "rl4-3-2",
+          "question": "A client reports: \"Clicking links in the navigation bar causes the whole page to flash and reload.\" What is the likely problem?\n\n```jsx\nfunction Navigation() {\n  return (\n    <nav>\n      <a href=\"/\">Home</a>\n      <a href=\"/dashboard\">Dashboard</a>\n      <a href=\"/settings\">Settings</a>\n    </nav>\n  );\n}\n```",
+          "options": [
+            "A) The component uses `<a href>` tags instead of `<Link to>` from React Router. Each click causes a full page reload instead of a client-side navigation.",
+            "B) The nav element does not support links in React.",
+            "C) The URLs are formatted incorrectly.",
+            "D) The component needs useNavigate instead of links."
+          ],
+          "correctAnswer": "A",
+          "explanation": "Standard `<a href>` tags trigger the browser's default navigation, which means a full page reload. In a React SPA, this wipes out all state and restarts the app. The fix: import `Link` from `react-router-dom` and change to `<Link to=\"/\">Home</Link>`, etc. This is a very common mistake in AI-generated React code.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "rl4-3-3",
+          "question": "You are reviewing AI-generated code for a blog app. The client says: \"Clicking on a blog post takes me to the post page, but it always shows the same post regardless of which one I click.\" What is the bug?\n\n```jsx\n// Route definition\n<Route path=\"/posts/:postId\" element={<BlogPost />} />\n\n// BlogPost component\nfunction BlogPost() {\n  const [post, setPost] = useState(null);\n\n  useEffect(() => {\n    fetch('/api/posts/1')\n      .then(res => res.json())\n      .then(data => setPost(data));\n  }, []);\n\n  if (!post) return <Spinner />;\n\n  return (\n    <article>\n      <h1>{post.title}</h1>\n      <p>{post.content}</p>\n    </article>\n  );\n}\n```",
+          "options": [
+            "A) The component never reads the `postId` from the URL. It hardcodes `/api/posts/1` in the fetch. It should use `useParams()` to get the postId and fetch `/api/posts/${postId}`.",
+            "B) The Route path should not have `:postId`.",
+            "C) The useEffect dependency array should include post.",
+            "D) The article element is not supported in React."
+          ],
+          "correctAnswer": "A",
+          "explanation": "The route defines `:postId` as a parameter, but the BlogPost component ignores it. It always fetches post #1. The fix: `const { postId } = useParams()` at the top of the component, then `fetch(`/api/posts/${postId}`)` in the effect, with `[postId]` as the dependency array. You would tell the AI: \"Use useParams() to read the postId from the URL, and use it in the fetch URL and the dependency array.\"",
+          "difficulty": "advanced"
+        }
+      ]
+    },
+    {
+      "type": "explainBack",
+      "prompt": "Explain what a single-page application is and why React apps use a router instead of traditional links. Describe the difference between `<Link>` and `<a href>` in a React app. What does `useParams()` do and when would you use it?"
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "React apps are single-page applications -- one HTML page where the router swaps components based on the URL. Use `<Link>` for internal navigation (no reload) and `<a href>` for external links. Route parameters like `:id` capture dynamic URL segments, and `useParams()` reads them inside the component. When navigation causes a page reload, check for `<a href>` that should be `<Link>`."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "Open any web app and click around. Notice which clicks feel instant (client-side routing) and which cause a visible page load (full navigation). The fast ones are almost certainly using the same Link/Route pattern you just learned."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is the main difference between using <Link to='/about'> and <a href='/about'> inside a React app?",
+      "options": ["Link causes a full page reload, <a> does not", "Link navigates without reloading the page, <a> causes a full page reload", "There is no difference"],
+      "correctIndex": 1,
+      "explanation": "In a React single-page application, <Link> swaps components without reloading the page, preserving state. An <a href> tag triggers a full page reload, wiping out all state.",
+      "encourageCorrect": "Perfect! Link keeps the SPA experience smooth and state-preserving.",
+      "encourageIncorrect": "It's the other way around -- <Link> navigates without a reload (keeping state), while <a href> causes a full page reload."
+    },
+    {
+      "question": "What does the useParams() hook do in React Router?",
+      "options": ["It reads query strings from the URL", "It reads dynamic route parameters like :id from the URL", "It navigates to a new page"],
+      "correctIndex": 1,
+      "explanation": "useParams() reads dynamic segments from the URL. For a route like /products/:id, useParams() returns an object with the id value from the current URL.",
+      "encourageCorrect": "You got it! useParams captures those dynamic :segments from the route path.",
+      "encourageIncorrect": "useParams() reads dynamic route parameters -- the :id, :userId, etc. parts of a route path. For navigation, you would use useNavigate() instead."
+    }
+  ]
+}

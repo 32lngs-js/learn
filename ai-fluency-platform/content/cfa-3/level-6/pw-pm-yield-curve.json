@@ -100,5 +100,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Credit Strategies** -- moving beyond the risk-free yield curve to explore how credit spreads create additional return opportunities and risks. The curve positioning skills you've learned here extend naturally to credit spread curves."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "A bullet portfolio strategy concentrates bond holdings at:",
+      "options": [
+        "Both ends of the yield curve",
+        "A single maturity point on the curve",
+        "Only the shortest maturities"
+      ],
+      "correctIndex": 1,
+      "explanation": "A bullet strategy clusters bonds around a single maturity target, often matching a liability's duration. It contrasts with barbell (short + long) and ladder (evenly spread) strategies.",
+      "encourageCorrect": "That's the bullet approach! All clustered around one maturity point.",
+      "encourageIncorrect": "A bullet strategy concentrates holdings around a single maturity point on the yield curve. Compare: barbell (two extremes), ladder (evenly spread)."
+    },
+    {
+      "question": "A steepening yield curve benefits which portfolio strategy?",
+      "options": [
+        "A barbell strategy",
+        "A bullet strategy concentrated at intermediate maturities",
+        "Both benefit equally"
+      ],
+      "correctIndex": 0,
+      "explanation": "When the curve steepens, a barbell (short + long) benefits because short-term bonds gain from falling short rates while the long end provides higher yields.",
+      "encourageCorrect": "Correct! The barbell benefits from curve steepening.",
+      "encourageIncorrect": "A barbell strategy tends to benefit from curve steepening. The short-end holdings gain from falling short rates, and the long-end earns higher yields."
+    }
   ]
 }

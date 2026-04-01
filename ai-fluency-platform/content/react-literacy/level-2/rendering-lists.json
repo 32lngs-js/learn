@@ -1,0 +1,98 @@
+{
+  "meta": {
+    "title": "2.4 Rendering Lists",
+    "description": "When you see .map() in React, it is turning an array of data into a list of components.",
+    "level": "level-2",
+    "slug": "rendering-lists",
+    "order": 4,
+    "isCheckpoint": false,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "predictPrompt",
+      "prompt": "Think about a list of search results, a feed of social media posts, or a table of customer records. Each item looks the same but has different data. Before reading this module, write down your guess: if you have an array of 50 products, how does React turn that into 50 product cards without writing the same component tag 50 times?"
+    },
+    {
+      "type": "markdown",
+      "content": "## The `.map()` pattern\n\nEvery list you have ever seen in a web app -- a list of emails, search results, shopping cart items, team members -- follows the same React pattern: take an array of data and transform it into an array of components using `.map()`.\n\nHere is the simplest possible example:\n\n```jsx\nfunction FruitList() {\n  const fruits = [\"Apple\", \"Banana\", \"Cherry\"];\n\n  return (\n    <ul>\n      {fruits.map(fruit => (\n        <li key={fruit}>{fruit}</li>\n      ))}\n    </ul>\n  );\n}\n```\n\nThis renders:\n- Apple\n- Banana\n- Cherry\n\nLet us break down what is happening:\n\n1. `fruits` is an array of three strings\n2. `.map()` goes through each item in the array and transforms it\n3. For each fruit, the function `fruit => (<li key={fruit}>{fruit}</li>)` creates a list item\n4. The result is an array of three `<li>` elements, which React renders inside the `<ul>`\n\nThink of `.map()` as a machine: data goes in one end, components come out the other end. One item in, one component out.\n\n### A realistic example\n\nIn real apps, you are usually mapping over an array of objects, not simple strings:\n\n```jsx\nfunction TeamDirectory() {\n  const members = [\n    { id: 1, name: \"Alice Johnson\", role: \"Engineer\", department: \"Platform\" },\n    { id: 2, name: \"Bob Smith\", role: \"Designer\", department: \"Product\" },\n    { id: 3, name: \"Carol Davis\", role: \"PM\", department: \"Growth\" },\n  ];\n\n  return (\n    <div className=\"team-directory\">\n      <h2>Team Members</h2>\n      {members.map(member => (\n        <div key={member.id} className=\"member-card\">\n          <h3>{member.name}</h3>\n          <p>{member.role} - {member.department}</p>\n        </div>\n      ))}\n    </div>\n  );\n}\n```\n\nThis renders three member cards. Each card shows a different person's name, role, and department. The data is different, but the structure is identical -- that is the power of `.map()`.\n\nNotice the pattern: inside `.map()`, you have access to each individual item. The parameter name (`member` in this case) is just a variable name -- you could call it anything. It represents one item from the array on each pass.\n\n### The `key` prop: why it matters\n\nEvery example above includes a `key` prop on the mapped elements. This is not optional -- it is a React requirement. The `key` tells React which item is which, so it can efficiently update the list when items are added, removed, or reordered.\n\n```jsx\n// Good: unique ID as key\n{members.map(member => (\n  <div key={member.id}>{member.name}</div>\n))}\n\n// Bad: array index as key\n{members.map((member, index) => (\n  <div key={index}>{member.name}</div>\n))}\n```\n\nWhy is the array index bad? Because indexes change when items are reordered, added, or removed. If you delete the second item, the third item gets index 1 (previously 2), and React thinks it is the same item -- leading to bugs where the wrong data appears in the wrong place.\n\nThe rule: **always use a unique, stable identifier as the key**. Database IDs are ideal. If the data does not have IDs, any property that uniquely identifies each item works.\n\nHere is what happens without proper keys -- a common AI-generated code mistake:\n\n```jsx\n// AI-generated code often does this:\n{tasks.map((task, index) => (\n  <TaskItem key={index} task={task} />\n))}\n\n// You should tell the AI to fix it:\n{tasks.map(task => (\n  <TaskItem key={task.id} task={task} />\n))}\n```\n\n### Mapping to custom components\n\nIn real codebases, the JSX inside `.map()` is usually a custom component:\n\n```jsx\nfunction ProductGrid({ products }) {\n  return (\n    <div className=\"product-grid\">\n      {products.map(product => (\n        <ProductCard\n          key={product.id}\n          name={product.name}\n          price={product.price}\n          imageUrl={product.imageUrl}\n          inStock={product.inStock}\n        />\n      ))}\n    </div>\n  );\n}\n```\n\nThis is the same pattern: `.map()` transforms each product object into a `<ProductCard />` component, passing the relevant data as props. The `ProductCard` component (defined elsewhere) handles how each card looks.\n\n### Combining `.map()` with conditionals\n\nYou will often see `.map()` combined with the conditional patterns from Module 2.3:\n\n```jsx\nfunction TaskList({ tasks }) {\n  return (\n    <div>\n      <h2>Tasks</h2>\n      {tasks.length > 0 ? (\n        <ul>\n          {tasks.map(task => (\n            <li key={task.id} className={task.done ? \"completed\" : \"\"}>\n              {task.title}\n              {task.urgent && <span className=\"urgent-badge\">Urgent</span>}\n            </li>\n          ))}\n        </ul>\n      ) : (\n        <p>No tasks yet. Add one to get started.</p>\n      )}\n    </div>\n  );\n}\n```\n\nReading this:\n1. If `tasks.length > 0`, render the task list (ternary pattern)\n2. Each task is mapped to an `<li>` with a unique key\n3. Completed tasks get a \"completed\" CSS class (conditional class pattern)\n4. Urgent tasks get an extra badge (`&&` pattern)\n5. If there are no tasks, show an empty state message\n\nThis combination of `.map()`, ternaries, and `&&` is the bread and butter of React rendering. Once you can read these three patterns together, you can read most React components.\n\n### Filtering before mapping\n\nSometimes you need to show only some items from an array. The `.filter()` method is often chained before `.map()`:\n\n```jsx\nfunction ActiveMembers({ members }) {\n  return (\n    <ul>\n      {members\n        .filter(member => member.isActive)\n        .map(member => (\n          <li key={member.id}>{member.name}</li>\n        ))}\n    </ul>\n  );\n}\n```\n\nRead this as: \"Take the members array, keep only the active ones, then turn each active member into a list item.\" The `.filter()` runs first, creating a smaller array. Then `.map()` transforms that filtered array into JSX.\n\n### Reading `.map()` in the wild\n\nHere is a realistic dashboard component you might encounter:\n\n```jsx\nfunction RecentOrders({ orders }) {\n  return (\n    <table className=\"orders-table\">\n      <thead>\n        <tr>\n          <th>Order #</th>\n          <th>Customer</th>\n          <th>Total</th>\n          <th>Status</th>\n        </tr>\n      </thead>\n      <tbody>\n        {orders.map(order => (\n          <tr key={order.id}>\n            <td>{order.orderNumber}</td>\n            <td>{order.customerName}</td>\n            <td>${order.total.toFixed(2)}</td>\n            <td>\n              <span className={`status status-${order.status}`}>\n                {order.status}\n              </span>\n            </td>\n          </tr>\n        ))}\n      </tbody>\n    </table>\n  );\n}\n```\n\nEven though this is a table instead of a list, the pattern is identical: `.map()` transforms each order object into a table row. Each row has a unique `key` (the order ID). The status gets a conditional CSS class based on its value."
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "How many list items does this render, and what does each one say?\n\n```jsx\nconst users = [\n  { id: \"a1\", name: \"Kim\", active: true },\n  { id: \"a2\", name: \"Pat\", active: false },\n  { id: \"a3\", name: \"Sam\", active: true },\n];\n\nreturn (\n  <ul>\n    {users\n      .filter(u => u.active)\n      .map(u => (\n        <li key={u.id}>{u.name}</li>\n      ))}\n  </ul>\n);\n```",
+      "answer": "It renders 2 list items: 'Kim' and 'Sam'. The .filter() step removes Pat because active is false. Only Kim (active: true) and Sam (active: true) pass through the filter. Then .map() turns each remaining user into an <li> with their name. Pat does not appear at all."
+    },
+    {
+      "type": "practiceSet",
+      "title": "List Rendering",
+      "problems": [
+        {
+          "id": "rl2-4-1",
+          "question": "What does this render?\n\n```jsx\nconst colors = [\"Red\", \"Green\", \"Blue\"];\n\nreturn (\n  <ul>\n    {colors.map(color => (\n      <li key={color}>{color}</li>\n    ))}\n  </ul>\n);\n```",
+          "options": [
+            "A) An unordered list with three items: Red, Green, Blue",
+            "B) The text 'Red, Green, Blue' as a single paragraph",
+            "C) Three separate unordered lists, one for each color"
+          ],
+          "correctAnswer": "A",
+          "explanation": ".map() transforms each string in the array into an <li> element. The three <li> elements are placed inside a single <ul>, creating one unordered list with three items. The key prop uses the color name itself (acceptable here since the values are unique strings).",
+          "difficulty": "basic"
+        },
+        {
+          "id": "rl2-4-2",
+          "question": "What is wrong with this list rendering code?\n\n```jsx\nconst products = [\n  { name: \"Laptop\", price: 999 },\n  { name: \"Mouse\", price: 29 },\n  { name: \"Keyboard\", price: 79 },\n];\n\nreturn (\n  <div>\n    {products.map((product, index) => (\n      <div key={index}>\n        <h3>{product.name}</h3>\n        <p>${product.price}</p>\n      </div>\n    ))}\n  </div>\n);\n```",
+          "options": [
+            "A) Nothing is wrong -- this code works correctly",
+            "B) Using index as the key is fragile -- if the list is reordered, added to, or items are removed, React may mix up which component belongs to which product",
+            "C) The .map() function cannot receive a second parameter"
+          ],
+          "correctAnswer": "B",
+          "explanation": "Using the array index as a key is a common mistake. If a product is deleted or the list is sorted, the indexes shift and React associates the wrong data with the wrong DOM elements. The fix is to use a unique identifier like a product ID. However, these products do not have IDs -- this is also a data modeling issue. You might tell a developer: 'These products need unique IDs, and the key should use those IDs instead of the array index.'",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "rl2-4-3",
+          "question": "What would you tell an AI to fix in this component?\n\n```jsx\nfunction NotificationList({ notifications }) {\n  return (\n    <div>\n      {notifications.map(notif => (\n        <div className={notif.read ? \"read\" : \"unread\"}>\n          <strong>{notif.title}</strong>\n          <p>{notif.body}</p>\n        </div>\n      ))}\n    </div>\n  );\n}\n```",
+          "options": [
+            "A) Tell the AI: 'Each mapped element is missing a key prop. Add key={notif.id} to the outer div in the .map() callback.'",
+            "B) Tell the AI: 'The conditional className is wrong -- swap read and unread.'",
+            "C) Tell the AI: 'The .map() should be a .forEach() instead.'"
+          ],
+          "correctAnswer": "A",
+          "explanation": "The mapped elements are missing the key prop. Every element returned from .map() in React must have a unique key. The fix: <div key={notif.id} className={...}>. The conditional className logic is correct (read notifications get the 'read' class). .forEach() would not work here because it does not return values -- .map() is the correct method for transforming data into JSX.",
+          "difficulty": "advanced"
+        }
+      ]
+    },
+    {
+      "type": "explainBack",
+      "prompt": "Explain the .map() pattern in React in your own words. Why does every mapped element need a key prop? What goes wrong if you use the array index as the key?"
+    },
+    {
+      "type": "keyTakeaway",
+      "content": ".map() transforms an array of data into an array of components -- one item in, one component out. Every mapped element must have a unique, stable key prop so React can track items correctly. Using array indexes as keys causes bugs when the list changes. Missing keys are the most common AI mistake in list rendering code."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "You have now learned the complete Level 2 toolkit: props for passing data, conditional rendering for showing and hiding, and .map() for rendering lists. The checkpoint will test all of these skills together with realistic multi-component scenarios."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What does .map() do when used inside JSX?",
+      "options": ["It filters out unwanted items from an array", "It transforms each item in an array into a component or element", "It sorts the array in alphabetical order"],
+      "correctIndex": 1,
+      "explanation": ".map() goes through each item in an array and transforms it into a piece of JSX -- one item in, one component out.",
+      "encourageCorrect": "That's it! .map() is the bread and butter of list rendering in React.",
+      "encourageIncorrect": "Not quite -- .map() transforms each array item into a component. Think of it as a machine: data goes in, JSX comes out, one piece at a time."
+    },
+    {
+      "question": "Why should you avoid using the array index as the key prop in .map()?",
+      "options": ["React does not accept numbers as keys", "Indexes shift when items are added, removed, or reordered, causing React to mix up which component belongs to which data", "Using index makes the list render slower"],
+      "correctIndex": 1,
+      "explanation": "Array indexes change when the list changes. If you delete item 2, item 3 becomes index 2, and React thinks it's the same item -- leading to display bugs.",
+      "encourageCorrect": "Great understanding! Using stable, unique IDs as keys keeps React from getting confused when lists change.",
+      "encourageIncorrect": "The issue is that indexes shift when items change. If you remove an item, all the indexes after it change, and React associates the wrong data with the wrong elements. Use unique IDs instead."
+    }
+  ]
+}

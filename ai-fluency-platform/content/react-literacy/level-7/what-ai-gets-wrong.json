@@ -1,0 +1,106 @@
+{
+  "meta": {
+    "title": "7.1 What AI Gets Wrong in React",
+    "description": "AI makes the same React mistakes over and over. Here is the catalog.",
+    "level": "level-7",
+    "slug": "what-ai-gets-wrong",
+    "order": 1,
+    "isCheckpoint": false,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "predictPrompt",
+      "prompt": "You ask an AI to generate a React component that fetches user data and displays it. Before reading further, what kinds of mistakes do you think the AI might make? Think about everything you have learned about state, effects, error handling, and accessibility."
+    },
+    {
+      "type": "markdown",
+      "content": "## The AI mistake catalog\n\nAI is remarkably good at generating React code that *looks* right. The structure is clean, the variable names are sensible, the JSX is well-formatted. But underneath that polished surface, the same mistakes appear over and over again. Once you know the catalog, you can spot them in seconds.\n\nLet us walk through the eight most common AI React mistakes, from most frequent to least.\n\n---\n\n### Mistake #1: Derived state (the most common mistake)\n\nThis is the single most frequent mistake AI makes in React. AI loves to store values in state that should simply be calculated from other state.\n\n**What AI generates:**\n\n```tsx\nconst [items, setItems] = useState<Item[]>([]);\nconst [totalPrice, setTotalPrice] = useState(0);\n\nuseEffect(() => {\n  const total = items.reduce((sum, item) => sum + item.price, 0);\n  setTotalPrice(total);\n}, [items]);\n\nreturn <p>Total: ${totalPrice}</p>;\n```\n\n**What it should be:**\n\n```tsx\nconst [items, setItems] = useState<Item[]>([]);\n\nconst totalPrice = items.reduce((sum, item) => sum + item.price, 0);\n\nreturn <p>Total: ${totalPrice}</p>;\n```\n\nWhy is the AI version wrong? The total price is *derived* from items. Every time items changes, React re-renders the component, and the calculation runs automatically. There is no need for a separate `useState` and `useEffect` — that adds complexity, an extra render cycle, and a potential for the total to be briefly out of sync with the items.\n\nThe rule is simple: **if a value can be calculated from existing state or props, calculate it directly. Do not store it in state.**\n\nAI does this because it has seen thousands of examples of `useState + useEffect` patterns and defaults to them even when they are unnecessary.\n\n---\n\n### Mistake #2: Missing or wrong dependency arrays in useEffect\n\nAI frequently gets the dependency array wrong — either omitting it entirely, leaving out dependencies, or including too many.\n\n**What AI generates (missing dependency):**\n\n```tsx\nconst [userId, setUserId] = useState(\"123\");\nconst [user, setUser] = useState(null);\n\nuseEffect(() => {\n  fetch(`/api/users/${userId}`)\n    .then(res => res.json())\n    .then(data => setUser(data));\n}, []); // Bug: userId is missing from the dependency array\n```\n\n**What it should be:**\n\n```tsx\nuseEffect(() => {\n  fetch(`/api/users/${userId}`)\n    .then(res => res.json())\n    .then(data => setUser(data));\n}, [userId]); // Correct: re-fetch when userId changes\n```\n\nWith the empty `[]`, this effect runs once when the component mounts and never again — even when `userId` changes. The user sees stale data. With `[userId]`, the effect re-runs whenever the user ID changes, keeping the data fresh.\n\n**What AI generates (no dependency array at all):**\n\n```tsx\nuseEffect(() => {\n  console.log(\"User updated:\", user);\n}); // Bug: runs on EVERY render\n```\n\nWithout a dependency array, this effect runs after every single render. If this were a fetch call, it would create an infinite loop: fetch -> set state -> re-render -> fetch -> set state -> re-render...\n\n---\n\n### Mistake #3: Missing error and loading states\n\nAI often generates data-fetching code that handles only the happy path.\n\n**What AI generates:**\n\n```tsx\nconst [users, setUsers] = useState<User[]>([]);\n\nuseEffect(() => {\n  fetch(\"/api/users\")\n    .then(res => res.json())\n    .then(data => setUsers(data));\n}, []);\n\nreturn (\n  <ul>\n    {users.map(user => (\n      <li key={user.id}>{user.name}</li>\n    ))}\n  </ul>\n);\n```\n\n**What it should be:**\n\n```tsx\nconst [users, setUsers] = useState<User[]>([]);\nconst [isLoading, setIsLoading] = useState(true);\nconst [error, setError] = useState<string | null>(null);\n\nuseEffect(() => {\n  fetch(\"/api/users\")\n    .then(res => {\n      if (!res.ok) throw new Error(\"Failed to fetch users\");\n      return res.json();\n    })\n    .then(data => setUsers(data))\n    .catch(err => setError(err.message))\n    .finally(() => setIsLoading(false));\n}, []);\n\nif (isLoading) return <p>Loading...</p>;\nif (error) return <p>Error: {error}</p>;\n\nreturn (\n  <ul>\n    {users.map(user => (\n      <li key={user.id}>{user.name}</li>\n    ))}\n  </ul>\n);\n```\n\nThe AI version shows nothing while the data loads (just an empty list), and if the API fails, the user sees... nothing. No feedback at all. The corrected version shows a loading indicator while waiting, displays an error message if something goes wrong, and checks the response status.\n\n---\n\n### Mistake #4: Missing or bad key props in lists\n\nAI sometimes forgets the `key` prop entirely, or uses the array index as the key.\n\n**What AI generates (index as key):**\n\n```tsx\n{items.map((item, index) => (\n  <TodoItem key={index} item={item} />\n))}\n```\n\n**What it should be:**\n\n```tsx\n{items.map(item => (\n  <TodoItem key={item.id} item={item} />\n))}\n```\n\nUsing the index as a key causes problems when items are reordered, added, or removed from the middle of the list. React uses keys to track which item is which — if you reorder items but the keys stay 0, 1, 2, 3, React gets confused and may show wrong data in the wrong row. Always use a unique, stable identifier like an `id` field.\n\n---\n\n### Mistake #5: Missing preventDefault in form handlers\n\nAI frequently forgets that HTML forms submit and reload the page by default.\n\n**What AI generates:**\n\n```tsx\nconst handleSubmit = () => {\n  // process form data...\n  submitData(formData);\n};\n\nreturn (\n  <form onSubmit={handleSubmit}>\n    {/* form fields */}\n    <button type=\"submit\">Submit</button>\n  </form>\n);\n```\n\n**What it should be:**\n\n```tsx\nconst handleSubmit = (e: React.FormEvent) => {\n  e.preventDefault();\n  submitData(formData);\n};\n```\n\nWithout `e.preventDefault()`, clicking the submit button causes a full page reload — the browser's default form behavior. In a React single-page app, this wipes out all state and essentially resets the application. The form *appears* to do nothing because the page reloads before the JavaScript can process the data.\n\n---\n\n### Mistake #6: Overengineering\n\nAI loves abstraction. Ask it for a simple component and it might give you a custom hook, a context provider, a utility function, and three helper components.\n\n**What AI generates:**\n\n```tsx\n// useToggle.ts\nconst useToggle = (initialValue = false) => {\n  const [value, setValue] = useState(initialValue);\n  const toggle = useCallback(() => setValue(v => !v), []);\n  const setTrue = useCallback(() => setValue(true), []);\n  const setFalse = useCallback(() => setValue(false), []);\n  return { value, toggle, setTrue, setFalse };\n};\n\n// In the component\nconst { value: isOpen, toggle: toggleMenu } = useToggle(false);\n```\n\n**What it should be:**\n\n```tsx\nconst [isOpen, setIsOpen] = useState(false);\n\n<button onClick={() => setIsOpen(!isOpen)}>Menu</button>\n```\n\nThe AI created an entire custom hook with `useCallback` optimizations for something that is a single `useState` and one line of toggle logic. This is not inherently broken, but it makes the code harder to read and maintain for no practical benefit. When reviewing AI code, ask: \"Is this complexity earning its keep?\"\n\n---\n\n### Mistake #7: Missing accessibility\n\nAI rarely adds accessibility features unless you specifically ask.\n\n**What AI generates:**\n\n```tsx\n<div onClick={handleClick} className=\"button\">\n  Close\n</div>\n```\n\n**What it should be:**\n\n```tsx\n<button onClick={handleClick} aria-label=\"Close dialog\">\n  Close\n</button>\n```\n\nThe AI used a `<div>` styled to look like a button instead of an actual `<button>` element. A `<div>` cannot be reached by keyboard (Tab key), does not respond to Enter or Space, and is not announced as a button by screen readers. Always use semantic HTML elements — `<button>` for buttons, `<a>` for links, `<input>` for form fields.\n\nOther common accessibility gaps: missing `alt` text on images, missing `aria-label` on icon-only buttons, no keyboard event handlers on custom interactive elements, missing form labels.\n\n---\n\n### Mistake #8: Stale closures in event handlers and timeouts\n\nThis is a subtle bug that AI creates when combining event handlers or timeouts with state.\n\n**What AI generates:**\n\n```tsx\nconst [count, setCount] = useState(0);\n\nconst handleClick = () => {\n  setTimeout(() => {\n    setCount(count + 1); // Bug: uses stale count value\n  }, 3000);\n};\n```\n\n**What it should be:**\n\n```tsx\nconst handleClick = () => {\n  setTimeout(() => {\n    setCount(prev => prev + 1); // Correct: uses updater function\n  }, 3000);\n};\n```\n\nThe problem: when the timeout fires three seconds later, it uses the value of `count` from when the click happened, not the current value. If the user clicked three times quickly, each timeout sees `count` as 0 and sets it to 1 — so instead of counting to 3, it gets stuck at 1. The updater function `prev => prev + 1` always uses the most recent value.\n\n---\n\n### The pattern to notice\n\nAll eight mistakes share a common trait: **the code looks correct at first glance.** It compiles, it renders, and in simple test cases it might even work. The bugs appear in real usage — when data changes, when APIs fail, when users interact in unexpected ways, when someone navigates with a keyboard.\n\nThis is why reading React code is so valuable. You cannot catch these mistakes by looking at the screen. You catch them by reading the code."
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "An AI generates a component with `const [fullName, setFullName] = useState(\"\")` and a `useEffect` that runs `setFullName(firstName + \" \" + lastName)` whenever firstName or lastName change. What is the specific name for this mistake, and how would you fix it?",
+      "answer": "This is the derived state anti-pattern (Mistake #1). fullName is derived from firstName and lastName and should be calculated directly: `const fullName = firstName + \" \" + lastName`. There is no need for a separate useState or useEffect because React re-renders the component whenever firstName or lastName change, and the calculation runs automatically during that render."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Spotting AI Mistakes",
+      "problems": [
+        {
+          "id": "rl7-1-1",
+          "question": "What is wrong with this AI-generated code?\n\n```tsx\nconst [products, setProducts] = useState<Product[]>([]);\nconst [filteredProducts, setFilteredProducts] = useState<Product[]>([]);\nconst [searchTerm, setSearchTerm] = useState(\"\");\n\nuseEffect(() => {\n  const filtered = products.filter(p =>\n    p.name.toLowerCase().includes(searchTerm.toLowerCase())\n  );\n  setFilteredProducts(filtered);\n}, [products, searchTerm]);\n\nreturn (\n  <ul>\n    {filteredProducts.map((p, index) => (\n      <li key={index}>{p.name} - ${p.price}</li>\n    ))}\n  </ul>\n);\n```",
+          "options": [
+            "A) filteredProducts is derived state that should be calculated directly, and the list uses index as the key instead of a unique ID",
+            "B) The useEffect is missing searchTerm in the dependency array",
+            "C) The filter function is case-sensitive and will not match properly"
+          ],
+          "correctAnswer": "A",
+          "explanation": "There are two mistakes. First, filteredProducts is derived from products and searchTerm — it should be `const filteredProducts = products.filter(...)` with no useState or useEffect. Second, using index as the key in .map() will cause bugs if the list is reordered or filtered. It should use a unique identifier like p.id. The filter function is actually correct — it converts both sides to lowercase.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "rl7-1-2",
+          "question": "An AI generated this data-fetching component. What is the most critical issue?\n\n```tsx\nconst UserProfile = ({ userId }: { userId: string }) => {\n  const [user, setUser] = useState<User | null>(null);\n\n  useEffect(() => {\n    fetch(`/api/users/${userId}`)\n      .then(res => res.json())\n      .then(data => setUser(data));\n  }, []);\n\n  return (\n    <div>\n      <h1>{user?.name}</h1>\n      <p>{user?.email}</p>\n    </div>\n  );\n};\n```",
+          "options": [
+            "A) The component should use useContext instead of props",
+            "B) The dependency array is empty, so the effect will not re-fetch when userId changes, causing stale data",
+            "C) The user variable should be initialized as an empty object instead of null"
+          ],
+          "correctAnswer": "B",
+          "explanation": "The useEffect uses userId inside the fetch URL but the dependency array is empty []. This means it fetches once on mount and never again — even when userId changes. If a parent component passes a different userId, the profile still shows the old user's data. The fix is to add userId to the dependency array: [userId]. There are also missing loading and error states, but the stale data bug is the most critical issue.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "rl7-1-3",
+          "question": "You ask AI to build a settings panel. It generates this. What would you tell the AI to fix?\n\n```tsx\nconst SettingsPanel = () => {\n  const [settings, setSettings] = useState(defaultSettings);\n  const [isDirty, setIsDirty] = useState(false);\n\n  useEffect(() => {\n    setIsDirty(JSON.stringify(settings) !== JSON.stringify(defaultSettings));\n  }, [settings]);\n\n  const handleSave = () => {\n    saveSettings(settings);\n  };\n\n  return (\n    <form onSubmit={handleSave}>\n      <input\n        value={settings.name}\n        onChange={e => setSettings({ ...settings, name: e.target.value })}\n      />\n      <div onClick={() => saveSettings(settings)} className=\"save-btn\">\n        {isDirty ? \"Save Changes\" : \"No Changes\"}\n      </div>\n    </form>\n  );\n};\n```",
+          "options": [
+            "A) \"Remove the isDirty state and calculate it directly, add preventDefault to handleSave, and change the save div to a button element\"",
+            "B) \"The useState should use useReducer for complex state management\"",
+            "C) \"The onChange handler should use a separate function instead of an inline arrow function\""
+          ],
+          "correctAnswer": "A",
+          "explanation": "Three AI mistakes in one component. First, isDirty is derived state — it should be `const isDirty = JSON.stringify(settings) !== JSON.stringify(defaultSettings)` with no useState or useEffect. Second, the form onSubmit handler is missing `e.preventDefault()`, so submitting the form will reload the page. Third, the save 'button' is a <div> — it cannot be focused by keyboard or activated by pressing Enter. It should be a <button> element.",
+          "difficulty": "advanced"
+        }
+      ]
+    },
+    {
+      "type": "explainBack",
+      "prompt": "Pick three of the eight AI mistakes from this module and explain each one in your own words. For each, describe: what the AI does wrong, why it causes a problem for users, and how you would recognize it in code."
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "AI makes eight predictable React mistakes: derived state stored in useState, missing dependency arrays, missing error/loading states, bad list keys, missing preventDefault, overengineering, missing accessibility, and stale closures. The code always looks correct at first glance — you catch these bugs by reading the code, not by looking at the screen."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "Now that you know what to look for, the next module gives you a systematic checklist for reviewing any AI-generated React code — so you do not have to rely on memory alone."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is the #1 most common React mistake AI makes?",
+      "options": ["Missing error handling", "Derived state stored in useState + useEffect", "Missing key props in lists"],
+      "correctIndex": 1,
+      "explanation": "AI loves to store derived values in state with a useEffect to update them, when the value should simply be calculated directly from existing state or props.",
+      "encourageCorrect": "Exactly right! This one shows up constantly in AI-generated code.",
+      "encourageIncorrect": "Close, but the most frequent mistake is derived state — using useState + useEffect for values that should just be calculated directly."
+    },
+    {
+      "question": "Why is using array index as a key prop in .map() a problem?",
+      "options": ["It causes a syntax error", "React gets confused when items are reordered, added, or removed", "It makes the list render slowly"],
+      "correctIndex": 1,
+      "explanation": "When items move around, index-based keys stay 0, 1, 2, 3 regardless — so React can't tell which item is which and may render wrong data in wrong rows.",
+      "encourageCorrect": "Spot on! Keys need to be stable and unique to each item, not just their position.",
+      "encourageIncorrect": "Not quite — the issue is that index keys don't move with their items when the list changes, confusing React's rendering."
+    },
+    {
+      "question": "What happens if a form handler is missing e.preventDefault()?",
+      "options": ["The form fields are cleared", "The browser reloads the page, wiping out all React state", "The form data is sent twice"],
+      "correctIndex": 1,
+      "explanation": "Without preventDefault(), the browser performs its default form submission behavior — a full page reload — which destroys all React state and essentially resets the app.",
+      "encourageCorrect": "That's it! A full page reload in a single-page app is almost never what you want.",
+      "encourageIncorrect": "The real problem is a full page reload. The browser's default form behavior navigates to a new page, wiping out all React state."
+    }
+  ]
+}

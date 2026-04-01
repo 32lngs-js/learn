@@ -104,5 +104,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Credit Risk**, examining default risk, credit spread risk, expected loss calculations, and the role of credit rating agencies \u2014 the fundamental concepts needed to evaluate the creditworthiness of bond issuers."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Key rate duration measures a bond's sensitivity to:",
+      "options": [
+        "A parallel shift in the entire yield curve",
+        "A change in yield at a specific maturity point on the curve",
+        "Changes in credit spreads"
+      ],
+      "correctIndex": 1,
+      "explanation": "Key rate duration isolates the bond's price sensitivity to changes at specific points along the yield curve, unlike effective duration which assumes parallel shifts.",
+      "encourageCorrect": "That's it! Key rate duration captures sensitivity to specific maturity points.",
+      "encourageIncorrect": "Key rate duration measures sensitivity to rate changes at specific maturity points, unlike modified duration which assumes the entire curve shifts equally."
+    },
+    {
+      "question": "A portfolio manager concerned about a flattening yield curve would focus on:",
+      "options": [
+        "Overall portfolio duration only",
+        "The distribution of key rate durations across maturities",
+        "Credit quality of holdings"
+      ],
+      "correctIndex": 1,
+      "explanation": "A flattening curve affects different maturities differently, so the distribution of exposures (key rate durations) across the curve matters more than just total duration.",
+      "encourageCorrect": "Correct! Non-parallel curve moves require looking at exposures at different maturities.",
+      "encourageIncorrect": "For non-parallel curve changes like flattening, key rate durations across different maturities matter more than just overall duration."
+    }
   ]
 }

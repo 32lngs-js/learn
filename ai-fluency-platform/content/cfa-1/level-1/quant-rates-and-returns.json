@@ -141,5 +141,43 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Time Value of Money**, where you will use interest rates to move cash flows through time. The discount rate concepts from this module \u2014 required return, opportunity cost \u2014 become the rates you plug into PV and FV calculations."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Which return measure is preferred for evaluating investment manager performance?",
+      "options": [
+        "Money-weighted return",
+        "Time-weighted return",
+        "Arithmetic mean return"
+      ],
+      "correctIndex": 1,
+      "explanation": "The time-weighted return removes the impact of cash flow timing, which the manager typically doesn't control.",
+      "encourageCorrect": "Exactly! Time-weighted return isolates the manager's skill from client cash flow decisions.",
+      "encourageIncorrect": "The time-weighted return is preferred for evaluating managers because it removes the effect of cash flow timing, which is outside the manager's control."
+    },
+    {
+      "question": "The geometric mean return is always less than or equal to the arithmetic mean. When are they equal?",
+      "options": [
+        "When returns are very high",
+        "When all periodic returns are identical (zero variance)",
+        "When the investment period is very long"
+      ],
+      "correctIndex": 1,
+      "explanation": "The two means are equal only when every periodic return is the same. Any variability causes the geometric mean to fall below the arithmetic mean.",
+      "encourageCorrect": "Spot on! Zero variance in returns is the only case where they match.",
+      "encourageIncorrect": "They are equal only when every return is identical \u2014 zero variance. Any variability makes the geometric mean lower."
+    },
+    {
+      "question": "An interest rate can be interpreted as all of the following EXCEPT:",
+      "options": [
+        "A required rate of return",
+        "A discount rate",
+        "A guaranteed future return"
+      ],
+      "correctIndex": 2,
+      "explanation": "Interest rates serve as required rates of return, discount rates, and opportunity costs \u2014 but they are never a guarantee of future returns.",
+      "encourageCorrect": "Nice! Interest rates are required returns, discount rates, and opportunity costs \u2014 never guarantees.",
+      "encourageIncorrect": "An interest rate can be a required rate of return, a discount rate, or an opportunity cost. It is not a guaranteed future return."
+    }
   ]
 }

@@ -43,5 +43,31 @@
       "type": "connectPrompt",
       "prompt": "You now know how to write a great briefing and how to get information into Claude. The next module covers a crucial judgment call: when to stop correcting Claude and start over. The answer might surprise you."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "How do you reference a file directly in a Claude Code prompt?",
+      "options": [
+        "Upload the file",
+        "Type @ followed by the file path",
+        "Copy-paste the contents"
+      ],
+      "correctIndex": 1,
+      "explanation": "Type @filename to reference a file directly — the content loads into your prompt without needing a tool call.",
+      "encourageCorrect": "That's right! The @ symbol is your shortcut for file references.",
+      "encourageIncorrect": "Use @filename to reference a file directly in your prompt — it loads the content immediately."
+    },
+    {
+      "question": "What does the 'claude -p' flag do when combined with piping?",
+      "options": [
+        "Opens an interactive session",
+        "Processes input, prints the response, and exits",
+        "Saves the response to a file"
+      ],
+      "correctIndex": 1,
+      "explanation": "The -p flag runs Claude in print mode — it processes piped input, prints the response, and exits without starting an interactive session.",
+      "encourageCorrect": "Correct! Print mode is perfect for quick one-shot transformations.",
+      "encourageIncorrect": "With -p, Claude processes the piped input, prints the result, and exits — perfect for one-off transformations."
+    }
   ]
 }

@@ -1,0 +1,98 @@
+{
+  "meta": {
+    "title": "5.1 TypeScript Is Just Labels",
+    "description": "TypeScript adds labels to data -- what type each variable is. It looks scary but it is just documentation.",
+    "level": "level-5",
+    "slug": "typescript-is-just-labels",
+    "order": 1,
+    "isCheckpoint": false,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "predictPrompt",
+      "prompt": "You have seen JavaScript variables like `const name = \"Ben\"`. In TypeScript, you might see `const name: string = \"Ben\"`. What do you think the `: string` part does? Does it change the behavior, or is it something else?"
+    },
+    {
+      "type": "markdown",
+      "content": "## TypeScript Is Just Labels\n\nIf you have opened a modern React codebase, you have almost certainly seen TypeScript. Files end in `.tsx` instead of `.jsx`. Variables have colons and type names after them. There are `interface` blocks that look like code but do not seem to do anything at runtime.\n\nHere is the most important thing to understand about TypeScript: **it does not change what the code does.** TypeScript is a layer of documentation that sits on top of JavaScript. It tells you (and the developer's editor) what kind of data each variable holds, what shape each object has, and what each function expects.\n\nThink of it like labels on boxes in a warehouse. The labels do not change what is inside the box. They just tell you what to expect before you open it.\n\n### The Basic Types\n\nTypeScript has a small set of basic types that you will see over and over:\n\n```typescript\nconst name: string = \"Ben\";\nconst age: number = 32;\nconst isActive: boolean = true;\nconst tags: string[] = [\"react\", \"typescript\"];\nconst score: number | null = null;\n```\n\nLet us break down what is happening:\n\n- `name: string` -- this variable holds text\n- `age: number` -- this variable holds a number\n- `isActive: boolean` -- this variable holds true or false\n- `tags: string[]` -- this variable holds an array of text values\n- `score: number | null` -- this variable holds either a number or null (the `|` means \"or\")\n\nNotice that the type comes after a colon. That is the pattern everywhere in TypeScript: `variableName: type`. Once you learn to spot the colon, you can read the type, absorb the information, and move on to the actual logic.\n\n### Reading Past the Types\n\nHere is the key skill: **you can mentally skip the type annotations to read the logic.** Watch:\n\n```typescript\nconst userName: string = \"Alice\";\nconst userAge: number = 28;\nconst greeting: string = `Hello, ${userName}! You are ${userAge} years old.`;\n```\n\nIf you mentally strip out the `: string` and `: number` parts, you get:\n\n```javascript\nconst userName = \"Alice\";\nconst userAge = 28;\nconst greeting = `Hello, ${userName}! You are ${userAge} years old.`;\n```\n\nSame logic. Same behavior. The types are just labels that document what kind of data each variable holds.\n\n### Interfaces: Describing the Shape of Objects\n\nWhen you have an object with multiple properties, TypeScript uses an **interface** to describe its shape:\n\n```typescript\ninterface User {\n  name: string;\n  age: number;\n  email: string;\n  isAdmin: boolean;\n}\n```\n\nThis says: \"A User object has a name (text), an age (number), an email (text), and an isAdmin flag (true/false).\" It is a blueprint. It does not create a user -- it just defines what a user looks like.\n\nYou will then see it used like this:\n\n```typescript\nconst currentUser: User = {\n  name: \"Alice\",\n  age: 28,\n  email: \"alice@example.com\",\n  isAdmin: false,\n};\n```\n\nThe `: User` after `currentUser` says \"this variable holds an object that matches the User shape.\" If someone tried to set `currentUser.age = \"twenty-eight\"`, TypeScript would flag it as an error because the interface says `age` is a number, not a string.\n\n### Optional Properties\n\nSometimes an object might or might not have a property. TypeScript marks these with a question mark:\n\n```typescript\ninterface UserProfile {\n  name: string;\n  email: string;\n  phone?: string;\n  bio?: string;\n}\n```\n\nThe `?` after `phone` and `bio` means those properties are optional. A valid `UserProfile` might have them or might not. When you see `?` in an interface, it means \"this might be undefined -- the code should handle that case.\"\n\n### Function Types\n\nFunctions get type annotations too -- for their parameters and their return value:\n\n```typescript\nfunction greet(name: string, age: number): string {\n  return `Hello, ${name}! You are ${age} years old.`;\n}\n```\n\nThe `: string` after the parentheses is the **return type** -- it tells you what the function gives back. The `name: string` and `age: number` inside the parentheses tell you what the function expects.\n\nYou will also see arrow functions with types:\n\n```typescript\nconst multiply = (a: number, b: number): number => {\n  return a * b;\n};\n```\n\nAgain, strip the types mentally and you have a regular arrow function: `const multiply = (a, b) => { return a * b; }`. The types are just documentation.\n\n### Type Aliases\n\nSometimes you will see `type` instead of `interface`:\n\n```typescript\ntype Status = \"loading\" | \"success\" | \"error\";\ntype UserID = string;\n```\n\nA `type` alias gives a name to a type. `Status` can only be one of three specific strings. `UserID` is a string, but the name tells you what it represents. Think of type aliases as vocabulary -- they give meaningful names to data shapes.\n\n### The Mental Model\n\nHere is how to think about TypeScript when you encounter it in a React codebase:\n\n1. **Types are labels, not logic.** They document data, they do not transform it.\n2. **The colon is your signal.** When you see `: something`, that is a type annotation.\n3. **Interfaces are blueprints.** They define what properties an object has and what types those properties are.\n4. **The `?` means optional.** The property might not exist.\n5. **You can read past them.** To understand what code does, focus on the logic and treat the types as helpful context.\n\nTypeScript does not make React code harder. It actually makes it easier to read once you know the pattern, because the types tell you what kind of data is flowing through the code without you having to figure it out yourself."
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "Given `interface Product { name: string; price: number; inStock?: boolean; }`, is a Product object required to have an `inStock` property?",
+      "answer": "No. The `?` after `inStock` means it is optional. A valid Product object needs `name` and `price`, but `inStock` can be left out."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Reading TypeScript Annotations",
+      "problems": [
+        {
+          "id": "rl5-1-1",
+          "question": "What does this TypeScript code tell you about the `users` variable?\n\n```typescript\ninterface User {\n  id: number;\n  name: string;\n  role: \"admin\" | \"editor\" | \"viewer\";\n}\n\nconst users: User[] = [\n  { id: 1, name: \"Alice\", role: \"admin\" },\n  { id: 2, name: \"Bob\", role: \"viewer\" },\n];\n```",
+          "options": [
+            "A) `users` is an array of User objects, each with an id (number), name (text), and role (one of three specific strings)",
+            "B) `users` is a single User object with id, name, and role properties",
+            "C) `users` is a function that returns User objects"
+          ],
+          "correctAnswer": "A",
+          "explanation": "`User[]` means an array of User objects. The interface defines the shape: `id` is a number, `name` is a string, and `role` must be exactly one of \"admin\", \"editor\", or \"viewer\". The `|` creates a union type -- it can only be one of those values.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "rl5-1-2",
+          "question": "Look at this function signature. What does it expect, and what does it return?\n\n```typescript\nfunction formatPrice(amount: number, currency?: string): string {\n  const symbol = currency === \"EUR\" ? \"\\u20ac\" : \"$\";\n  return `${symbol}${amount.toFixed(2)}`;\n}\n```",
+          "options": [
+            "A) It requires a number and a string, and returns a number",
+            "B) It requires a number, optionally accepts a string, and returns a string",
+            "C) It requires two strings and returns a string"
+          ],
+          "correctAnswer": "B",
+          "explanation": "`amount: number` is required. `currency?: string` has the `?`, so it is optional. The return type after the closing parenthesis is `: string`. You can call this as `formatPrice(9.99)` or `formatPrice(9.99, \"EUR\")`.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "rl5-1-3",
+          "question": "A developer asks you to review this TypeScript interface for a dashboard component. What can you tell them about the data shape?\n\n```typescript\ninterface DashboardData {\n  title: string;\n  metrics: {\n    revenue: number;\n    users: number;\n    conversionRate: number;\n  };\n  lastUpdated: string;\n  alerts?: string[];\n  comparisonPeriod?: \"week\" | \"month\" | \"quarter\";\n}\n```",
+          "options": [
+            "A) The dashboard needs a title and metrics. Alerts and comparison period are required too.",
+            "B) The dashboard needs a title, a metrics object with three numbers, and a lastUpdated string. Alerts (an array of strings) and comparisonPeriod (one of three values) are optional.",
+            "C) The dashboard only needs a title. Everything else is optional."
+          ],
+          "correctAnswer": "B",
+          "explanation": "Properties without `?` are required: `title`, `metrics` (which itself has three required number properties), and `lastUpdated`. Properties with `?` are optional: `alerts` (an array of strings) and `comparisonPeriod` (which can be \"week\", \"month\", or \"quarter\"). This interface IS the documentation for what this dashboard component needs.",
+          "difficulty": "advanced"
+        }
+      ]
+    },
+    {
+      "type": "explainBack",
+      "prompt": "In your own words, explain what TypeScript adds to JavaScript. If you were telling a colleague who had never seen TypeScript, how would you describe what the colons and interface blocks do?"
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "TypeScript is JavaScript with labels. The colon introduces a type annotation -- it documents what kind of data a variable holds, a function expects, or a function returns. Interfaces define the shape of objects. The `?` marks optional properties. None of this changes behavior -- it is all documentation that helps you (and the editor) understand the code."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "Think about a spreadsheet with column headers like \"Name (text)\", \"Price (number)\", \"In Stock (yes/no)\". TypeScript interfaces work the same way -- they are column headers for your data. Next time you see an interface, try reading it like a table schema."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What does the '?' mean after a property name in a TypeScript interface?",
+      "options": ["The property must be a boolean", "The property is optional -- it may or may not exist", "The property has a default value"],
+      "correctIndex": 1,
+      "explanation": "A question mark after a property name (like phone?: string) means the property is optional. A valid object may include it or leave it out.",
+      "encourageCorrect": "That's right! The ? is TypeScript's way of saying 'this might not be there.'",
+      "encourageIncorrect": "The ? marks a property as optional -- it might be present or might be undefined. Required properties have no ?."
+    },
+    {
+      "question": "What does TypeScript add to JavaScript?",
+      "options": ["New runtime behavior and features", "Type annotations that document what kind of data variables hold", "A completely different syntax"],
+      "correctIndex": 1,
+      "explanation": "TypeScript adds type annotations -- labels that document data types. It does not change what the code does at runtime. The types are like labels on boxes that tell you what is inside.",
+      "encourageCorrect": "Spot on! Types are documentation, not logic. They help you understand the code without changing its behavior.",
+      "encourageIncorrect": "TypeScript adds type annotations -- labels that document data. It does not change runtime behavior. Think of it as adding labels to your variables."
+    }
+  ]
+}

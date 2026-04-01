@@ -43,5 +43,43 @@
       "type": "connectPrompt",
       "prompt": "You now understand the three foundations: the agentic loop, the interface, and the context window. The next module puts it all together with a guided hands-on exercise where you collaborate with Claude Code on a real task."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What command shows how full your context window is?",
+      "options": [
+        "/status",
+        "/context",
+        "/memory"
+      ],
+      "correctIndex": 1,
+      "explanation": "The /context command shows a visual grid of how much context space is used.",
+      "encourageCorrect": "Right! /context is your fuel gauge for the session.",
+      "encourageIncorrect": "Use /context to check how full your context window is — think of it as checking your fuel gauge."
+    },
+    {
+      "question": "What happens when the context window fills up?",
+      "options": [
+        "Claude stops working entirely",
+        "Old information gets compressed or removed",
+        "Claude switches to a bigger window"
+      ],
+      "correctIndex": 1,
+      "explanation": "When the context fills up, Claude Code compacts the conversation — summarizing older messages to free space, which means details may be lost.",
+      "encourageCorrect": "Exactly! Compaction summarizes old content to make room, but some detail is lost.",
+      "encourageIncorrect": "When the context fills up, older messages get compressed into summaries — details from earlier in the conversation may be lost."
+    },
+    {
+      "question": "According to the lesson, starting a fresh session with /clear is what?",
+      "options": [
+        "A failure",
+        "A strategy, not a failure",
+        "Something to avoid"
+      ],
+      "correctIndex": 1,
+      "explanation": "Starting fresh with /clear is often the smartest move — a fresh desk means Claude operates at full capacity.",
+      "encourageCorrect": "That's the mindset! /clear is a strategic tool, not a sign of failure.",
+      "encourageIncorrect": "Starting fresh is actually a strategy, not a failure — a clean context means Claude works at full capacity."
+    }
   ]
 }

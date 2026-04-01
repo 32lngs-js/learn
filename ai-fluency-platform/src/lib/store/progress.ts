@@ -5,6 +5,7 @@ import type {
   ModuleProgressState,
   InteractionState,
 } from "@/types/progress";
+import { syncProgress } from "./db-sync";
 
 const PROGRESS_KEY = "aif_progress";
 
@@ -80,6 +81,10 @@ export function markInteraction(
   };
 
   saveStore(store);
+
+  // Sync to DB (fire-and-forget)
+  const mod = store.modules[modulePath];
+  syncProgress(modulePath, levelId, mod.completed, mod.completedAt, mod.interactions);
 }
 
 export function markModuleComplete(
@@ -101,6 +106,10 @@ export function markModuleComplete(
   store.modules[modulePath].completedAt = new Date().toISOString();
 
   saveStore(store);
+
+  // Sync to DB (fire-and-forget)
+  const mod = store.modules[modulePath];
+  syncProgress(modulePath, levelId, mod.completed, mod.completedAt, mod.interactions);
 }
 
 export function isModuleComplete(modulePath: string): boolean {

@@ -104,5 +104,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Analyzing Balance Sheets**, where you'll learn how assets, liabilities, and equity are classified and measured. The revenue and expense recognition choices you just studied directly affect balance sheet accounts \u2014 deferred revenue appears as a liability, capitalized costs appear as assets, and retained earnings link net income to equity."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Gross profit is calculated as:",
+      "options": [
+        "Revenue minus all operating expenses",
+        "Revenue minus cost of goods sold",
+        "Net income plus taxes"
+      ],
+      "correctIndex": 1,
+      "explanation": "Gross profit = Revenue - COGS. It shows how much the company earns after direct production costs, before other expenses.",
+      "encourageCorrect": "That's it! Revenue minus COGS gives you the gross profit.",
+      "encourageIncorrect": "Gross profit = Revenue - Cost of Goods Sold. It measures profitability before selling, general, and administrative expenses."
+    },
+    {
+      "question": "What is the difference between a single-step and multi-step income statement?",
+      "options": [
+        "Single-step groups all revenues and all expenses; multi-step shows intermediate subtotals like gross profit",
+        "Single-step is for small companies; multi-step is for large ones",
+        "They report different net income figures"
+      ],
+      "correctIndex": 0,
+      "explanation": "A multi-step income statement provides useful subtotals (gross profit, operating income) while a single-step simply groups all revenues and expenses.",
+      "encourageCorrect": "Exactly! Multi-step gives you more detail with intermediate subtotals.",
+      "encourageIncorrect": "The multi-step format shows intermediate subtotals like gross profit and operating income. The single-step just groups revenues and expenses together."
+    }
   ]
 }

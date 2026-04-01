@@ -47,5 +47,31 @@
       "type": "connectPrompt",
       "prompt": "You now have four workflow patterns — research, writing, data, and debugging — all built on the four-phase framework. The checkpoint will test whether you can apply this framework to a real task from your own work."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What are the five steps of the universal debug loop?",
+      "options": [
+        "Find, Fix, Test, Deploy, Monitor",
+        "Reproduce, Locate, Understand, Fix, Verify",
+        "Read, Analyze, Change, Check, Done"
+      ],
+      "correctIndex": 1,
+      "explanation": "The debug loop: Reproduce (confirm the problem), Locate (find where it lives), Understand (why it's broken), Fix (minimum change), Verify (confirm it works).",
+      "encourageCorrect": "That's the complete loop! Each step prevents a different kind of mistake.",
+      "encourageIncorrect": "The five steps: Reproduce, Locate, Understand, Fix, Verify. Most people skip straight to Fix — which is why fixes often don't stick."
+    },
+    {
+      "question": "What is the most common debugging mistake?",
+      "options": [
+        "Spending too long on reproduce",
+        "Skipping straight to Fix without understanding the root cause",
+        "Using too many tool calls"
+      ],
+      "correctIndex": 1,
+      "explanation": "The most common mistake is jumping straight to Fix. Without understanding the root cause, you fix symptoms that keep coming back.",
+      "encourageCorrect": "Right! Fix the root cause, not just the symptom.",
+      "encourageIncorrect": "The most common mistake is skipping straight to Fix — without Locate and Understand, you end up fixing symptoms rather than root causes."
+    }
   ]
 }

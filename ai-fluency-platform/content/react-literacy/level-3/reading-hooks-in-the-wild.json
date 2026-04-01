@@ -1,0 +1,109 @@
+{
+  "meta": {
+    "title": "3.5 Reading Hooks in the Wild",
+    "description": "Real components combine multiple hooks. Practice reading them together.",
+    "level": "level-3",
+    "slug": "reading-hooks-in-the-wild",
+    "order": 5,
+    "isCheckpoint": false,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "predictPrompt",
+      "prompt": "You open a React file and see five lines starting with `const [...] = useState(...)` and two `useEffect(...)` blocks. Does that feel overwhelming? Before reading on, what strategy would you use to make sense of it? Would you read top to bottom, or would you focus on certain parts first?"
+    },
+    {
+      "type": "markdown",
+      "content": "## Real components are not textbook examples\n\nIn the previous modules, you saw useState, useEffect, and useContext one at a time with clean, minimal examples. Real components are messier. A typical component in a production codebase might have three useState calls, two useEffect calls, a useContext, and some event handlers -- all before you reach the JSX.\n\nThis module teaches you a strategy for reading these components without getting lost.\n\n## A realistic component\n\nHere is a search component that you might find in a real codebase:\n\n```jsx\nfunction ProductSearch() {\n  const { user } = useContext(AuthContext);\n  const [query, setQuery] = useState('');\n  const [results, setResults] = useState([]);\n  const [isLoading, setIsLoading] = useState(false);\n  const [error, setError] = useState(null);\n\n  useEffect(() => {\n    if (!query) {\n      setResults([]);\n      return;\n    }\n\n    setIsLoading(true);\n    setError(null);\n\n    fetch(`/api/products?q=${query}&userId=${user?.id}`)\n      .then(res => res.json())\n      .then(data => {\n        setResults(data);\n        setIsLoading(false);\n      })\n      .catch(err => {\n        setError(err.message);\n        setIsLoading(false);\n      });\n  }, [query, user?.id]);\n\n  useEffect(() => {\n    document.title = query\n      ? `Search: ${query}`\n      : 'Product Search';\n  }, [query]);\n\n  return (\n    <div>\n      <input\n        value={query}\n        onChange={e => setQuery(e.target.value)}\n        placeholder=\"Search products...\"\n      />\n      {isLoading && <Spinner />}\n      {error && <ErrorBanner message={error} />}\n      {results.map(product => (\n        <ProductCard key={product.id} product={product} />\n      ))}\n    </div>\n  );\n}\n```\n\nThat is 40+ lines of code. Let us apply a reading strategy.\n\n## The reading strategy: State, Effects, JSX\n\n### Step 1: Read the state variables\n\nScan the top of the component for all the `useState` and `useContext` calls. These tell you the component's \"shape\" -- everything it remembers and everything it reads from context.\n\n```jsx\nconst { user } = useContext(AuthContext);  // Reads logged-in user\nconst [query, setQuery] = useState('');     // Search text, starts empty\nconst [results, setResults] = useState([]); // Search results, starts empty\nconst [isLoading, setIsLoading] = useState(false); // Loading flag\nconst [error, setError] = useState(null);   // Error message, if any\n```\n\nNow you know: this component tracks a search query, a list of results, a loading state, and an error state. It also reads the current user from context.\n\n### Step 2: Read the effects\n\nFor each useEffect, check the dependency array first (when does it run?) and then skim the body (what does it do?).\n\n**Effect 1**: Dependencies `[query, user?.id]` -- runs when query or user changes.\n- If query is empty, clears results and stops.\n- Otherwise, fetches products from the API.\n- Manages loading and error states.\n\n**Effect 2**: Dependency `[query]` -- runs when query changes.\n- Updates the browser tab title.\n\n### Step 3: Read the JSX\n\nNow look at the return statement to see what the user sees:\n- An input field bound to `query`\n- A spinner when loading\n- An error banner when there is an error\n- A list of ProductCard components for each result\n\n### The full picture\n\nIn plain language: \"This is a product search page. The user types in the input, which updates the query state. When the query changes, the component fetches matching products from the server and updates the page title. While loading, it shows a spinner. If something goes wrong, it shows an error. Otherwise, it shows the results.\"\n\nThat is it. Forty lines of code summarized in four sentences.\n\n## Custom hooks: reusable logic\n\nAs you read more React code, you will encounter functions that start with `use` but are not built-in hooks:\n\n```jsx\nfunction ProductSearch() {\n  const { user } = useContext(AuthContext);\n  const [query, setQuery] = useState('');\n  const { data, isLoading, error } = useFetch(`/api/products?q=${query}`);\n  useDocumentTitle(query ? `Search: ${query}` : 'Product Search');\n\n  return (\n    <div>\n      <input value={query} onChange={e => setQuery(e.target.value)} />\n      {isLoading && <Spinner />}\n      {error && <ErrorBanner message={error} />}\n      {data?.map(product => (\n        <ProductCard key={product.id} product={product} />\n      ))}\n    </div>\n  );\n}\n```\n\nThis component does the same thing as before, but it is much shorter. The fetching logic has been extracted into `useFetch`, and the title logic into `useDocumentTitle`.\n\n### What are custom hooks?\n\nA **custom hook** is a function whose name starts with `use` that contains other hooks inside it. It is a way to package reusable logic so that components do not have to repeat it.\n\n```jsx\n// This is a custom hook\nfunction useFetch(url) {\n  const [data, setData] = useState(null);\n  const [isLoading, setIsLoading] = useState(true);\n  const [error, setError] = useState(null);\n\n  useEffect(() => {\n    fetch(url)\n      .then(res => res.json())\n      .then(data => {\n        setData(data);\n        setIsLoading(false);\n      })\n      .catch(err => {\n        setError(err.message);\n        setIsLoading(false);\n      });\n  }, [url]);\n\n  return { data, isLoading, error };\n}\n```\n\nInside, it is just the same useState + useEffect pattern you already know. The custom hook packages it up with a clean interface: give it a URL, get back data, loading, and error.\n\n### How to read custom hooks\n\nYou do not need to read the inside of a custom hook to understand a component that uses it. Follow this approach:\n\n1. **Read the name** -- `useFetch`, `useLocalStorage`, `useWindowSize`, `useDebounce` -- the name tells you what it does.\n2. **Read the arguments** -- what you pass in (a URL, a key name, a delay).\n3. **Read the return value** -- what you get back (data, a boolean, a size object).\n\nThat is exactly how you read any function. The `use` prefix just tells you it contains hooks inside.\n\n### Common custom hooks you will encounter\n\n| Hook name | What it does | Typical return value |\n| :-- | :-- | :-- |\n| `useFetch(url)` | Fetches data from a URL | `{ data, loading, error }` |\n| `useLocalStorage(key, initial)` | Syncs state with localStorage | `[value, setValue]` |\n| `useWindowSize()` | Tracks browser window dimensions | `{ width, height }` |\n| `useDebounce(value, delay)` | Delays updating a value until typing stops | The debounced value |\n| `useMediaQuery(query)` | Checks if a CSS media query matches | `true` or `false` |\n| `useOnClickOutside(ref, handler)` | Detects clicks outside an element | Nothing (calls handler) |\n| `useAuth()` | Reads authentication state | `{ user, login, logout }` |\n| `useForm(initial)` | Manages form state and validation | `{ values, errors, handleChange }` |\n\nYou do not need to memorize these. The point is: when you see a `use` function, read its name and return value. That tells you everything you need to know about what the component is doing with it.\n\n## Multiple hooks working together\n\nHere is another realistic example -- a notification component:\n\n```jsx\nfunction NotificationCenter() {\n  const { user } = useContext(AuthContext);\n  const [notifications, setNotifications] = useState([]);\n  const [filter, setFilter] = useState('all');\n  const unreadCount = notifications.filter(n => !n.read).length;\n\n  useEffect(() => {\n    if (!user) return;\n\n    fetch(`/api/notifications?userId=${user.id}`)\n      .then(res => res.json())\n      .then(data => setNotifications(data));\n  }, [user]);\n\n  useEffect(() => {\n    document.title = unreadCount > 0\n      ? `(${unreadCount}) Notifications`\n      : 'Notifications';\n  }, [unreadCount]);\n\n  const filtered = filter === 'all'\n    ? notifications\n    : notifications.filter(n => !n.read);\n\n  function handleMarkRead(id) {\n    setNotifications(prev =>\n      prev.map(n => n.id === id ? { ...n, read: true } : n)\n    );\n  }\n\n  return (\n    <div>\n      <h2>Notifications ({unreadCount} unread)</h2>\n      <select value={filter} onChange={e => setFilter(e.target.value)}>\n        <option value=\"all\">All</option>\n        <option value=\"unread\">Unread</option>\n      </select>\n      {filtered.map(n => (\n        <NotificationItem\n          key={n.id}\n          notification={n}\n          onMarkRead={() => handleMarkRead(n.id)}\n        />\n      ))}\n    </div>\n  );\n}\n```\n\nApplying our strategy:\n\n**State**: Reads `user` from context. Manages `notifications` (starts empty) and `filter` (starts as 'all'). Computes `unreadCount` from the notifications array.\n\n**Effects**: (1) When `user` changes, fetches notifications from the API. (2) When `unreadCount` changes, updates the page title to show the count.\n\n**Logic**: `filtered` computes which notifications to show based on the filter. `handleMarkRead` updates a specific notification to mark it as read, using the spread pattern to create a new object.\n\n**JSX**: Shows a heading with unread count, a filter dropdown, and a list of notification items.\n\nPlain language: \"This is a notification center. It loads the user's notifications when the component appears, lets them filter between all and unread, shows the unread count in the heading and browser tab, and lets them mark individual notifications as read.\"\n\n## The key insight\n\nYou do not need to understand every line of a React component to understand what it does. Read the state to know what it tracks, read the effects to know what it does beyond rendering, and read the JSX to know what the user sees. Everything in between is implementation detail."
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "You see a component that uses `const windowSize = useWindowSize()`. You have never seen this hook before. Do you need to find its source code to understand what the component does with it?",
+      "answer": "No. The name tells you it returns the window size. The variable name confirms it. You can see how `windowSize` is used in the rest of the component (probably something like `windowSize.width > 768 ? <DesktopLayout /> : <MobileLayout />`). The hook is a black box with a clear label -- you read the label, not the internals."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Reading Hooks in the Wild",
+      "problems": [
+        {
+          "id": "rl3-5-1",
+          "question": "Read this component and describe what it does in one sentence.\n\n```jsx\nfunction WeatherWidget({ city }) {\n  const [weather, setWeather] = useState(null);\n  const [loading, setLoading] = useState(true);\n\n  useEffect(() => {\n    setLoading(true);\n    fetch(`/api/weather?city=${city}`)\n      .then(res => res.json())\n      .then(data => {\n        setWeather(data);\n        setLoading(false);\n      });\n  }, [city]);\n\n  if (loading) return <p>Loading weather...</p>;\n  return (\n    <div>\n      <h3>{city}</h3>\n      <p>{weather.temp}\u00b0F - {weather.condition}</p>\n    </div>\n  );\n}\n```",
+          "options": [
+            "A) It fetches and displays the weather for a given city, showing a loading message while the data loads and re-fetching when the city changes.",
+            "B) It lets the user type in a city name and search for weather.",
+            "C) It shows a static weather display that never updates.",
+            "D) It fetches weather once on page load and never again."
+          ],
+          "correctAnswer": "A",
+          "explanation": "The component receives `city` as a prop. The useEffect has `[city]` as its dependency, so it fetches new weather data whenever the city changes. While loading, it shows \"Loading weather...\" and once data arrives, it shows the temperature and condition. This is a classic fetch-on-prop-change pattern.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "rl3-5-2",
+          "question": "What does the custom hook `useLocalStorage` do in this component, and what happens when the user changes the font size?\n\n```jsx\nfunction SettingsPage() {\n  const [fontSize, setFontSize] = useLocalStorage('fontSize', 16);\n  const [showTooltips, setShowTooltips] = useLocalStorage('tooltips', true);\n\n  return (\n    <div style={{ fontSize: `${fontSize}px` }}>\n      <label>\n        Font Size:\n        <input\n          type=\"range\"\n          min=\"12\"\n          max=\"24\"\n          value={fontSize}\n          onChange={e => setFontSize(Number(e.target.value))}\n        />\n      </label>\n      <label>\n        <input\n          type=\"checkbox\"\n          checked={showTooltips}\n          onChange={() => setShowTooltips(prev => !prev)}\n        />\n        Show Tooltips\n      </label>\n    </div>\n  );\n}\n```",
+          "options": [
+            "A) `useLocalStorage` works like useState but also saves the value to the browser's localStorage. When the user changes the font size, it updates both the state and localStorage, so the setting persists across page reloads.",
+            "B) `useLocalStorage` reads from localStorage once but never writes back to it.",
+            "C) `useLocalStorage` replaces useContext for sharing data between components.",
+            "D) The component will crash because useLocalStorage is not a real React hook."
+          ],
+          "correctAnswer": "A",
+          "explanation": "The name `useLocalStorage` and the arguments (a key string and default value) tell you this is a custom hook that works like useState but persists to localStorage. It returns `[value, setValue]` just like useState. When the user moves the font size slider, `setFontSize` updates both the component state and the `'fontSize'` key in localStorage, so the preference survives a page refresh.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "rl3-5-3",
+          "question": "You are reviewing this AI-generated dashboard component. The client says it works on first load but breaks when they switch between different project IDs. What is the most likely issue?\n\n```jsx\nfunction ProjectDashboard({ projectId }) {\n  const { user } = useContext(AuthContext);\n  const [project, setProject] = useState(null);\n  const [tasks, setTasks] = useState([]);\n  const [members, setMembers] = useState([]);\n  const [loading, setLoading] = useState(true);\n\n  useEffect(() => {\n    Promise.all([\n      fetch(`/api/projects/${projectId}`).then(r => r.json()),\n      fetch(`/api/projects/${projectId}/tasks`).then(r => r.json()),\n      fetch(`/api/projects/${projectId}/members`).then(r => r.json()),\n    ]).then(([projectData, tasksData, membersData]) => {\n      setProject(projectData);\n      setTasks(tasksData);\n      setMembers(membersData);\n      setLoading(false);\n    });\n  }, []);\n\n  if (loading) return <Spinner />;\n\n  return (\n    <div>\n      <h1>{project.name}</h1>\n      <p>Owner: {user?.name}</p>\n      <TaskList tasks={tasks} />\n      <MemberList members={members} />\n    </div>\n  );\n}\n```",
+          "options": [
+            "A) The useEffect dependency array is empty `[]`, so it only fetches data for the initial `projectId`. When `projectId` changes, the effect does not re-run and the component shows stale data from the first project.",
+            "B) Promise.all does not work with fetch.",
+            "C) The component needs separate useEffect calls for each fetch.",
+            "D) The AuthContext is causing the stale data."
+          ],
+          "correctAnswer": "A",
+          "explanation": "The dependency array is `[]` (empty), meaning the effect only runs once on mount. When `projectId` changes (the user switches projects), the effect does not fire again, so the component keeps showing data from the first project. The fix is to change the dependency array to `[projectId]` so the data re-fetches when the project changes. Also, `setLoading(true)` should be added at the start of the effect to show the spinner during re-fetches. You would tell the AI: \"Add projectId to the useEffect dependency array so data re-fetches when the project changes.\"",
+          "difficulty": "advanced"
+        }
+      ]
+    },
+    {
+      "type": "explainBack",
+      "prompt": "Describe the three-step reading strategy for a component with multiple hooks: state, effects, JSX. Then explain what a custom hook is and how you read one without looking at its source code."
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "Read stateful components in three passes: (1) State -- what does this component remember? (2) Effects -- what does it do beyond rendering? (3) JSX -- what does the user see? Custom hooks are just reusable bundles of hooks. Read their name and return value, not their internals."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "You now have all the tools to read any component that uses hooks. The next module is the Level 3 checkpoint where you will put it all together. Before you move on, try opening a real React file -- from your team's codebase, a GitHub project, or AI-generated code -- and apply the State/Effects/JSX reading strategy."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is the recommended three-step strategy for reading a component with multiple hooks?",
+      "options": ["Import, Export, Render", "State, Effects, JSX", "Props, Context, Return"],
+      "correctIndex": 1,
+      "explanation": "Read in three passes: (1) State -- what does the component remember? (2) Effects -- what does it do beyond rendering? (3) JSX -- what does the user see?",
+      "encourageCorrect": "You've internalized the reading strategy! State, Effects, JSX will serve you well in any React codebase.",
+      "encourageIncorrect": "The three-step strategy is State, Effects, JSX. First see what data the component tracks, then what side effects it runs, then what the user actually sees."
+    },
+    {
+      "question": "What is a custom hook in React?",
+      "options": ["A special HTML element that starts with 'use'", "A function starting with 'use' that bundles reusable hook logic", "A CSS class that hooks into a component's style"],
+      "correctIndex": 1,
+      "explanation": "A custom hook is a regular function whose name starts with 'use' that contains other hooks inside it. It packages reusable logic so multiple components can share it.",
+      "encourageCorrect": "That's it! Custom hooks are just reusable bundles of hook logic with a descriptive name.",
+      "encourageIncorrect": "A custom hook is a function starting with 'use' (like useFetch or useLocalStorage) that wraps up reusable hook logic. Inside, it's just useState and useEffect patterns you already know."
+    },
+    {
+      "question": "If you see 'const { data, isLoading, error } = useFetch(url)' in a component, do you need to read the useFetch source code to understand the component?",
+      "options": ["Yes, you always need to read the hook's source code", "No, the name and return value tell you what it does", "Only if the component has more than 50 lines"],
+      "correctIndex": 1,
+      "explanation": "The name 'useFetch' tells you it fetches data, and the return value { data, isLoading, error } tells you what you get back. You can read it like a black box with a clear label.",
+      "encourageCorrect": "Exactly! Read the name and the return value -- that's all you need. Custom hooks are meant to be understood from the outside.",
+      "encourageIncorrect": "You don't need to dig into the source. The hook name (useFetch) tells you what it does, and the return value ({ data, isLoading, error }) tells you what it provides. That's enough to understand the component."
+    }
+  ]
+}

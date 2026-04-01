@@ -43,5 +43,31 @@
       "type": "connectPrompt",
       "prompt": "You now have the full fleet toolkit: parallel worktrees, agent teams, batch operations, automated scripts, CI pipelines, the SDK, and remote access. The checkpoint will test your ability to set up an automated workflow — the culmination of this level's parallel power."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What does the 'teleport' feature do?",
+      "options": [
+        "Moves files between computers",
+        "Transfers a session between CLI and web interfaces",
+        "Speeds up Claude's response time"
+      ],
+      "correctIndex": 1,
+      "explanation": "Teleport lets you move a session between CLI and web view seamlessly — same conversation, different window.",
+      "encourageCorrect": "That's it! Teleport makes sessions truly portable across interfaces.",
+      "encourageIncorrect": "Teleport transfers a session between CLI and web — you can start in the terminal and continue in a browser, or share via a web link."
+    },
+    {
+      "question": "What is mobile access best suited for?",
+      "options": [
+        "Writing long prompts",
+        "Monitoring tasks and lightweight input like approvals",
+        "Full development work"
+      ],
+      "correctIndex": 1,
+      "explanation": "Mobile access is for monitoring progress, approving permission requests, and sending quick follow-up instructions — not primary work.",
+      "encourageCorrect": "Right! Mobile is for monitoring and quick interventions.",
+      "encourageIncorrect": "Mobile access is best for monitoring long tasks and lightweight input — like checking progress or approving a permission request."
+    }
   ]
 }

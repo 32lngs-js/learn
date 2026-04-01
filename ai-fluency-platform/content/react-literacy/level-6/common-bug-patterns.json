@@ -1,0 +1,105 @@
+{
+  "meta": {
+    "title": "6.3 Common Bug Patterns",
+    "description": "The same bugs come up over and over. Learn to recognize them on sight.",
+    "level": "level-6",
+    "slug": "common-bug-patterns",
+    "order": 3,
+    "isCheckpoint": false,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "predictPrompt",
+      "prompt": "You have seen how React manages state with useState and side effects with useEffect. What kinds of mistakes do you think developers make most often with these tools? Where would things go wrong?"
+    },
+    {
+      "type": "markdown",
+      "content": "## Common Bug Patterns\n\nReact developers make the same mistakes over and over. Not because they are bad developers, but because React has specific rules about how state, effects, and rendering work -- and those rules have non-obvious edge cases.\n\nThe good news for you: since the same bugs keep appearing, you can learn to recognize them on sight. This module covers the ten most common React bug patterns, each with a \"before\" (broken) and \"after\" (fixed) example.\n\n### Bug 1: Stale Closure\n\n**Symptom:** A function uses an old value instead of the current one.\n\n**Before (broken):**\n```typescript\nfunction Counter() {\n  const [count, setCount] = useState(0);\n\n  function handleClick() {\n    setTimeout(() => {\n      // BUG: This always alerts the value of count at the time\n      // setTimeout was called, not the current value\n      alert(`Count is: ${count}`);\n    }, 3000);\n  }\n\n  return (\n    <div>\n      <p>Count: {count}</p>\n      <button onClick={() => setCount(count + 1)}>Increment</button>\n      <button onClick={handleClick}>Alert count in 3s</button>\n    </div>\n  );\n}\n```\n\nIf you click \"Increment\" three times, then click \"Alert count in 3s\", the alert says \"Count is: 3\". But if you click \"Alert count in 3s\" first, then increment three times during the 3-second wait, the alert says \"Count is: 0\" -- the old value.\n\n**After (fixed):**\n```typescript\nfunction handleClick() {\n  setTimeout(() => {\n    // Use a ref to always get the current value\n    alert(`Count is: ${countRef.current}`);\n  }, 3000);\n}\n```\n\n**How to spot it:** Any time a function captures a state value and runs later (in a timeout, interval, or event listener), watch for stale values.\n\n### Bug 2: Missing Dependency Array\n\n**Symptom:** useEffect runs on every render, causing infinite loops or excessive API calls.\n\n**Before (broken):**\n```typescript\nfunction UserProfile({ userId }: { userId: string }) {\n  const [user, setUser] = useState<User | null>(null);\n\n  useEffect(() => {\n    fetch(`/api/users/${userId}`)\n      .then((res) => res.json())\n      .then((data) => setUser(data));\n  }); // BUG: No dependency array! This runs on EVERY render.\n\n  return <div>{user?.name}</div>;\n}\n```\n\nWithout a dependency array, `useEffect` runs after every render. The fetch sets state, which triggers a re-render, which runs the effect again, which fetches again, forever.\n\n**After (fixed):**\n```typescript\nuseEffect(() => {\n  fetch(`/api/users/${userId}`)\n    .then((res) => res.json())\n    .then((data) => setUser(data));\n}, [userId]); // Only re-run when userId changes\n```\n\n**How to spot it:** Look for `useEffect` without a second argument, or with an empty array when it should depend on something.\n\n### Bug 3: Derived State Anti-Pattern\n\n**Symptom:** State that gets out of sync with the data it depends on.\n\n**Before (broken):**\n```typescript\nfunction ProductList({ products }: { products: Product[] }) {\n  const [filteredProducts, setFilteredProducts] = useState(products);\n  const [search, setSearch] = useState('');\n\n  // BUG: This useEffect tries to sync filteredProducts with products,\n  // but it creates a lag and can get out of sync\n  useEffect(() => {\n    setFilteredProducts(\n      products.filter((p) => p.name.toLowerCase().includes(search.toLowerCase()))\n    );\n  }, [products, search]);\n\n  return (\n    <div>\n      <input value={search} onChange={(e) => setSearch(e.target.value)} />\n      {filteredProducts.map((p) => <ProductCard key={p.id} product={p} />)}\n    </div>\n  );\n}\n```\n\nThe problem: `filteredProducts` can be calculated directly from `products` and `search`. There is no reason to store it in state.\n\n**After (fixed):**\n```typescript\nfunction ProductList({ products }: { products: Product[] }) {\n  const [search, setSearch] = useState('');\n\n  // Computed directly -- always in sync, no extra state needed\n  const filteredProducts = products.filter((p) =>\n    p.name.toLowerCase().includes(search.toLowerCase())\n  );\n\n  return (\n    <div>\n      <input value={search} onChange={(e) => setSearch(e.target.value)} />\n      {filteredProducts.map((p) => <ProductCard key={p.id} product={p} />)}\n    </div>\n  );\n}\n```\n\n**How to spot it:** If you see `useState` + `useEffect` where the effect just computes a value from other state or props, it should probably be a simple variable or `useMemo`.\n\n### Bug 4: Direct State Mutation\n\n**Symptom:** You update state but the screen does not change.\n\n**Before (broken):**\n```typescript\nfunction TodoList() {\n  const [todos, setTodos] = useState<string[]>(['Buy groceries', 'Walk dog']);\n\n  function addTodo(text: string) {\n    // BUG: Mutating the existing array -- React does not detect the change\n    todos.push(text);\n    setTodos(todos);\n  }\n\n  return (\n    <div>\n      {todos.map((todo, i) => <p key={i}>{todo}</p>)}\n      <button onClick={() => addTodo('New task')}>Add</button>\n    </div>\n  );\n}\n```\n\n`todos.push(text)` modifies the existing array. `setTodos(todos)` passes the same array reference. React compares the old and new values, sees the same reference, and skips re-rendering.\n\n**After (fixed):**\n```typescript\nfunction addTodo(text: string) {\n  // Create a NEW array with the spread operator\n  setTodos([...todos, text]);\n}\n```\n\n**How to spot it:** Look for `.push()`, `.splice()`, `.sort()` on state arrays, or direct property assignment on state objects like `state.name = \"new name\"`. These are mutations.\n\n### Bug 5: Index as Key\n\n**Symptom:** List items behave strangely when reordered, filtered, or deleted.\n\n**Before (broken):**\n```typescript\n{items.map((item, index) => (\n  <EditableItem key={index} item={item} />\n))}\n```\n\nIf you delete the first item, React thinks the element at index 0 is still the same component. It keeps the old component's state and just updates the props. This means form inputs, animations, and local state get mixed up between items.\n\n**After (fixed):**\n```typescript\n{items.map((item) => (\n  <EditableItem key={item.id} item={item} />\n))}\n```\n\n**How to spot it:** `key={index}` in any list that can be reordered, filtered, or have items added/removed.\n\n### Bug 6: Conditional Hook\n\n**Symptom:** \"Invalid hook call\" error.\n\n**Before (broken):**\n```typescript\nfunction Profile({ userId }: { userId: string | null }) {\n  if (!userId) {\n    return <p>Please log in</p>;\n  }\n\n  // BUG: Hook after conditional return\n  const [user, setUser] = useState<User | null>(null);\n  // ...\n}\n```\n\n**After (fixed):**\n```typescript\nfunction Profile({ userId }: { userId: string | null }) {\n  const [user, setUser] = useState<User | null>(null);\n\n  // Hooks are always called. Conditional return comes after.\n  if (!userId) {\n    return <p>Please log in</p>;\n  }\n  // ...\n}\n```\n\n**How to spot it:** Any `return` statement before a hook call, or any hook inside an `if` block.\n\n### Bug 7: Missing Error Handling\n\n**Symptom:** The app crashes or shows a blank screen when an API call fails.\n\n**Before (broken):**\n```typescript\nuseEffect(() => {\n  fetch('/api/data')\n    .then((res) => res.json())\n    .then((data) => setData(data));\n  // BUG: No .catch() -- if the fetch fails, nothing happens\n  // (or worse, the app crashes)\n}, []);\n```\n\n**After (fixed):**\n```typescript\nuseEffect(() => {\n  fetch('/api/data')\n    .then((res) => {\n      if (!res.ok) throw new Error(`HTTP ${res.status}`);\n      return res.json();\n    })\n    .then((data) => setData(data))\n    .catch((err) => setError(err.message))\n    .finally(() => setLoading(false));\n}, []);\n```\n\n**How to spot it:** `fetch()` calls without `.catch()` or try/catch blocks.\n\n### Bug 8: Prop Type Mismatch\n\n**Symptom:** Component receives data in the wrong format.\n\n**Before (broken):**\n```typescript\n// API returns: { created_at: \"2024-01-15T10:30:00Z\" }\n// Component expects:\ninterface EventProps {\n  date: Date;  // A Date object, not a string!\n}\n\n// Usage:\n<Event date={apiData.created_at} />  // Passing a string, not a Date\n```\n\n**After (fixed):**\n```typescript\n<Event date={new Date(apiData.created_at)} />\n```\n\n**How to spot it:** Check the interface types against what is actually being passed. API data is often strings where the component expects objects, or objects where it expects specific properties.\n\n### Bug 9: Missing Cleanup\n\n**Symptom:** Memory leaks, event listeners firing on unmounted components, stale subscriptions.\n\n**Before (broken):**\n```typescript\nuseEffect(() => {\n  const interval = setInterval(() => {\n    setCount((c) => c + 1);\n  }, 1000);\n  // BUG: No cleanup! The interval keeps running after the component unmounts.\n}, []);\n```\n\n**After (fixed):**\n```typescript\nuseEffect(() => {\n  const interval = setInterval(() => {\n    setCount((c) => c + 1);\n  }, 1000);\n\n  return () => clearInterval(interval); // Cleanup on unmount\n}, []);\n```\n\n**How to spot it:** `useEffect` with `setInterval`, `setTimeout`, `addEventListener`, or WebSocket subscriptions that do not have a return function for cleanup.\n\n### Bug 10: Unnecessary Re-Renders\n\n**Symptom:** The app is slow, especially with large lists or complex UIs.\n\n**Before (slow):**\n```typescript\nfunction App() {\n  const [count, setCount] = useState(0);\n\n  return (\n    <div>\n      <button onClick={() => setCount(count + 1)}>Click: {count}</button>\n      {/* This re-renders on every click even though it does not use count */}\n      <ExpensiveList items={data} />\n    </div>\n  );\n}\n```\n\n**After (optimized):**\n```typescript\nconst MemoizedList = React.memo(ExpensiveList);\n\nfunction App() {\n  const [count, setCount] = useState(0);\n\n  return (\n    <div>\n      <button onClick={() => setCount(count + 1)}>Click: {count}</button>\n      <MemoizedList items={data} />\n    </div>\n  );\n}\n```\n\n**How to spot it:** Use React DevTools Profiler to see what re-renders. If a component re-renders but its props have not changed, it might benefit from `React.memo`.\n\n### The Pattern Recognition Skill\n\nYou do not need to memorize every fix. What matters is being able to look at code and say:\n\n- \"This has a mutation bug -- they are pushing to the state array directly.\"\n- \"This useEffect has no dependency array -- it is probably running too often.\"\n- \"This hook is after a conditional return -- that will crash.\"\n\nThat kind of pattern recognition is what turns you from someone who stares at code helplessly into someone who can pinpoint the problem in minutes."
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "You see `todos.push(newTodo); setTodos(todos);` in a React component. Why does the screen not update even though setTodos is called?",
+      "answer": "`.push()` mutates the existing array. When you pass the same array reference to `setTodos`, React compares old and new and sees they are the same reference, so it skips re-rendering. You need to create a new array: `setTodos([...todos, newTodo])`."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Spotting Bug Patterns",
+      "problems": [
+        {
+          "id": "rl6-3-1",
+          "question": "What bug pattern does this code have?\n\n```typescript\nfunction SearchResults({ query }: { query: string }) {\n  const [results, setResults] = useState<Result[]>([]);\n\n  useEffect(() => {\n    fetch(`/api/search?q=${query}`)\n      .then((res) => res.json())\n      .then((data) => setResults(data));\n  });\n\n  return (\n    <ul>\n      {results.map((r) => <li key={r.id}>{r.title}</li>)}\n    </ul>\n  );\n}\n```",
+          "options": [
+            "A) Missing key props on list items",
+            "B) Missing dependency array on useEffect -- it runs on every render, causing an infinite loop of fetching, setting state, re-rendering, and fetching again",
+            "C) The fetch URL is malformed"
+          ],
+          "correctAnswer": "B",
+          "explanation": "The `useEffect` has no second argument (dependency array). It runs after every render. Each fetch call sets state, which triggers a re-render, which runs the effect again. Add `[query]` as the dependency array so it only fetches when `query` changes.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "rl6-3-2",
+          "question": "A developer says \"I click the delete button on a todo but the wrong item gets removed.\" Look at the code:\n\n```typescript\nfunction TodoList() {\n  const [todos, setTodos] = useState([\n    { id: 1, text: 'Buy milk' },\n    { id: 2, text: 'Walk dog' },\n    { id: 3, text: 'Call dentist' },\n  ]);\n\n  function deleteTodo(id: number) {\n    setTodos(todos.filter((t) => t.id !== id));\n  }\n\n  return (\n    <ul>\n      {todos.map((todo, index) => (\n        <li key={index}>\n          <input type=\"text\" defaultValue={todo.text} />\n          <button onClick={() => deleteTodo(todo.id)}>Delete</button>\n        </li>\n      ))}\n    </ul>\n  );\n}\n```\n\nWhat is the bug?",
+          "options": [
+            "A) The `deleteTodo` function logic is wrong",
+            "B) `key={index}` causes React to mismatch items when one is deleted. After deleting item at index 0, the old index-1 component keeps its state but gets index-0's data.",
+            "C) `defaultValue` should be `value`"
+          ],
+          "correctAnswer": "B",
+          "explanation": "Using `key={index}` means React tracks elements by position, not identity. When the first item is deleted, React thinks the component at index 0 (with its input state) is still the same -- but it now receives the second todo's data. The input keeps the old text because `defaultValue` only sets the initial value. Fix: use `key={todo.id}` so React correctly tracks which component belongs to which todo.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "rl6-3-3",
+          "question": "This component has two bugs. Identify them both.\n\n```typescript\nfunction NotificationBanner({ userId }: { userId: string }) {\n  if (!userId) {\n    return null;\n  }\n\n  const [notifications, setNotifications] = useState<Notification[]>([]);\n\n  useEffect(() => {\n    const ws = new WebSocket(`wss://api.example.com/notifications/${userId}`);\n\n    ws.onmessage = (event) => {\n      const notification = JSON.parse(event.data);\n      notifications.push(notification);\n      setNotifications(notifications);\n    };\n  }, [userId]);\n\n  return (\n    <div>\n      {notifications.map((n, i) => (\n        <div key={i} className=\"notification\">{n.message}</div>\n      ))}\n    </div>\n  );\n}\n```",
+          "options": [
+            "A) The WebSocket URL is wrong, and the component needs more CSS",
+            "B) (1) The hook is after a conditional return (invalid hook call), and (2) `notifications.push()` mutates state directly instead of creating a new array",
+            "C) (1) The useEffect dependency array should be empty, and (2) the key props are fine"
+          ],
+          "correctAnswer": "B",
+          "explanation": "Bug 1: The `if (!userId) return null` is before `useState` and `useEffect`. Hooks must be called before any conditional returns. Bug 2: `notifications.push(notification)` mutates the existing array, then `setNotifications(notifications)` passes the same reference -- React will not re-render. Additionally, the WebSocket has no cleanup function (a third issue). The fix: move hooks above the conditional return, use `setNotifications(prev => [...prev, notification])`, and add `return () => ws.close()` in the effect."
+        }
+      ]
+    },
+    {
+      "type": "explainBack",
+      "prompt": "Pick three of the ten bug patterns from this module and explain them in your own words. For each one, describe the symptom (what the user sees) and the cause (what is wrong in the code)."
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "React bugs follow predictable patterns: stale closures, missing dependency arrays, state mutation, index keys, conditional hooks, missing error handling, and missing cleanup. You do not need to know how to fix them all -- but recognizing the pattern by sight lets you describe the problem precisely enough for a developer or AI to fix it quickly."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "Think of these bug patterns like common typos in writing. A missing period, a doubled word, a misplaced comma -- you learn to spot them automatically with practice. The more React code you read, the faster you will recognize these patterns. Start a mental checklist: mutation? missing deps? conditional hooks?"
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Why does 'todos.push(newTodo); setTodos(todos);' fail to update the screen?",
+      "options": ["push() does not work on arrays in React", "push() mutates the existing array, and React sees the same reference so it skips re-rendering", "setTodos only works with strings"],
+      "correctIndex": 1,
+      "explanation": "push() modifies the existing array in place. When you pass the same array reference to setTodos, React compares old and new, sees they are the same object, and does not re-render. Use setTodos([...todos, newTodo]) to create a new array.",
+      "encourageCorrect": "Nailed it! Mutation is invisible to React -- always create a new array or object.",
+      "encourageIncorrect": "The issue is that push() mutates the existing array. React compares references, sees the same array, and skips the re-render. The fix: create a new array with the spread operator."
+    },
+    {
+      "question": "What happens if you place a useState hook after a conditional return statement?",
+      "options": ["It works fine", "React throws an 'Invalid hook call' error because hooks must be called in the same order every render", "The state resets on every render"],
+      "correctIndex": 1,
+      "explanation": "Hooks must always be called at the top level of the component, before any conditional returns. If a hook is after a conditional return, it may not be called on every render, breaking React's rules.",
+      "encourageCorrect": "Exactly right! Hooks before returns, always. This rule is non-negotiable in React.",
+      "encourageIncorrect": "Hooks must always be called in the same order on every render. A conditional return before a hook means the hook might be skipped, causing an 'Invalid hook call' error."
+    },
+    {
+      "question": "What is the 'derived state anti-pattern'?",
+      "options": ["Using too many useState hooks in one component", "Storing computed values in state with useEffect instead of calculating them directly from existing state or props", "Passing state as props to child components"],
+      "correctIndex": 1,
+      "explanation": "If a value can be computed from existing state or props, calculate it directly as a variable -- do not store it in a separate useState synced by useEffect. That creates unnecessary complexity and sync bugs.",
+      "encourageCorrect": "Well spotted! If you can compute it, do not store it. Keep your state minimal.",
+      "encourageIncorrect": "The derived state anti-pattern is using useState + useEffect to sync a value that could simply be computed from existing state or props. Just calculate it directly instead."
+    }
+  ]
+}

@@ -106,5 +106,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Residual Income Valuation**, which bridges the gap between absolute and relative valuation. The justified P/B ratio you just learned has a direct connection to the residual income model \u2014 both depend on whether a firm earns above or below its cost of equity."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "The price-to-earnings (P/E) ratio can be justified by the Gordon Growth Model as:",
+      "options": [
+        "P/E = Earnings / Price",
+        "P/E = Payout ratio / (r - g)",
+        "P/E = Revenue / Shares outstanding"
+      ],
+      "correctIndex": 1,
+      "explanation": "The justified P/E equals the payout ratio divided by (r - g). Higher growth or lower required returns justify a higher P/E.",
+      "encourageCorrect": "Well done! The justified P/E links fundamentals to the market multiple.",
+      "encourageIncorrect": "The justified P/E = payout ratio / (r - g). It shows that higher growth (g) or lower required return (r) justifies a higher P/E ratio."
+    },
+    {
+      "question": "Enterprise value to EBITDA (EV/EBITDA) is preferred over P/E because:",
+      "options": [
+        "It's always more accurate",
+        "It is capital-structure neutral and less affected by accounting differences",
+        "It is simpler to calculate"
+      ],
+      "correctIndex": 1,
+      "explanation": "EV/EBITDA compares total firm value to pre-interest, pre-tax, pre-depreciation earnings, making it useful for comparing firms with different leverage and depreciation policies.",
+      "encourageCorrect": "Right! EV/EBITDA strips out capital structure and depreciation differences.",
+      "encourageIncorrect": "EV/EBITDA is capital-structure neutral and not distorted by depreciation methods, making it better for comparing firms with different leverage levels."
+    }
   ]
 }

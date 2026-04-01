@@ -100,5 +100,31 @@
       "type": "connectPrompt",
       "prompt": "Next, we explore **Yield Curve Strategies** -- how to profit from expected changes in the shape and level of the yield curve. The duration concepts from immunization become tools for positioning: bullet, barbell, and ladder strategies each express different views on how the curve will evolve."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "The goal of duration matching in liability-driven investing is to:",
+      "options": [
+        "Maximize portfolio returns",
+        "Ensure that changes in interest rates affect assets and liabilities equally",
+        "Eliminate all investment risk"
+      ],
+      "correctIndex": 1,
+      "explanation": "Duration matching means the portfolio duration equals the liability duration, so rate changes affect both sides equally, preserving the funded status.",
+      "encourageCorrect": "Exactly! Matching duration keeps assets and liabilities moving in sync.",
+      "encourageIncorrect": "Duration matching ensures that when rates change, the asset value and liability value move by similar amounts, protecting the funded status."
+    },
+    {
+      "question": "Cash flow matching is more conservative than duration matching because it:",
+      "options": [
+        "Uses only equities",
+        "Matches the exact timing and amount of each liability with dedicated cash flows",
+        "Takes on more interest rate risk"
+      ],
+      "correctIndex": 1,
+      "explanation": "Cash flow matching dedicates specific assets to each liability payment date, essentially locking in the ability to pay each obligation as it comes due.",
+      "encourageCorrect": "Right! Cash flow matching is the most conservative approach \u2014 each payment is pre-funded.",
+      "encourageIncorrect": "Cash flow matching dedicates specific assets to meet each future liability payment exactly when it's due. It's more conservative (and more restrictive) than duration matching."
+    }
   ]
 }

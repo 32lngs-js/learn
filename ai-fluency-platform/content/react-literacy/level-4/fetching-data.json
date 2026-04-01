@@ -1,0 +1,109 @@
+{
+  "meta": {
+    "title": "4.1 Fetching Data",
+    "description": "The most common side effect: loading data from a server.",
+    "level": "level-4",
+    "slug": "fetching-data",
+    "order": 1,
+    "isCheckpoint": false,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "predictPrompt",
+      "prompt": "When you visit a social media profile, the page shows a spinner for a moment and then your posts appear. What do you think is happening during that spinner? The data is not baked into the HTML -- it comes from somewhere else. How do you think a React component asks a server for data and then displays it?"
+    },
+    {
+      "type": "markdown",
+      "content": "## The pattern behind every loading spinner\n\nAlmost every React application needs to load data from a server. User profiles, product listings, dashboard metrics, notification counts -- all of this data lives on a server and needs to be fetched when the component appears.\n\nYou already saw a preview of this in Module 3.3. Now we will break it down completely, because this is THE most common React data pattern. Once you can read it, you can read the majority of real React components.\n\n## The tri-state pattern\n\nEvery data-fetching component manages three states:\n\n1. **Loading** -- waiting for the server to respond\n2. **Error** -- the server responded with a problem\n3. **Success** -- the data arrived and is ready to display\n\nHere is the standard pattern:\n\n```jsx\nfunction UserProfile({ userId }) {\n  const [user, setUser] = useState(null);\n  const [loading, setLoading] = useState(true);\n  const [error, setError] = useState(null);\n\n  useEffect(() => {\n    setLoading(true);\n    setError(null);\n\n    fetch(`/api/users/${userId}`)\n      .then(res => {\n        if (!res.ok) throw new Error('Failed to fetch user');\n        return res.json();\n      })\n      .then(data => {\n        setUser(data);\n        setLoading(false);\n      })\n      .catch(err => {\n        setError(err.message);\n        setLoading(false);\n      });\n  }, [userId]);\n\n  if (loading) return <Spinner />;\n  if (error) return <ErrorMessage message={error} />;\n\n  return (\n    <div>\n      <h1>{user.name}</h1>\n      <p>{user.email}</p>\n      <img src={user.avatar} alt={user.name} />\n    </div>\n  );\n}\n```\n\nLet us trace the lifecycle:\n\n1. **First render**: `loading` is `true`, so the component shows `<Spinner />`.\n2. **After render**: The useEffect runs. It calls `fetch` to request data from the server.\n3. **Server responds successfully**: `setUser(data)` stores the data, `setLoading(false)` hides the spinner. The component re-renders and shows the user profile.\n4. **Server responds with an error**: `setError(err.message)` stores the error, `setLoading(false)` hides the spinner. The component re-renders and shows the error message.\n5. **userId changes**: The effect re-runs. Loading resets to `true`, error resets to `null`, and a new fetch starts.\n\nThis three-state flow -- loading, error, success -- is so universal that you should expect to see it in almost every component that fetches data.\n\n### The guard clauses\n\nNotice the rendering pattern at the bottom:\n\n```jsx\nif (loading) return <Spinner />;\nif (error) return <ErrorMessage message={error} />;\nreturn <div>...</div>; // Success case\n```\n\nThese are called **guard clauses** or **early returns**. They handle the loading and error states first, so the main return statement can safely assume the data exists. This is a very common pattern.\n\n## fetch and .then() chains\n\nThe `fetch` function is built into the browser. It makes an HTTP request and returns a **Promise** -- an object that represents a value that does not exist yet but will arrive later.\n\nThe `.then()` method says: \"When the promise resolves, do this next thing.\"\n\n```jsx\nfetch('/api/users/123')       // Start the request\n  .then(res => res.json())     // When response arrives, parse as JSON\n  .then(data => setUser(data)) // When JSON is parsed, store it\n  .catch(err => setError(err)) // If anything fails, store the error\n```\n\nYou can read `.then()` chains as a sequence of steps:\n- Step 1: Send request\n- Step 2: Parse the response\n- Step 3: Do something with the data\n- If any step fails: handle the error\n\n## async/await: the cleaner syntax\n\nModern JavaScript offers an alternative syntax that reads more like regular code:\n\n```jsx\nuseEffect(() => {\n  async function loadUser() {\n    try {\n      setLoading(true);\n      const res = await fetch(`/api/users/${userId}`);\n      if (!res.ok) throw new Error('Failed to fetch');\n      const data = await res.json();\n      setUser(data);\n    } catch (err) {\n      setError(err.message);\n    } finally {\n      setLoading(false);\n    }\n  }\n\n  loadUser();\n}, [userId]);\n```\n\n`async/await` does the exact same thing as `.then()` chains. The `await` keyword pauses execution until the promise resolves. It is purely a syntax preference -- both patterns are common.\n\nImportant detail: notice that the `async` function is **defined inside** the useEffect and then called. This is because useEffect's callback cannot itself be async -- a technical limitation you will see in every codebase.\n\n### Reading .then() vs async/await\n\n| `.then()` style | `async/await` style |\n| :-- | :-- |\n| `fetch(url).then(res => res.json()).then(data => ...)` | `const res = await fetch(url); const data = await res.json();` |\n| `.catch(err => ...)` | `try { ... } catch (err) { ... }` |\n| Chained, callback-style | Linear, reads top to bottom |\n\nBoth are correct. Recognize both when reading code.\n\n## Fetching when a prop or state changes\n\nThe dependency array controls when data is re-fetched:\n\n```jsx\n// Fetch once on mount\nuseEffect(() => { fetchData(); }, []);\n\n// Re-fetch when userId changes\nuseEffect(() => { fetchUser(userId); }, [userId]);\n\n// Re-fetch when search query or filters change\nuseEffect(() => { searchProducts(query, category); }, [query, category]);\n```\n\nThis connects directly to what you learned in Module 3.3. The dependency array is the key.\n\n## A more realistic example\n\nHere is a product listing page with search and pagination:\n\n```jsx\nfunction ProductListing() {\n  const [products, setProducts] = useState([]);\n  const [loading, setLoading] = useState(true);\n  const [error, setError] = useState(null);\n  const [page, setPage] = useState(1);\n  const [search, setSearch] = useState('');\n\n  useEffect(() => {\n    setLoading(true);\n    setError(null);\n\n    fetch(`/api/products?page=${page}&q=${search}`)\n      .then(res => res.json())\n      .then(data => {\n        setProducts(data.items);\n        setLoading(false);\n      })\n      .catch(err => {\n        setError(err.message);\n        setLoading(false);\n      });\n  }, [page, search]);\n\n  return (\n    <div>\n      <input\n        value={search}\n        onChange={e => {\n          setSearch(e.target.value);\n          setPage(1);\n        }}\n        placeholder=\"Search products...\"\n      />\n\n      {loading && <Spinner />}\n      {error && <ErrorBanner message={error} />}\n\n      {!loading && !error && (\n        <>\n          <ProductGrid products={products} />\n          <button onClick={() => setPage(prev => prev - 1)} disabled={page === 1}>\n            Previous\n          </button>\n          <span>Page {page}</span>\n          <button onClick={() => setPage(prev => prev + 1)}>\n            Next\n          </button>\n        </>\n      )}\n    </div>\n  );\n}\n```\n\nReading this:\n- **State**: products (the data), loading, error, page number, search query\n- **Effect**: Fetches products whenever `page` or `search` changes\n- **Behavior**: When the user types in the search box, search updates AND page resets to 1. When they click pagination, page changes. Both trigger a new fetch.\n- **Rendering**: Shows a spinner while loading, an error if something fails, or the product grid with pagination controls.\n\nThis component is about 40 lines but follows the exact same tri-state pattern as the simpler example. Once you know the pattern, the complexity is manageable.\n\n## Common mistakes to watch for\n\n| Mistake | What happens | How to spot it |\n| :-- | :-- | :-- |\n| Missing dependency array | Infinite fetch loop | useEffect with fetch but no `[]` or `[dep]` |\n| No error handling | Fetch fails silently | No `.catch()` or `try/catch` |\n| No loading state | Content flashes or layout jumps | No loading boolean, no spinner |\n| Not resetting loading on re-fetch | Stale data shown alongside new spinner | Missing `setLoading(true)` at start of effect |"
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "If a data-fetching component has `loading`, `error`, and `data` state but only checks `if (loading)` before rendering the data, what happens when the fetch fails?",
+      "answer": "The component will try to render the data even though it is null (since the fetch failed and data was never set). This typically causes a crash -- something like \"Cannot read property 'name' of null.\" The fix is to also check the error state before attempting to render the data. The guard clause pattern -- `if (loading) return spinner; if (error) return error message; return data;` -- prevents this."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Fetching Data",
+      "problems": [
+        {
+          "id": "rl4-1-1",
+          "question": "What does the user see in this component immediately after the page loads, and what do they see after the data arrives?\n\n```jsx\nfunction TeamList() {\n  const [teams, setTeams] = useState([]);\n  const [loading, setLoading] = useState(true);\n\n  useEffect(() => {\n    fetch('/api/teams')\n      .then(res => res.json())\n      .then(data => {\n        setTeams(data);\n        setLoading(false);\n      });\n  }, []);\n\n  if (loading) return <p>Loading teams...</p>;\n\n  return (\n    <ul>\n      {teams.map(team => (\n        <li key={team.id}>{team.name}</li>\n      ))}\n    </ul>\n  );\n}\n```",
+          "options": [
+            "A) First: \"Loading teams...\" text. After data arrives: a list of team names.",
+            "B) First: an empty list. After data arrives: team names appear.",
+            "C) First: the component crashes. After data: it works.",
+            "D) The component always shows \"Loading teams...\" because the effect never completes."
+          ],
+          "correctAnswer": "A",
+          "explanation": "On first render, `loading` is `true`, so the component returns the \"Loading teams...\" paragraph. The useEffect runs after render, fetches from `/api/teams`, and when data arrives, sets `teams` and `loading` to false. The component re-renders, now showing the list of team names. This is the standard tri-state pattern (though this example omits error handling).",
+          "difficulty": "basic"
+        },
+        {
+          "id": "rl4-1-2",
+          "question": "The client says: \"Every time I switch between departments, the old department's employees show for a split second before the new ones load.\" What is missing from this component?\n\n```jsx\nfunction EmployeeList({ departmentId }) {\n  const [employees, setEmployees] = useState([]);\n  const [loading, setLoading] = useState(true);\n\n  useEffect(() => {\n    fetch(`/api/departments/${departmentId}/employees`)\n      .then(res => res.json())\n      .then(data => {\n        setEmployees(data);\n        setLoading(false);\n      });\n  }, [departmentId]);\n\n  if (loading) return <Spinner />;\n\n  return (\n    <ul>\n      {employees.map(emp => (\n        <li key={emp.id}>{emp.name}</li>\n      ))}\n    </ul>\n  );\n}\n```",
+          "options": [
+            "A) The effect does not reset `loading` to `true` when departmentId changes. The old employees stay visible while the new fetch is in progress.",
+            "B) The dependency array should be empty.",
+            "C) The employees array should be initialized with null instead of an empty array.",
+            "D) The key prop should be the index instead of emp.id."
+          ],
+          "correctAnswer": "A",
+          "explanation": "When `departmentId` changes, the effect re-runs. But `loading` is only set to `true` on the very first render (the initial state). On subsequent department switches, `loading` is already `false`, so the component continues showing the old employee list until the new data arrives. The fix: add `setLoading(true)` at the start of the effect, before the fetch. This ensures the spinner shows during every re-fetch.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "rl4-1-3",
+          "question": "You are reviewing AI-generated code for a dashboard. The client says the page is blank -- no data, no spinner, no error message. What are the problems?\n\n```jsx\nfunction Dashboard() {\n  const [metrics, setMetrics] = useState(null);\n  const [loading, setLoading] = useState(false);\n\n  useEffect(() => {\n    async function load() {\n      const res = await fetch('/api/metrics');\n      const data = await res.json();\n      setMetrics(data);\n      setLoading(false);\n    }\n    load();\n  }, []);\n\n  if (loading) return <Spinner />;\n  if (!metrics) return null;\n\n  return (\n    <div>\n      <h1>Dashboard</h1>\n      <p>Revenue: ${metrics.revenue}</p>\n      <p>Users: {metrics.users}</p>\n    </div>\n  );\n}\n```",
+          "options": [
+            "A) `loading` starts as `false`, so the spinner never shows. And `!metrics` is `true` (since it starts as `null`), so the component returns `null` -- a blank screen. The fix: initialize `loading` to `true`, and add error handling.",
+            "B) The async function syntax is wrong.",
+            "C) useEffect's dependency array should include metrics.",
+            "D) setMetrics should be called before setLoading."
+          ],
+          "correctAnswer": "A",
+          "explanation": "Two problems: (1) `loading` starts as `false`. On the first render, the spinner guard clause is skipped. The `!metrics` check returns `null` (blank screen). The fetch is running in the background, but the user sees nothing. (2) There is no error handling -- if the fetch fails, the page stays blank forever. The fix: change `useState(false)` to `useState(true)` so the spinner shows immediately, and wrap the fetch in try/catch to handle errors. You would tell the AI: \"Initialize loading to true so the spinner shows on first render, and add try/catch error handling to the fetch.\"",
+          "difficulty": "advanced"
+        }
+      ]
+    },
+    {
+      "type": "explainBack",
+      "prompt": "Describe the tri-state pattern for data fetching in React: what three states does every data-fetching component manage? Walk through what happens from the moment the component appears on screen to when the data is displayed."
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "Data fetching in React follows a universal pattern: useState for data + loading + error, useEffect with fetch, and guard clauses for rendering. The tri-state flow (loading, error, success) appears in almost every component that talks to a server. When reviewing code, check that loading starts as true, errors are handled, and the dependency array is correct."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "Every loading spinner you see in a web app is backed by this pattern. Next time a page takes a moment to load, picture the three states flipping: loading true, then loading false + data set (success), or loading false + error set (failure). You now understand what is happening under the hood."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What are the three states every data-fetching component manages?",
+      "options": ["Loading, Error, Success", "Open, Closed, Pending", "Fetching, Parsing, Rendering"],
+      "correctIndex": 0,
+      "explanation": "Every data-fetching component manages three states: Loading (waiting for the server), Error (something went wrong), and Success (data is ready to display).",
+      "encourageCorrect": "Exactly right! This tri-state pattern is the foundation of data fetching in React.",
+      "encourageIncorrect": "Not quite -- the three states are Loading, Error, and Success. You will see this pattern in almost every component that talks to a server."
+    },
+    {
+      "question": "What do guard clauses like 'if (loading) return <Spinner />' do in a data-fetching component?",
+      "options": ["They prevent the component from rendering at all", "They handle loading and error states first so the main return can safely assume data exists", "They skip the useEffect call"],
+      "correctIndex": 1,
+      "explanation": "Guard clauses (early returns) handle the loading and error states first, so by the time the code reaches the main return statement, it is safe to assume the data is available.",
+      "encourageCorrect": "Well done! Guard clauses keep the main rendering logic clean and safe.",
+      "encourageIncorrect": "Close -- guard clauses handle loading and error states with early returns, so the final return statement can safely access the data without null checks."
+    },
+    {
+      "question": "What happens if a useEffect with a fetch call has no dependency array at all?",
+      "options": ["The fetch runs only once on mount", "The fetch runs after every render, potentially causing an infinite loop", "The fetch never runs"],
+      "correctIndex": 1,
+      "explanation": "Without a dependency array, useEffect runs after every render. Since the fetch sets state (triggering a re-render), this creates an infinite loop of fetching.",
+      "encourageCorrect": "Spot on! A missing dependency array is one of the most common data-fetching mistakes.",
+      "encourageIncorrect": "Actually, without a dependency array, useEffect runs on every render -- and since fetching sets state, that triggers another render, creating an infinite loop."
+    }
+  ]
+}

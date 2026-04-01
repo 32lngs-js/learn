@@ -55,5 +55,31 @@
       "type": "keyTakeaway",
       "content": "Context compression is a first-class engineering concern, not an afterthought. Token budget managers enforce limits proactively. Sliding windows are simple but lossy. Summarization pipelines preserve information at the cost of latency and an extra API call. Map-reduce handles documents larger than any context window. Use cheaper models for compression steps to minimize cost without sacrificing quality where it matters."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Why should you reserve 15-20% of your token budget for the model's output?",
+      "options": [
+        "Because output tokens are free up to that amount",
+        "Because an overfull context degrades quality and risks truncation errors",
+        "Because the model needs empty space to load"
+      ],
+      "correctIndex": 1,
+      "explanation": "Filling the context to capacity means less attention per token and risk of truncation from tokenization variations. Headroom prevents both issues.",
+      "encourageCorrect": "That's right! Leaving headroom protects both output quality and reliability.",
+      "encourageIncorrect": "An overfull context means less attention per token (degraded quality) and risk of truncation errors from tokenization variations. Always leave 15-20% headroom."
+    },
+    {
+      "question": "What is the map-reduce pattern for context compression?",
+      "options": [
+        "A way to compress images",
+        "Processing document sections independently, then combining the results to handle documents larger than any context window",
+        "A database query optimization"
+      ],
+      "correctIndex": 1,
+      "explanation": "Map-reduce processes each section of a large document separately (map), then combines the results (reduce) -- enabling work with documents larger than any single context window.",
+      "encourageCorrect": "Exactly! Map-reduce is how you handle documents that won't fit in any context window.",
+      "encourageIncorrect": "Map-reduce processes document sections independently (map step), then combines the results (reduce step) -- this lets you work with documents larger than any context window."
+    }
   ]
 }

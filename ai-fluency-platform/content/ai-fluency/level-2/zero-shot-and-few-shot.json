@@ -55,5 +55,31 @@
       "type": "connectPrompt",
       "prompt": "Few-shot prompting controls the model's output format. In Module 2.2, you will learn chain-of-thought prompting, which controls the model's reasoning process -- forcing it to show its work step by step."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is the difference between zero-shot and few-shot prompting?",
+      "options": [
+        "Zero-shot uses many examples; few-shot uses none",
+        "Zero-shot gives only instructions; few-shot includes examples of desired output",
+        "There is no difference"
+      ],
+      "correctIndex": 1,
+      "explanation": "Zero-shot prompts provide only instructions. Few-shot prompts include examples that demonstrate the desired pattern for the model to follow.",
+      "encourageCorrect": "That's right! Adding examples is what makes it 'few-shot' -- and it often dramatically improves results.",
+      "encourageIncorrect": "Zero-shot means instructions only, no examples. Few-shot means you include examples of the desired output pattern for the model to follow."
+    },
+    {
+      "question": "How many examples typically work best for few-shot prompting?",
+      "options": [
+        "Just 1 example is always enough",
+        "3-5 examples establish a robust pattern for most tasks",
+        "At least 50 examples are needed"
+      ],
+      "correctIndex": 1,
+      "explanation": "Research shows 3-5 diverse, representative examples typically establish a strong pattern, with diminishing returns beyond 10-15 examples.",
+      "encourageCorrect": "Nice! 3-5 well-chosen examples is the sweet spot for most tasks.",
+      "encourageIncorrect": "Research shows 3-5 examples usually work well. Quality and diversity of examples matter more than quantity, and beyond 10-15 you get diminishing returns."
+    }
   ]
 }

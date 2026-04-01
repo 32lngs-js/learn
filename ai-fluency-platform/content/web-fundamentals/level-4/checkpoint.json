@@ -1,0 +1,110 @@
+{
+  "meta": {
+    "title": "4.4 Checkpoint",
+    "description": "Find and diagnose bugs across HTML, CSS, and JavaScript in a realistic multi-layer codebase.",
+    "level": "level-4",
+    "slug": "checkpoint",
+    "order": 4,
+    "isCheckpoint": true,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "markdown",
+      "content": "## Level 4 Checkpoint\n\nBelow is the complete code for a simple task manager app. It has a heading, a list of tasks, a button to toggle tasks as \"done,\" and some styling. But there are **four intentional bugs** — one in HTML, one in CSS, and two in JavaScript.\n\nRead through all three files carefully. Then answer the questions to find each bug.\n\n```html\n<!-- index.html -->\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Task Manager</title>\n  <link rel=\"stylesheet\" href=\"styles.css\">\n</head>\n<body>\n  <div class=\"container\">\n    <h1>My Tasks</h1>\n    <ul id=\"task-list\">\n      <li class=\"task\" data-id=\"1\">\n        <span class=\"task-text\">Buy groceries</span>\n        <button class=\"done-btn\">Done</button>\n      </li>\n      <li class=\"task\" data-id=\"2\">\n        <span class=\"task-text\">Reply to emails</span>\n        <button class=\"done-btn\">Done</button>\n      </li>\n      <li class=\"task\" data-id=\"3\">\n        <span class=\"task-text\">Schedule team meeting<span>\n        <button class=\"done-btn\">Done</button>\n      </li>\n    </ul>\n    <p class=\"summary\">Click \"Done\" to mark tasks as completed.</p>\n  </div>\n  <script src=\"app.js\"></script>\n</body>\n</html>\n```\n\n```css\n/* styles.css */\n.container {\n  max-width: 500px;\n  margin: 40px auto;\n  font-family: Arial, sans-serif;\n}\n\n.task {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  padding: 12px;\n  border-bottom: 1px solid #ddd;\n}\n\n.task-text {\n  font-size: 16px;\n}\n\n.task.completed .task-text {\n  text-decoration: line-through;\n  color: #999;\n}\n\n.done-btn {\n  background: #4CAF50;\n  color: #fff;\n  border: none;\n  padding: 6px 14px;\n  border-radius: 4px;\n  cursor: pointer;\n}\n\n.done-btn:hover {\n  background: #45a049;\n}\n\n.summary {\n  color: #666;\n  margin-top: 20px;\n  font-size: 14x;\n}\n```\n\n```javascript\n// app.js\nconst buttons = document.querySelectorAll('.done-btn');\n\nbuttons.forEach(function(button) {\n  button.addEventListener('click', function() {\n    const task = button.closest('.task');\n    task.classList.toggle('complete');\n\n    if (task.classList.contains('complete')) {\n      button.textContent = 'Undo';\n    } else {\n      button.textContent = 'Done';\n    }\n  });\n});\n\nconst taskCount = document.getElementByld('task-list').children.length;\nconsole.log('Total tasks: ' + taskCount);\n```"
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "Before looking at the answers, how many of the four bugs do you think you spotted? Rate yourself: found 0, found 1, found 2, found 3, or found all 4.",
+      "answer": "If you found 3 or 4, you are reading code across all three layers with confidence. If you found 1 or 2, that is still solid — it means you are catching issues in at least one layer. The questions below will help you find the ones you missed."
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "Which of the four bugs do you think would be hardest to find without DevTools — and which panel would help you find it?",
+      "answer": "The CSS typo (14x instead of 14px) and the JS method name typo (getElementByld instead of getElementById) are easy to miss by just reading. The Console panel would immediately flag the JS error, and the Elements panel would show you that the font-size rule is invalid. DevTools turns invisible bugs into obvious ones."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Finding the Bugs",
+      "problems": [
+        {
+          "id": "wf4-4-1",
+          "question": "Look at the HTML for the third task (\"Schedule team meeting\"). What is wrong?",
+          "options": [
+            "A) The `<li>` tag is missing its closing `</li>` tag",
+            "B) The `<span>` closing tag is missing the forward slash — it says `<span>` instead of `</span>`",
+            "C) The `data-id` attribute has the wrong number"
+          ],
+          "correctAnswer": "B",
+          "explanation": "The third task has `<span class=\"task-text\">Schedule team meeting<span>` — the closing tag is `<span>` instead of `</span>`. Without the slash, the browser thinks a new span is opening instead of the old one closing. This can cause the button and surrounding content to render incorrectly.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "wf4-4-2",
+          "question": "Look at the CSS for the `.summary` class. There is a subtle typo. What is it?",
+          "options": [
+            "A) `color` should be `text-color`",
+            "B) `font-size: 14x` is missing the 'p' — it should be `14px`",
+            "C) `margin-top` should be `padding-top`"
+          ],
+          "correctAnswer": "B",
+          "explanation": "The font-size is set to `14x` instead of `14px`. The browser does not recognize `14x` as a valid CSS value, so it will ignore the entire font-size declaration. The summary text will render at the browser's default size instead of 14 pixels.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "wf4-4-3",
+          "question": "The JavaScript toggles the class `complete` on the task when the Done button is clicked. But the CSS rule for strikethrough text targets `.task.completed`. What will happen?",
+          "options": [
+            "A) The strikethrough will work fine — `complete` and `completed` are treated the same",
+            "B) Nothing visual will change — JS adds `complete` but CSS is looking for `completed`, so the styles never apply",
+            "C) The browser will throw an error because the class names do not match"
+          ],
+          "correctAnswer": "B",
+          "explanation": "CSS class names must match exactly. JavaScript adds the class `complete`, but the CSS rule targets `.task.completed` (with a 'd' at the end). Since no element ever gets the class `completed`, the strikethrough and gray color styles never apply. The button text will still change to 'Undo' because that is handled by JavaScript, not CSS.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "wf4-4-4",
+          "question": "The last two lines of the JavaScript try to count the total tasks and log the number. What will happen when this code runs?",
+          "options": [
+            "A) It will log 'Total tasks: 3' to the console",
+            "B) It will throw an error because `getElementByld` is not a valid method — it should be `getElementById` (with a capital 'I')",
+            "C) It will log 'Total tasks: 0' because the list has not loaded yet"
+          ],
+          "correctAnswer": "B",
+          "explanation": "Look carefully: the code says `getElementByld` — that is a lowercase 'L', not a capital 'I'. The correct method name is `getElementById` with a capital 'I'. JavaScript is case-sensitive, so this will throw a TypeError: `document.getElementByld is not a function`. This is the kind of error the Console panel would show immediately.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "wf4-4-5",
+          "question": "If you saw this app in a browser, which bug would you notice first without opening DevTools?",
+          "options": [
+            "A) The HTML span typo — the third task's text and button would likely render incorrectly",
+            "B) The CSS font-size typo — the summary text would be the wrong size",
+            "C) The JS class name mismatch — clicking Done would change the button text but the task text would not get a strikethrough"
+          ],
+          "correctAnswer": "C",
+          "explanation": "The most noticeable bug to a user would be clicking 'Done' and seeing the button change to 'Undo' but the task text not getting a strikethrough. This is the JS/CSS mismatch — JavaScript does its part but CSS never kicks in because the class names do not match. The HTML span bug might cause subtle rendering issues, and the CSS font-size bug only affects one small paragraph.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "wf4-4-6",
+          "question": "To fix the strikethrough bug, which approach is correct?",
+          "options": [
+            "A) Change the CSS rule from `.task.completed` to `.task.complete` so it matches what JavaScript adds",
+            "B) Change the JavaScript from `classList.toggle('complete')` to `classList.toggle('completed')` so it matches the CSS",
+            "C) Both A and B would fix the bug — you just need the names to match"
+          ],
+          "correctAnswer": "C",
+          "explanation": "The problem is a mismatch: JS uses 'complete' and CSS uses 'completed'. Either change would fix it — all that matters is that JavaScript adds the same class name that CSS is targeting. In practice, you would pick whichever one is easier to change without breaking other things.",
+          "difficulty": "basic"
+        }
+      ]
+    },
+    {
+      "type": "tryItYourself",
+      "title": "Open any website you use regularly and practice your debugging skills. Open DevTools (F12), then: (1) In the Elements panel, find a button and look at all the CSS classes applied to it. (2) In the Console, check if there are any error messages. (3) In the Network panel, refresh the page and look for any failed requests (red rows with 4xx or 5xx status codes). You just ran a mini-audit of a production website.",
+      "solution": "You should have been able to find a button's CSS classes in the Elements panel, check for Console errors, and see network request statuses. Many production sites have minor Console warnings or non-critical failed requests — finding these shows you are reading the same signals that developers use every day."
+    }
+  ]
+}

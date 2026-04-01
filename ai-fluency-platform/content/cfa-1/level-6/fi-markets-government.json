@@ -104,5 +104,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Yield Measures for Fixed-Rate Bonds**, where we explore current yield, YTM, YTC, YTW, and the various yield spreads (G-spread, Z-spread, I-spread, OAS) used to compare bonds across different sectors."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Treasury bills differ from Treasury notes and bonds in that T-bills:",
+      "options": [
+        "Pay semi-annual coupons",
+        "Are short-term, zero-coupon instruments sold at a discount",
+        "Have maturities of 10 to 30 years"
+      ],
+      "correctIndex": 1,
+      "explanation": "T-bills are short-term (up to 1 year), pay no coupons, and are sold at a discount to face value.",
+      "encourageCorrect": "Exactly! T-bills are short-term, zero-coupon, discount instruments.",
+      "encourageIncorrect": "T-bills are short-term (up to 1 year) zero-coupon instruments sold at a discount. Notes (2-10 years) and bonds (20-30 years) pay semi-annual coupons."
+    },
+    {
+      "question": "Treasury Inflation-Protected Securities (TIPS) protect investors from:",
+      "options": [
+        "Credit risk",
+        "Inflation risk, because the principal adjusts with CPI",
+        "Interest rate risk"
+      ],
+      "correctIndex": 1,
+      "explanation": "TIPS have a principal that adjusts with inflation (CPI). Coupon payments are based on the adjusted principal, so real purchasing power is preserved.",
+      "encourageCorrect": "Right! TIPS protect your purchasing power by adjusting principal with inflation.",
+      "encourageIncorrect": "TIPS protect against inflation by adjusting the principal based on the CPI. This means both principal and coupon payments keep pace with inflation."
+    }
   ]
 }

@@ -59,5 +59,31 @@
         "What happens to your HIL design when the volume of decisions grows 10x? Does it scale?"
       ]
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What does 'human-in-the-loop' mean in AI systems?",
+      "options": [
+        "A human trains the model manually",
+        "A human reviews, approves, or corrects AI decisions before they take effect",
+        "A human writes all the prompts"
+      ],
+      "correctIndex": 1,
+      "explanation": "Human-in-the-loop means a human reviews AI outputs and makes the final decision, ensuring quality and catching errors before they cause harm.",
+      "encourageCorrect": "Exactly! Human oversight is the safety net that catches what AI misses.",
+      "encourageIncorrect": "Human-in-the-loop means a human reviews and approves AI decisions before they take effect -- it's a critical safety mechanism for high-stakes applications."
+    },
+    {
+      "question": "When is human-in-the-loop most important?",
+      "options": [
+        "For all AI tasks equally",
+        "For high-stakes decisions where errors are costly or irreversible",
+        "Only for creative writing tasks"
+      ],
+      "correctIndex": 1,
+      "explanation": "The higher the cost of an error, the more critical human oversight becomes -- especially for decisions affecting health, safety, finances, or legal outcomes.",
+      "encourageCorrect": "Right! Risk level should determine how much human oversight you build into the system.",
+      "encourageIncorrect": "Human-in-the-loop is most critical for high-stakes decisions where errors are costly or irreversible -- the oversight level should match the risk level."
+    }
   ]
 }

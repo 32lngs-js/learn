@@ -1,0 +1,126 @@
+{
+  "meta": {
+    "title": "4.2 DevTools for Non-Developers",
+    "description": "Learn to use the three most useful browser DevTools panels: Elements, Console, and Network.",
+    "level": "level-4",
+    "slug": "devtools-for-non-developers",
+    "order": 2,
+    "isCheckpoint": false,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "predictPrompt",
+      "prompt": "You have probably heard of browser DevTools (the panel that opens when you press F12). What do you think it is used for? Do you think it is only for developers, or could a non-developer get value from it too?"
+    },
+    {
+      "type": "markdown",
+      "content": "## Your X-ray vision for webpages\n\nEvery modern browser has **DevTools** built in \u2014 a set of panels that let you look behind the curtain of any webpage. You open it by pressing `F12` (or `Ctrl+Shift+I` on Windows, `Cmd+Option+I` on Mac).\n\nDevTools has dozens of panels, but you only need three. Each one answers a different kind of question:\n\n| Panel | What it shows | When to use it |\n| :-- | :-- | :-- |\n| **Elements** | The live HTML and CSS of the page | \"Why does this look wrong?\" |\n| **Console** | Error messages and JavaScript output | \"Why does this not work?\" |\n| **Network** | Every file and request the page makes | \"Why is this not loading?\" |\n\nLet's look at each one.\n\n## The Elements panel: see and edit HTML + CSS live\n\nThe Elements panel shows you the **DOM** \u2014 the browser's live version of the page. On the left, you see the HTML structure. On the right, you see the CSS rules applied to whatever element you have selected.\n\nThe most useful trick: **right-click any element on the page and select \"Inspect.\"** This jumps you directly to that element in the Elements panel.\n\nWhat you can do:\n- **See which CSS rules are applied** to any element \u2014 and where they come from\n- **See which rules are overridden** \u2014 they show up with a ~~strikethrough~~\n- **Edit CSS values live** to test changes without touching any code files\n- **Toggle CSS rules on and off** with the checkboxes next to each property\n\nA common workflow: someone says \"the button text is too small on mobile.\" You inspect the button, look at the CSS panel, find the `font-size` property, and now you can say exactly what the current value is and where it is defined.\n\n## The Console panel: errors and messages\n\nThe Console is where JavaScript talks to you. When something goes wrong, the error message appears here \u2014 usually in red.\n\nCommon things you will see:\n\n```\nUncaught TypeError: Cannot read properties of null (reading 'addEventListener')\n```\n\nThis means JavaScript tried to find an element (`getElementById` or `querySelector`), got `null` (nothing found), and then tried to use it. Translation: **JS is looking for an element that does not exist in the HTML.**\n\n```\n404 (Not Found)\n```\n\nThe page tried to load a file (image, script, stylesheet) and the server said it does not exist.\n\n```\nFailed to fetch\n```\n\nThe page tried to make a network request (like loading data from an API) and it failed \u2014 the server might be down or unreachable.\n\nYou do not need to understand every error message. You need to know that **the Console is where you look when something is not working**, and the red text usually points you toward the cause.\n\n## The Network panel: what the page loads\n\nWhen you visit a webpage, your browser does not just load one file. It loads the HTML, then all the CSS files, JavaScript files, images, fonts, and data from APIs. The Network panel shows **every single request**.\n\nEach row is one request. The important columns:\n- **Name** \u2014 the file or endpoint being requested\n- **Status** \u2014 `200` means success, `404` means not found, `500` means server error\n- **Type** \u2014 document, stylesheet, script, image, fetch (API call), etc.\n\nPractical workflows:\n\n| Problem | Where to look |\n| :-- | :-- |\n| An image is not loading | Network panel \u2014 filter by \"Img\" \u2014 look for a red row with status `404` |\n| A button click does nothing | Console panel \u2014 look for red error messages |\n| The page layout looks broken | Elements panel \u2014 inspect the broken area, check the CSS rules |\n| The page loads slowly | Network panel \u2014 sort by \"Size\" or \"Time\" to find the largest or slowest requests |\n| Data is not showing up | Network panel \u2014 filter by \"Fetch/XHR\" \u2014 check if the API call succeeded |\n\n## Quick reference: how to open DevTools\n\n- **Windows/Linux:** `F12` or `Ctrl+Shift+I`\n- **Mac:** `Cmd+Option+I`\n- **Right-click any element** and choose \"Inspect\" to jump straight to the Elements panel"
+    },
+    {
+      "type": "practiceSet",
+      "title": "Matching Problems to DevTools Panels",
+      "problems": [
+        {
+          "id": "wf4-2-1",
+          "question": "A product image on an e-commerce site is showing a broken image icon instead of the photo. Which DevTools panel should you check first?",
+          "options": [
+            "A) Elements \u2014 to see if the image tag exists in the HTML",
+            "B) Network \u2014 to see if the image file loaded successfully",
+            "C) Console \u2014 to see if JavaScript is blocking the image"
+          ],
+          "correctAnswer": "B",
+          "explanation": "A broken image icon usually means the image file could not be loaded. The Network panel will show you the request for that image and its status code \u2014 likely a 404 (not found) or a wrong URL.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "wf4-2-2",
+          "question": "A user reports that clicking the \"Add to Cart\" button does nothing. No visual change, no error that they can see. Which DevTools panel should you check first?",
+          "options": [
+            "A) Network \u2014 the cart API might be failing",
+            "B) Elements \u2014 the button HTML might be wrong",
+            "C) Console \u2014 there might be a JavaScript error preventing the click handler from running"
+          ],
+          "correctAnswer": "C",
+          "explanation": "When a button 'does nothing,' the most likely cause is a JavaScript error. The Console panel will show you if there is an error being thrown when the button is clicked. If the Console is clean, then you would check Network to see if an API call is failing silently.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "wf4-2-3",
+          "question": "The spacing between a heading and a paragraph looks way too large on the staging site but fine on the live site. Which DevTools panel would help you compare the difference?",
+          "options": [
+            "A) Console \u2014 to check for spacing-related errors",
+            "B) Elements \u2014 to inspect the CSS margin and padding values on each site",
+            "C) Network \u2014 to see if a different CSS file is being loaded"
+          ],
+          "correctAnswer": "B",
+          "explanation": "Spacing issues are CSS issues. The Elements panel lets you select the heading and paragraph and see exactly what margin and padding values are applied. You can compare these values between the two sites to find the difference.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "wf4-2-4",
+          "question": "A dashboard page that normally shows charts and data is loading but all the charts are empty. The page layout itself looks fine. Which panel should you check first?",
+          "options": [
+            "A) Elements \u2014 the chart containers might be missing",
+            "B) Console \u2014 there might be a JavaScript error when processing the data",
+            "C) Network \u2014 the API calls that fetch the chart data might be failing"
+          ],
+          "correctAnswer": "C",
+          "explanation": "If the layout loads fine but the data is missing, the most likely cause is that the API calls to fetch the data are failing. The Network panel (filtered to Fetch/XHR) will show you if those requests succeeded or returned errors.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "wf4-2-5",
+          "question": "You see this error in the Console:\n\n```\nUncaught TypeError: Cannot read properties of null (reading 'classList')\n```\n\nWhat does this most likely mean?",
+          "options": [
+            "A) The CSS class list is corrupted and needs to be reset",
+            "B) JavaScript tried to modify an element that does not exist in the HTML",
+            "C) The HTML file is missing a `<classList>` tag"
+          ],
+          "correctAnswer": "B",
+          "explanation": "The error says it cannot read 'classList' of null. This means JavaScript used getElementById or querySelector to find an element, got null (nothing found), and then tried to access .classList on it. The element JavaScript is looking for does not exist \u2014 probably a wrong id or the script runs before the HTML is loaded.",
+          "difficulty": "intermediate"
+        }
+      ]
+    },
+    {
+      "type": "tryItYourself",
+      "title": "Open DevTools on any webpage you use regularly (a news site, a social media page, or your company's site). Spend two minutes exploring: (1) In the Elements panel, right-click a heading and select 'Inspect' \u2014 look at the CSS on the right side. (2) In the Console panel, look for any red error messages. (3) In the Network panel, refresh the page and see how many requests are made. Write down one thing you noticed in each panel.",
+      "solution": "You should have been able to inspect an element and see its CSS rules, check the Console for any errors (many popular sites have a few), and see dozens or hundreds of network requests when a page loads. If you found at least one observation per panel, you are using DevTools effectively."
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "DevTools gives you three essential panels: Elements (see HTML and CSS live), Console (see JavaScript errors), and Network (see what the page loads). Match the symptom to the right panel: looks wrong \u2192 Elements, does not work \u2192 Console, does not load \u2192 Network."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "Now you know where to look. Next, we will put it all together with a systematic approach: given a bug report, how do you trace it from symptom to cause? Module 4.3 will give you a debugging flowchart."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "The three essential DevTools panels for non-developers are:",
+      "options": [
+        "Sources, Performance, Memory",
+        "Elements, Console, and Network",
+        "Application, Security, Lighthouse"
+      ],
+      "correctIndex": 1,
+      "explanation": "Elements shows HTML/CSS (for visual issues), Console shows JS errors (for broken features), and Network shows loading requests (for missing resources).",
+      "encourageCorrect": "Those are the three you need! Elements, Console, Network.",
+      "encourageIncorrect": "The three essential panels: Elements (HTML/CSS issues), Console (JavaScript errors), and Network (loading/resource problems)."
+    },
+    {
+      "question": "If something looks wrong visually on a webpage, which DevTools panel should you check first?",
+      "options": [
+        "Console",
+        "Elements",
+        "Network"
+      ],
+      "correctIndex": 1,
+      "explanation": "The Elements panel shows live HTML and CSS. You can inspect any element to see its styles, box model, and make temporary changes for testing.",
+      "encourageCorrect": "Right! Visual problems = Elements panel. That's where CSS and HTML live.",
+      "encourageIncorrect": "The Elements panel is for visual issues. It shows the HTML structure and CSS styles for any element, and lets you edit them temporarily."
+    }
+  ]
+}

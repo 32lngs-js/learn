@@ -118,5 +118,31 @@
       "type": "connectPrompt",
       "prompt": "The next module introduces **Equity Securities** \u2014 the actual instruments traded in the markets we've been discussing. Understanding market efficiency helps you evaluate whether paying for active equity management is worthwhile or whether passive index exposure is the better approach."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Under the semi-strong form of market efficiency, which type of analysis cannot consistently generate excess returns?",
+      "options": [
+        "Only technical analysis",
+        "Both technical and fundamental analysis",
+        "Neither \u2014 all analysis can beat the market"
+      ],
+      "correctIndex": 1,
+      "explanation": "Semi-strong efficiency means prices reflect all public information, so neither technical nor fundamental analysis using public data can consistently beat the market.",
+      "encourageCorrect": "Correct! Semi-strong means all public info is priced in, making both approaches ineffective for excess returns.",
+      "encourageIncorrect": "Semi-strong efficiency says all public information is already in prices. That rules out both technical and fundamental analysis for consistent excess returns."
+    },
+    {
+      "question": "What does the weak form of market efficiency imply?",
+      "options": [
+        "Stock prices are always wrong",
+        "Past price and volume data cannot predict future prices",
+        "Fundamental analysis is useless"
+      ],
+      "correctIndex": 1,
+      "explanation": "Weak-form efficiency means all past trading data is already reflected in prices, so technical analysis based on price patterns cannot consistently profit.",
+      "encourageCorrect": "Right! Weak form means historical prices are already baked in.",
+      "encourageIncorrect": "Weak-form efficiency means past price and volume data are already reflected in current prices, so technical analysis can't consistently generate excess returns."
+    }
   ]
 }

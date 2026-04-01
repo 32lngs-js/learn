@@ -1,0 +1,118 @@
+{
+  "meta": {
+    "title": "1.2 The Anatomy of a Page",
+    "description": "Understand the major sections of an HTML document \u2014 head, body, and semantic elements \u2014 and what goes where.",
+    "level": "level-1",
+    "slug": "anatomy-of-a-page",
+    "order": 2,
+    "isCheckpoint": false,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "predictPrompt",
+      "prompt": "You know that HTML tags label content. But a full webpage has a lot more going on \u2014 a title in the browser tab, styles that control how it looks, and the visible content itself. Where do you think all of those different things live inside the HTML?"
+    },
+    {
+      "type": "markdown",
+      "content": "## The skeleton of every webpage\n\nEvery HTML page follows the same basic structure, no matter how simple or complex:\n\n```html\n<!DOCTYPE html>\n<html>\n  <head>\n    <title>My Page Title</title>\n  </head>\n  <body>\n    <h1>Hello, world!</h1>\n    <p>This is visible content.</p>\n  </body>\n</html>\n```\n\nLet's walk through each part.\n\n## The `<html>` tag: the wrapper\n\nThe `<html>` tag wraps everything. It is the outermost container \u2014 like the cover of a book that holds all the pages inside.\n\n## The `<head>`: behind the scenes\n\nThe `<head>` section contains information **about** the page, but nothing the user sees directly on the page itself. Think of it as the backstage area:\n\n- **`<title>`** \u2014 The text that appears in the browser tab. Not on the page itself, just the tab.\n- **`<link>`** \u2014 Connects stylesheets (CSS files) that control how the page looks.\n- **`<meta>`** \u2014 Metadata like character encoding, description for search engines, and viewport settings for mobile.\n- **`<script>`** \u2014 Can load JavaScript files (though scripts can also go at the end of the body).\n\nIf you have ever seen a browser tab that says \"Untitled Document\" or just shows the file path, it means the `<title>` tag is missing or empty in the `<head>`.\n\n## The `<body>`: what users see\n\nThe `<body>` section contains everything that is visible on the page \u2014 all the headings, paragraphs, images, buttons, and links. If it shows up on screen, it lives in the `<body>`.\n\n## Semantic elements: giving the body structure\n\nInside the `<body>`, you could technically put everything in `<div>` tags and the page would look fine. But modern HTML has **semantic elements** \u2014 tags that describe the *role* of the content, not just that it is a container:\n\n```html\n<body>\n  <header>\n    <nav>\n      <a href=\"/\">Home</a>\n      <a href=\"/about\">About</a>\n    </nav>\n  </header>\n  <main>\n    <article>\n      <h1>How to Make Sourdough</h1>\n      <p>Start with a good starter...</p>\n    </article>\n  </main>\n  <footer>\n    <p>Copyright 2025 My Bakery</p>\n  </footer>\n</body>\n```\n\nHere is what each one means:\n\n- **`<header>`** \u2014 The top section of the page (logo, navigation, banner)\n- **`<nav>`** \u2014 A navigation area with links\n- **`<main>`** \u2014 The primary content of the page\n- **`<article>`** \u2014 A self-contained piece of content (blog post, news story, product listing)\n- **`<section>`** \u2014 A thematic grouping of content within the page\n- **`<footer>`** \u2014 The bottom section (copyright, contact info, legal links)\n\n## Why semantic elements matter\n\nYou might wonder: if `<div>` and `<main>` look the same on screen, why bother?\n\nTwo big reasons:\n\n1. **Accessibility.** Screen readers use semantic tags to help visually impaired users navigate. A screen reader can jump straight to `<main>` or list all the `<nav>` links. If everything is a `<div>`, the screen reader has no idea what is what.\n\n2. **Search engines.** Google reads semantic tags to understand page structure, which affects how your content ranks and appears in search results.\n\nWhen you see a page built entirely with `<div>` tags and no semantic elements, it is a red flag \u2014 not because the page will look broken, but because it will be harder for machines (screen readers, search engines, AI tools) to understand."
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "On a scale of 1-5, how confident are you that you could look at an HTML file and identify which parts are in the head (not visible) versus the body (visible)?",
+      "answer": "If you rated yourself 3 or higher, great. The key distinction is simple: <head> is metadata about the page (title, styles, scripts), <body> is the visible content. Everything the user sees on the page is in the body."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Page Structure",
+      "problems": [
+        {
+          "id": "wf1-2-1",
+          "question": "Where does the text inside the `<title>` tag appear?\n\n```html\n<head>\n  <title>Our Company - Home</title>\n</head>\n```",
+          "options": [
+            "A) In the browser tab (and search engine results), not on the page itself",
+            "B) As a large heading at the top of the visible page",
+            "C) As small text in the footer of the page"
+          ],
+          "correctAnswer": "A",
+          "explanation": "The <title> tag lives in the <head>, which is the behind-the-scenes section. Its text shows up in the browser tab and in search engine results, but it does not appear anywhere on the visible page.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "wf1-2-2",
+          "question": "A tester reports that a screen reader cannot navigate this page \u2014 it just reads everything as a flat wall of text with no sections. What is the most likely issue?\n\n```html\n<body>\n  <div class=\"top-bar\">\n    <div class=\"links\">...</div>\n  </div>\n  <div class=\"content\">\n    <div class=\"post\">...</div>\n  </div>\n  <div class=\"bottom\">\n    <div class=\"legal\">...</div>\n  </div>\n</body>\n```",
+          "options": [
+            "A) The CSS classes are not descriptive enough",
+            "B) The page uses only <div> tags instead of semantic elements like <header>, <nav>, <main>, and <footer>",
+            "C) The page is missing a <title> tag"
+          ],
+          "correctAnswer": "B",
+          "explanation": "Screen readers rely on semantic HTML elements to understand page structure. When everything is a <div>, the screen reader cannot tell what is navigation, what is the main content, and what is the footer. Replacing those <div> tags with <header>, <nav>, <main>, and <footer> would fix the navigation issue.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "wf1-2-3",
+          "question": "A client says: \"The browser tab just says 'Untitled Document' instead of our company name.\" You view the source and see this:\n\n```html\n<html>\n  <head>\n    <link rel=\"stylesheet\" href=\"styles.css\">\n  </head>\n  <body>\n    <h1>Acme Corp</h1>\n    <p>Welcome to our website.</p>\n  </body>\n</html>\n```\n\nWhat needs to be fixed?",
+          "options": [
+            "A) The <h1> tag should be moved into the <head>",
+            "B) A <title>Acme Corp</title> tag needs to be added inside the <head>",
+            "C) The <link> tag is in the wrong place and is overriding the title"
+          ],
+          "correctAnswer": "B",
+          "explanation": "The browser tab text comes from the <title> tag inside the <head>. This page has a <head> section but no <title> tag in it, so the browser shows a default like \"Untitled Document.\" Adding <title>Acme Corp</title> inside the <head> fixes it. The <h1> is for visible page content \u2014 it does not affect the browser tab.",
+          "difficulty": "intermediate"
+        }
+      ]
+    },
+    {
+      "type": "explainBack",
+      "prompt": "Explain the difference between the <head> and <body> sections of an HTML page. What kind of things go in each one, and why does it matter?"
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "Every HTML page has the same skeleton: <html> wraps everything, <head> holds behind-the-scenes metadata (title, styles, scripts), and <body> holds the visible content. Inside the body, semantic elements like <header>, <nav>, <main>, and <footer> give structure that screen readers and search engines depend on."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "You can now read the structure of a page from top to bottom. But pages are not just headings and paragraphs \u2014 they have links you can click, images you can see, and lists of items. Next, we will cover the most common HTML elements you will encounter in the wild."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "In an HTML page, the <head> element contains:",
+      "options": [
+        "The visible content users see on the page",
+        "Behind-the-scenes metadata like the page title, styles, and scripts",
+        "Navigation links and menus"
+      ],
+      "correctIndex": 1,
+      "explanation": "The <head> holds metadata (title, linked stylesheets, scripts) that the browser needs but users don't see directly. The <body> holds visible content.",
+      "encourageCorrect": "Right! The head is behind the scenes, the body is what you see.",
+      "encourageIncorrect": "The <head> contains metadata like the page title, styles, and scripts. The <body> holds all the visible content."
+    },
+    {
+      "question": "Which HTML element contains everything visible on a webpage?",
+      "options": [
+        "<head>",
+        "<body>",
+        "<title>"
+      ],
+      "correctIndex": 1,
+      "explanation": "The <body> element contains all the visible content \u2014 text, images, buttons, and everything else users see and interact with.",
+      "encourageCorrect": "Correct! Everything you see lives inside the <body> tag.",
+      "encourageIncorrect": "The <body> element holds all visible content. The <head> is for metadata, and <title> just sets the browser tab text."
+    },
+    {
+      "question": "Semantic HTML elements like <header>, <nav>, <main>, and <footer> are useful because they:",
+      "options": [
+        "Make pages load faster",
+        "Give structure that screen readers and search engines can understand",
+        "Add visual styling automatically"
+      ],
+      "correctIndex": 1,
+      "explanation": "Semantic elements describe the purpose of content, helping screen readers navigate for accessibility and helping search engines understand page structure.",
+      "encourageCorrect": "Well done! Semantic HTML is about meaning, not just appearance.",
+      "encourageIncorrect": "Semantic elements describe what content is for (navigation, main content, footer), helping screen readers and search engines understand the page."
+    }
+  ]
+}

@@ -133,5 +133,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Machine Learning** \u2014 a modern extension of statistical modeling that goes beyond traditional regression. You will learn about supervised and unsupervised methods, regularization, and techniques like decision trees and ensemble methods that handle the complexity and non-linearity often found in financial data."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "A time series is stationary if:",
+      "options": [
+        "It always increases over time",
+        "Its mean, variance, and covariance structure are constant over time",
+        "It has no autocorrelation"
+      ],
+      "correctIndex": 1,
+      "explanation": "Stationarity means the statistical properties of the series don't change over time. Non-stationary series need to be differenced or transformed before modeling.",
+      "encourageCorrect": "Exactly! Constant statistical properties over time is stationarity.",
+      "encourageIncorrect": "A stationary series has a constant mean, variance, and autocovariance over time. Most financial time series are non-stationary and need transformation."
+    },
+    {
+      "question": "A random walk (unit root) in a time series means:",
+      "options": [
+        "The series is perfectly predictable",
+        "The best forecast of tomorrow's value is today's value",
+        "The series has no trend"
+      ],
+      "correctIndex": 1,
+      "explanation": "A random walk means each value equals the previous value plus random noise. The best prediction is the current value \u2014 the series is non-stationary.",
+      "encourageCorrect": "Right! In a random walk, today's price is the best forecast for tomorrow.",
+      "encourageIncorrect": "A random walk means the best forecast is the current value. The series drifts randomly with no tendency to revert \u2014 it's a classic non-stationary process."
+    }
   ]
 }

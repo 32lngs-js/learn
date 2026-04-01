@@ -99,5 +99,31 @@
       "type": "connectPrompt",
       "prompt": "This completes the Ethics section. The **final checkpoint** will test your ability to apply the Code and Standards, Guidance, essay techniques, and the Asset Manager Code to comprehensive PM-level ethical scenarios."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "The Asset Manager Code of Professional Conduct applies to:",
+      "options": [
+        "Only individual CFA charterholders",
+        "Firms that manage assets on behalf of clients",
+        "Government regulators"
+      ],
+      "correctIndex": 1,
+      "explanation": "The Asset Manager Code is a voluntary code for asset management firms (not individuals) that want to demonstrate commitment to ethical practices.",
+      "encourageCorrect": "That's the distinction! It's a firm-level code, not individual.",
+      "encourageIncorrect": "The Asset Manager Code applies to firms, not individuals. It's voluntary and signals the firm's commitment to ethical asset management."
+    },
+    {
+      "question": "A key principle of the Asset Manager Code is:",
+      "options": [
+        "Maximizing the firm's revenue at all costs",
+        "Acting in the best interests of the client above the firm's own interests",
+        "Minimizing all risk in client portfolios"
+      ],
+      "correctIndex": 1,
+      "explanation": "Like the CFA Standards, the Asset Manager Code places client interests first. Firms commit to loyalty, transparency, and fair dealing.",
+      "encourageCorrect": "Correct! Client interests first \u2014 the same principle at the firm level.",
+      "encourageIncorrect": "The Asset Manager Code requires firms to act in clients' best interests. Client loyalty is the overarching principle, just as with the individual Standards."
+    }
   ]
 }

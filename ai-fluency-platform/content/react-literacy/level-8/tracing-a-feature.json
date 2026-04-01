@@ -1,0 +1,98 @@
+{
+  "meta": {
+    "title": "8.2 Tracing a Feature",
+    "description": "Follow a user action from button click through state change to API call and screen update across multiple files.",
+    "level": "level-8",
+    "slug": "tracing-a-feature",
+    "order": 2,
+    "isCheckpoint": false,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "predictPrompt",
+      "prompt": "A user clicks 'Add to Cart' on a product page. Before reading further, write down every step you think happens between that click and the cart count updating in the header. How many files do you think are involved?"
+    },
+    {
+      "type": "markdown",
+      "content": "## Following the thread across files\n\nIn Levels 1 through 6, you learned to read individual components. But real features do not live in a single file. When a user clicks \"Add to Cart,\" the action might flow through five or six files before the screen updates.\n\nTracing a feature means following that thread from start to finish. It is the single most useful skill for understanding a React codebase — and it uses everything you have learned.\n\n---\n\n### The tracing strategy\n\nHere is a six-step process that works for any feature:\n\n1. **Start at the page component** — find the page where the feature lives\n2. **Find the interactive element** — the button, form, or link the user interacts with\n3. **Follow the event handler** — what function runs when the user clicks?\n4. **If it calls a custom hook, go to that file** — hooks often contain the real logic\n5. **If it makes an API call, note the endpoint** — this is where data leaves the browser\n6. **Follow the state update back to the render** — how does the screen change?\n\nImport statements are your navigation system at every step. They tell you which file to open next.\n\n---\n\n### Complete example: \"Add to Cart\"\n\nLet us trace what happens when a user clicks \"Add to Cart\" on a product page. We will visit every file involved.\n\n#### Step 1: Start at the page component\n\nFrom `App.tsx`, we know the product page is at the route `products/:id`, rendered by `ProductDetail`:\n\n```tsx\n// App.tsx\n<Route path=\"products/:id\" element={<ProductDetail />} />\n```\n\nWe open `src/pages/ProductDetail.tsx`.\n\n#### Step 2: Find the interactive element\n\nInside `ProductDetail.tsx`, we scan the JSX for the Add to Cart button:\n\n```tsx\n// src/pages/ProductDetail.tsx\nimport { useParams } from \"react-router-dom\";\nimport { useProduct } from \"../hooks/useProduct\";\nimport { useCart } from \"../hooks/useCart\";\nimport { ProductInfo } from \"../components/ProductInfo\";\nimport { AddToCartButton } from \"../components/AddToCartButton\";\n\nconst ProductDetail = () => {\n  const { id } = useParams<{ id: string }>();\n  const { product, isLoading, error } = useProduct(id!);\n  const { addItem } = useCart();\n\n  if (isLoading) return <p>Loading...</p>;\n  if (error) return <p>Error: {error}</p>;\n  if (!product) return <p>Product not found</p>;\n\n  return (\n    <div className=\"product-detail\">\n      <ProductInfo product={product} />\n      <AddToCartButton onClick={() => addItem(product)} />\n    </div>\n  );\n};\n```\n\nThe button is `<AddToCartButton>`. When clicked, it calls `addItem(product)`. Where does `addItem` come from? The import says: `useCart` hook.\n\n#### Step 3: Follow the event handler\n\nThe `AddToCartButton` component is simple — it just renders a button and calls the onClick prop:\n\n```tsx\n// src/components/AddToCartButton.tsx\ninterface AddToCartButtonProps {\n  onClick: () => void;\n}\n\nconst AddToCartButton = ({ onClick }: AddToCartButtonProps) => {\n  return (\n    <button onClick={onClick} className=\"add-to-cart\">\n      Add to Cart\n    </button>\n  );\n};\n```\n\nThis is a \"dumb\" component — it does not know anything about carts. It just fires the callback. The real logic is in the `useCart` hook.\n\n#### Step 4: Follow the custom hook\n\nWe open `src/hooks/useCart.ts`:\n\n```tsx\n// src/hooks/useCart.ts\nimport { useContext } from \"react\";\nimport { CartContext } from \"../context/CartContext\";\nimport { addToCart } from \"../api/cart\";\n\nexport const useCart = () => {\n  const { cartItems, setCartItems } = useContext(CartContext);\n\n  const addItem = async (product: Product) => {\n    const updatedCart = await addToCart(product.id);\n    setCartItems(updatedCart.items);\n  };\n\n  const itemCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);\n\n  return { cartItems, addItem, itemCount };\n};\n```\n\nNow we can see the flow: `addItem` calls an API function `addToCart`, then updates the cart state via context. The `itemCount` is derived (calculated directly — good pattern!).\n\n#### Step 5: Follow the API call\n\nWe open `src/api/cart.ts`:\n\n```tsx\n// src/api/cart.ts\nimport { apiClient } from \"./client\";\n\nexport const addToCart = async (productId: string) => {\n  const response = await apiClient.post(\"/cart/items\", { productId });\n  return response.data;\n};\n```\n\nThis sends a POST request to `/cart/items` with the product ID. The server adds the item and returns the updated cart.\n\n#### Step 6: Follow the state update back to the render\n\nBack in `useCart`, after the API call succeeds, `setCartItems(updatedCart.items)` updates the cart context. Any component that uses `useCart()` or reads from `CartContext` will re-render with the new data.\n\nWhere is the cart count displayed? Probably in the header:\n\n```tsx\n// src/components/Header.tsx\nimport { useCart } from \"../hooks/useCart\";\n\nconst Header = () => {\n  const { itemCount } = useCart();\n\n  return (\n    <header>\n      <nav>{/* navigation links */}</nav>\n      <span className=\"cart-badge\">{itemCount}</span>\n    </header>\n  );\n};\n```\n\nThe header uses the same `useCart` hook, which reads from the same context. When `setCartItems` updates the context, both the ProductDetail page and the Header re-render. The cart badge updates.\n\n---\n\n### The complete thread\n\nLet us map the entire flow:\n\n```\nUser clicks \"Add to Cart\"\n  → AddToCartButton calls onClick prop\n    → ProductDetail passes addItem(product)\n      → useCart.addItem calls addToCart API function\n        → POST /cart/items to the server\n          → Server adds item, returns updated cart\n        → setCartItems updates CartContext\n          → Header re-renders, cart badge shows new count\n          → ProductDetail re-renders (if it displays cart info)\n```\n\n**Files visited:** ProductDetail.tsx → AddToCartButton.tsx → useCart.ts → cart.ts (API) → CartContext.tsx → Header.tsx\n\nSix files. One button click. This is normal in a real React app.\n\n---\n\n### Import statements are your map\n\nNotice how we navigated the entire feature using import statements:\n\n- `ProductDetail` imports `useCart` → we know to check the hook\n- `useCart` imports `CartContext` → we know state is in context\n- `useCart` imports `addToCart` → we know there is an API call\n- `Header` imports `useCart` → we know the header reads cart data\n\nEvery `import` line is a road on the map. If you can follow imports, you can trace any feature.\n\n---\n\n### Common feature patterns\n\nMost features follow one of these patterns:\n\n**Read pattern** (view data):\n```\nPage → useEffect/hook fetches data → API call → setState → render\n```\n\n**Write pattern** (submit data):\n```\nForm/Button → event handler → API call → update state → re-render\n```\n\n**Shared state pattern** (state affects multiple components):\n```\nComponent A → updates context/store → Component B re-renders\n```\n\n**Navigation pattern** (move between pages):\n```\nLink/navigate call → router matches new route → new page component renders\n```\n\nOnce you recognize which pattern a feature uses, tracing it becomes much faster.\n\n---\n\n### Practice: trace it yourself\n\nHere is a challenge. Given these imports, trace what happens when a user submits a contact form:\n\n```tsx\n// src/pages/Contact.tsx\nimport { useState } from \"react\";\nimport { ContactForm } from \"../components/ContactForm\";\nimport { submitContact } from \"../api/contact\";\nimport { useToast } from \"../hooks/useToast\";\n```\n\nWithout even seeing the code, you can outline the flow:\n1. The Contact page renders a ContactForm component\n2. The form collects data and calls a submit callback (probably passed as an onSubmit prop)\n3. The page handler calls `submitContact` — an API function that sends data to the server\n4. After success, `useToast` probably shows a success notification\n\nImports told you the entire story. The code just fills in the details."
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "You are looking at a page component and you see it imports `useAuth` from '../hooks/useAuth' and `ProtectedContent` from '../components/ProtectedContent'. Without seeing the code, what can you infer about what this page does?",
+      "answer": "The page likely checks whether the user is authenticated using the useAuth hook (probably getting values like isLoggedIn, user, or token). It then conditionally renders ProtectedContent — content that should only be visible to logged-in users. The ProtectedContent component probably receives user data as a prop or reads it from context. If the user is not authenticated, the page likely shows a login prompt or redirects to a login page."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Tracing Features",
+      "problems": [
+        {
+          "id": "rl8-2-1",
+          "question": "A user clicks a \"Delete\" button on a task in a todo app. Given this code, what is the correct order of events?\n\n```tsx\n// TaskItem.tsx\nconst TaskItem = ({ task, onDelete }: TaskItemProps) => (\n  <li>\n    {task.title}\n    <button onClick={() => onDelete(task.id)}>Delete</button>\n  </li>\n);\n\n// TaskList.tsx (parent)\nimport { useTasks } from \"../hooks/useTasks\";\n\nconst TaskList = () => {\n  const { tasks, removeTask } = useTasks();\n  return (\n    <ul>\n      {tasks.map(task => (\n        <TaskItem key={task.id} task={task} onDelete={removeTask} />\n      ))}\n    </ul>\n  );\n};\n```",
+          "options": [
+            "A) Click → onDelete(task.id) fires → removeTask runs in useTasks hook → state updates → TaskList re-renders without the deleted task",
+            "B) Click → TaskList re-renders → then onDelete fires → then removeTask runs",
+            "C) Click → onDelete fires → TaskItem removes itself from the DOM directly"
+          ],
+          "correctAnswer": "A",
+          "explanation": "The flow is: user clicks Delete → the button's onClick calls onDelete(task.id) → this calls removeTask from the useTasks hook (which was passed as the onDelete prop) → the hook updates its internal state (removing the task) → React re-renders TaskList with the updated tasks array → the deleted task no longer appears. TaskItem does not remove itself — React's re-render handles that.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "rl8-2-2",
+          "question": "You need to find why a user's profile shows the wrong email after they update it. Given these imports in the profile page, which file would you check FIRST?\n\n```tsx\n// src/pages/Profile.tsx\nimport { useUser } from \"../hooks/useUser\";\nimport { ProfileForm } from \"../components/ProfileForm\";\nimport { updateProfile } from \"../api/users\";\nimport { useToast } from \"../hooks/useToast\";\n```",
+          "options": [
+            "A) useToast — the notification system might be interfering with the update",
+            "B) useUser — the hook manages user state, so if the email is wrong after update, the state might not be refreshed after the API call",
+            "C) ProfileForm — the form might be sending the wrong data"
+          ],
+          "correctAnswer": "B",
+          "explanation": "The bug is that the profile shows wrong data after an update. The most likely cause: the updateProfile API call succeeds, but the useUser hook's state is not refreshed with the new data. Either the hook needs to re-fetch after the update, or the local state needs to be updated with the API response. The useUser hook is where user state lives, making it the first place to investigate. ProfileForm is worth checking second if the hook looks correct.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "rl8-2-3",
+          "question": "You see this code and a bug report: \"The search results do not update when I switch from the Products page to the Users page.\" What is the likely cause?\n\n```tsx\n// src/hooks/useSearch.ts\nexport const useSearch = (endpoint: string) => {\n  const [query, setQuery] = useState(\"\");\n  const [results, setResults] = useState([]);\n\n  useEffect(() => {\n    if (query) {\n      fetch(`${endpoint}?q=${query}`)\n        .then(res => res.json())\n        .then(data => setResults(data));\n    }\n  }, [query]);\n\n  return { query, setQuery, results };\n};\n\n// Used in pages:\nconst { query, setQuery, results } = useSearch(\"/api/products\");\nconst { query, setQuery, results } = useSearch(\"/api/users\");\n```",
+          "options": [
+            "A) The useSearch hook is missing `endpoint` in the useEffect dependency array — when the endpoint changes (switching pages), the effect does not re-run with the new URL",
+            "B) The useState should be useReducer for complex state",
+            "C) The fetch should use axios instead of the native fetch API"
+          ],
+          "correctAnswer": "A",
+          "explanation": "The useEffect dependency array only includes [query], not endpoint. When the user navigates from Products to Users, the endpoint changes from '/api/products' to '/api/users', but the effect does not re-run because endpoint is not in the dependency array. The search continues hitting the old endpoint. Adding endpoint to the array — [query, endpoint] — fixes this. This is the classic missing dependency bug from the AI mistake catalog.",
+          "difficulty": "advanced"
+        }
+      ]
+    },
+    {
+      "type": "explainBack",
+      "prompt": "Choose a feature from an app you use every day (like 'liking a post,' 'sending a message,' or 'adding a filter'). Using the six-step tracing strategy, describe the flow you think happens behind the scenes — from your click to the screen updating. Name the types of files you think would be involved (page, component, hook, API, context)."
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "Tracing a feature means following a user action across files: page component to event handler to custom hook to API call to state update to re-render. Import statements are your navigation system — they tell you which files connect. Most features follow one of four patterns: read, write, shared state, or navigation."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "You now have all the skills: reading components, understanding state and effects, debugging, reviewing AI output, navigating projects, and tracing features. The final capstone puts it all together in a realistic scenario that simulates a real day working with a React codebase."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is the first step when tracing a feature in a React codebase?",
+      "options": ["Open the API files to see what endpoints exist", "Start at the page component where the feature lives", "Check the package.json for relevant libraries"],
+      "correctIndex": 1,
+      "explanation": "Start at the page component — find where the feature lives in the UI, then follow the interactive element to its event handler, and trace from there.",
+      "encourageCorrect": "Right! Start where the user sees the feature, then follow the breadcrumbs.",
+      "encourageIncorrect": "Start at the page component where the feature lives. From there, find the interactive element and follow the event handler through hooks, API calls, and state updates."
+    },
+    {
+      "question": "What do import statements tell you when navigating a React project?",
+      "options": ["Which CSS styles are applied to each component", "Which files depend on each other — they are roads on your navigation map", "Which components are rendered on screen"],
+      "correctIndex": 1,
+      "explanation": "Import statements connect every file in the project. They tell you exactly which files a component depends on and where to find them.",
+      "encourageCorrect": "Exactly! Imports are the roads on your codebase map — follow them to trace any feature.",
+      "encourageIncorrect": "Import statements are your navigation system — they show which files depend on each other, letting you trace features across the project."
+    }
+  ]
+}

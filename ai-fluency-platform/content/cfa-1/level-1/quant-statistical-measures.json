@@ -118,5 +118,43 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Probability Trees and Conditional Expectations**, where you will apply probability rules to uncertain outcomes. The dispersion and distribution shape concepts from this module help you understand why probability distributions matter for investment decisions."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "When a dataset contains outliers, which measure of central tendency is most appropriate?",
+      "options": [
+        "The arithmetic mean",
+        "The median",
+        "The mode"
+      ],
+      "correctIndex": 1,
+      "explanation": "The median is resistant to outliers because it depends only on the middle value, unlike the mean which is pulled by extreme values.",
+      "encourageCorrect": "Nice! The median is robust to outliers \u2014 a key reason to use it.",
+      "encourageIncorrect": "The median is best with outliers because it isn't distorted by extreme values the way the mean is."
+    },
+    {
+      "question": "A positively skewed distribution has which relationship among its measures of central tendency?",
+      "options": [
+        "Mean > Median > Mode",
+        "Mean < Median < Mode",
+        "Mean = Median = Mode"
+      ],
+      "correctIndex": 0,
+      "explanation": "In a positively (right) skewed distribution, the right tail pulls the mean above the median, which is above the mode.",
+      "encourageCorrect": "Well done! Positive skew means the mean gets pulled right by the long tail.",
+      "encourageIncorrect": "For positive skew, the long right tail pulls the mean highest: Mean > Median > Mode."
+    },
+    {
+      "question": "What does excess kurtosis greater than zero (leptokurtic) indicate about a distribution?",
+      "options": [
+        "It has thinner tails than a normal distribution",
+        "It has fatter tails and more extreme outcomes than a normal distribution",
+        "It is perfectly symmetric"
+      ],
+      "correctIndex": 1,
+      "explanation": "Leptokurtic distributions have fatter tails, meaning extreme outcomes (both positive and negative) are more likely than a normal distribution predicts.",
+      "encourageCorrect": "Exactly! Leptokurtic means fat tails \u2014 more extreme events than normal.",
+      "encourageIncorrect": "Excess kurtosis > 0 (leptokurtic) means fatter tails than normal \u2014 extreme outcomes happen more often than a normal distribution would suggest."
+    }
   ]
 }

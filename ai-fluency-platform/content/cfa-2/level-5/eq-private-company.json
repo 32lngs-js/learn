@@ -106,5 +106,31 @@
       "type": "connectPrompt",
       "prompt": "You've now completed the Equity Investments modules for Level II. The next section is the **Equity Investments Checkpoint**, where you'll test your integrated understanding across all six equity valuation topics \u2014 from DDM to private company valuation."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "A discount for lack of marketability (DLOM) is applied to private company valuations because:",
+      "options": [
+        "Private companies are always less profitable",
+        "Private company shares cannot be easily sold on a public market",
+        "Private companies have no financial statements"
+      ],
+      "correctIndex": 1,
+      "explanation": "Private company shares are illiquid \u2014 there's no active public market to sell them quickly. The DLOM reflects this reduced liquidity.",
+      "encourageCorrect": "That's it! Illiquidity reduces value compared to freely traded shares.",
+      "encourageIncorrect": "The DLOM reflects the fact that private company shares lack the liquidity of publicly traded securities. Investors require a discount for this illiquidity."
+    },
+    {
+      "question": "A control premium is paid when acquiring a private company because:",
+      "options": [
+        "The buyer gets a discount",
+        "Control allows the buyer to make strategic decisions and realize synergies",
+        "All private companies charge a premium"
+      ],
+      "correctIndex": 1,
+      "explanation": "Controlling ownership allows the buyer to change strategy, management, and operations. This power to create additional value justifies paying a premium.",
+      "encourageCorrect": "Right! Control means you can change the company to create more value.",
+      "encourageIncorrect": "A control premium is justified because controlling ownership allows the buyer to make strategic changes and potentially realize synergies."
+    }
   ]
 }

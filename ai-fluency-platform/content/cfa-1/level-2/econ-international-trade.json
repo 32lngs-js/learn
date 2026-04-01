@@ -104,5 +104,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Capital Flows and the FX Market** \u2014 how money moves across borders and how exchange rates are determined. International trade creates the demand for foreign currencies, and the balance of payments framework connects trade flows to financial flows and exchange rate movements."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What does the theory of comparative advantage state?",
+      "options": [
+        "Countries should produce everything domestically",
+        "Countries benefit by specializing in goods they produce at the lowest opportunity cost",
+        "Larger countries always have a trade advantage"
+      ],
+      "correctIndex": 1,
+      "explanation": "Comparative advantage says countries gain from trade by specializing in goods where their opportunity cost is lowest, even if another country is more efficient at everything.",
+      "encourageCorrect": "Well done! Comparative advantage is about opportunity cost, not absolute efficiency.",
+      "encourageIncorrect": "Comparative advantage means specializing in what you produce at the lowest opportunity cost. Even if one country is better at everything, trade still benefits both."
+    },
+    {
+      "question": "Which of the following is a trade restriction?",
+      "options": [
+        "A tariff on imported goods",
+        "A free trade agreement",
+        "A floating exchange rate"
+      ],
+      "correctIndex": 0,
+      "explanation": "Tariffs are taxes on imports that raise the price of foreign goods, restricting trade. Free trade agreements and floating exchange rates do not restrict trade.",
+      "encourageCorrect": "Correct! Tariffs are the classic trade restriction \u2014 a tax on imports.",
+      "encourageIncorrect": "A tariff is a tax on imports and a direct trade restriction. Free trade agreements and floating exchange rates are not trade restrictions."
+    }
   ]
 }

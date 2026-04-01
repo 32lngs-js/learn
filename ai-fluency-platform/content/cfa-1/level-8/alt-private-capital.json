@@ -114,5 +114,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Real Estate and Infrastructure**, where you will learn about another major category of alternative investments \u2014 tangible real assets. You will see how valuation approaches differ from private equity, including cap rates, NOI, and the distinction between direct and indirect real estate investing."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Private equity's J-curve describes:",
+      "options": [
+        "A steady increase in returns from day one",
+        "Early negative returns (from fees and investments) followed by positive returns as portfolio companies mature",
+        "Declining returns over the fund's life"
+      ],
+      "correctIndex": 1,
+      "explanation": "PE funds draw capital and incur fees early (negative returns), then generate positive returns as companies grow and are exited \u2014 creating a J-shaped return pattern.",
+      "encourageCorrect": "That's the J-curve! Down early, up later as exits occur.",
+      "encourageIncorrect": "The J-curve shows early negative returns (capital calls, fees, and unrealized investments) followed by positive returns as portfolio companies are improved and sold."
+    },
+    {
+      "question": "Venture capital invests primarily in:",
+      "options": [
+        "Mature, profitable companies",
+        "Early-stage companies with high growth potential",
+        "Government bonds"
+      ],
+      "correctIndex": 1,
+      "explanation": "Venture capital targets early-stage and startup companies with high growth potential, accepting high failure rates for the chance of outsized returns.",
+      "encourageCorrect": "Right! VC backs young companies with big potential.",
+      "encourageIncorrect": "Venture capital invests in early-stage and startup companies. The risk is high (many fail), but successful investments can produce very large returns."
+    }
   ]
 }

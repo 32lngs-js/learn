@@ -43,5 +43,31 @@
       "type": "connectPrompt",
       "prompt": "You now have a complete toolkit for managing context: understanding the cliff, knowing what costs what, configuring CLAUDE.md and memory, compacting strategically, clearing when needed, and shielding with subagents. The checkpoint will test whether you can put it all together to diagnose and fix a stale session."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "How much can subagents reduce context cost for research-heavy tasks?",
+      "options": [
+        "About 10%",
+        "About 30-60x less",
+        "No difference"
+      ],
+      "correctIndex": 1,
+      "explanation": "Subagents can reduce context cost by 30-60x — they do the reading in their own context and return only a concise summary.",
+      "encourageCorrect": "Impressive ratio, right? That's the power of context isolation.",
+      "encourageIncorrect": "Subagents can reduce context cost by 30-60x — all the file reading happens in their context, and you only get a short summary."
+    },
+    {
+      "question": "When should you read files directly instead of using a subagent?",
+      "options": [
+        "Always — direct reads are always better",
+        "When you need the exact content, or the file is small",
+        "Never — always use subagents"
+      ],
+      "correctIndex": 1,
+      "explanation": "Read directly when you need exact content for editing or the file is small. Use subagents for broad surveys and exploratory research.",
+      "encourageCorrect": "Good judgment! Direct reads for precision, subagents for surveys.",
+      "encourageIncorrect": "Read directly when you need the actual content (like for editing) or when the file is small. Subagents are for broad exploration."
+    }
   ]
 }

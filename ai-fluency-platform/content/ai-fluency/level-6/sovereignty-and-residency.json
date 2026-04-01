@@ -59,5 +59,31 @@
       "type": "keyTakeaway",
       "content": "Sovereignty and data residency are architectural constraints, not legal afterthoughts. The Platformizer must design AI systems that respect jurisdictional boundaries for data storage, processing, and model training while navigating export controls on hardware and capabilities. Multi-region architecture patterns -- regional isolation, federated training, and sovereignty-aware routing -- are essential tools for deploying AI in a world of competing regulatory regimes."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is data residency in the context of AI?",
+      "options": [
+        "Where the AI company is headquartered",
+        "Legal requirements about where data can be stored and processed, based on jurisdiction",
+        "The physical location of GPU servers"
+      ],
+      "correctIndex": 1,
+      "explanation": "Data residency laws require certain categories of data to be stored and processed within specific geographic boundaries.",
+      "encourageCorrect": "Right! Data residency is an architectural constraint that must be designed for from the start.",
+      "encourageIncorrect": "Data residency refers to legal requirements that certain data must be stored and processed within specific jurisdictions -- like GDPR requiring EU data to stay in the EU."
+    },
+    {
+      "question": "Why might training a single global AI model on customer data from 30 countries cause legal problems?",
+      "options": [
+        "Because it makes the model too large",
+        "Because data from multiple jurisdictions gets mixed, potentially violating local data residency and transfer laws",
+        "Because customers prefer local models"
+      ],
+      "correctIndex": 1,
+      "explanation": "Training on cross-border data can violate GDPR, China's PIPL, and other laws that restrict where personal data can be processed and stored.",
+      "encourageCorrect": "Exactly! Cross-border data mixing is a major compliance risk that requires careful architectural planning.",
+      "encourageIncorrect": "Mixing data from 30 countries in one model can violate multiple laws (GDPR, PIPL, etc.) that restrict where personal data can be processed, stored, and transferred."
+    }
   ]
 }

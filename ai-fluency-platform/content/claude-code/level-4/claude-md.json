@@ -47,5 +47,31 @@
       "type": "connectPrompt",
       "prompt": "CLAUDE.md is the briefing you write yourself. The next module covers Claude's own memory system — how it remembers things across sessions automatically, and how you can use rules files for path-specific instructions."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is the recommended maximum length for a CLAUDE.md file?",
+      "options": [
+        "50 lines",
+        "Under 500 lines",
+        "As long as needed"
+      ],
+      "correctIndex": 1,
+      "explanation": "Keep CLAUDE.md under 500 lines — every line costs tokens every session, so each line must earn its place.",
+      "encourageCorrect": "That's the guideline! Every line should earn its place.",
+      "encourageIncorrect": "Keep it under 500 lines — CLAUDE.md loads every session, so longer files waste context budget."
+    },
+    {
+      "question": "What should NOT go in CLAUDE.md?",
+      "options": [
+        "Project conventions and architecture",
+        "Information Claude can discover by reading files on demand",
+        "Key commands for building and testing"
+      ],
+      "correctIndex": 1,
+      "explanation": "Don't include information Claude can discover on its own — like folder structures (Claude can run ls) or full API docs (Claude can read them when needed).",
+      "encourageCorrect": "Correct! Only include what Claude can't easily figure out on its own.",
+      "encourageIncorrect": "Leave out anything Claude can discover by reading files — like folder structures or API docs. Include only stable, high-value information."
+    }
   ]
 }

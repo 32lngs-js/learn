@@ -104,5 +104,31 @@
       "type": "connectPrompt",
       "prompt": "The next module examines **Asset-Backed Securities (ABS)** \u2014 specific securitization structures backed by auto loans, credit card receivables, and collateralized loan obligations. We'll explore their unique structural features and prepayment considerations."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is securitization?",
+      "options": [
+        "Insuring a bond against default",
+        "Pooling financial assets and issuing securities backed by their cash flows",
+        "Listing a bond on a stock exchange"
+      ],
+      "correctIndex": 1,
+      "explanation": "Securitization takes illiquid assets (loans, receivables), pools them, and creates tradable securities backed by the pool's cash flows.",
+      "encourageCorrect": "Right! Securitization turns illiquid assets into tradable securities.",
+      "encourageIncorrect": "Securitization pools financial assets (like loans) and issues securities backed by their cash flows, transforming illiquid assets into tradable ones."
+    },
+    {
+      "question": "A Special Purpose Entity (SPE) in securitization serves to:",
+      "options": [
+        "Manage the underlying loans",
+        "Legally isolate the pooled assets from the originator's bankruptcy risk",
+        "Rate the securities"
+      ],
+      "correctIndex": 1,
+      "explanation": "The SPE is a separate legal entity that holds the assets. If the originator goes bankrupt, the SPE's assets are protected ('bankruptcy remote').",
+      "encourageCorrect": "Exactly! The SPE creates bankruptcy remoteness \u2014 protecting investors from the originator's risk.",
+      "encourageIncorrect": "The SPE legally separates the pooled assets from the originator. If the originator goes bankrupt, the assets in the SPE are protected."
+    }
   ]
 }

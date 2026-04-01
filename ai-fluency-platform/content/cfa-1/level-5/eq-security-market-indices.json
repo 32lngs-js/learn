@@ -118,5 +118,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Market Efficiency**, which examines whether market prices fully reflect available information. If markets are efficient, index investing (passive management) should outperform most active managers \u2014 which is why index construction methods matter so much for investment practice."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "A price-weighted index gives more weight to stocks with:",
+      "options": [
+        "Higher market capitalizations",
+        "Higher stock prices",
+        "Higher trading volumes"
+      ],
+      "correctIndex": 1,
+      "explanation": "In a price-weighted index (like the Dow Jones), higher-priced stocks have more influence, regardless of company size.",
+      "encourageCorrect": "Right! In price-weighted indices, the stock price determines the weight.",
+      "encourageIncorrect": "Price-weighted indices give more weight to higher-priced stocks. The Dow Jones Industrial Average is the most famous example."
+    },
+    {
+      "question": "In a market-capitalization-weighted index, which company has the most influence?",
+      "options": [
+        "The one with the highest stock price",
+        "The one with the largest market cap",
+        "The one with the most shares outstanding"
+      ],
+      "correctIndex": 1,
+      "explanation": "Market-cap-weighted indices (like the S&P 500) weight each stock by its market capitalization (price x shares outstanding).",
+      "encourageCorrect": "Correct! Market cap = price x shares, and the biggest company has the most influence.",
+      "encourageIncorrect": "Market-cap-weighted indices weight stocks by market capitalization (price times shares outstanding). The largest companies dominate the index."
+    }
   ]
 }

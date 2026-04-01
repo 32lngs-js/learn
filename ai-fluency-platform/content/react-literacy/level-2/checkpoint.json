@@ -1,0 +1,107 @@
+{
+  "meta": {
+    "title": "2.5 Checkpoint",
+    "description": "Trace data flow through a multi-component page and identify problems.",
+    "level": "level-2",
+    "slug": "checkpoint",
+    "order": 5,
+    "isCheckpoint": true,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "markdown",
+      "content": "## Checkpoint: The Data Flow\n\nThis checkpoint tests whether you can trace data through a React component tree, read conditional rendering, and spot common problems in list rendering. Work through these without scrolling back to the modules.\n\n### Concept recall"
+    },
+    {
+      "type": "explainBack",
+      "prompt": "Explain how props work in React. What is destructuring, and how do default values work? If a component shows the wrong data, describe how you would trace the value backward through the component tree to find the bug."
+    },
+    {
+      "type": "explainBack",
+      "prompt": "Describe the two conditional rendering patterns in React (ternary and &&). When do you use each one? What is the zero gotcha with && and how do you avoid it?"
+    },
+    {
+      "type": "explainBack",
+      "prompt": "Explain the .map() pattern for rendering lists. Why does every item need a key prop? Why is using the array index as a key considered a bad practice?"
+    },
+    {
+      "type": "markdown",
+      "content": "### Applied exercises\n\nRead each code example and answer the question. These problems combine multiple Level 2 concepts."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Level 2 Synthesis",
+      "problems": [
+        {
+          "id": "rl2-cp-1",
+          "question": "Trace the data: what does the UserGreeting component display when App renders?\n\n```jsx\nfunction App() {\n  const user = { firstName: \"Dana\", lastName: \"Park\", plan: \"Pro\" };\n\n  return (\n    <div>\n      <UserGreeting\n        name={user.firstName}\n        tier={user.plan}\n      />\n    </div>\n  );\n}\n\nfunction UserGreeting({ name, tier = \"Free\" }) {\n  return (\n    <div>\n      <h1>Hello, {name}</h1>\n      <p>Your plan: {tier}</p>\n    </div>\n  );\n}\n```",
+          "options": [
+            "A) Hello, Dana / Your plan: Pro",
+            "B) Hello, Dana Park / Your plan: Pro",
+            "C) Hello, Dana / Your plan: Free"
+          ],
+          "correctAnswer": "A",
+          "explanation": "Trace the data: App passes user.firstName ('Dana') as the name prop and user.plan ('Pro') as the tier prop. UserGreeting displays {name} ('Dana') and {tier} ('Pro'). The default value 'Free' for tier is not used because App explicitly passes 'Pro'. Note that user.lastName ('Park') is never passed to UserGreeting, so only the first name appears.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "rl2-cp-2",
+          "question": "This component has a subtle bug. What does the user see when `unreadMessages` is 0?\n\n```jsx\nfunction MailboxHeader({ unreadMessages, userName }) {\n  return (\n    <header>\n      <h1>{userName}'s Mailbox</h1>\n      {unreadMessages && (\n        <div className=\"notification\">\n          You have {unreadMessages} unread messages\n        </div>\n      )}\n      {unreadMessages === 0 ? (\n        <p>All caught up!</p>\n      ) : null}\n    </header>\n  );\n}\n```",
+          "options": [
+            "A) The heading, then 'All caught up!' -- everything works correctly",
+            "B) The heading, then the text '0', then 'All caught up!' -- the && gotcha strikes",
+            "C) The heading only -- both conditional sections are hidden"
+          ],
+          "correctAnswer": "B",
+          "explanation": "Two things happen. First, {unreadMessages && ...} short-circuits because 0 is falsy, but React renders the number 0 as the text '0'. So the user sees a stray '0' on the page. Second, {unreadMessages === 0 ? <p>All caught up!</p> : null} correctly evaluates to 'All caught up!' because the condition is true. The fix for the first line: {unreadMessages > 0 && ...}.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "rl2-cp-3",
+          "question": "The sidebar shows 'No user' even though the parent passes a valid user. Where is the bug?\n\n```jsx\nfunction Dashboard() {\n  const currentUser = { name: \"Riley\", role: \"Editor\" };\n\n  return (\n    <div>\n      <MainPanel />\n      <Sidebar user={currentUser} />\n    </div>\n  );\n}\n\nfunction Sidebar({ username }) {\n  return (\n    <aside>\n      <p>{username ? username : \"No user\"}</p>\n    </aside>\n  );\n}\n```",
+          "options": [
+            "A) Dashboard passes the prop as 'user' but Sidebar destructures it as 'username' -- the prop name does not match",
+            "B) Sidebar should use 'props.user' instead of destructuring",
+            "C) The currentUser object is missing a 'username' field"
+          ],
+          "correctAnswer": "A",
+          "explanation": "Dashboard passes <Sidebar user={currentUser} />, which means the prop is named 'user'. But Sidebar destructures { username }, looking for a prop called 'username'. Since no prop called 'username' exists, it is undefined, and the ternary falls through to 'No user'. The fix: either change the parent to pass username={currentUser} or change the child to destructure { user } instead of { username }.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "rl2-cp-4",
+          "question": "What does this component render, and is there a problem with it?\n\n```jsx\nfunction TagCloud({ tags }) {\n  return (\n    <div className=\"tag-cloud\">\n      {tags.length > 0 ? (\n        tags.map(tag => (\n          <span className=\"tag\">{tag.label}</span>\n        ))\n      ) : (\n        <p>No tags</p>\n      )}\n    </div>\n  );\n}\n\n// Used like this:\n<TagCloud tags={[\n  { id: \"t1\", label: \"React\" },\n  { id: \"t2\", label: \"JavaScript\" },\n  { id: \"t3\", label: \"Design\" }\n]} />\n```",
+          "options": [
+            "A) It renders three tag spans (React, JavaScript, Design) -- no problems",
+            "B) It renders three tag spans but the mapped elements are missing key props -- React will show a console warning",
+            "C) It renders 'No tags' because the condition is wrong"
+          ],
+          "correctAnswer": "B",
+          "explanation": "The component correctly checks tags.length > 0 (true, since there are 3 tags) and maps over the array. Each tag object has an id field that should be used as the key. But the <span> inside .map() has no key prop. This will work visually but React will show a console warning, and the list may behave incorrectly if tags are added, removed, or reordered. The fix: <span key={tag.id} className='tag'>.",
+          "difficulty": "advanced"
+        },
+        {
+          "id": "rl2-cp-5",
+          "question": "Read this multi-component setup and determine: what does the page display when the order has 2 items?\n\n```jsx\nfunction OrderPage() {\n  const order = {\n    items: [\n      { id: \"i1\", name: \"Notebook\", price: 12.99 },\n      { id: \"i2\", name: \"Pen Set\", price: 8.49 },\n    ],\n    discount: 0,\n  };\n\n  const total = order.items.reduce((sum, item) => sum + item.price, 0);\n\n  return (\n    <div>\n      <h1>Your Order</h1>\n      <ItemList items={order.items} />\n      {order.discount > 0 && (\n        <p className=\"discount\">Discount applied!</p>\n      )}\n      <OrderTotal amount={total} />\n    </div>\n  );\n}\n\nfunction ItemList({ items }) {\n  return (\n    <ul>\n      {items.map(item => (\n        <li key={item.id}>\n          {item.name} - ${item.price}\n        </li>\n      ))}\n    </ul>\n  );\n}\n\nfunction OrderTotal({ amount }) {\n  return <p className=\"total\">Total: ${amount.toFixed(2)}</p>;\n}\n```",
+          "options": [
+            "A) 'Your Order', a list of 2 items with prices, 'Discount applied!', and the total $21.48",
+            "B) 'Your Order', a list of 2 items with prices, and the total $21.48 (no discount message)",
+            "C) 'Your Order', an empty list, '0', and the total $0.00"
+          ],
+          "correctAnswer": "B",
+          "explanation": "The heading 'Your Order' always renders. ItemList maps the 2 items into list items showing 'Notebook - $12.99' and 'Pen Set - $8.49'. The discount check: order.discount is 0, and {0 > 0} is false, so the discount message does not appear. Note: this uses > 0 (not the bare && pattern), so there is no zero gotcha here. OrderTotal receives the total (12.99 + 8.49 = 21.48) and displays 'Total: $21.48'.",
+          "difficulty": "advanced"
+        }
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "### Self-assessment\n\nRate your confidence on each Level 2 concept from 1 (cannot explain it) to 5 (could teach it):\n\n| Concept | Confidence (1-5) |\n| :-- | :-- |\n| Reading props and destructuring | |\n| Default prop values | |\n| String props vs curly brace props | |\n| One-way data flow (parent to child) | |\n| Prop drilling | |\n| Ternary conditional rendering | |\n| && short-circuit rendering | |\n| The zero gotcha | |\n| .map() for list rendering | |\n| The key prop and why index is bad | |\n\nIf any concept is below a 3, revisit that module before continuing to Level 3."
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "Level 2 fluency means you can trace data from where it is defined through the props it passes to the components that display it. You can read conditional rendering patterns (ternary and &&) and spot the zero gotcha. You can read .map() list rendering and know that missing or index-based keys are problems. If you can do all of this, you are ready for Level 3, where components start remembering things on their own with state."
+    }
+  ]
+}

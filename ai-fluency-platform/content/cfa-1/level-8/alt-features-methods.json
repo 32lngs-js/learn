@@ -118,5 +118,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Alternative Investment Performance and Returns**, where you will learn how to measure and compare returns across alternative investments using IRR, MOIC, and the J-curve effect \u2014 critical tools for evaluating whether those high fees are justified."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Which of the following is a common feature of alternative investments?",
+      "options": [
+        "High daily liquidity",
+        "Illiquidity and longer investment horizons",
+        "Guaranteed returns"
+      ],
+      "correctIndex": 1,
+      "explanation": "Alternative investments (private equity, real estate, hedge funds) typically have limited liquidity and require longer holding periods than public market investments.",
+      "encourageCorrect": "Exactly! Illiquidity and longer time horizons distinguish alternatives from traditional investments.",
+      "encourageIncorrect": "Alternative investments are characterized by illiquidity and longer investment horizons. This is a key difference from publicly traded stocks and bonds."
+    },
+    {
+      "question": "Why might reported returns for alternative investments be smoother than actual economic returns?",
+      "options": [
+        "Because alternative managers are more skilled",
+        "Because infrequent valuations and appraisal-based pricing create stale prices",
+        "Because alternatives have no volatility"
+      ],
+      "correctIndex": 1,
+      "explanation": "Many alternatives are valued using appraisals rather than market prices, leading to smoothed returns that understate true volatility.",
+      "encourageCorrect": "Right! Appraisal-based pricing creates artificially smooth return series.",
+      "encourageIncorrect": "Infrequent, appraisal-based valuations produce smoothed returns that understate the true volatility of alternative investments."
+    }
   ]
 }

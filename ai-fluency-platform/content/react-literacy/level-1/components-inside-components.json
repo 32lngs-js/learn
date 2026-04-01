@@ -1,0 +1,98 @@
+{
+  "meta": {
+    "title": "1.3 Components Inside Components",
+    "description": "Pages are built by nesting components like building blocks.",
+    "level": "level-1",
+    "slug": "components-inside-components",
+    "order": 3,
+    "isCheckpoint": false,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "predictPrompt",
+      "prompt": "Think about a webpage you use every day -- maybe Gmail, Twitter, or a company dashboard. If you had to break it into separate pieces (a header, a sidebar, a list of items, a footer), how many pieces would there be? Write down a rough list of the pieces you can identify."
+    },
+    {
+      "type": "markdown",
+      "content": "## Components all the way down\n\nIn Module 1.2, you learned that a React component is a function that returns JSX. Now here is the key insight that makes React powerful: **components can use other components inside their return statement**.\n\nThis is called **composition**, and it is how every React page is built. A page is not one giant file of markup. It is a tree of small, focused components, each responsible for one piece of the interface.\n\nHere is a simple example:\n\n```jsx\nfunction Header() {\n  return (\n    <header className=\"site-header\">\n      <h1>My App</h1>\n      <nav>\n        <a href=\"/home\">Home</a>\n        <a href=\"/about\">About</a>\n      </nav>\n    </header>\n  );\n}\n\nfunction Footer() {\n  return (\n    <footer className=\"site-footer\">\n      <p>&copy; 2025 My App</p>\n    </footer>\n  );\n}\n\nfunction Page() {\n  return (\n    <div className=\"page\">\n      <Header />\n      <main>\n        <h2>Welcome to the app</h2>\n        <p>This is the main content area.</p>\n      </main>\n      <Footer />\n    </div>\n  );\n}\n```\n\nLook at the `Page` component. Inside its return statement, you see `<Header />` and `<Footer />`. These are not HTML elements -- there is no HTML tag called `<Header>` or `<Footer>`. They are **React components**. When React encounters `<Header />`, it calls the `Header` function, gets back the JSX it returns, and inserts that JSX in place of the `<Header />` tag.\n\nThe result is as if `Page` had written all the markup inline:\n\n```html\n<div class=\"page\">\n  <header class=\"site-header\">\n    <h1>My App</h1>\n    <nav>\n      <a href=\"/home\">Home</a>\n      <a href=\"/about\">About</a>\n    </nav>\n  </header>\n  <main>\n    <h2>Welcome to the app</h2>\n    <p>This is the main content area.</p>\n  </main>\n  <footer class=\"site-footer\">\n    <p>&copy; 2025 My App</p>\n  </footer>\n</div>\n```\n\n### The capital letter rule\n\nHow do you tell the difference between a React component and a regular HTML element when reading JSX? The rule is simple and absolute:\n\n- **Capital letter** = React component (defined somewhere in the codebase)\n- **Lowercase letter** = standard HTML element\n\n```jsx\nreturn (\n  <div>                    {/* HTML element */}\n    <Header />             {/* React component */}\n    <main>                 {/* HTML element */}\n      <ArticleList />      {/* React component */}\n      <Sidebar />          {/* React component */}\n    </main>\n    <footer>               {/* HTML element */}\n      <Copyright />        {/* React component */}\n    </footer>\n  </div>\n);\n```\n\nThis is one of the most useful literacy skills you can develop. When scanning unfamiliar React code, the capitalization immediately tells you which pieces are custom-built and which are standard HTML.\n\n### The component tree\n\nWhen you nest components inside each other, you create a **component tree** -- a hierarchy that describes the structure of the page. Here is a realistic example of what a dashboard page might look like as a tree:\n\n```\nApp\n├── NavBar\n│   ├── Logo\n│   └── UserMenu\n├── Dashboard\n│   ├── MetricsRow\n│   │   ├── MetricCard (\"Revenue\")\n│   │   ├── MetricCard (\"Users\")\n│   │   └── MetricCard (\"Orders\")\n│   ├── RecentActivity\n│   │   └── ActivityItem (repeated)\n│   └── QuickActions\n└── Footer\n```\n\nAnd here is how the top-level component might look in code:\n\n```jsx\nfunction App() {\n  return (\n    <div className=\"app\">\n      <NavBar />\n      <Dashboard />\n      <Footer />\n    </div>\n  );\n}\n```\n\nThe `App` component does not know what is inside `NavBar`, `Dashboard`, or `Footer`. It just knows they exist and arranges them on the page. Each of those components manages its own content. `Dashboard` might contain `MetricsRow`, `RecentActivity`, and `QuickActions`. `MetricsRow` might contain three `MetricCard` components.\n\nThis is the power of composition: each component is small and focused, and the page structure emerges from how they are combined.\n\n### Where to find a component's definition\n\nWhen you see `<Sidebar />` in a component, you might wonder: where is `Sidebar` defined? The answer is almost always at the top of the file, in an **import statement**:\n\n```jsx\nimport Sidebar from \"./components/Sidebar\";\nimport Header from \"./components/Header\";\nimport UserProfile from \"./components/UserProfile\";\n\nfunction DashboardPage() {\n  return (\n    <div>\n      <Header />\n      <div className=\"content\">\n        <Sidebar />\n        <UserProfile />\n      </div>\n    </div>\n  );\n}\n```\n\nThe import tells you the file path. `import Sidebar from \"./components/Sidebar\"` means there is a file at `./components/Sidebar.js` (or `.jsx` or `.tsx`) that exports the `Sidebar` component. If you want to understand what `<Sidebar />` renders, you go to that file.\n\nThis is how you navigate a React codebase: see a component tag, check the import, follow it to the file.\n\n### A real-world example\n\nHere is a simplified version of what a settings page might look like in a real React app:\n\n```jsx\nimport PageLayout from \"../layouts/PageLayout\";\nimport SettingsNav from \"./SettingsNav\";\nimport ProfileSection from \"./ProfileSection\";\nimport NotificationSettings from \"./NotificationSettings\";\nimport DangerZone from \"./DangerZone\";\n\nfunction SettingsPage() {\n  const user = { name: \"Maria Lopez\", email: \"maria@example.com\" };\n\n  return (\n    <PageLayout title=\"Settings\">\n      <div className=\"settings-container\">\n        <SettingsNav />\n        <div className=\"settings-content\">\n          <ProfileSection user={user} />\n          <NotificationSettings />\n          <DangerZone />\n        </div>\n      </div>\n    </PageLayout>\n  );\n}\n\nexport default SettingsPage;\n```\n\nWithout knowing anything about the internals of these components, you can read this page:\n\n- The page is wrapped in a `PageLayout` that handles common layout structure\n- There is a `SettingsNav` for navigation between settings sections\n- The main content area has three sections: profile, notifications, and a danger zone (probably for account deletion)\n- The `ProfileSection` receives the user data -- the other sections do not need it\n- Each component lives in its own file (visible from the imports)\n\nThis is React literacy in action: you can understand the structure and purpose of a page without reading the implementation of every component.\n\n### Components can appear multiple times\n\nA component is reusable. You can use the same component multiple times with different data:\n\n```jsx\nfunction TeamPage() {\n  return (\n    <div className=\"team\">\n      <h1>Our Team</h1>\n      <MemberCard name=\"Alice\" role=\"Engineer\" />\n      <MemberCard name=\"Bob\" role=\"Designer\" />\n      <MemberCard name=\"Carol\" role=\"PM\" />\n    </div>\n  );\n}\n```\n\nThree `MemberCard` components, each with different data. The component is defined once but used three times. This is one of the main reasons React uses components -- write the card layout once, reuse it for every team member."
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "In this JSX, how many React components and how many HTML elements are there?\n\n```jsx\n<div>\n  <Header />\n  <main>\n    <SearchBar />\n    <ResultsList />\n  </main>\n</div>\n```",
+      "answer": "There are 3 React components (Header, SearchBar, ResultsList -- all capitalized) and 2 HTML elements (div, main -- all lowercase). The capital letter rule makes this distinction immediate: capitalized tags are custom components defined somewhere in the codebase, lowercase tags are standard HTML elements."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Reading Component Trees",
+      "problems": [
+        {
+          "id": "rl1-3-1",
+          "question": "Which of the following are React components (not HTML elements) in this JSX?\n\n```jsx\nreturn (\n  <section>\n    <PageTitle />\n    <div className=\"grid\">\n      <ProductCard />\n      <ProductCard />\n    </div>\n    <footer>\n      <Copyright />\n    </footer>\n  </section>\n);\n```",
+          "options": [
+            "A) section, div, footer",
+            "B) PageTitle, ProductCard, Copyright",
+            "C) PageTitle, ProductCard, Copyright, section, div, footer"
+          ],
+          "correctAnswer": "B",
+          "explanation": "The capital letter rule: PageTitle, ProductCard, and Copyright start with capital letters, so they are React components. section, div, and footer start with lowercase letters, so they are standard HTML elements. Note that ProductCard appears twice -- it is the same component used in two places.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "rl1-3-2",
+          "question": "Based on the imports, where would you find the code for the `Sidebar` component?\n\n```jsx\nimport Header from \"./components/Header\";\nimport Sidebar from \"../shared/Sidebar\";\nimport MainContent from \"./MainContent\";\n```",
+          "options": [
+            "A) In a file at ./components/Sidebar.js or .jsx or .tsx",
+            "B) In a file at ../shared/Sidebar.js or .jsx or .tsx",
+            "C) In the same file, below the import statements"
+          ],
+          "correctAnswer": "B",
+          "explanation": "The import path tells you exactly where the file is. 'import Sidebar from \"../shared/Sidebar\"' means the Sidebar component is in a file called Sidebar (with a .js, .jsx, or .tsx extension) inside a 'shared' folder one directory up from the current file. The '..' means 'go up one directory.'",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "rl1-3-3",
+          "question": "What can you tell about this page's structure without seeing the code for any child component?\n\n```jsx\nfunction CheckoutPage() {\n  return (\n    <div className=\"checkout\">\n      <ProgressBar step={3} />\n      <div className=\"checkout-body\">\n        <OrderSummary />\n        <PaymentForm />\n      </div>\n      <HelpLink />\n    </div>\n  );\n}\n```",
+          "options": [
+            "A) The page has a progress bar showing step 3, then an order summary next to a payment form, and a help link at the bottom",
+            "B) The page only shows a payment form -- the other components are hidden",
+            "C) You cannot tell anything about the page without reading each component's code"
+          ],
+          "correctAnswer": "A",
+          "explanation": "Component names are descriptive. ProgressBar with step={3} likely shows the user is on step 3. OrderSummary and PaymentForm sit side by side in a checkout-body container. HelpLink is at the bottom. You do not need to read each component's code to understand the page layout -- the names and structure tell you the story. This is the power of well-named components.",
+          "difficulty": "advanced"
+        }
+      ]
+    },
+    {
+      "type": "explainBack",
+      "prompt": "Explain component composition in your own words. How do you tell the difference between a React component and an HTML element in JSX? If you see a component you do not recognize, how do you find where it is defined?"
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "React pages are built by nesting components inside other components. Capital letters mean React components, lowercase means HTML elements. Import statements tell you where each component is defined. You can understand a page's structure from component names and arrangement without reading every component's code."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "You can now read JSX, identify the structure of a component, and understand how components nest together to form pages. The Level 1 checkpoint will test all three skills together -- reading complete (small) components and identifying what they render."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "How do you tell the difference between a React component and an HTML element in JSX?",
+      "options": ["React components use double brackets", "React components start with a capital letter, HTML elements are lowercase", "React components always have a className attribute"],
+      "correctIndex": 1,
+      "explanation": "The capital letter rule: tags starting with a capital letter (like <Header />) are React components, while lowercase tags (like <div>) are standard HTML elements.",
+      "encourageCorrect": "You've got it! The capital letter rule is one of the most useful patterns for reading React code quickly.",
+      "encourageIncorrect": "Remember the capital letter rule: <Header /> is a React component (capital H), while <div> is plain HTML (lowercase d)."
+    },
+    {
+      "question": "If you see '<Sidebar />' used inside a component, where would you look to find its code?",
+      "options": ["In the CSS file", "In the import statements at the top of the file", "In the return statement of the same component"],
+      "correctIndex": 1,
+      "explanation": "Import statements at the top of the file tell you the file path where each component is defined. You follow the import to find the source code.",
+      "encourageCorrect": "Exactly right! The imports are your roadmap for navigating a React codebase.",
+      "encourageIncorrect": "Good thinking, but the answer is the import statements. Something like 'import Sidebar from ./components/Sidebar' tells you exactly where to find the code."
+    }
+  ]
+}

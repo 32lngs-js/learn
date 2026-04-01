@@ -114,5 +114,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers the **One-Period Binomial Model** \u2014 a powerful framework for pricing options using risk-neutral probabilities. You will learn how to construct replicating portfolios and price options without needing to know investors' risk preferences."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Put-call parity for European options establishes a relationship between:",
+      "options": [
+        "Call price, put price, stock price, and present value of the strike",
+        "Only call and put prices",
+        "American options and European options"
+      ],
+      "correctIndex": 0,
+      "explanation": "Put-call parity: Call + PV(Strike) = Put + Stock. This links four prices and allows you to find any one given the other three.",
+      "encourageCorrect": "Exactly! Call + PV(X) = Put + Stock is the fundamental parity relationship.",
+      "encourageIncorrect": "Put-call parity links four values: C + PV(X) = P + S. Knowing any three, you can determine the fourth."
+    },
+    {
+      "question": "If put-call parity is violated, what opportunity exists?",
+      "options": [
+        "A hedging opportunity",
+        "An arbitrage opportunity (riskless profit)",
+        "A speculative opportunity"
+      ],
+      "correctIndex": 1,
+      "explanation": "A violation of put-call parity means you can construct a riskless arbitrage by buying the cheap side and selling the expensive side.",
+      "encourageCorrect": "Right! Parity violations create arbitrage \u2014 free money that is quickly exploited.",
+      "encourageIncorrect": "When put-call parity is violated, an arbitrage (riskless profit) opportunity exists. Traders exploit it until prices realign."
+    }
   ]
 }

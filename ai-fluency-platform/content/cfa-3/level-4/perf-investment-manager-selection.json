@@ -104,5 +104,31 @@
       "type": "connectPrompt",
       "prompt": "Next, we cover the **Global Investment Performance Standards (GIPS)** \u2014 the industry framework for fair, comparable presentation of investment performance."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Due diligence in manager selection should include:",
+      "options": [
+        "Only reviewing past returns",
+        "Evaluating the investment process, team, performance, risk management, and operational infrastructure",
+        "Only checking regulatory filings"
+      ],
+      "correctIndex": 1,
+      "explanation": "Comprehensive due diligence examines investment philosophy, process, people, performance, risk controls, and business/operational factors.",
+      "encourageCorrect": "Well done! Thorough due diligence covers much more than just past returns.",
+      "encourageIncorrect": "Manager due diligence should be comprehensive: investment process, team stability, performance attribution, risk management, and operational controls."
+    },
+    {
+      "question": "Past performance in manager selection is:",
+      "options": [
+        "A reliable predictor of future results",
+        "Just one factor among many; it provides limited predictive power alone",
+        "Irrelevant to the selection process"
+      ],
+      "correctIndex": 1,
+      "explanation": "Past performance offers limited predictive value for future results. Process, people, and philosophy are equally or more important in selection.",
+      "encourageCorrect": "That's the reality! Past performance is useful but far from sufficient.",
+      "encourageIncorrect": "Past performance has limited predictive power. A thorough selection process weighs it alongside investment process quality, team stability, and risk management."
+    }
   ]
 }

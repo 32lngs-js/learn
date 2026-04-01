@@ -40,9 +40,9 @@
       "context": "### Persistent Personas in Your Tool\n\nInstead of repeating role instructions every conversation, your tool can maintain persistent personas:",
       "providers": {
         "claude-code": "Claude Code uses **CLAUDE.md** files as persistent persona and role definitions. Place a CLAUDE.md file in your project's root directory with instructions like \"You are a senior backend engineer. Always consider error handling and edge cases. Prefer TypeScript over JavaScript. Follow our team's naming conventions.\" These instructions are automatically included in every Claude Code conversation within that project.\n\nCLAUDE.md supports a hierarchy: project-level files apply to everyone working on the repo, while user-level files in `~/.claude/CLAUDE.md` apply to all your projects. This means your team shares the same AI persona through version-controlled CLAUDE.md files, ensuring consistent behavior across developers. For one-off persona changes, you can also use the `--system-prompt` flag: `claude --system-prompt \"You are a security auditor. Focus on OWASP Top 10 vulnerabilities.\"` This overrides the default behavior for a single session without modifying your persistent configuration.",
-        "codex": "Codex supports **system instructions** that persist across sessions. You can configure these in the settings panel, defining the role and behavioral guidelines that Codex should follow in every interaction. For example, setting the system instructions to \"You are a senior full-stack developer. Always write tests alongside implementation code. Prefer functional patterns over class-based patterns.\"\n\nFor team consistency, Codex supports **organization-level instructions** that apply to all members. This means an engineering lead can define a shared persona — coding standards, review criteria, documentation requirements — that every team member's Codex instance follows. This is the team prompt library concept from Module 2.6 built directly into the tool. Individual developers can still add their own instructions on top of the organization defaults.",
-        "cline": "Cline provides a **custom instructions** field in the extension settings that applies to every conversation. This is where you define your persistent persona — coding style preferences, language choices, review criteria, or any behavioral guidelines. For example: \"You are a React specialist. Use functional components with hooks. Prefer Tailwind CSS for styling. Write unit tests with Vitest.\"\n\nCline also supports **project-specific instruction sets**, so you can define different personas for different codebases. Your open-source project might use one set of guidelines while your enterprise codebase uses another. When you switch workspaces in VS Code, Cline automatically loads the appropriate instructions. This means the role prompt follows the project, not the conversation — exactly the persistent persona pattern described in this module.",
-        "gemini": "Gemini supports persistent personas through **system instructions** in the CLI configuration and through **Gems** in the Gemini web interface. System instructions are defined once and apply to all subsequent interactions, acting as a persistent role prompt.\n\nGems take this further by letting you create **named, saveable personas** that you can switch between. A \"Code Reviewer\" Gem might include detailed review criteria and your team's style guide, while a \"Technical Writer\" Gem focuses on documentation clarity and API reference standards. Gems persist across conversations and can be shared within Google Workspace organizations, making them a built-in team prompt library. In the Gemini CLI, system instructions serve the same purpose — define your preferred role and behavioral guidelines once, and they apply to every interaction."
+        "codex": "Codex supports **system instructions** that persist across sessions. You can configure these in the settings panel, defining the role and behavioral guidelines that Codex should follow in every interaction. For example, setting the system instructions to \"You are a senior full-stack developer. Always write tests alongside implementation code. Prefer functional patterns over class-based patterns.\"\n\nFor team consistency, Codex supports **organization-level instructions** that apply to all members. This means an engineering lead can define a shared persona \u2014 coding standards, review criteria, documentation requirements \u2014 that every team member's Codex instance follows. This is the team prompt library concept from Module 2.6 built directly into the tool. Individual developers can still add their own instructions on top of the organization defaults.",
+        "cline": "Cline provides a **custom instructions** field in the extension settings that applies to every conversation. This is where you define your persistent persona \u2014 coding style preferences, language choices, review criteria, or any behavioral guidelines. For example: \"You are a React specialist. Use functional components with hooks. Prefer Tailwind CSS for styling. Write unit tests with Vitest.\"\n\nCline also supports **project-specific instruction sets**, so you can define different personas for different codebases. Your open-source project might use one set of guidelines while your enterprise codebase uses another. When you switch workspaces in VS Code, Cline automatically loads the appropriate instructions. This means the role prompt follows the project, not the conversation \u2014 exactly the persistent persona pattern described in this module.",
+        "gemini": "Gemini supports persistent personas through **system instructions** in the CLI configuration and through **Gems** in the Gemini web interface. System instructions are defined once and apply to all subsequent interactions, acting as a persistent role prompt.\n\nGems take this further by letting you create **named, saveable personas** that you can switch between. A \"Code Reviewer\" Gem might include detailed review criteria and your team's style guide, while a \"Technical Writer\" Gem focuses on documentation clarity and API reference standards. Gems persist across conversations and can be shared within Google Workspace organizations, making them a built-in team prompt library. In the Gemini CLI, system instructions serve the same purpose \u2014 define your preferred role and behavioral guidelines once, and they apply to every interaction."
       }
     },
     {
@@ -64,6 +64,32 @@
     {
       "type": "connectPrompt",
       "prompt": "Roles control perspective and tone. In Module 2.4, you will learn how to control the model's behavior at a lower level through parameters like temperature, top-p, max tokens, and delimiters -- the knobs and switches beneath the surface."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Does assigning a role to an AI model give it new knowledge?",
+      "options": [
+        "Yes, it unlocks hidden knowledge",
+        "No, it shifts which existing patterns the model draws from",
+        "Yes, but only for technical topics"
+      ],
+      "correctIndex": 1,
+      "explanation": "Role prompting doesn't add knowledge -- it biases the model toward vocabulary, reasoning patterns, and detail levels associated with that role in its training data.",
+      "encourageCorrect": "Exactly! Roles shift probability distributions, they don't create new expertise.",
+      "encourageIncorrect": "Role prompts don't add new knowledge -- they shift which existing patterns the model uses, biasing it toward the vocabulary and style of that role."
+    },
+    {
+      "question": "Why is role prompting considered a prompt engineering technique, not just role-play?",
+      "options": [
+        "Because it changes the model's architecture",
+        "Because it biases the model's probability distribution toward domain-specific vocabulary and reasoning",
+        "Because it makes the model respond faster"
+      ],
+      "correctIndex": 1,
+      "explanation": "Role prompting is a deliberate technique that manipulates which training data patterns the model draws from, affecting vocabulary, reasoning, and detail level.",
+      "encourageCorrect": "Well put! It's a systematic technique for controlling output quality and style.",
+      "encourageIncorrect": "Role prompting is a technique that biases the model's output toward specific vocabulary and reasoning patterns from its training data -- it's engineering, not entertainment."
     }
   ]
 }

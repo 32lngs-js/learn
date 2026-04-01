@@ -1,0 +1,25 @@
+{
+  "meta": {
+    "title": "Getting Started",
+    "description": "What this course is, who it's for, and why React literacy matters in the age of AI.",
+    "level": "root",
+    "slug": "getting-started",
+    "order": 0,
+    "isCheckpoint": false,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "markdown",
+      "content": "## You are not here to become a React developer\n\nThis course will not teach you to build React applications from scratch. It will not ask you to set up a development environment, configure webpack, or write components in a blank editor.\n\nSo what *will* it do?\n\nIt will teach you to **read** React code. To look at a component and understand what it renders, how data flows through it, and why it might be broken — the same way a project manager can read an architectural blueprint without being an architect.\n\n## Why React, and why now?\n\nReact is the most widely used framework for building web applications. When you ask AI to build you a web app, dashboard, or interactive tool, there is a very good chance the output will be React code.\n\nAI can generate entire React applications from a text description. But here is the problem: **AI makes the same React mistakes over and over.** Missing dependency arrays that cause infinite loops. Stale closures that show old data. Unnecessary state that adds complexity for no reason.\n\nSomeone needs to:\n\n- Look at a React component and understand what it does\n- Spot when a hook is misconfigured\n- Recognize why a list is rendering incorrectly\n- Describe the problem precisely enough for AI to fix it\n\nThat someone is you.\n\n## Prerequisites\n\nThis course assumes you are comfortable reading basic HTML, CSS, and JavaScript — the material covered in **Web Fundamentals Levels 1-4**. If you completed that course, you are ready. If you already know the basics of reading web code, you can jump straight in.\n\nYou do **not** need to know React. That is what this course teaches.\n\n## What you will learn\n\n| Level | Topic | What you will be able to do |\n| :-- | :-- | :-- |\n| 1 | **The Component** | Read JSX and understand what a React component renders |\n| 2 | **The Data Flow** | Trace how data moves through props from parent to child components |\n| 3 | **The Memory** | Read hooks (useState, useEffect, useContext) and understand state changes |\n| 4 | **The Side Effects** | Understand data fetching, forms, routing, and async patterns |\n| 5 | **The Shape of Code** | Read TypeScript annotations and recognize common project patterns |\n| 6 | **The Debugging** | Use error messages and React DevTools to find and diagnose bugs |\n| 7 | **The AI Review** | Review AI-generated React code systematically and direct fixes |\n| 8 | **The Codebase** | Navigate a real React project and trace features across files |\n\n## How this course works\n\nEach module follows a pattern:\n\n1. **Predict** — You guess before you learn, activating what you already know\n2. **Learn** — Short, focused explanations with real React code examples\n3. **Practice** — Problems that present real code and ask: \"What does this do?\" \"What is wrong?\" \"What would you tell AI to fix?\"\n4. **Reflect** — Connect what you learned to your own work\n\nThe practice problems are not trivia. They are the exact situations you will face when reviewing AI-generated React code.\n\n## Who this is for\n\n- **Product managers** who work with React teams and want to understand technical discussions\n- **Designers** who want to verify that a developer (or AI) implemented their design correctly in React\n- **Founders** who use AI tools to build React applications and need to review the output\n- **Non-React developers** who encounter React code in their work and want to read it confidently\n- **Anyone** who completed Web Fundamentals and wants to go deeper into the framework that powers most modern web apps"
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "React literacy is not about writing React code — it is about reading, understanding, and troubleshooting it. In the age of AI, the ability to review and debug React components is more valuable than the ability to build them from scratch."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "Ready to start? Level 1 begins with the building block of every React application: the component. You already know HTML — JSX is going to feel surprisingly familiar."
+    }
+  ]
+}

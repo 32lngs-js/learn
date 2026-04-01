@@ -43,5 +43,31 @@
       "type": "connectPrompt",
       "prompt": "Writing is about creating content. The next module covers a different kind of work: organizing, cleaning, and transforming data and files. The four-phase workflow adapts beautifully to data tasks where understanding the data before changing it is critical."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is the recommended approach for writing long documents with Claude?",
+      "options": [
+        "Write it all in one prompt",
+        "Draft section by section with specific guidance for each",
+        "Let Claude decide the entire structure"
+      ],
+      "correctIndex": 1,
+      "explanation": "Draft section by section — this maintains quality control, keeps context focused, and lets your voice stay consistent.",
+      "encourageCorrect": "That's the writing partner approach! Section by section keeps quality high.",
+      "encourageIncorrect": "Draft section by section with specific guidance for each — this maintains quality, keeps context focused, and preserves your voice."
+    },
+    {
+      "question": "What kind of revision requests get the best results?",
+      "options": [
+        "'Make it better'",
+        "Specific requests like 'shorten to 50 words' or 'rewrite in active voice'",
+        "'Fix everything'"
+      ],
+      "correctIndex": 1,
+      "explanation": "Specific revision requests produce specific results. Vague requests produce vague improvements.",
+      "encourageCorrect": "Exactly! Specificity wins again, even in revision.",
+      "encourageIncorrect": "Specific requests like 'shorten to 50 words' or 'rewrite in active voice' get far better results than vague ones like 'make it better'."
+    }
   ]
 }

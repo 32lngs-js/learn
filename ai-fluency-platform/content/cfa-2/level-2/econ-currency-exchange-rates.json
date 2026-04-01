@@ -125,5 +125,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Economic Growth and Investment Implications**, where you'll analyze growth models and understand how macroeconomic factors drive long-term investment returns across countries \u2014 building on the international perspective developed here."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "According to the international Fisher effect, currencies with higher interest rates will tend to:",
+      "options": [
+        "Appreciate against other currencies",
+        "Depreciate against other currencies",
+        "Remain stable"
+      ],
+      "correctIndex": 1,
+      "explanation": "The international Fisher effect predicts that high-interest-rate currencies depreciate because the rate differential reflects higher expected inflation.",
+      "encourageCorrect": "That's the Fisher effect! Higher rates signal higher inflation expectations and currency depreciation.",
+      "encourageIncorrect": "The international Fisher effect says high-interest-rate currencies tend to depreciate. The higher rates reflect higher expected inflation."
+    },
+    {
+      "question": "Covered interest rate parity ensures that:",
+      "options": [
+        "Currency speculation is always profitable",
+        "The forward exchange rate eliminates any arbitrage between domestic and foreign interest rates",
+        "Spot rates never change"
+      ],
+      "correctIndex": 1,
+      "explanation": "Covered interest rate parity says the forward premium/discount exactly offsets the interest rate differential, preventing riskless arbitrage.",
+      "encourageCorrect": "Exactly! The forward rate adjusts so no riskless arbitrage exists.",
+      "encourageIncorrect": "Covered interest rate parity means the forward exchange rate adjusts to offset interest rate differentials between two currencies, preventing arbitrage."
+    }
   ]
 }

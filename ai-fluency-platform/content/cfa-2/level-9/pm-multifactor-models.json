@@ -104,5 +104,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Portfolio Construction**, where you will apply factor models to build optimal portfolios. You will study Mean-Variance Optimization and its limitations, Black-Litterman, and risk budgeting \u2014 all of which rely on the factor decomposition framework you just learned."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "The Fama-French three-factor model includes which factors beyond the market factor?",
+      "options": [
+        "Momentum and volatility",
+        "Size (SMB) and value (HML)",
+        "Interest rate and inflation"
+      ],
+      "correctIndex": 1,
+      "explanation": "Fama-French adds size (small minus big, SMB) and value (high minus low book-to-market, HML) to the single market factor of CAPM.",
+      "encourageCorrect": "Exactly! Market, size, and value are the three Fama-French factors.",
+      "encourageIncorrect": "Fama-French three factors: Market (excess return), Size (SMB: small cap premium), and Value (HML: value stock premium)."
+    },
+    {
+      "question": "Factor models help portfolio managers by:",
+      "options": [
+        "Eliminating all portfolio risk",
+        "Decomposing returns into systematic factor exposures and specific risk",
+        "Guaranteeing positive alpha"
+      ],
+      "correctIndex": 1,
+      "explanation": "Factor models separate returns into parts driven by systematic factors (market, size, value, etc.) and a company-specific residual component.",
+      "encourageCorrect": "Right! Factor models decompose where your returns actually come from.",
+      "encourageIncorrect": "Factor models decompose portfolio returns into systematic factor exposures (market, size, value, etc.) and idiosyncratic (stock-specific) risk."
+    }
   ]
 }

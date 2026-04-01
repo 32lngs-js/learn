@@ -1,0 +1,72 @@
+{
+  "meta": {
+    "title": "7.1 The Literacy Mindset",
+    "description": "Understand the difference between code literacy and code fluency, know when to handle things yourself vs ask for help, and build lasting confidence.",
+    "level": "level-7",
+    "slug": "the-literacy-mindset",
+    "order": 1,
+    "isCheckpoint": false,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "predictPrompt",
+      "prompt": "You have spent six levels learning to read code. But there is a difference between being able to read a language and being fluent in it \u2014 you can read a restaurant menu in French without being able to write a novel. What do you think the practical difference is between 'code literacy' and 'code fluency,' and which one do you think matters more for your role?"
+    },
+    {
+      "type": "markdown",
+      "content": "## Code literacy vs code fluency\n\nLet's name what you have built.\n\n**Code fluency** is the ability to write code from scratch, debug complex algorithms, architect systems, and think in code all day. Software engineers spend years developing this. It is a deep, specialized skill.\n\n**Code literacy** is the ability to read code, understand what it does, spot problems, and communicate about it clearly. It is the skill of comprehension, not composition.\n\nHere is the key insight: **code literacy is the higher-leverage skill for most non-engineering roles.** A product manager who can read a pull request catches issues before they ship. A designer who can inspect CSS can give precise feedback instead of vague \"it looks off\" comments. A founder who can read a contractor's code delivery knows whether they got what they paid for.\n\nYou are not trying to become a developer. You are trying to never feel helpless when code is involved.\n\n## The 80/20 of code reading\n\nHere is something reassuring: roughly 20% of concepts cover 80% of what you will encounter in real web code.\n\nYou already know that 20%:\n\n- **HTML tags** structure content \u2014 headings, paragraphs, links, images, forms, divs\n- **CSS properties** control appearance \u2014 colors, spacing, layout, fonts, responsive breakpoints\n- **JavaScript patterns** drive behavior \u2014 variables, functions, event listeners, DOM queries, conditionals\n- **The DevTools** let you inspect and test anything live in the browser\n\nWhen you encounter the other 80% \u2014 complex build systems, server-side rendering, advanced state management \u2014 you do not need to understand it all. You need to understand enough to ask the right question or find the right person.\n\n## When to DIY vs ask a developer vs use AI\n\nNow that you can read code, you have three options when you encounter a code-related task:\n\n**Handle it yourself** when:\n- You need to change text content in HTML\n- You need to tweak a CSS value (color, spacing, font size)\n- You need to add a tracking snippet or embed code to a page\n- You need to inspect a page in DevTools to diagnose a visual issue\n\n**Use AI as your partner** when:\n- You need to generate a new component or section and can verify the output\n- You need to understand what unfamiliar code does\n- You need to write a first draft of something and then refine it\n- You can clearly describe what you want in code terms\n\n**Ask a developer** when:\n- The change touches backend logic, databases, or authentication\n- You are unsure whether a change could break other parts of the system\n- The codebase uses patterns you have never seen and cannot figure out\n- Security is involved \u2014 never guess on security\n\nThe important thing is that you can now make this decision **intelligently** instead of defaulting to \"I don't know, ask engineering.\"\n\n## Building your reference toolkit\n\nProfessional developers do not memorize everything. They have bookmarks, reference docs, and habits that let them look things up fast. You should too:\n\n- **MDN Web Docs** (developer.mozilla.org) \u2014 The authoritative reference for HTML, CSS, and JavaScript. Bookmark it. When you see a tag or property you do not recognize, search MDN first.\n- **Your browser's DevTools** \u2014 You already know how to use these. Make inspecting pages a habit, not a special occasion.\n- **A personal cheat sheet** \u2014 Keep a short document with the patterns you encounter most often. \"This is how a media query works.\" \"This is what querySelector does.\" Writing it in your own words helps it stick.\n- **AI chat** \u2014 When you are stuck, describe what you see in code terms. \"I see a CSS rule with `display: grid` and `grid-template-columns: repeat(3, 1fr)` \u2014 what does the `1fr` mean?\" is a question that gets a precise, useful answer.\n\n## The most important skill: specificity of confusion\n\nBefore this course, when you looked at code, you might have said:\n\n> \"I don't understand this code.\"\n\nNow you can say:\n\n> \"I understand that this is a form with three input fields and a submit button. I can see the CSS is using flexbox for the layout. But I don't understand what the JavaScript function on line 42 does \u2014 it seems to be checking something about the email input before the form submits.\"\n\nThat second statement is **enormously more useful** \u2014 to you, to a developer you are asking for help, and to an AI you are prompting. The ability to be specific about what you do and do not understand is the single most valuable outcome of code literacy.\n\nThis is the mindset shift: you have gone from \"code is a foreign language\" to \"code is a language I can read well enough to have a real conversation about it.\""
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "On a scale of 1-5, how confident are you that you could look at a webpage's source code and specifically identify which part you do not understand, rather than feeling lost about the whole thing?",
+      "answer": "If you rated yourself 3 or higher, you have internalized the core skill of this course. Code literacy is not about understanding everything \u2014 it is about being able to pinpoint exactly where your understanding stops, so you can ask the right question or look up the right thing."
+    },
+    {
+      "type": "reflectPrompt",
+      "questions": [
+        "Think about a specific moment in your work from the past month where code was involved (a website change, a bug report, a feature discussion). How would you have handled that moment differently with what you know now?",
+        "Of the three options \u2014 DIY, use AI, ask a developer \u2014 which one do you think you will use most often in your role? Why?",
+        "What is one topic from this course that felt confusing at first but now feels manageable? What changed in your understanding?"
+      ]
+    },
+    {
+      "type": "explainBack",
+      "prompt": "Explain the difference between code literacy and code fluency to someone who thinks they need to 'learn to code' to be effective in a tech-adjacent role. Why is literacy often the better investment?"
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "Code literacy \u2014 the ability to read, understand, and communicate about code \u2014 is a distinct and highly valuable skill, separate from the ability to write code from scratch. The 20% of concepts you have learned covers 80% of what you will encounter. Your most powerful new ability is specificity: instead of saying 'I don't understand,' you can now pinpoint exactly what you do and do not understand."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "You have the mindset. Now let's put it to work. Module 7.2 will drop you into 8 realistic scenarios \u2014 each one tied to a specific role \u2014 where code literacy makes the difference between feeling stuck and taking action."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "The key difference between code literacy and code fluency is:",
+      "options": [
+        "Code literacy requires years of practice",
+        "Code literacy is the ability to read and understand code; code fluency is the ability to write it from scratch",
+        "There is no difference"
+      ],
+      "correctIndex": 1,
+      "explanation": "Code literacy means reading, understanding, and communicating about code. Code fluency means writing it from scratch. This course builds literacy, not fluency.",
+      "encourageCorrect": "That's the distinction! Reading vs writing \u2014 both valuable, different skills.",
+      "encourageIncorrect": "Code literacy is about reading and understanding code. Code fluency is about writing it. You don't need fluency to be highly effective with code."
+    },
+    {
+      "question": "Your most powerful new ability from code literacy is:",
+      "options": [
+        "Memorizing syntax",
+        "Specificity \u2014 saying 'the padding on .card is too large' instead of 'it looks weird'",
+        "Being able to write JavaScript functions"
+      ],
+      "correctIndex": 1,
+      "explanation": "Specificity transforms your ability to communicate about web issues. Naming elements and properties precisely gets issues fixed faster.",
+      "encourageCorrect": "Exactly! Specificity is the superpower \u2014 precise language leads to precise fixes.",
+      "encourageIncorrect": "Specificity is the most powerful skill: naming the exact element, property, and issue instead of saying something vague like 'it looks weird.'"
+    }
+  ]
+}

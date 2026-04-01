@@ -59,5 +59,31 @@
         "What monitoring and alerting would you set up to catch cost anomalies before they become budget problems?"
       ]
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Why do multi-model pipelines multiply token costs?",
+      "options": [
+        "Because they use more expensive models",
+        "Because a single user request triggers multiple model calls across router, specialist, and evaluator",
+        "Because they process tokens more slowly"
+      ],
+      "correctIndex": 1,
+      "explanation": "In a multi-model pipeline, one user request may trigger calls to a router, specialist, and evaluator -- each consuming tokens and adding cost.",
+      "encourageCorrect": "Right! Understanding cost multiplication is key to managing multi-model system budgets.",
+      "encourageIncorrect": "A single user request can trigger multiple model calls (router, specialist, evaluator), and each call consumes tokens -- so costs multiply across the pipeline."
+    },
+    {
+      "question": "Why is a per-request token budget more useful than a monthly spending cap?",
+      "options": [
+        "It's easier to calculate",
+        "It catches runaway individual requests in real time, like a circuit breaker, rather than alerting after the damage is done",
+        "It's cheaper to implement"
+      ],
+      "correctIndex": 1,
+      "explanation": "Per-request budgets act as circuit breakers, catching runaway requests immediately. Monthly caps only tell you after you've already overspent.",
+      "encourageCorrect": "Great analogy! Per-request budgets are circuit breakers; monthly caps are billing alerts.",
+      "encourageIncorrect": "A per-request budget is like a circuit breaker -- it stops runaway requests immediately. A monthly cap is a billing alert that only tells you after the damage is done."
+    }
   ]
 }

@@ -1,0 +1,29 @@
+{
+  "meta": {
+    "title": "Level 5: The Shape of Code",
+    "description": "Real React uses TypeScript and established patterns. Learn to read them.",
+    "level": "level-5",
+    "slug": "index",
+    "order": 0,
+    "isCheckpoint": false,
+    "isIndex": true
+  },
+  "blocks": [
+    {
+      "type": "markdown",
+      "content": "## Welcome to Level 5\n\nYou have made it through four levels. You can read components, trace props, understand state and hooks, follow data fetching, and recognize routing patterns. You have a solid foundation in reading React.\n\nBut if you open a real production React codebase right now, you will probably notice something: the code looks a little different from what you have been reading. There are colons and angle brackets in unfamiliar places. Variables have extra annotations. Files are organized in folders with `index.ts` files that seem to do nothing.\n\nThat is because most real-world React projects use **TypeScript** and follow **common structural patterns**. This level teaches you to read both.\n\nThe good news: TypeScript is not a new language. It is JavaScript with labels. And the project patterns are not random -- they follow a small number of conventions that, once you recognize them, make any codebase easier to navigate.\n\n### What you will learn\n\n| Module | Topic | Core Idea |\n| :-- | :-- | :-- |\n| 5.1 | TypeScript Is Just Labels | Type annotations are documentation, not behavior |\n| 5.2 | Reading Typed Components | Props interfaces are the component's contract |\n| 5.3 | Custom Hooks | `useXyz()` is a reusable piece of logic you can read by its return value |\n| 5.4 | Common Project Patterns | How real projects organize their files and folders |\n| 5.5 | Checkpoint | Read TypeScript React code and navigate project structures |\n\n### The core idea\n\nTypeScript adds **labels** to your code -- it documents what type each variable is, what shape each object has, and what each function expects and returns. These labels do not change what the code does. They are metadata. Once you learn to see them as documentation rather than intimidating syntax, TypeScript code becomes easier to read than plain JavaScript, not harder."
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "TypeScript is JavaScript with documentation built in. Project patterns are conventions that make codebases navigable. Both are learnable, and both make real React code easier to read once you know what to look for."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "As you work through Level 5, notice how TypeScript annotations actually help you understand what code does faster -- they tell you what kind of data flows through each variable and function without needing to trace it yourself."
+    },
+    {
+      "type": "markdown",
+      "content": "### Ready?\n\nStart with [Module 5.1: TypeScript Is Just Labels](/react-literacy/level-5/typescript-is-just-labels/) to learn the annotation system that most React codebases use."
+    }
+  ]
+}

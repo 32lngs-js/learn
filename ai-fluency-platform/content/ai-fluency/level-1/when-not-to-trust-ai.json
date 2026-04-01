@@ -51,5 +51,31 @@
       "type": "connectPrompt",
       "prompt": "You now have the complete Level 1 foundation: AI is an inference engine producing probabilistic predictions from frozen weights, its fluent output is not evidence of understanding, and high-risk domains require mandatory verification. The Level 1 checkpoint will test whether you have internalized these concepts."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Can an AI model tell when its own output is incorrect?",
+      "options": [
+        "Yes, it flags uncertain answers automatically",
+        "No, it produces fabricated content with the same confidence as accurate content",
+        "Only for math problems"
+      ],
+      "correctIndex": 1,
+      "explanation": "AI does not know when it is wrong -- it generates fabricated legal citations, incorrect medical dosages, and invented data with the same fluency as accurate information.",
+      "encourageCorrect": "That's a critical insight! The model's confidence tells you nothing about its accuracy.",
+      "encourageIncorrect": "AI cannot tell when it's wrong -- it produces incorrect information with the same fluency and confidence as correct information. That's why human verification matters."
+    },
+    {
+      "question": "In which domains should you always verify AI output against authoritative sources?",
+      "options": [
+        "Only creative writing",
+        "High-risk domains like legal, medical, and financial information",
+        "Only when the output seems wrong"
+      ],
+      "correctIndex": 1,
+      "explanation": "The higher the cost of an error, the more rigorously you must verify. Legal, medical, and financial domains are high-risk because errors can cause real harm.",
+      "encourageCorrect": "Exactly! High-stakes domains demand mandatory verification -- human expertise is the final quality gate.",
+      "encourageIncorrect": "High-risk domains like legal, medical, and financial information always require verification against authoritative sources -- the cost of errors is too high."
+    }
   ]
 }

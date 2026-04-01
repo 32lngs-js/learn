@@ -104,5 +104,31 @@
       "type": "connectPrompt",
       "prompt": "Next, we examine **Trading Costs and Execution** \u2014 the often-overlooked friction that determines whether investment ideas actually translate into portfolio returns."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "The key difference between a defined benefit pension and a defined contribution pension is:",
+      "options": [
+        "DB plans are always better for employees",
+        "In DB, the employer bears investment risk; in DC, the employee bears it",
+        "DC plans don't allow investing in equities"
+      ],
+      "correctIndex": 1,
+      "explanation": "DB plans promise a specific benefit (employer bears risk). DC plans specify contributions only (employee bears investment risk and retirement outcome risk).",
+      "encourageCorrect": "Exactly! Who bears the risk is the fundamental difference.",
+      "encourageIncorrect": "In defined benefit, the employer bears investment risk (they owe a promised benefit). In defined contribution, the employee bears the risk (their benefit depends on investment performance)."
+    },
+    {
+      "question": "A sovereign wealth fund's investment horizon is typically:",
+      "options": [
+        "Very short (under 1 year)",
+        "Very long, often intergenerational",
+        "Exactly 10 years"
+      ],
+      "correctIndex": 1,
+      "explanation": "Sovereign wealth funds typically invest on behalf of a nation for future generations, giving them very long (multi-decade) time horizons.",
+      "encourageCorrect": "Right! Sovereign wealth funds think in decades and generations.",
+      "encourageIncorrect": "Sovereign wealth funds invest with intergenerational time horizons \u2014 often decades or longer. This allows them to take illiquidity premiums."
+    }
   ]
 }

@@ -1,0 +1,25 @@
+{
+  "meta": {
+    "title": "Level 1: The Page",
+    "description": "Learn to read HTML and understand the structure of any webpage — no coding required.",
+    "level": "level-1",
+    "slug": "the-page",
+    "order": 0,
+    "isCheckpoint": false,
+    "isIndex": true
+  },
+  "blocks": [
+    {
+      "type": "markdown",
+      "content": "## Level 1: The Page\n\nEvery website you have ever visited — every landing page, every blog post, every product page — is built on the same foundation: **HTML**.\n\nHTML is not a programming language. It does not do calculations or make decisions. It is a **labeling system**. Think of it like an outline for a document: this part is a heading, this part is a paragraph, this is a link, this is an image.\n\nWhen you \"View Source\" on any webpage, the wall of text you see is HTML. By the end of this level, that wall of text will start making sense.\n\n## What you will learn\n\n| Module | Topic | What you will be able to do |\n| :-- | :-- | :-- |\n| 1.1 | **What Is a Webpage, Really?** | Use View Source, read basic tags, and understand how HTML becomes what you see on screen |\n| 1.2 | **The Anatomy of a Page** | Recognize the major sections of an HTML document and understand what goes where |\n| 1.3 | **Links, Images, and Lists** | Read the most common HTML elements and spot why they break |\n| 1.4 | **Checkpoint** | Put it all together with realistic reading and debugging challenges |\n\n## The mental model\n\nImagine you are handed a printed document — a report, a newsletter, a flyer. You can immediately tell which text is the headline, which is a paragraph, and which is a bulleted list. You know this because of visual cues: size, weight, position.\n\nHTML is how a computer gets those same cues. Instead of visual formatting, it uses **tags** — little labels wrapped in angle brackets — to say \"this is a heading\" or \"this is a list item.\" The browser reads those labels and renders the visual result you are used to seeing.\n\nYou already understand document structure intuitively. HTML just makes that structure explicit."
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "HTML is a labeling system, not a programming language. It tells the browser what each piece of content is — heading, paragraph, link, image — so the browser knows how to display it. Learning to read HTML is like learning to read an outline."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "Let's start with the most basic question: when you visit a webpage, what is actually happening? Module 1.1 will show you what is behind every page you have ever seen."
+    }
+  ]
+}

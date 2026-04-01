@@ -1,0 +1,29 @@
+{
+  "meta": {
+    "title": "Level 3: The Memory",
+    "description": "Components remember things with state. Learn to read the hooks that manage it.",
+    "level": "level-3",
+    "slug": "index",
+    "order": 0,
+    "isCheckpoint": false,
+    "isIndex": true
+  },
+  "blocks": [
+    {
+      "type": "markdown",
+      "content": "## Welcome to Level 3\n\nIn Level 2, you learned how data flows into a component through props -- data handed down from a parent. But props only tell half the story. What happens when a user clicks a button and the screen changes? What happens when a form field tracks what the user is typing? What happens when a component needs to remember something on its own?\n\nThat is **state**.\n\nProps are data passed in from outside. State is data the component remembers on its own. This distinction is one of the most important ideas in React, and this level will make it second nature.\n\n### What you will learn\n\n| Module | Topic | Core Idea |\n| :-- | :-- | :-- |\n| 3.1 | useState: The Basics | The most common hook -- giving a component its own piece of memory |\n| 3.2 | State Updates and Gotchas | Why state does not update instantly, and the rules for updating objects and arrays |\n| 3.3 | useEffect: When Things Happen | Running code at specific moments -- on mount, on change, on unmount |\n| 3.4 | useContext: Data Without Drilling | Sharing data across the component tree without passing props at every level |\n| 3.5 | Reading Hooks in the Wild | How real components combine multiple hooks together |\n| 3.6 | Checkpoint | Test your ability to read stateful components |\n\n### The core idea\n\nReact manages change through **hooks** -- special functions that let components remember values, respond to events, and connect to the outside world. The three most important hooks are `useState`, `useEffect`, and `useContext`. If you can read these three, you can read the vast majority of React components in any codebase.\n\nThis is the hardest level in the course. Hooks are the concept that trips up even working developers. But you are not here to write hooks -- you are here to read them. And reading them is a learnable skill with clear patterns."
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "Props are data from the outside. State is data the component manages on its own. Hooks are the functions that let components remember things, respond to changes, and connect to the world beyond the screen."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "Think about a web application you use daily -- maybe a task manager, email client, or dashboard. What parts of the screen change without a full page reload? A counter going up, a sidebar opening, a notification appearing. Every one of those changes is driven by state."
+    },
+    {
+      "type": "markdown",
+      "content": "### Ready?\n\nStart with [Module 3.1: useState: The Basics](/react-literacy/level-3/usestate-the-basics/) to learn the hook that gives components their memory."
+    }
+  ]
+}

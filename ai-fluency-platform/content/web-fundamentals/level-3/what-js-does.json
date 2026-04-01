@@ -1,0 +1,106 @@
+{
+  "meta": {
+    "title": "3.1 What JavaScript Actually Does",
+    "description": "Understand the three jobs of JavaScript, read variables and functions, and learn to translate code to plain English.",
+    "level": "level-3",
+    "slug": "what-js-does",
+    "order": 1,
+    "isCheckpoint": false,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "predictPrompt",
+      "prompt": "When you click a button on a website and something changes \u2014 a menu opens, a form submits, a message appears \u2014 what do you think is making that happen? How do you think the browser knows what to do when you interact with the page?"
+    },
+    {
+      "type": "markdown",
+      "content": "## The Three Jobs of JavaScript\n\nEvery piece of JavaScript you will ever encounter does one (or more) of three things:\n\n### Job 1: Respond to user actions\nWhen you click a button, type in a search box, or hover over a menu \u2014 JavaScript is listening. It waits for something to happen, then runs a set of instructions.\n\n### Job 2: Change the page content\nJavaScript can reach into the HTML and change it *after* the page has loaded. It can show or hide elements, update text, add new items to a list, or swap out an entire section.\n\n### Job 3: Talk to servers\nWhen you see new content appear without the page refreshing \u2014 a feed loading more posts, a search showing suggestions as you type \u2014 JavaScript is sending requests to a server and putting the response on the page.\n\nThat is it. Every interactive feature you use on the web \u2014 from a dropdown menu to an infinite-scrolling feed \u2014 is some combination of those three jobs.\n\n---\n\n## Reading Variables: Labeled Boxes\n\nA **variable** is just a labeled container that holds a value. Think of it as a sticky note with a name on it, stuck to a box.\n\n```javascript\nlet userName = \"Alice\";\nlet itemCount = 3;\nlet isLoggedIn = true;\n```\n\nReading this aloud:\n- \"Create a container called `userName` and put the text `Alice` in it.\"\n- \"Create a container called `itemCount` and put the number `3` in it.\"\n- \"Create a container called `isLoggedIn` and set it to `true` (yes).\"\n\nThe word `let` just means \"create a new container.\" You will also see `const` (same thing, but the value cannot be changed later) and occasionally `var` (an older version of `let`).\n\n---\n\n## Reading Functions: Reusable Recipes\n\nA **function** is a saved set of instructions with a name. Think of it as a recipe card \u2014 you write it once, then use it whenever you need it.\n\n```javascript\nfunction greet() {\n  alert(\"Welcome back!\");\n}\n```\n\nReading this aloud: \"There is a recipe called `greet`. When someone runs it, it shows a pop-up that says 'Welcome back!'\"\n\nFunctions can also accept inputs (called **parameters**):\n\n```javascript\nfunction greet(name) {\n  alert(\"Welcome back, \" + name + \"!\");\n}\n```\n\n\"There is a recipe called `greet` that takes a `name`. When you run `greet(\"Alice\")`, it shows 'Welcome back, Alice!'\"\n\n---\n\n## The Skill: Reading JavaScript Aloud\n\nThe single most useful skill for reading code is **translating each line to plain English**. You do not need to understand every detail \u2014 just get the gist.\n\n```javascript\nlet price = 29.99;\nlet discount = 0.10;\nlet finalPrice = price - (price * discount);\n```\n\nTranslation:\n1. \"The price is 29.99.\"\n2. \"The discount is 10%.\"\n3. \"The final price is the price minus 10% of the price.\"\n\nYou do not need to calculate the result. You just need to understand what the code *intends* to do.\n\n---\n\n## Where JavaScript Lives\n\nJavaScript can appear in two places in an HTML file:\n\n**Inline \u2014 inside a `<script>` tag:**\n```html\n<script>\n  alert(\"Hello!\");\n</script>\n```\n\n**External \u2014 loaded from a separate file:**\n```html\n<script src=\"app.js\"></script>\n```\n\nThe second approach is far more common on real websites. The JavaScript lives in its own `.js` file and the HTML just points to it, the same way CSS uses a `<link>` tag to point to a `.css` file.\n\nWhen you view the source of a page and see a `<script src=\"...\">` tag, that tells you where the behavior code lives."
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "If you saw `let cartTotal = 0;` in JavaScript, could you explain in one sentence what that line does?",
+      "answer": "It creates a container (variable) called cartTotal and sets its starting value to 0. Think of it as labeling an empty box 'cartTotal' and putting a zero inside it."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Reading JavaScript Basics",
+      "problems": [
+        {
+          "id": "wf3-1",
+          "question": "What does this code do?\n\n```javascript\ndocument.getElementById('greeting').textContent = 'Hello!';\n```",
+          "options": [
+            "A) It finds the element with id 'greeting' and changes its visible text to 'Hello!'",
+            "B) It creates a new element called 'greeting' and adds it to the page",
+            "C) It deletes the element with id 'greeting' and replaces it with the text 'Hello!'"
+          ],
+          "correctAnswer": "A",
+          "explanation": "Reading left to right: 'In the document, get the element whose id is greeting, then set its text content to Hello!' It finds an existing element and updates what it displays \u2014 it does not create or delete anything.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "wf3-2",
+          "question": "What value does `result` hold after this code runs?\n\n```javascript\nlet quantity = 4;\nlet pricePerItem = 10;\nlet result = quantity * pricePerItem;\n```",
+          "options": [
+            "A) The text 'quantity * pricePerItem'",
+            "B) 40",
+            "C) 14"
+          ],
+          "correctAnswer": "B",
+          "explanation": "The code creates a quantity of 4 and a price of 10, then multiplies them. 4 times 10 equals 40. JavaScript does the math and stores the result, not the formula text.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "wf3-3",
+          "question": "When will the banner appear?\n\n```javascript\nlet hour = 14;\nif (hour < 12) {\n  document.getElementById('banner').textContent = 'Good morning!';\n}\n```",
+          "options": [
+            "A) Always \u2014 every time the page loads",
+            "B) Only when the hour is less than 12 (before noon)",
+            "C) Only when the hour is exactly 14"
+          ],
+          "correctAnswer": "B",
+          "explanation": "The `if` statement checks whether `hour` is less than 12. The banner text only gets set when that condition is true. In this specific case, hour is 14, so the condition is false and the banner will NOT appear. But the rule the code defines is: show the banner only before noon.",
+          "difficulty": "intermediate"
+        }
+      ]
+    },
+    {
+      "type": "explainBack",
+      "prompt": "In your own words, explain the three jobs of JavaScript. For each job, give one real-world example of a website feature that uses it."
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "JavaScript does three things: responds to user actions, changes page content, and talks to servers. Variables are labeled containers (`let name = \"Alice\"`), functions are reusable recipes (`function greet() {}`), and the most powerful reading skill is translating each line of code to plain English."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "You now know what JavaScript does and how to read its basic building blocks. But how does JavaScript know when you click a button or submit a form? Module 3.2 will show you how events connect user actions to code \u2014 and why that connection sometimes breaks."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "The three main jobs of JavaScript are:",
+      "options": [
+        "Style pages, create databases, send emails",
+        "Respond to user actions, change page content, and talk to servers",
+        "Write HTML, format text, and display images"
+      ],
+      "correctIndex": 1,
+      "explanation": "JavaScript handles interactivity (clicks, typing), dynamically updates the page content, and communicates with servers to fetch or send data.",
+      "encourageCorrect": "Those are the three jobs! React to actions, change content, talk to servers.",
+      "encourageIncorrect": "JavaScript's three jobs: respond to user actions (clicks, typing), change page content dynamically, and communicate with servers."
+    },
+    {
+      "question": "In JavaScript, 'let cartTotal = 0;' does what?",
+      "options": [
+        "Displays the number 0 on the page",
+        "Creates a variable called cartTotal and sets its initial value to 0",
+        "Deletes the shopping cart"
+      ],
+      "correctIndex": 1,
+      "explanation": "The 'let' keyword creates a variable (a labeled container). cartTotal is the name, and 0 is the initial value stored in it.",
+      "encourageCorrect": "That's it! let creates a variable \u2014 a labeled container for a value.",
+      "encourageIncorrect": "'let' creates a variable. This line creates a container called cartTotal and puts the value 0 in it."
+    }
+  ]
+}

@@ -100,5 +100,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Arbitrage, Replication, and Cost of Carry** \u2014 the foundational pricing principles for all derivatives. You will learn why two assets with the same payoffs must have the same price, and how to construct replicating portfolios."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Which of the following is a key benefit of derivatives?",
+      "options": [
+        "They eliminate all investment risk",
+        "They allow risk transfer and hedging",
+        "They always generate profits"
+      ],
+      "correctIndex": 1,
+      "explanation": "Derivatives allow parties to transfer specific risks (like interest rate or currency risk) to those better able or more willing to bear them.",
+      "encourageCorrect": "Right! Risk transfer is the primary economic function of derivatives.",
+      "encourageIncorrect": "A key benefit of derivatives is risk transfer \u2014 they let you hedge specific risks by passing them to other market participants."
+    },
+    {
+      "question": "Counterparty risk in derivatives refers to:",
+      "options": [
+        "The risk that market prices will move against you",
+        "The risk that the other party to the contract will fail to fulfill their obligations",
+        "The risk of regulatory changes"
+      ],
+      "correctIndex": 1,
+      "explanation": "Counterparty risk is the possibility that the other party defaults on the contract. It is especially relevant in OTC (non-exchange-traded) derivatives.",
+      "encourageCorrect": "Correct! Counterparty risk is about the other party potentially not paying up.",
+      "encourageIncorrect": "Counterparty risk is the danger that the other party won't fulfill their contract obligations. This is a bigger concern in OTC markets than exchange-traded ones."
+    }
   ]
 }

@@ -1,0 +1,51 @@
+{
+  "meta": {
+    "title": "Getting Started",
+    "description": "What this course is, who it's for, and the philosophy behind code literacy in the age of AI.",
+    "level": "root",
+    "slug": "getting-started",
+    "order": 0,
+    "isCheckpoint": false,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "markdown",
+      "content": "## You are not here to become a developer\n\nLet's get that out of the way immediately. This course will not teach you to build websites from scratch. It will not quiz you on syntax. It will not ask you to write code in a blank editor.\n\nSo what *will* it do?\n\nIt will teach you to **read** web code. To look at HTML, CSS, and JavaScript and understand what it does \u2014 the same way you can read a recipe without being a chef, or read a financial statement without being an accountant.\n\n## Why this matters now\n\nAI can write code. It is getting better at it every month. Tools like Claude, ChatGPT, and GitHub Copilot can generate entire webpages from a text description.\n\nBut here is the thing: **someone still needs to verify that the code works correctly.**\n\nSomeone needs to:\n\n- Look at the output and know if the HTML structure makes sense\n- Spot when the CSS is causing a layout bug\n- Understand why a button click does nothing\n- Describe the problem precisely enough for AI to fix it\n\nThat someone is you. Not because you are a developer, but because you work with web products \u2014 as a marketer, designer, PM, founder, content creator, or anyone who touches websites as part of their job.\n\n## What you will learn\n\n| Level | Topic | What you will be able to do |\n| :-- | :-- | :-- |\n| 1 | **The Page** | Read HTML and understand webpage structure |\n| 2 | **The Look** | Read CSS and understand why things look the way they do |\n| 3 | **The Behavior** | Read JavaScript and understand interactivity and common errors |\n| 4 | **The Full Picture** | Trace how HTML, CSS, and JS work together; use browser DevTools |\n| 5 | **The Conversation** | Prompt AI for web code, verify its output, and iterate on fixes |\n| 6 | **The Real World** | Recognize frameworks, navigate project structures, spot common patterns |\n| 7 | **The Confidence** | Apply code literacy to real scenarios from your actual job |\n\n## How this course works\n\nEach module follows a pattern:\n\n1. **Predict** \u2014 You guess before you learn, activating what you already know\n2. **Learn** \u2014 Short, focused explanations with real code examples\n3. **Practice** \u2014 Problems that test reading, debugging, and troubleshooting \u2014 not memorization\n4. **Reflect** \u2014 Connect what you learned to your own work\n\nThe practice problems are not trivia. They are the kind of situations you will actually face: \"What does this code do?\" \"Why is this broken?\" \"What would you tell AI to fix?\"\n\n## Who this is for\n\n- **Marketers** who need to add tracking code or fix a broken landing page\n- **Designers** who want to verify that a developer (or AI) matched their mockup\n- **Product managers** who want to write better bug reports and understand technical constraints\n- **Founders** who need to review code from contractors or AI tools\n- **Content creators** who work with websites and want to stop feeling lost when something breaks\n- **Anyone** who is tired of saying \"I don't understand code\" when what they really need is literacy, not fluency"
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "Code literacy is not about writing code \u2014 it is about reading, understanding, and troubleshooting it. In the age of AI, the ability to verify and debug code is more valuable than the ability to write it from scratch."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "Ready to start? Level 1 begins with the most fundamental question: what is a webpage, really? You will be surprised how simple the answer is."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Code literacy is best described as the ability to:",
+      "options": [
+        "Write code from scratch",
+        "Read, understand, and troubleshoot code",
+        "Design graphics for websites"
+      ],
+      "correctIndex": 1,
+      "explanation": "Code literacy is about reading and understanding code, not necessarily writing it. In the age of AI, verifying and debugging code is more valuable than writing it from scratch.",
+      "encourageCorrect": "Exactly! Reading and understanding code is the goal of this course.",
+      "encourageIncorrect": "Code literacy means reading, understanding, and troubleshooting code. You don't need to write code from scratch to be code-literate."
+    },
+    {
+      "question": "In the age of AI, which skill is more valuable than writing code from scratch?",
+      "options": [
+        "Typing speed",
+        "The ability to verify and debug code",
+        "Memorizing programming syntax"
+      ],
+      "correctIndex": 1,
+      "explanation": "AI can generate code quickly, but someone still needs to verify it works correctly and debug issues. That's the core skill this course builds.",
+      "encourageCorrect": "That's the insight! Verification and debugging are the essential human skills.",
+      "encourageIncorrect": "Verifying and debugging code is more valuable than writing it, because AI can generate code but still needs human review."
+    }
+  ]
+}

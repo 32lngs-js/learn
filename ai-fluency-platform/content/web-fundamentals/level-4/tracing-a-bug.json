@@ -1,0 +1,119 @@
+{
+  "meta": {
+    "title": "4.3 Tracing a Bug",
+    "description": "Learn a systematic debugging flowchart to trace web bugs from symptom to root cause across HTML, CSS, and JavaScript.",
+    "level": "level-4",
+    "slug": "tracing-a-bug",
+    "order": 3,
+    "isCheckpoint": false,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "predictPrompt",
+      "prompt": "A colleague messages you: \"The signup page is broken.\" What questions would you ask before you could even start figuring out what is wrong?"
+    },
+    {
+      "type": "markdown",
+      "content": "## The debugging flowchart\n\nWhen something is wrong on a webpage, you can narrow down the cause quickly by asking three questions in order:\n\n### Step 1: Is the element visible on the page?\n\n**No \u2192 HTML problem.** The element might be missing from the HTML entirely, or it might be inside a container that is hidden. Check the Elements panel \u2014 search for the element. If it is not in the DOM, the HTML is the issue.\n\n**Yes \u2192 go to Step 2.**\n\n### Step 2: Does it look correct?\n\n**No \u2192 CSS problem.** The element exists but has wrong colors, wrong spacing, wrong size, or is in the wrong position. Inspect it in the Elements panel and look at the CSS rules. Common causes: a style is overridden, a class is missing, or a media query is not matching.\n\n**Yes \u2192 go to Step 3.**\n\n### Step 3: Does it respond to interaction?\n\n**No \u2192 JavaScript problem.** The element is there and looks right, but clicking, typing, or hovering does nothing. Check the Console for errors. Common causes: no event listener attached, a JS error that stops execution, or the JS is looking for the wrong element.\n\n**Yes \u2192 look deeper.** The issue might be in the data (wrong API response), timing (something loads too slowly), or a combination of layers.\n\nHere is the flowchart as a quick reference:\n\n```\nIs the element visible?\n\u251c\u2500\u2500 No  \u2192 Check HTML (Elements panel)\n\u2514\u2500\u2500 Yes \u2192 Does it look correct?\n    \u251c\u2500\u2500 No  \u2192 Check CSS (Elements panel, Styles tab)\n    \u2514\u2500\u2500 Yes \u2192 Does it respond to interaction?\n        \u251c\u2500\u2500 No  \u2192 Check JavaScript (Console panel)\n        \u2514\u2500\u2500 Yes \u2192 Check data/network (Network panel)\n```\n\n## Narrowing down: whole page vs. one element\n\nBefore you start debugging, figure out the **scope** of the problem:\n\n- **Whole page is broken** \u2014 likely a missing or failed CSS/JS file. Check the Network panel for failed requests (red rows). A single missing stylesheet can break the entire layout.\n- **One element is broken** \u2014 likely a specific HTML, CSS, or JS issue with that element. Inspect that element directly.\n- **Works on one device but not another** \u2014 likely a CSS media query issue or a browser compatibility problem.\n- **Worked yesterday but not today** \u2014 something changed. Check what was deployed recently.\n\n## Using DevTools to confirm your hypothesis\n\nDebugging is not guessing \u2014 it is forming a hypothesis and testing it:\n\n1. **Observe the symptom** \u2014 what exactly is wrong?\n2. **Form a hypothesis** \u2014 based on the flowchart, which layer is likely the cause?\n3. **Open the right DevTools panel** \u2014 Elements for HTML/CSS, Console for JS, Network for loading issues\n4. **Look for evidence** \u2014 does the panel confirm or deny your hypothesis?\n5. **Report or fix** \u2014 now you know what is wrong and where\n\n## Writing useful bug reports\n\nThe difference between a helpful bug report and a useless one:\n\n| Unhelpful | Helpful |\n| :-- | :-- |\n| \"It is broken\" | \"The signup button on /pricing returns a 404 when clicked\" |\n| \"The page looks weird\" | \"The hero image overlaps the navigation bar on screens smaller than 768px\" |\n| \"Nothing works\" | \"The search bar does not return results \u2014 the Console shows 'Failed to fetch' when I type and hit enter\" |\n\nA good bug report includes:\n- **What** you were doing (\"clicked the signup button\")\n- **Where** it happened (\"on the /pricing page\")\n- **What you expected** (\"to be taken to the signup form\")\n- **What actually happened** (\"got a 404 error page\")\n- **What you found in DevTools** (\"Console shows a 404 for /api/signup\")"
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "On a scale of 1-5, how confident are you that you could take a vague bug report like 'the page is broken' and systematically narrow it down to a specific layer (HTML, CSS, or JS)?",
+      "answer": "If you rated yourself 3 or higher, you have the right mental framework. The key is the flowchart: visible? \u2192 looks right? \u2192 responds? Each question points you to a different layer. If you are below 3, try applying the flowchart to a real page \u2014 inspect something that looks off and trace it through the steps."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Debugging Scenarios",
+      "problems": [
+        {
+          "id": "wf4-3-1",
+          "question": "A user reports: \"The newsletter signup form is invisible on the homepage.\" You open the page and confirm \u2014 the form is not visible anywhere. According to the debugging flowchart, which layer should you check first?",
+          "options": [
+            "A) CSS \u2014 the form might be styled with `display: none` or `visibility: hidden`",
+            "B) JavaScript \u2014 a script might be hiding the form",
+            "C) HTML \u2014 the form element might be missing from the page entirely"
+          ],
+          "correctAnswer": "C",
+          "explanation": "Step 1 of the flowchart: Is the element visible? No. First check if the element exists in the HTML at all by searching for it in the Elements panel. If it is in the HTML but hidden, then CSS or JS might be hiding it \u2014 but start with HTML first.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "wf4-3-2",
+          "question": "A pricing page shows all the plan cards, but the \"Enterprise\" card has white text on a white background, making it unreadable. The text is there if you select it with your mouse. Which layer is the problem?",
+          "options": [
+            "A) HTML \u2014 the text content is wrong",
+            "B) CSS \u2014 the text color or background color is wrong",
+            "C) JavaScript \u2014 a script is changing the text color"
+          ],
+          "correctAnswer": "B",
+          "explanation": "The element is visible (step 1: yes) but does not look correct (step 2: no). This points to CSS. The text exists and is correct \u2014 you can select it \u2014 but the visual styling (color on background) is making it unreadable. Inspect the element and check the color and background-color CSS properties.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "wf4-3-3",
+          "question": "An e-commerce site has a search bar that is visible and correctly styled, but when users type a query and press Enter, nothing happens \u2014 no results appear and the page does not change. Where should you look first?",
+          "options": [
+            "A) Elements panel \u2014 the search input might be missing an attribute",
+            "B) Console panel \u2014 there might be a JavaScript error when the search function runs",
+            "C) Network panel \u2014 the search results API might be returning an error"
+          ],
+          "correctAnswer": "B",
+          "explanation": "The element is visible (step 1: yes), looks correct (step 2: yes), but does not respond to interaction (step 3: no). This points to JavaScript. Start with the Console to see if there is an error preventing the search handler from running. If the Console is clean, then check the Network panel to see if the API request is failing.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "wf4-3-4",
+          "question": "A web app worked fine yesterday, but today the entire page is unstyled \u2014 all the text is Times New Roman, there is no layout, and no colors. The HTML content is all there. What is the most likely cause?",
+          "options": [
+            "A) The CSS file failed to load \u2014 check the Network panel for a failed stylesheet request",
+            "B) JavaScript is removing all the styles on page load",
+            "C) The HTML tags were changed to remove all class attributes"
+          ],
+          "correctAnswer": "A",
+          "explanation": "When an entire page loses all its styling at once, the most likely cause is that the CSS file itself failed to load. Check the Network panel for a red row showing a 404 or other error for a .css file. A single missing stylesheet can make the whole page look like plain text.",
+          "difficulty": "intermediate"
+        }
+      ]
+    },
+    {
+      "type": "tryItYourself",
+      "title": "Pick any webpage and practice the debugging flowchart. Right-click an element and inspect it. In the Elements panel, try unchecking a CSS property \u2014 watch how the page changes. Then check the Console for any existing errors. Finally, refresh the page with the Network panel open and look for any failed requests (red rows). You just ran through the entire debugging flowchart on a live page.",
+      "solution": "You should have been able to: (1) inspect an element and toggle a CSS property to see the effect, (2) check the Console for error messages, and (3) see network requests and their status codes. If you found any failed requests or Console errors, you have already identified real bugs using the flowchart."
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "Debug systematically: Is it visible? (HTML) Does it look right? (CSS) Does it respond? (JS) Does data load? (Network). Narrow the scope first (whole page vs. one element), form a hypothesis, and use DevTools to confirm it. Write bug reports that include what, where, expected, actual, and what DevTools showed."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "You now have a complete toolkit: you understand the three layers, you know your way around DevTools, and you have a debugging flowchart. Time to prove it. The checkpoint will throw real multi-layer bugs at you."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "When debugging a webpage, the first question to ask is:",
+      "options": [
+        "What color is the element?",
+        "Is the element visible on the page? (HTML problem vs CSS/JS problem)",
+        "What framework was used?"
+      ],
+      "correctIndex": 1,
+      "explanation": "Start by checking if the element exists in the HTML. If not visible at all, it's an HTML problem. If visible but wrong, it's CSS. If not responding, it's JS.",
+      "encourageCorrect": "That's the starting point! Visibility first, then narrow down the layer.",
+      "encourageIncorrect": "First check: is the element visible? No = HTML issue. Yes but looks wrong = CSS. Yes but doesn't respond = JS. This narrows the problem quickly."
+    },
+    {
+      "question": "A good bug report should include:",
+      "options": [
+        "Just 'the page is broken'",
+        "What happened, where it happened, what you expected, what actually occurred, and what DevTools showed",
+        "A screenshot only"
+      ],
+      "correctIndex": 1,
+      "explanation": "Specific bug reports help developers fix issues faster: what, where, expected behavior, actual behavior, and any DevTools evidence.",
+      "encourageCorrect": "Right! Specificity is the key to good bug reports.",
+      "encourageIncorrect": "A good bug report includes: what happened, where, what was expected, what actually occurred, and any evidence from DevTools."
+    }
+  ]
+}

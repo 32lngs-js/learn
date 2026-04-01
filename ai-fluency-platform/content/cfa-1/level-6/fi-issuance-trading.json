@@ -104,5 +104,31 @@
       "type": "connectPrompt",
       "prompt": "The next module explores **Markets for Corporate Issuers**, examining the different types of corporate bonds (investment-grade, high-yield, commercial paper) and the credit enhancement mechanisms that affect their pricing and risk."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "The primary market for bonds is where:",
+      "options": [
+        "Existing bonds are traded between investors",
+        "New bonds are issued and sold for the first time",
+        "Central banks conduct monetary policy"
+      ],
+      "correctIndex": 1,
+      "explanation": "The primary market is where new securities are first sold to investors. After issuance, trading occurs in the secondary market.",
+      "encourageCorrect": "Right! Primary = new issuance, secondary = subsequent trading.",
+      "encourageIncorrect": "The primary market is where new bonds are issued and sold for the first time. After that, they trade in the secondary market."
+    },
+    {
+      "question": "Most bond trading occurs in which type of market?",
+      "options": [
+        "On a centralized exchange like the NYSE",
+        "In the over-the-counter (OTC) dealer market",
+        "Through government auctions only"
+      ],
+      "correctIndex": 1,
+      "explanation": "Unlike stocks, most bonds trade OTC through dealer networks rather than on centralized exchanges.",
+      "encourageCorrect": "Correct! The bond market is predominantly OTC, unlike the stock market.",
+      "encourageIncorrect": "Most bond trading happens over-the-counter (OTC) through dealer networks, not on centralized exchanges like most stock trading."
+    }
   ]
 }

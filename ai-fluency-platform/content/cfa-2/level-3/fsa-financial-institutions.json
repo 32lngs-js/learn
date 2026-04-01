@@ -106,5 +106,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Evaluating Financial Report Quality**, where you'll develop a framework for detecting earnings manipulation and assessing the quality of reported financial results \u2014 skills particularly valuable when analyzing complex financial institutions."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "A bank's net interest margin measures:",
+      "options": [
+        "Total revenue minus total expenses",
+        "The spread between interest earned on assets and interest paid on liabilities",
+        "The bank's stock price performance"
+      ],
+      "correctIndex": 1,
+      "explanation": "Net interest margin = (Interest income - Interest expense) / Earning assets. It measures how effectively a bank earns from its lending vs. borrowing.",
+      "encourageCorrect": "That's the core profitability metric for banks!",
+      "encourageIncorrect": "Net interest margin is the difference between interest earned on loans/investments and interest paid on deposits/borrowings, as a percentage of earning assets."
+    },
+    {
+      "question": "Why are financial institutions analyzed differently from other companies?",
+      "options": [
+        "They are always more profitable",
+        "Their balance sheets are dominated by financial assets and liabilities, and they are heavily regulated",
+        "They don't have financial statements"
+      ],
+      "correctIndex": 1,
+      "explanation": "Banks and insurers have unique balance sheets (mostly financial assets/liabilities), face heavy regulation, and use leverage very differently than non-financial firms.",
+      "encourageCorrect": "Right! Financial institutions need specialized analysis due to their unique structure.",
+      "encourageIncorrect": "Financial institutions have unique balance sheets dominated by financial assets/liabilities, face heavy regulation, and operate with very different leverage levels."
+    }
   ]
 }

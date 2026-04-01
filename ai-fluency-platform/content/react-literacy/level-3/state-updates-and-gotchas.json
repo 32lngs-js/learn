@@ -1,0 +1,109 @@
+{
+  "meta": {
+    "title": "3.2 State Updates and Gotchas",
+    "description": "State does not update instantly, and updating objects and arrays has tricky rules.",
+    "level": "level-3",
+    "slug": "state-updates-and-gotchas",
+    "order": 2,
+    "isCheckpoint": false,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "predictPrompt",
+      "prompt": "If you call `setCount(count + 1)` three times in a row inside the same function, what do you think the final value of count will be? If count started at 0, would it be 1 or 3? Take a guess before reading on."
+    },
+    {
+      "type": "markdown",
+      "content": "## The surprise that trips up everyone\n\nYou learned in 3.1 that calling the setter function updates state and triggers a re-render. That is true. But there is a critical detail that catches everyone off guard, including experienced developers:\n\n**State does not update instantly.**\n\nWhen you call `setCount(1)`, the variable `count` does not change to `1` right away. It keeps its old value for the rest of that function call. The new value only appears on the **next render**.\n\n### Seeing the problem\n\n```jsx\nfunction BrokenCounter() {\n  const [count, setCount] = useState(0);\n\n  function handleClick() {\n    setCount(count + 1);\n    setCount(count + 1);\n    setCount(count + 1);\n    // You might expect count to be 3 after this.\n    // It will be 1.\n  }\n\n  return (\n    <button onClick={handleClick}>\n      Count: {count}\n    </button>\n  );\n}\n```\n\nWhy does this only increment by 1? Because all three lines read the same `count` value. When the click happens, `count` is `0`. So all three calls are `setCount(0 + 1)`. You are setting the count to 1 three times in a row.\n\nThis is called a **stale closure** -- the function \"closes over\" the old value of count and does not see the update.\n\n### An analogy\n\nImagine you are writing on a whiteboard. Someone tells you: \"Add 1 to whatever is on the board.\" You look at the board, see 0, and write down 1. Then they say it again: \"Add 1 to whatever is on the board.\" But you are still reading from a **photograph** of the board taken at the start. The photograph still shows 0. So you write down 1 again.\n\nThat is what happens with stale closures. The function has a snapshot of the value from when it was created, not a live view.\n\n### The fix: functional updates\n\nReact provides a way to read the latest value instead of the snapshot:\n\n```jsx\nfunction WorkingCounter() {\n  const [count, setCount] = useState(0);\n\n  function handleClick() {\n    setCount(prev => prev + 1);\n    setCount(prev => prev + 1);\n    setCount(prev => prev + 1);\n    // count will be 3 after re-render\n  }\n\n  return (\n    <button onClick={handleClick}>\n      Count: {count}\n    </button>\n  );\n}\n```\n\nInstead of passing a value (`count + 1`), you pass a **function** (`prev => prev + 1`). React calls your function with the most recent value. So:\n\n1. First call: `prev` is `0`, returns `1`\n2. Second call: `prev` is `1`, returns `2`\n3. Third call: `prev` is `2`, returns `3`\n\nThe pattern `prev => prev + 1` is called a **functional update**. When you see it in code, you know the developer needed to read the latest value, not a snapshot.\n\n### When do you need functional updates?\n\nYou need functional updates when the new value depends on the old value:\n\n```jsx\n// Incrementing -- new value depends on old\nsetCount(prev => prev + 1);         // YES, use functional\n\n// Toggling -- new value depends on old\nsetIsOpen(prev => !prev);            // YES, use functional\n\n// Adding to an array -- new value depends on old\nsetItems(prev => [...prev, newItem]); // YES, use functional\n\n// Setting to a specific value -- no dependency\nsetName('Alice');                     // NO, just pass the value\nsetIsLoading(true);                   // NO, just pass the value\n```\n\nThe rule of thumb: if you are reading the current state to calculate the next state, use a functional update.\n\n## Immutability: the copy-then-change rule\n\nReact has a strict rule about updating state that contains objects or arrays: **never modify the existing value. Always create a new one.**\n\nThis is called **immutability** -- treating state values as read-only and replacing them with new copies.\n\n### Why? How React detects changes\n\nReact decides whether to re-render by checking: \"Is the new value a different thing than the old value?\" For objects and arrays, React checks if it is the **same reference** (same object in memory), not whether the contents changed.\n\n```jsx\n// WRONG -- mutating the existing array\nconst handleAdd = () => {\n  items.push(newItem);  // This modifies the existing array\n  setItems(items);      // React sees the same array reference\n                        // and thinks nothing changed!\n};\n\n// RIGHT -- creating a new array\nconst handleAdd = () => {\n  setItems([...items, newItem]);  // Spread into a new array\n                                  // React sees a new reference\n                                  // and re-renders!\n};\n```\n\nThe `...` (spread operator) creates a copy. `[...items, newItem]` means: \"make a new array with everything from `items`, plus `newItem` at the end.\"\n\n### Common patterns for immutable updates\n\n**Adding to an array:**\n```jsx\nsetItems([...items, newItem]);\n// or at the beginning:\nsetItems([newItem, ...items]);\n```\n\n**Removing from an array:**\n```jsx\nsetItems(items.filter(item => item.id !== idToRemove));\n```\n\n**Updating an object:**\n```jsx\nsetUser({ ...user, name: 'New Name' });\n// Spread the old object, then override the property you want to change\n```\n\n**Updating a nested object:**\n```jsx\nsetUser({\n  ...user,\n  address: {\n    ...user.address,\n    city: 'New York'\n  }\n});\n```\n\nNotice the pattern: spread to copy, then override. Every level of nesting needs its own spread.\n\n### Spotting the mutation bug\n\nWhen you see any of these in React code, it is almost certainly a bug:\n\n```jsx\n// These all MUTATE -- they change the existing value\narray.push(item);       // Adds to existing array\narray.splice(0, 1);     // Removes from existing array\nobj.name = 'New';       // Changes existing object property\narray.sort();           // Sorts the existing array in-place\narray.reverse();        // Reverses the existing array in-place\n```\n\nThe correct alternatives:\n\n```jsx\n// These all create NEW values\n[...array, item];                    // New array with item added\narray.filter((_, i) => i !== 0);     // New array without first item\n{ ...obj, name: 'New' };             // New object with updated name\n[...array].sort();                   // Copy first, then sort\n[...array].reverse();                // Copy first, then reverse\n```\n\n## State batching\n\nOne more thing to know: React **batches** state updates that happen in the same event handler. This means if you call multiple setters, React does not re-render after each one -- it waits and does one single re-render with all the changes applied.\n\n```jsx\nfunction handleSubmit() {\n  setIsLoading(true);      // Does NOT re-render yet\n  setError(null);          // Does NOT re-render yet\n  setFormData(data);       // Does NOT re-render yet\n  // React re-renders ONCE here, with all three updates\n}\n```\n\nThis is a performance optimization. You do not need to do anything special -- just know that React is smart enough to group updates together.\n\n### Summary of the gotchas\n\n| Gotcha | What happens | The fix |\n| :-- | :-- | :-- |\n| Stale closure | Reading state in the same function after setting it gives the old value | Use functional update: `prev => prev + 1` |\n| Direct mutation | Modifying an object/array without creating a new one -- React does not detect the change | Always spread to copy: `{...obj}`, `[...arr]` |\n| Multiple updates | Calling `setValue(value + 1)` multiple times only applies once | Use functional update for each call |"
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "A component has `const [items, setItems] = useState(['a', 'b', 'c'])`. A developer writes `items.push('d'); setItems(items);` to add an item. Will the screen update to show the new item?",
+      "answer": "No, or at least not reliably. `items.push('d')` mutates the existing array, and `setItems(items)` passes the same array reference back to React. React compares references and may think nothing changed, so it skips the re-render. The correct code is `setItems([...items, 'd'])` which creates a brand-new array. This is one of the most common bugs in React -- especially in AI-generated code."
+    },
+    {
+      "type": "practiceSet",
+      "title": "State Updates and Gotchas",
+      "problems": [
+        {
+          "id": "rl3-2-1",
+          "question": "What does the user see after clicking the button once? The count starts at 0.\n\n```jsx\nfunction DoubleCounter() {\n  const [count, setCount] = useState(0);\n\n  function handleClick() {\n    setCount(count + 1);\n    setCount(count + 1);\n  }\n\n  return <button onClick={handleClick}>Count: {count}</button>;\n}\n```",
+          "options": [
+            "A) Count: 1",
+            "B) Count: 2",
+            "C) Count: 0",
+            "D) The component crashes"
+          ],
+          "correctAnswer": "A",
+          "explanation": "Both calls to `setCount(count + 1)` read the same stale value of `count`, which is 0. So both calls are `setCount(0 + 1)`, which is `setCount(1)`. The count becomes 1, not 2. To get 2, you would need functional updates: `setCount(prev => prev + 1)` for each call.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "rl3-2-2",
+          "question": "A user reports that deleting a todo item does not work -- the item stays in the list. What is wrong?\n\n```jsx\nfunction TodoList() {\n  const [todos, setTodos] = useState([\n    { id: 1, text: 'Buy milk' },\n    { id: 2, text: 'Walk dog' },\n  ]);\n\n  function handleDelete(id) {\n    const index = todos.findIndex(t => t.id === id);\n    todos.splice(index, 1);\n    setTodos(todos);\n  }\n\n  return (\n    <ul>\n      {todos.map(todo => (\n        <li key={todo.id}>\n          {todo.text}\n          <button onClick={() => handleDelete(todo.id)}>Delete</button>\n        </li>\n      ))}\n    </ul>\n  );\n}\n```",
+          "options": [
+            "A) `todos.splice(index, 1)` mutates the existing array, and `setTodos(todos)` passes the same reference. React does not detect a change.",
+            "B) The `findIndex` call is incorrect and returns -1.",
+            "C) The key prop should be the index, not the id.",
+            "D) `setTodos` should be called before `splice`."
+          ],
+          "correctAnswer": "A",
+          "explanation": "This is the classic mutation bug. `splice` modifies the array in place, then `setTodos(todos)` passes back the same array reference. React compares the old and new references, sees they are the same object, and may skip the re-render. The fix: `setTodos(todos.filter(t => t.id !== id))` which creates a brand-new array without the deleted item.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "rl3-2-3",
+          "question": "You are reviewing AI-generated code for a user profile editor. The client says that changing the city does not work -- it erases the user's name. What would you tell the AI to fix?\n\n```jsx\nfunction ProfileEditor() {\n  const [user, setUser] = useState({\n    name: 'Alice',\n    email: 'alice@example.com',\n    address: { city: 'Boston', state: 'MA' }\n  });\n\n  function handleCityChange(newCity) {\n    setUser({\n      address: { city: newCity, state: user.address.state }\n    });\n  }\n\n  return (\n    <div>\n      <p>Name: {user.name}</p>\n      <p>Email: {user.email}</p>\n      <input\n        value={user.address.city}\n        onChange={(e) => handleCityChange(e.target.value)}\n      />\n    </div>\n  );\n}\n```",
+          "options": [
+            "A) The `setUser` call replaces the entire user object with just `{ address: {...} }`, losing `name` and `email`. It needs to spread the existing user first: `setUser({ ...user, address: { ...user.address, city: newCity } })`.",
+            "B) The onChange handler should call `setUser` directly instead of using a separate function.",
+            "C) The input value should be `user.city` not `user.address.city`.",
+            "D) useState cannot hold nested objects."
+          ],
+          "correctAnswer": "A",
+          "explanation": "When you call `setUser({ address: {...} })`, the new object only has an `address` property. The `name` and `email` properties are gone. The fix is to spread the existing user object first, then override just the nested address: `setUser({ ...user, address: { ...user.address, city: newCity } })`. You would tell the AI: \"The handleCityChange function replaces the entire user object instead of updating just the city. Spread the existing user and address to preserve other fields.\"",
+          "difficulty": "advanced"
+        }
+      ]
+    },
+    {
+      "type": "explainBack",
+      "prompt": "Explain in your own words why `setCount(count + 1)` called three times only increments by 1. Then explain what the spread operator (`...`) does when updating an object in state and why it is necessary."
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "State updates are not instant -- the variable keeps its old value until the next render. Use functional updates (`prev => prev + 1`) when the new value depends on the old. Never mutate objects or arrays directly -- always spread to create a copy first. These two gotchas (stale closures and mutation) are the source of most state-related bugs in React."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "Next time you see a bug report like \"clicking the button does nothing\" or \"the list does not update,\" think about these two gotchas. Is the code reading a stale value? Is it mutating instead of copying? These are the first two things to check."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "If you call setCount(count + 1) three times in the same function and count is 0, what is the final value?",
+      "options": ["3", "1", "0"],
+      "correctIndex": 1,
+      "explanation": "All three calls read the same stale value of count (0), so they all compute setCount(0 + 1). The count ends up as 1, not 3. This is the stale closure gotcha.",
+      "encourageCorrect": "You remembered! The stale closure gotcha is one of the trickiest concepts, and you've got it down.",
+      "encourageIncorrect": "This is the stale closure gotcha: all three calls see count as 0, so they all set it to 1. Use functional updates (prev => prev + 1) to fix it."
+    },
+    {
+      "question": "Why does items.push(newItem) followed by setItems(items) often fail to update the screen?",
+      "options": ["push() does not work on arrays in React", "push() mutates the existing array, and React sees the same reference so it skips the re-render", "setItems can only accept strings"],
+      "correctIndex": 1,
+      "explanation": "push() modifies the array in place. When you pass the same array reference to setItems, React compares old and new and thinks nothing changed. Use setItems([...items, newItem]) instead.",
+      "encourageCorrect": "Excellent! You understand immutability in React -- always create a new array or object instead of mutating the old one.",
+      "encourageIncorrect": "push() changes the existing array without creating a new one. React checks references, sees the same array, and skips the update. The fix: setItems([...items, newItem]) to create a fresh array."
+    },
+    {
+      "question": "What does the spread operator (...) do when updating an object in state?",
+      "options": ["It deletes all properties from the object", "It creates a copy of the object so you can override specific properties without losing the rest", "It merges two components together"],
+      "correctIndex": 1,
+      "explanation": "The spread operator copies all properties from an existing object into a new one. You can then override specific properties: { ...user, name: 'New Name' } keeps everything except the updated name.",
+      "encourageCorrect": "That's right! Spread to copy, then override -- it's the standard pattern for immutable state updates.",
+      "encourageIncorrect": "The spread operator copies the existing object into a new one. So { ...user, name: 'New' } keeps all of user's properties but replaces name. This way React detects the change."
+    }
+  ]
+}

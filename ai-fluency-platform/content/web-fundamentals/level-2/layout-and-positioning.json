@@ -1,0 +1,106 @@
+{
+  "meta": {
+    "title": "2.3 Layout and Positioning",
+    "description": "Flexbox, grid, and why things end up where they are on the page.",
+    "level": "level-2",
+    "slug": "layout-and-positioning",
+    "order": 3,
+    "isCheckpoint": false,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "predictPrompt",
+      "prompt": "On most websites, you see elements arranged in rows (navigation links side by side) and columns (a sidebar next to main content). What do you think controls whether elements appear side by side or stacked vertically?"
+    },
+    {
+      "type": "markdown",
+      "content": "## Layout and Positioning\n\nBy default, HTML elements follow two simple rules:\n\n- **Block elements** (like `<div>`, `<h1>`, `<p>`) take up the full width and stack vertically, one on top of another \u2014 like paragraphs in a document.\n- **Inline elements** (like `<span>`, `<a>`, `<strong>`) sit side by side within a line of text \u2014 like words in a sentence.\n\nThis default behavior explains why, without any CSS, everything just stacks down the page. To create the layouts you see on real websites \u2014 navigation bars, card grids, sidebars \u2014 you need to override this default.\n\n### Flexbox: the layout workhorse\n\n`display: flex` is the most common layout tool in modern CSS. When you see it, you are looking at a **flex container** that controls how its children are arranged.\n\n```css\n.nav {\n  display: flex;\n}\n```\n\n> \"Make the `.nav` element a flex container \u2014 its children will now sit side by side in a row.\"\n\nThat single property turns vertical stacking into a horizontal row. From there, a few key properties control the arrangement:\n\n**`justify-content`** \u2014 controls horizontal spacing\n- `flex-start` \u2014 items hug the left side\n- `flex-end` \u2014 items hug the right side\n- `center` \u2014 items are centered\n- `space-between` \u2014 items spread out with equal space between them (first item on the left, last item on the right)\n- `space-around` \u2014 equal space around each item\n\n**`align-items`** \u2014 controls vertical alignment\n- `flex-start` \u2014 items align to the top\n- `center` \u2014 items are vertically centered\n- `flex-end` \u2014 items align to the bottom\n- `stretch` \u2014 items stretch to fill the container height\n\n**`gap`** \u2014 adds consistent space between items\n```css\n.nav {\n  display: flex;\n  gap: 16px;\n}\n```\n> \"Arrange children in a row with 16 pixels between each one.\"\n\n**`flex-direction: column`** \u2014 switches from a row to a column\n```css\n.sidebar {\n  display: flex;\n  flex-direction: column;\n  gap: 12px;\n}\n```\n> \"Stack children vertically with 12 pixels between each one.\"\n\n### A common pattern: centering with flexbox\n\nThe most common layout task on the web \u2014 centering something both horizontally and vertically:\n\n```css\n.hero {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n```\n\nWhen you see these three properties together, read it as: \"Center everything inside this element both horizontally and vertically.\"\n\n### Grid: for two-dimensional layouts\n\n`display: grid` is for layouts that need both rows and columns \u2014 like a product card grid or a dashboard.\n\n```css\n.products {\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  gap: 24px;\n}\n```\n\n> \"Arrange children in a grid with 3 equal-width columns and 24 pixels between each item.\"\n\n`1fr` means \"one fraction of the available space\" \u2014 so `repeat(3, 1fr)` creates three columns that each take up one-third of the width.\n\nYou do not need to master grid. Just know that when you see `display: grid` and `grid-template-columns`, you are looking at a multi-column layout.\n\n### Common layout bugs\n\nThese are the layout issues you will encounter most often:\n\n**Items stacking vertically when they should be side by side:**\nThe container is probably missing `display: flex` or `display: grid`.\n\n**Items not centering:**\nThe container has `display: flex` but is missing `justify-content: center` and/or `align-items: center`.\n\n**Content overflowing its container:**\nChildren are wider than the parent. Look for fixed widths (like `width: 500px`) that do not fit in a smaller container. The fix is usually flexible widths (`width: 100%` or `max-width`).\n\n**Layout looks right on desktop but breaks on mobile:**\nThe layout probably needs a media query (covered in Module 2.4) to switch from a row to a column on small screens."
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "If you saw `display: flex; justify-content: space-between;` on a navigation bar, could you describe what the layout looks like?",
+      "answer": "The navigation items sit side by side in a row (that is what `display: flex` does). `justify-content: space-between` spreads them out so the first item is flush left, the last item is flush right, and equal space is distributed between each item in the middle. This is a very common pattern for navigation bars \u2014 logo on the left, links on the right."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Layout and Positioning",
+      "problems": [
+        {
+          "id": "wf2-7",
+          "question": "What does `justify-content: space-between` look like when applied to a flex container with three items?",
+          "options": [
+            "A) All three items are bunched together in the center",
+            "B) The first item is on the left, the last is on the right, and the middle item is evenly spaced between them",
+            "C) Each item has equal space on its left and right sides, including at the edges"
+          ],
+          "correctAnswer": "B",
+          "explanation": "`space-between` distributes items so the first is at the start, the last is at the end, and remaining space is evenly divided between items. There is no extra space at the edges. This is different from `space-around` (option C), which adds space around every item including the edges.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "wf2-8",
+          "question": "You asked AI to create three product cards side by side, but they are stacking vertically instead. The CSS for the card container is:\n\n```css\n.card-container {\n  padding: 20px;\n  gap: 16px;\n}\n```\n\nWhat is missing?",
+          "options": [
+            "A) The container needs `display: flex` to arrange its children in a row",
+            "B) Each card needs `float: left` to sit side by side",
+            "C) The container needs a `width: 100%` property"
+          ],
+          "correctAnswer": "A",
+          "explanation": "Without `display: flex` (or `display: grid`), elements follow the default block behavior and stack vertically. Adding `display: flex` to `.card-container` will make the cards sit side by side in a row. The `gap` property is already there and will work once flex is enabled.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "wf2-9",
+          "question": "AI generated a hero section but the content hugs the left side instead of being centered. The CSS is:\n\n```css\n.hero {\n  display: flex;\n  height: 400px;\n}\n```\n\nWhat would you tell AI to fix?",
+          "options": [
+            "A) \"Add `text-align: center` to the hero section\"",
+            "B) \"Add `justify-content: center` and `align-items: center` to center the content horizontally and vertically\"",
+            "C) \"Change `display: flex` to `display: block` to fix the alignment\""
+          ],
+          "correctAnswer": "B",
+          "explanation": "`display: flex` puts children in a row, but without alignment properties, items default to the top-left. Adding `justify-content: center` centers items horizontally, and `align-items: center` centers them vertically. This is the standard pattern for centering content in a flex container.",
+          "difficulty": "intermediate"
+        }
+      ]
+    },
+    {
+      "type": "explainBack",
+      "prompt": "In your own words, explain the difference between `display: flex` and `display: grid`. When would you expect to see each one used? You do not need to be technically precise \u2014 just describe what each one does to the layout."
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "Block elements stack vertically by default. `display: flex` makes children sit side by side in a row (or column with `flex-direction: column`). `justify-content` controls horizontal arrangement, `align-items` controls vertical alignment, and `gap` adds space between items. `display: grid` is for two-dimensional layouts like card grids. When things are stacking when they should not be, the container is probably missing `display: flex`."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "You can now read the CSS that controls colors, spacing, and layout. But real-world CSS has a few more tricks \u2014 rules that only apply on mobile screens, effects that trigger on hover, and variables that keep colors consistent. Module 2.4 covers the CSS patterns you will actually encounter in the wild."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What does 'display: flex' do to an element's children?",
+      "options": [
+        "Makes them invisible",
+        "Arranges them side by side in a row (by default)",
+        "Stacks them vertically with extra spacing"
+      ],
+      "correctIndex": 1,
+      "explanation": "Flexbox (display: flex) makes child elements sit side by side in a row by default, instead of stacking vertically like normal block elements.",
+      "encourageCorrect": "That's flexbox! Children line up in a row instead of stacking.",
+      "encourageIncorrect": "display: flex makes an element's children sit side by side in a row by default. Use flex-direction: column to stack them vertically instead."
+    },
+    {
+      "question": "By default, block-level HTML elements (like <div>, <h1>, <p>) behave how?",
+      "options": [
+        "They sit side by side in a row",
+        "They take up full width and stack vertically",
+        "They float to the right side of the page"
+      ],
+      "correctIndex": 1,
+      "explanation": "Block elements take up the full available width and stack on top of each other. This is the default flow of HTML before any CSS layout changes.",
+      "encourageCorrect": "Right! Full width, stacking vertically \u2014 that's the default block behavior.",
+      "encourageIncorrect": "Block elements take the full width and stack vertically by default. You need CSS (like flexbox or grid) to change this layout."
+    }
+  ]
+}

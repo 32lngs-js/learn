@@ -104,5 +104,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Credit Analysis for Corporate Issuers**, examining the four Cs framework (capacity, collateral, covenants, character), key credit ratios, and industry analysis used to evaluate corporate credit risk."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Sovereign bonds issued in a country's own currency are considered to have:",
+      "options": [
+        "No credit risk at all",
+        "Very low default risk because the government can print its own currency",
+        "The same risk as corporate bonds"
+      ],
+      "correctIndex": 1,
+      "explanation": "A sovereign can technically print more of its own currency to repay debt, making outright default unlikely (though inflation risk remains).",
+      "encourageCorrect": "That's the key insight! Own-currency debt has low default risk, but inflation risk exists.",
+      "encourageIncorrect": "Sovereign debt in the country's own currency has very low default risk because the government can create more currency. However, this can cause inflation."
+    },
+    {
+      "question": "Municipal bonds in the US often have a tax advantage because:",
+      "options": [
+        "They pay higher coupons than corporate bonds",
+        "Interest income is often exempt from federal income tax",
+        "They never lose value"
+      ],
+      "correctIndex": 1,
+      "explanation": "Municipal bond interest is typically exempt from federal income tax (and sometimes state/local tax), making them attractive to high-tax-bracket investors.",
+      "encourageCorrect": "Right! Tax-exempt interest is the big draw for muni bonds.",
+      "encourageIncorrect": "Municipal bond interest is often exempt from federal income tax. This tax advantage means investors accept lower yields compared to taxable bonds."
+    }
   ]
 }

@@ -104,5 +104,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Cash Flow Statement II \u2014 Free Cash Flow and Analysis**, where you'll calculate FCFF and FCFE, essential metrics for equity and firm valuation. These build directly on the CFO you just learned to compute."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "The cash flow statement is divided into which three sections?",
+      "options": [
+        "Revenue, expenses, and profit",
+        "Operating, investing, and financing activities",
+        "Current, non-current, and equity"
+      ],
+      "correctIndex": 1,
+      "explanation": "The three sections are operating (core business), investing (long-term assets), and financing (debt and equity transactions).",
+      "encourageCorrect": "Exactly! Operating, investing, and financing cover all cash movements.",
+      "encourageIncorrect": "The cash flow statement has three sections: operating activities, investing activities, and financing activities."
+    },
+    {
+      "question": "Under US GAAP, where are interest payments classified on the cash flow statement?",
+      "options": [
+        "Operating activities",
+        "Investing activities",
+        "Financing activities"
+      ],
+      "correctIndex": 0,
+      "explanation": "Under US GAAP, interest paid is classified as an operating activity. Under IFRS, firms can choose to classify it as operating or financing.",
+      "encourageCorrect": "Correct! US GAAP puts interest paid in operating. IFRS gives a choice.",
+      "encourageIncorrect": "Under US GAAP, interest paid is classified as an operating activity. Under IFRS, it can be operating or financing \u2014 the firm chooses."
+    }
   ]
 }

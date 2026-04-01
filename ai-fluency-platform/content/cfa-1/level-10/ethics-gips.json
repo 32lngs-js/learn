@@ -118,5 +118,31 @@
       "type": "connectPrompt",
       "prompt": "The next module focuses on **Ethics Application** \u2014 putting everything together with case studies and scenario analysis. You will practice applying the ethical decision-making framework, the Standards, and GIPS concepts to complex, multi-issue scenarios like those you will encounter on the CFA exam."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is the primary purpose of the Global Investment Performance Standards (GIPS)?",
+      "options": [
+        "To regulate trading practices",
+        "To ensure fair, comparable presentation of investment performance",
+        "To set minimum return requirements for funds"
+      ],
+      "correctIndex": 1,
+      "explanation": "GIPS provides a standardized framework so investors can fairly compare performance across firms and regions.",
+      "encourageCorrect": "Exactly! GIPS ensures performance reporting is fair and comparable worldwide.",
+      "encourageIncorrect": "GIPS exists to ensure investment performance is presented fairly and comparably across firms and regions."
+    },
+    {
+      "question": "Under GIPS, is compliance voluntary or mandatory?",
+      "options": [
+        "Mandatory for all investment firms",
+        "Voluntary, but firms must comply fully if they claim compliance",
+        "Mandatory only for CFA charterholders"
+      ],
+      "correctIndex": 1,
+      "explanation": "GIPS compliance is voluntary, but once a firm claims compliance, it must follow all requirements \u2014 partial compliance is not allowed.",
+      "encourageCorrect": "Right! It's opt-in, but once you claim it, you must comply fully.",
+      "encourageIncorrect": "GIPS is voluntary, but it's all or nothing \u2014 a firm that claims compliance must follow every requirement. No partial compliance."
+    }
   ]
 }

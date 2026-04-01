@@ -1,0 +1,29 @@
+{
+  "meta": {
+    "title": "Level 8: The Codebase",
+    "description": "Put it all together. Navigate a real React project with confidence.",
+    "level": "level-8",
+    "slug": "index",
+    "order": 0,
+    "isCheckpoint": false,
+    "isIndex": true
+  },
+  "blocks": [
+    {
+      "type": "markdown",
+      "content": "## The whole picture\n\nFor seven levels, you have been learning to read React code one concept at a time: JSX, components, props, state, hooks, effects, data fetching, forms, routing, TypeScript, debugging, and AI review. Each level zoomed in on one piece.\n\nThis final level zooms out. Real React projects are not single files — they are collections of 50, 100, or 500 files that work together. A feature you want to understand might span five files: a page component, a custom hook, an API utility, a reusable UI component, and a context provider.\n\nThis level teaches you to navigate that ecosystem. By the end, you will be able to open any React project and answer: where is the entry point, how are the files organized, and how do I trace a feature from button click to screen update?\n\n### What you will learn\n\n| Module | Topic | Core Idea |\n| :-- | :-- | :-- |\n| 8.1 | Reading a React Project | How to read package.json, find entry points, and understand project structure |\n| 8.2 | Tracing a Feature | Following a user action across multiple files from click to render |\n| 8.3 | Final Capstone | Navigate a realistic codebase, find bugs, review AI output, communicate fixes |\n\n### The core idea\n\nA React project is a tree of files, just like a React app is a tree of components. Every file has a role — entry point, page, component, hook, utility, configuration. Once you know the roles, you can find anything.\n\nThe final capstone is the most comprehensive exercise in this course. It simulates a real scenario: someone hands you a React codebase, and you need to navigate it, understand it, and direct fixes. Everything you have learned comes together."
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "A React project is a tree of files with predictable roles. Learning to navigate that tree — and trace how features flow across files — is the final skill that ties everything together."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "Think about a real React project you have encountered — maybe a colleague's codebase, an open-source project, or your own company's product. What confused you most about navigating it? Keep that in mind as you work through these final modules."
+    },
+    {
+      "type": "markdown",
+      "content": "### Ready?\n\nStart with [Module 8.1: Reading a React Project](/react-literacy/level-8/reading-a-react-project/) to learn how to read the map of any React codebase."
+    }
+  ]
+}

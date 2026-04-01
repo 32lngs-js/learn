@@ -104,5 +104,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Real-World Constraints** on asset allocation \u2014 how liquidity, taxes, regulations, transaction costs, and rebalancing strategies modify the theoretically optimal portfolio into a practical investment policy."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Mean-variance optimization requires which inputs?",
+      "options": [
+        "Only expected returns",
+        "Expected returns, standard deviations, and correlations for all asset classes",
+        "Only historical prices"
+      ],
+      "correctIndex": 1,
+      "explanation": "MVO needs three inputs for each asset class: expected return, risk (standard deviation), and pairwise correlations. These drive the efficient frontier.",
+      "encourageCorrect": "Exactly! Returns, risks, and correlations are the three inputs to MVO.",
+      "encourageIncorrect": "Mean-variance optimization requires expected returns, standard deviations, and all pairwise correlations. These inputs generate the efficient frontier."
+    },
+    {
+      "question": "A key criticism of mean-variance optimization is that it:",
+      "options": [
+        "Is too simple to implement",
+        "Is highly sensitive to small changes in the input estimates",
+        "Always produces the same result regardless of inputs"
+      ],
+      "correctIndex": 1,
+      "explanation": "MVO is notoriously sensitive to input estimates. Small changes in expected returns can produce dramatically different optimal allocations.",
+      "encourageCorrect": "Right! Garbage in, garbage out \u2014 MVO amplifies estimation errors.",
+      "encourageIncorrect": "MVO is very sensitive to input estimates. Small changes in expected returns or correlations can drastically change the recommended allocation."
+    }
   ]
 }

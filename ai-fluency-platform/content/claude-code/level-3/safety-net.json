@@ -43,5 +43,31 @@
       "type": "connectPrompt",
       "prompt": "You now have a comprehensive understanding of Claude Code's dashboard: tools, commands, modes, sessions, input methods, output methods, and safety nets. The Level 3 checkpoint will test this knowledge by asking you to complete a real task using multiple features together."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What are the five layers of safety in Claude Code?",
+      "options": [
+        "Firewall, antivirus, backup, encryption, password",
+        "Permission prompts, Esc, /rewind, /diff, Git",
+        "Sandbox, review, approve, test, deploy"
+      ],
+      "correctIndex": 1,
+      "explanation": "The five layers: permission prompts, Esc (stop), /rewind (undo), /diff (review changes), and Git (revert anything).",
+      "encourageCorrect": "You've got all five! That's a solid safety foundation.",
+      "encourageIncorrect": "The five layers are: permission prompts (approve actions), Esc (stop), /rewind (undo), /diff (review), and Git (revert anything)."
+    },
+    {
+      "question": "Why does the safety net matter beyond just protecting your files?",
+      "options": [
+        "It makes Claude faster",
+        "It gives you permission to experiment boldly",
+        "It reduces API costs"
+      ],
+      "correctIndex": 1,
+      "explanation": "Understanding the safety net transforms your mindset from cautious to confident — you experiment more, which is how you learn.",
+      "encourageCorrect": "Exactly! Confidence leads to experimentation, which leads to learning.",
+      "encourageIncorrect": "The safety net doesn't just protect you — it gives you permission to experiment boldly, which is how you discover what Claude can really do."
+    }
   ]
 }

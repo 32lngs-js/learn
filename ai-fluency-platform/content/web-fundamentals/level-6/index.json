@@ -1,0 +1,25 @@
+{
+  "meta": {
+    "title": "Level 6: The Real World",
+    "description": "Navigate real-world codebases by recognizing frameworks, reading project structures, and identifying common patterns — without needing to write code yourself.",
+    "level": "level-6",
+    "slug": "index",
+    "order": 0,
+    "isCheckpoint": false,
+    "isIndex": true
+  },
+  "blocks": [
+    {
+      "type": "markdown",
+      "content": "## Level 6: The Real World\n\nUp to now, you have been reading HTML, CSS, and JavaScript in isolation — neat examples designed to teach one concept at a time. Real codebases look nothing like that.\n\nA real project has dozens of folders, hundreds of files, configuration you have never seen before, and code that looks like HTML but is not quite HTML. The first time you open a professional codebase, it can feel like walking into a cockpit — buttons and switches everywhere, and no obvious place to start.\n\nThis level changes that. You will learn to recognize the patterns that real projects follow, so you can orient yourself quickly and find what matters.\n\n## What you will learn\n\n| Module | Topic | What you will be able to do |\n| :-- | :-- | :-- |\n| 6.1 | **Frameworks and Components** | Recognize React, Vue, and Angular code — and understand why it looks different from plain HTML |\n| 6.2 | **Reading a Project** | Navigate a project's folder structure and know which files matter for content changes |\n| 6.3 | **Common Patterns You'll See** | Identify environment variables, API calls, responsive design, forms, and auth patterns |\n| 6.4 | **Checkpoint** | Trace a bug report to the right file in a realistic project |\n\n## The mental model\n\nThink of a real codebase like a large office building. There is a lobby (the homepage), hallways (navigation), offices (pages), and a basement full of mechanical equipment (config files, build tools, dependencies). If someone asks you to change the sign on the third floor, you do not need to understand the HVAC system in the basement. You need to know how to read the building directory, take the elevator to the right floor, and find the right door.\n\nThat is exactly what this level teaches: how to read the directory, ignore the basement, and find the right door.\n\n## Important framing\n\nYou do **not** need to learn React, Vue, or Angular. You do **not** need to understand build tools or package managers. You need to **recognize** these things when you see them, and know enough to find what you are looking for. Recognize, don't learn."
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "Real codebases look overwhelming because they contain layers of tooling and configuration that have nothing to do with the content you care about. This level teaches you to filter out the noise and find the signal — the files that actually matter for the change you need to make."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "Let's start with the biggest difference between tutorial code and real code: frameworks. Module 6.1 will show you why real code looks like HTML-but-not-quite, and how to read it without needing to learn a whole new language."
+    }
+  ]
+}

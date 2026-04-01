@@ -1,0 +1,102 @@
+{
+  "meta": {
+    "title": "3.5 Checkpoint",
+    "description": "Put your JavaScript reading skills to the test: read, understand, and debug a realistic interactive feature.",
+    "level": "level-3",
+    "slug": "checkpoint",
+    "order": 5,
+    "isCheckpoint": true,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "markdown",
+      "content": "## Checkpoint: Reading and Debugging a Real Feature\n\nBelow is a to-do list \"add item\" feature — the kind of code you would find in a real web application. It has **two bugs** hidden in it. Your job is to read the code, understand what it is supposed to do, and find the problems.\n\n```javascript\nlet addBtn = document.getElementById('add-btn');\nlet input = document.getElementById('todo-input');\nlet list = document.getElementById('todo-list');\nlet counter = document.getElementById('item-count');\nlet items = [];\n\naddBtn.addEventListener('click', addItem);\n\nfunction addItem() {\n  let text = input.value;\n\n  if (text === '') {\n    document.getElementById('error').textContent = 'Please enter a task.';\n    return;\n  }\n\n  document.getElementById('error').textContent = '';\n  items.push(text);\n\n  let li = document.createElement('li');\n  li.textContent = text;\n  li.addEventListener('click', function() {\n    li.classList.toggle('completed');\n  });\n  list.appendChild(li);\n\n  counter.textContent = `${items.length} items`;\n}\n```\n\nTake a moment to read through this code. Use the line-by-line strategy from Module 3.4:\n1. What elements does it find on the page?\n2. What happens when the button is clicked?\n3. What does the function do step by step?\n4. What is missing or wrong?"
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "Before looking at the problems below: in plain English, what is this code supposed to do when a user types a task and clicks the Add button?",
+      "answer": "When the user clicks the Add button, it should: (1) check if the input is empty and show an error if so, (2) add the typed text to an internal list, (3) create a new list item on the page with that text, (4) make the list item toggleable as 'completed' when clicked, and (5) update a counter showing the total number of items. However, it never clears the input field after adding — the user's text stays in the box."
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "Can you identify the two bugs in the code above? Hint: one is about user experience after adding an item, and the other would cause a problem if the HTML used a different ID than the code expects.",
+      "answer": "Bug 1: The input field is never cleared after adding an item. After items.push(text), there should be a line like `input.value = '';` to reset the text field. Without it, the old text stays in the input box and the user has to manually delete it.\n\nBug 2: The code references an element with id 'error' using getElementById('error'), but if the HTML used a different id (like 'error-message' or 'todo-error'), it would throw a TypeError: Cannot read properties of null. This is a fragile coupling — and the kind of ID mismatch bug covered in Modules 3.2 and 3.3."
+    },
+    {
+      "type": "practiceSet",
+      "title": "Checkpoint: JavaScript Reading and Debugging",
+      "problems": [
+        {
+          "id": "wf3-13",
+          "question": "Looking at the to-do list code: what does `items.push(text)` do?",
+          "options": [
+            "A) It adds the task text to the end of the items array — keeping a running list of all tasks",
+            "B) It pushes the text onto the screen as a notification",
+            "C) It sends the text to a server to be saved"
+          ],
+          "correctAnswer": "A",
+          "explanation": "The `.push()` method adds a new item to the end of an array. `items` is an array (created as `[]` — an empty list), and `.push(text)` adds the user's task text to that list. This keeps a JavaScript-side record of all tasks, separate from what is displayed on the page.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "wf3-14",
+          "question": "After adding a task, users complain that the text stays in the input box and they have to delete it manually before typing the next task. Which line of code is missing from the `addItem` function?",
+          "options": [
+            "A) `input.value = '';` — a line to clear the input field after adding the task",
+            "B) `input.remove();` — a line to remove the input element from the page",
+            "C) `input.addEventListener('clear', resetField);` — a listener to auto-clear the input"
+          ],
+          "correctAnswer": "A",
+          "explanation": "Setting `input.value = ''` resets the text field to empty. This is a common UX pattern — after the user's input has been processed, clear the field so they can immediately type something new. The code processes the input correctly but forgets this cleanup step.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "wf3-15",
+          "question": "A user opens the console and sees:\n\n```\nUncaught TypeError: Cannot read properties of null (reading 'textContent')\n    at addItem (app.js:17)\n```\n\nLooking at the to-do list code, what is the most likely cause?",
+          "options": [
+            "A) The `items` array is null because it was not initialized properly",
+            "B) An element referenced in the addItem function (like the one with id 'error') was not found on the page — the ID in the code does not match the HTML",
+            "C) The `textContent` property does not exist in this browser"
+          ],
+          "correctAnswer": "B",
+          "explanation": "TypeError: Cannot read properties of null means getElementById returned null — it could not find the element. In the addItem function, `document.getElementById('error').textContent` would fail if there is no element with id 'error' in the HTML. Perhaps the HTML uses 'error-message' or 'todo-error' instead. This is the classic ID-mismatch bug from Module 3.2.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "wf3-16",
+          "question": "What does this line do?\n\n```javascript\nli.addEventListener('click', function() {\n  li.classList.toggle('completed');\n});\n```",
+          "options": [
+            "A) It makes each to-do list item toggleable — clicking it adds or removes the 'completed' CSS class, which would typically show a strikethrough or color change",
+            "B) It deletes the list item when clicked",
+            "C) It marks all items in the list as completed at once"
+          ],
+          "correctAnswer": "A",
+          "explanation": "This attaches a click event to the individual list item (`li`). When clicked, `classList.toggle('completed')` adds the 'completed' class if it is missing, or removes it if it is already there. This creates the familiar pattern where clicking a to-do item shows it as done (usually with a strikethrough styled in CSS), and clicking again marks it as not done.",
+          "difficulty": "basic"
+        },
+        {
+          "id": "wf3-17",
+          "question": "You are told the counter shows '1 items' after adding the first task. A teammate asks if this is a JavaScript bug or a content issue. What is your assessment?\n\n```javascript\ncounter.textContent = `${items.length} items`;\n```",
+          "options": [
+            "A) It is a content/logic issue — the code always says 'items' (plural) even when there is only 1 item. The fix would check the count and use 'item' vs 'items' accordingly.",
+            "B) It is a JavaScript bug — template literals do not work correctly with numbers",
+            "C) It is a CSS issue — the counter is displaying the wrong text due to styling"
+          ],
+          "correctAnswer": "A",
+          "explanation": "The template literal works correctly — it inserts the number just fine. The issue is that the word 'items' is hardcoded as the plural form. When the count is 1, it shows '1 items' instead of '1 item'. This is a logic/content issue, not a syntax error. The code does exactly what it says — it just does not account for singular vs plural.",
+          "difficulty": "advanced"
+        }
+      ]
+    },
+    {
+      "type": "tryItYourself",
+      "title": "Open the browser console on a website or web app you use daily (email, project management tool, social media — anything). Look for any red error messages. If you find one, try to identify: (1) what type of error it is (ReferenceError, TypeError, SyntaxError), (2) what the message says in plain English, and (3) which file and line number it points to. You do not need to fix anything — just practice reading the error.",
+      "solution": "Most websites will have at least a few console messages. If you found a red error, you should be able to identify the error type (the first word before the colon), translate the message into plain English using what you learned in Module 3.3, and note the file and line number at the end. Even if the error message references unfamiliar code, you now have the pattern: type tells you the category, message tells you the specific problem, location tells you where to look."
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "You can now read JavaScript. You understand variables, functions, events, and common patterns. You can open the console and make sense of error messages. You know the three usual suspects when something does not work. Most importantly, you know the strategy: read the function name, identify the inputs, follow the decisions, find the output. You do not need to write JavaScript to be effective — being able to read it makes you a better collaborator, troubleshooter, and communicator."
+    }
+  ]
+}

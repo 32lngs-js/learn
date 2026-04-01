@@ -110,5 +110,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers the **Discounted Dividend Model (DDM)** \u2014 the most fundamental absolute valuation approach. You'll apply the Gordon Growth Model, multi-stage DDM, and learn when dividends are the appropriate cash flow to discount."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Sum-of-the-parts valuation is useful when:",
+      "options": [
+        "A company has only one business segment",
+        "A company has multiple distinct business segments that should be valued separately",
+        "The company's stock is perfectly valued by the market"
+      ],
+      "correctIndex": 1,
+      "explanation": "Sum-of-the-parts values each business segment using appropriate methods and multiples, then adds them together. It's useful for conglomerates.",
+      "encourageCorrect": "That's the approach! Value each piece separately, then add them up.",
+      "encourageIncorrect": "Sum-of-the-parts values each business segment independently, using appropriate multiples for each. It's especially useful for diversified conglomerates."
+    },
+    {
+      "question": "A conglomerate discount refers to:",
+      "options": [
+        "A discount on the purchase price of a conglomerate",
+        "The market valuing a diversified company below the sum of its parts",
+        "A volume discount for large trades"
+      ],
+      "correctIndex": 1,
+      "explanation": "Markets sometimes value conglomerates below what the individual parts would be worth separately, reflecting complexity, inefficiency, or poor capital allocation.",
+      "encourageCorrect": "Correct! The whole can be worth less than the sum of its parts.",
+      "encourageIncorrect": "A conglomerate discount means the market values the combined company below what its individual segments would be worth separately."
+    }
   ]
 }

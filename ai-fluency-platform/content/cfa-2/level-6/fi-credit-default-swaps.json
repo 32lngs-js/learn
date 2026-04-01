@@ -106,5 +106,31 @@
       "type": "connectPrompt",
       "prompt": "You've now completed the Fixed Income modules for Level II. The next section is the **Fixed Income Checkpoint**, where you'll test your integrated understanding across all five FI topics \u2014 from term structure dynamics through credit default swaps."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "A credit default swap (CDS) is essentially:",
+      "options": [
+        "An interest rate swap",
+        "Insurance against the default of a specific bond or issuer",
+        "A type of equity option"
+      ],
+      "correctIndex": 1,
+      "explanation": "The CDS buyer pays a periodic premium (spread) and receives payment if the reference entity defaults. It functions like credit insurance.",
+      "encourageCorrect": "That's the intuition! CDS is credit insurance \u2014 pay a premium, get protected.",
+      "encourageIncorrect": "A CDS functions like insurance against default. The protection buyer pays periodic premiums; the seller pays out if the reference entity defaults."
+    },
+    {
+      "question": "If CDS spreads on a company widen, it indicates:",
+      "options": [
+        "Improving creditworthiness",
+        "Deteriorating creditworthiness or increased market perception of default risk",
+        "The company's stock is rising"
+      ],
+      "correctIndex": 1,
+      "explanation": "Wider CDS spreads mean the cost of default protection has increased, reflecting higher perceived default risk.",
+      "encourageCorrect": "Correct! Wider spreads signal the market is more worried about default.",
+      "encourageIncorrect": "Wider CDS spreads mean higher cost for credit protection, signaling the market perceives greater default risk for that issuer."
+    }
   ]
 }

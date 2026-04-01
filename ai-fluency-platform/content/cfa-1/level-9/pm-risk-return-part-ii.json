@@ -118,5 +118,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Portfolio Management: An Overview**, which steps back from the math to describe the full investment management process \u2014 the types of investors, their objectives, and how portfolios are actually managed in practice. Your understanding of risk-return tradeoffs and CAPM will ground every practical decision discussed there."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "The Capital Asset Pricing Model (CAPM) states that expected return depends on:",
+      "options": [
+        "Total risk (standard deviation)",
+        "Systematic risk (beta) only",
+        "Both systematic and unsystematic risk"
+      ],
+      "correctIndex": 1,
+      "explanation": "CAPM says only systematic risk (beta) is rewarded because unsystematic risk can be diversified away. E(R) = Rf + Beta x (E(Rm) - Rf).",
+      "encourageCorrect": "Right! Only beta matters in CAPM \u2014 diversifiable risk gets no reward.",
+      "encourageIncorrect": "CAPM says only systematic risk (beta) is compensated. Unsystematic risk can be diversified away, so the market doesn't reward it."
+    },
+    {
+      "question": "The Capital Market Line (CML) describes the relationship between expected return and:",
+      "options": [
+        "Beta",
+        "Total risk (standard deviation) for efficient portfolios",
+        "Unsystematic risk"
+      ],
+      "correctIndex": 1,
+      "explanation": "The CML plots expected return against total risk (standard deviation) for efficient (fully diversified) portfolios that combine the risk-free asset with the market portfolio.",
+      "encourageCorrect": "Exactly! The CML is about total risk for efficient portfolios.",
+      "encourageIncorrect": "The CML shows the risk-return trade-off for efficient portfolios using total risk (standard deviation). The SML uses beta instead."
+    }
   ]
 }

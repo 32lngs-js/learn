@@ -104,5 +104,31 @@
       "type": "connectPrompt",
       "prompt": "Next, we bring everything together in a **Case Study** that integrates asset allocation, derivatives overlay, ESG considerations, risk management, and performance evaluation for a comprehensive institutional portfolio."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "Implementation shortfall measures:",
+      "options": [
+        "Only the explicit trading costs (commissions)",
+        "The total cost of implementing an investment decision, including market impact and opportunity cost",
+        "The portfolio manager's fee"
+      ],
+      "correctIndex": 1,
+      "explanation": "Implementation shortfall = difference between the paper portfolio (decision price) and the actual portfolio. It captures commissions, market impact, delays, and missed trades.",
+      "encourageCorrect": "That's the comprehensive cost measure! Everything from decision to execution.",
+      "encourageIncorrect": "Implementation shortfall captures the total cost of executing a trade: commissions, market impact, delay costs, and the opportunity cost of missed trades."
+    },
+    {
+      "question": "Market impact cost is typically higher for:",
+      "options": [
+        "Very liquid, large-cap stocks",
+        "Large orders in less liquid securities",
+        "Market orders placed in the first hour of trading"
+      ],
+      "correctIndex": 1,
+      "explanation": "Large orders in illiquid securities move the price against the trader as the market absorbs the order, increasing market impact costs.",
+      "encourageCorrect": "Right! Big orders in thin markets move prices against you.",
+      "encourageIncorrect": "Market impact is highest for large orders in illiquid securities. The order itself moves the price, increasing the cost of execution."
+    }
   ]
 }

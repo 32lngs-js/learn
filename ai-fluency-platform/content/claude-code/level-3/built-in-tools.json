@@ -47,5 +47,31 @@
       "type": "connectPrompt",
       "prompt": "The six tools are what Claude uses to do work. But you have your own set of controls: slash commands. The next module covers the commands that let you manage your session, check your context, and control the flow of work."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is the difference between Glob and Grep?",
+      "options": [
+        "Glob reads files, Grep edits files",
+        "Glob searches by file name pattern, Grep searches inside file contents",
+        "They do the same thing"
+      ],
+      "correctIndex": 1,
+      "explanation": "Glob finds files by name pattern (like '*.csv'), while Grep searches inside files for specific text content.",
+      "encourageCorrect": "Perfect distinction! Glob = names, Grep = contents.",
+      "encourageIncorrect": "Glob searches for files by name pattern (like *.csv), while Grep searches inside files for text content."
+    },
+    {
+      "question": "Why does Claude prefer the Edit tool over Write for existing files?",
+      "options": [
+        "Edit is faster",
+        "Edit changes only specific sections, leaving the rest untouched",
+        "Write doesn't work on existing files"
+      ],
+      "correctIndex": 1,
+      "explanation": "Edit makes targeted changes to specific sections while leaving the rest of the file intact, making it safer than a full rewrite.",
+      "encourageCorrect": "Right! Edit is the precision instrument — safer for existing files.",
+      "encourageIncorrect": "Edit only changes specific sections of a file while preserving the other 497 lines — much safer than rewriting the whole thing."
+    }
   ]
 }

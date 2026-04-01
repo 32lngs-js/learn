@@ -118,5 +118,31 @@
       "type": "connectPrompt",
       "prompt": "The next module covers **Securitization**, where we examine how pools of loans and receivables are transformed into tradeable securities through special purpose vehicles, tranching, and credit enhancement structures."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "The four C's of credit analysis are:",
+      "options": [
+        "Cash, Capital, Collateral, Character",
+        "Capacity, Collateral, Covenants, Character",
+        "Cost, Coverage, Credit, Compliance"
+      ],
+      "correctIndex": 1,
+      "explanation": "The four C's are Capacity (ability to pay), Collateral (asset backing), Covenants (legal protections), and Character (management quality).",
+      "encourageCorrect": "Well done! Capacity, Collateral, Covenants, and Character cover the key credit dimensions.",
+      "encourageIncorrect": "The four C's are Capacity (ability to repay), Collateral (asset backing), Covenants (legal protections), and Character (management integrity)."
+    },
+    {
+      "question": "A higher interest coverage ratio indicates:",
+      "options": [
+        "Greater default risk",
+        "A stronger ability to service debt from operating earnings",
+        "Higher leverage"
+      ],
+      "correctIndex": 1,
+      "explanation": "Interest coverage = EBIT / Interest expense. A higher ratio means the company earns much more than it needs to cover interest payments.",
+      "encourageCorrect": "Correct! More coverage means the company easily earns enough to pay its interest.",
+      "encourageIncorrect": "A higher interest coverage ratio means the company's earnings comfortably cover its interest payments, indicating lower default risk."
+    }
   ]
 }

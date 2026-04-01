@@ -118,5 +118,31 @@
       "type": "connectPrompt",
       "prompt": "You have now covered all the major topics in Corporate Issuers: organizational forms, stakeholders, governance, working capital, capital investments, capital structure, and business models. The next module is a **Checkpoint** that tests your integrated understanding across all these topics with cross-cutting practice problems."
     }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is a business model?",
+      "options": [
+        "A company's stock price target",
+        "A description of how a company creates, delivers, and captures value",
+        "A financial statement format"
+      ],
+      "correctIndex": 1,
+      "explanation": "A business model describes the way a firm creates value for customers, delivers it, and captures revenue and profit.",
+      "encourageCorrect": "Exactly! A business model is the blueprint for how a company makes money.",
+      "encourageIncorrect": "A business model describes how a company creates, delivers, and captures value. It's the fundamental design of the business."
+    },
+    {
+      "question": "A firm with a network effects business model becomes more valuable when:",
+      "options": [
+        "It raises prices",
+        "More users join the platform",
+        "It reduces its product line"
+      ],
+      "correctIndex": 1,
+      "explanation": "Network effects mean each additional user increases the value for all existing users, creating a powerful competitive advantage.",
+      "encourageCorrect": "Right! More users means more value for everyone on the platform.",
+      "encourageIncorrect": "Network effects mean the product becomes more valuable as more users join. Think social media \u2014 more users attract even more users."
+    }
   ]
 }

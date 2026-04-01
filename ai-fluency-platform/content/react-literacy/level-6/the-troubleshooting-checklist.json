@@ -1,0 +1,98 @@
+{
+  "meta": {
+    "title": "6.4 The Troubleshooting Checklist",
+    "description": "A systematic approach to any React bug.",
+    "level": "level-6",
+    "slug": "the-troubleshooting-checklist",
+    "order": 4,
+    "isCheckpoint": false,
+    "isIndex": false
+  },
+  "blocks": [
+    {
+      "type": "predictPrompt",
+      "prompt": "If a developer said \"the dashboard page is broken,\" what questions would you ask to narrow down the problem? What information would help you (or an AI) figure out what went wrong?"
+    },
+    {
+      "type": "markdown",
+      "content": "## The Troubleshooting Checklist\n\nYou have learned to read error messages, use React DevTools, and recognize common bug patterns. Now it is time to put all of those skills together into a systematic process.\n\nDebugging is not about being smart or lucky. It is about following a process. The same checklist works for almost any React bug, from a blank screen to a subtle data issue. Here it is.\n\n### Step 1: Read the Error Message\n\nThis sounds obvious, but most people skip it. When something breaks, the first thing to do is open the browser's developer console (F12 or right-click > Inspect > Console tab) and read the error.\n\n**What to look for:**\n- The error type: `TypeError`, `SyntaxError`, `ReferenceError`\n- The specific message: \"Cannot read properties of undefined (reading 'name')\"\n- The first line of the stack trace: `at UserCard (UserCard.tsx:14:22)`\n\n**If there is no error in the console**, also check:\n- The terminal where the development server runs (for build errors or server-side errors)\n- The Network tab for failed API requests (red rows)\n\nExample diagnosis: \"There is a TypeError in UserCard.tsx at line 14. It is trying to read the 'name' property from something undefined.\"\n\n### Step 2: Identify Which Component Has the Problem\n\nThe stack trace tells you the file and line number. But sometimes you need more context:\n\n- **Error Boundaries:** If the app shows a fallback UI (like \"Something went wrong\"), the error boundary caught the crash. Check the console for which component errored.\n- **Stack Trace:** Read from top to bottom. The first entry is where the error happened. The entries below show the parent components that led to it.\n- **Visual Clues:** If only one section of the page is broken, the bug is in that section's component tree, not the whole app.\n\nExample diagnosis: \"The error is in the PostCard component, which is rendered by PostList, which is on the DashboardPage.\"\n\n### Step 3: Inspect Props and State\n\nOpen React DevTools and find the component from Step 2. Check:\n\n- **Props:** Are all required props present? Do they have the expected values and types?\n- **State:** Is the state what you expect? Is it `null` when it should be an object? Is it an empty array when it should have data?\n- **Hooks:** What are the current values of any hooks (useState, useContext)?\n\nThis step often reveals the problem immediately. Common findings:\n- A prop is `undefined` because the parent did not pass it\n- State is `null` because the API call failed silently\n- A hook value is stale because of a missing dependency\n\nExample diagnosis: \"The PostCard's `post` prop is undefined. The parent PostList has `posts` in its state, but it is an empty array. The data never loaded.\"\n\n### Step 4: Check the Data Flow\n\nIf the props and state look wrong, trace backward:\n\n- **Where does this prop come from?** Find the parent component and check what it passes.\n- **Where does this state come from?** Is it from a `useState` initial value, a `useEffect` fetch, or a context provider?\n- **Is there a data transformation?** Sometimes data is correct at the source but gets mangled during mapping or filtering.\n\nFollow the trail of data from the source (API call, context provider, or parent component) to the component that displays it. The break is somewhere along that path.\n\nExample diagnosis: \"The API returns the data correctly (I checked the Network tab). The useEffect fetches it and stores it in state. But the mapping function uses `post.title` and the API returns `post.headline` -- the property name is wrong.\"\n\n### Step 5: Check useEffect Dependency Arrays\n\nA huge category of bugs comes from `useEffect`:\n\n- **Empty array `[]`:** The effect runs once on mount. If it should run when a prop changes, the prop is missing from the array.\n- **Missing array:** The effect runs on every render (potentially infinite loop).\n- **Wrong dependencies:** The effect runs at the wrong times.\n\nFor each `useEffect` in the component, ask:\n1. What does this effect do?\n2. What values does it use?\n3. Are all of those values in the dependency array?\n\nExample diagnosis: \"The useEffect that fetches user data has `[]` as its dependency array, but it uses `userId` from props. When userId changes, the effect does not re-run, so the component shows stale data from the previous user.\"\n\n### Step 6: Check the Network Tab\n\nIf the component is data-driven, check whether the data arrived correctly:\n\n- **Status codes:** 200 (OK), 201 (Created), 404 (Not Found), 401 (Unauthorized), 500 (Server Error)\n- **Response body:** Does the API return the data in the expected format?\n- **Timing:** Is the request still pending? Did it take too long?\n- **Request payload:** For POST/PUT requests, is the sent data correct?\n\nCommon findings:\n- The API returns 401 (unauthorized) because the auth token expired\n- The API returns data in a different format than the component expects\n- The request was never made (the useEffect did not run)\n- The request is pending (loading state should be shown)\n\nExample diagnosis: \"The API returns a 200 response, but the data is wrapped in a `{ data: { users: [...] } }` object. The component accesses `response.users` but it should access `response.data.users`.\"\n\n### Step 7: Form a Hypothesis and Describe It\n\nNow you have enough information to state precisely what is wrong. A good bug description has three parts:\n\n1. **What is happening:** \"The user profile page shows 'undefined' for the username.\"\n2. **Why it is happening:** \"The UserProfile component receives a `user` prop where the `name` field is missing. The API returns `full_name` instead of `name`.\"\n3. **Where to look:** \"Check the data transformation in `src/features/profile/useUserProfile.ts` where the API response is mapped to the User interface.\"\n\nThat description is precise enough for a developer to fix in minutes, or for an AI to generate the correct fix on the first try.\n\n### The Complete Checklist (Quick Reference)\n\n```\n1. Read the error message and stack trace\n   - What error? Which file and line?\n\n2. Identify the component\n   - Which component tree branch is broken?\n\n3. Inspect props and state (React DevTools)\n   - Are props correct? Is state what you expect?\n\n4. Trace the data flow\n   - Where does the data come from? Where does it break?\n\n5. Check useEffect dependency arrays\n   - Is the effect running at the right times?\n\n6. Check the Network tab\n   - Did the API call succeed? Is the response correct?\n\n7. Form and describe the hypothesis\n   - What, why, and where.\n```\n\n### Worked Example: The Disappearing Cart\n\n**Bug report:** \"Items disappear from the shopping cart when I navigate to a different page and come back.\"\n\nLet us walk through the checklist:\n\n**Step 1: Read the error.** No errors in the console. No red in the Network tab. This is a logic bug, not a crash.\n\n**Step 2: Identify the component.** The cart is managed by the `CartPage` component.\n\n**Step 3: Inspect props and state.** Open React DevTools, navigate to a different page, then come back to the cart. The `CartPage` component's `items` state is an empty array. When we were on the cart page, it had three items.\n\n**Step 4: Trace the data flow.** Where does the cart state live? It is `useState` inside `CartPage`. When we navigate away, `CartPage` unmounts. When we come back, it remounts with fresh state -- an empty array.\n\n**Step 5: Check effects.** There is no `useEffect` that loads cart data from the server or local storage. The cart only exists in component state.\n\n**Step 6: Check network.** No API calls for cart data. The cart is entirely client-side.\n\n**Step 7: Hypothesis.** \"The cart state is stored inside the CartPage component using useState. When the user navigates away, the component unmounts and the state is lost. The cart data needs to be stored in a higher-level component (like App), in a context provider, or in localStorage so it persists across page navigation.\"\n\nThat is a precise, actionable bug description. A developer or AI can fix this quickly.\n\n### When the Checklist Is Not Enough\n\nSome bugs are harder:\n\n- **Intermittent bugs** that only happen sometimes (often race conditions)\n- **Build/configuration bugs** where the code is correct but the tooling is wrong\n- **Third-party library bugs** where the problem is in a library, not your code\n\nFor these, the checklist still helps you gather information. Even if you cannot identify the root cause, you can describe what you observed: \"The bug happens when the user clicks Submit quickly twice in a row. The first time works fine. The second time, the API returns a 409 Conflict. It seems like a race condition where the second request fires before the first completes.\"\n\nThat description is worth its weight in gold to the developer who has to fix it."
+    },
+    {
+      "type": "calibrationCheck",
+      "question": "A page loads but shows no data. There are no errors in the console. What are the first two things you would check?",
+      "answer": "First, check the Network tab to see if the API call was made and what it returned. Second, open React DevTools and check the component's state -- is the data there but not being rendered, or did it never arrive?"
+    },
+    {
+      "type": "practiceSet",
+      "title": "Applying the Troubleshooting Checklist",
+      "problems": [
+        {
+          "id": "rl6-4-1",
+          "question": "A user reports: \"I update my email in settings but when I refresh the page, the old email is back.\" You check the Network tab and see a PUT request to `/api/user/settings` with status `200 OK`. What is the most likely problem?\n\n```typescript\nfunction SettingsForm({ user }: { user: User }) {\n  const [email, setEmail] = useState(user.email);\n\n  async function handleSave() {\n    await fetch('/api/user/settings', {\n      method: 'PUT',\n      body: JSON.stringify({ email }),\n    });\n    alert('Settings saved!');\n  }\n\n  return (\n    <form onSubmit={(e) => { e.preventDefault(); handleSave(); }}>\n      <input value={email} onChange={(e) => setEmail(e.target.value)} />\n      <button type=\"submit\">Save</button>\n    </form>\n  );\n}\n```",
+          "options": [
+            "A) The API is not actually saving the data despite returning 200",
+            "B) The API saves the data, but the component does not re-fetch the user data after saving. On refresh, the app loads the old data from cache or the initial page load does not include the updated email.",
+            "C) The `useState` initial value is wrong"
+          ],
+          "correctAnswer": "B",
+          "explanation": "The API returns 200, so the save probably succeeds. But after saving, the code just shows an alert. It does not update the parent component's `user` object, invalidate any cache, or refetch the user data. When the page refreshes, it loads the user data fresh -- and if the initial data load has a cache, or if the parent component still has the old `user` object, the old email appears. The fix: after saving, either refetch the user data, invalidate the query cache, or update the parent state.",
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "rl6-4-2",
+          "question": "A team reports: \"The dashboard works in development but shows a blank white screen in production. No errors in the console.\" You check the Network tab in production and see all API calls returning `200 OK`. What should you check next?\n\n```typescript\nfunction Dashboard() {\n  const { data, isLoading } = useQuery(['metrics'], fetchMetrics);\n\n  if (isLoading) return <LoadingSpinner />;\n\n  return (\n    <div>\n      <h1>Dashboard</h1>\n      {data.metrics.map((m) => (\n        <MetricCard key={m.id} metric={m} />\n      ))}\n    </div>\n  );\n}\n```",
+          "options": [
+            "A) Check if the API response format differs between development and production -- the production API might return data in a different structure (e.g., `data.results` instead of `data.metrics`), causing `data.metrics` to be undefined and silently failing",
+            "B) Check if the CSS is different in production",
+            "C) Check if the user has admin permissions"
+          ],
+          "correctAnswer": "A",
+          "explanation": "A blank screen with no console errors often means the data loaded but the rendering failed silently. If the production API returns a slightly different structure (e.g., `{ results: [...] }` instead of `{ metrics: [...] }`), then `data.metrics` is `undefined`, and `.map()` on `undefined` would normally throw -- but if there is an error boundary catching it, you would see the blank screen. Check the API response in the Network tab and compare the production response format to what the code expects.",
+          "difficulty": "advanced"
+        },
+        {
+          "id": "rl6-4-3",
+          "question": "A user reports: \"When I click 'Load More', nothing happens the second time.\" Walk through the checklist. Which step reveals the problem?\n\n```typescript\nfunction InfiniteList() {\n  const [items, setItems] = useState<Item[]>([]);\n  const [page, setPage] = useState(1);\n  const [loading, setLoading] = useState(false);\n\n  async function loadMore() {\n    if (loading) return;\n    setLoading(true);\n\n    const response = await fetch(`/api/items?page=${page}`);\n    const newItems = await response.json();\n\n    setItems([...items, ...newItems]);\n    setLoading(false);\n  }\n\n  return (\n    <div>\n      {items.map((item) => <ItemCard key={item.id} item={item} />)}\n      <button onClick={loadMore} disabled={loading}>\n        {loading ? 'Loading...' : 'Load More'}\n      </button>\n    </div>\n  );\n}\n```",
+          "options": [
+            "A) Step 6 (Network tab) -- the API is returning an error on the second request",
+            "B) Step 3 (Inspect state) -- the `page` state is always `1` because `setPage` is never called. Every click fetches page 1 again, and the items from page 1 are appended (duplicating them)",
+            "C) Step 1 (Error message) -- there is a visible error about duplicate keys"
+          ],
+          "correctAnswer": "B",
+          "explanation": "The `loadMore` function fetches `page` data and appends items, but it never increments the page. `setPage(page + 1)` is missing. Every click fetches `/api/items?page=1` and appends the same items again. Inspecting state in React DevTools (Step 3) would show `page` stuck at `1` and `items` growing with duplicates. The fix: add `setPage(page + 1)` after the successful fetch.",
+          "difficulty": "intermediate"
+        }
+      ]
+    },
+    {
+      "type": "explainBack",
+      "prompt": "Walk through the seven-step troubleshooting checklist from memory. For each step, explain in one sentence what you are looking for and why."
+    },
+    {
+      "type": "keyTakeaway",
+      "content": "Debugging is a systematic process, not guesswork. Follow the checklist: read the error, find the component, inspect props and state, trace the data, check effects, check the network, form a hypothesis. The goal is not to write the fix -- it is to describe the problem precisely enough that someone (or an AI) can fix it quickly."
+    },
+    {
+      "type": "connectPrompt",
+      "prompt": "Think about how a doctor diagnoses a patient: symptoms, tests, examination, hypothesis, treatment. The troubleshooting checklist is the same process. Error messages are symptoms. DevTools is the examination. The Network tab is a lab test. Your diagnosis is the hypothesis. Keep the checklist handy -- it works every time."
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "question": "What is the first step in the troubleshooting checklist?",
+      "options": ["Check the Network tab for failed requests", "Read the error message and stack trace in the console", "Open React DevTools and inspect component state"],
+      "correctIndex": 1,
+      "explanation": "Step 1 is always to read the error message. It tells you what went wrong and the stack trace tells you where. Many bugs can be identified from the error message alone.",
+      "encourageCorrect": "That's it! Always start with the error message -- it often tells you everything you need.",
+      "encourageIncorrect": "The first step is always to read the error message and stack trace. They tell you what went wrong and exactly where. Start there before reaching for other tools."
+    },
+    {
+      "question": "A page shows no data and no error. What two things should you check?",
+      "options": ["The CSS and the HTML", "The Network tab (did the API call succeed?) and React DevTools (is data in the component's state?)", "The package.json and tsconfig.json"],
+      "correctIndex": 1,
+      "explanation": "Check the Network tab to see if the API call was made and what it returned. Then check React DevTools to see if the component's state has the data. This isolates whether the problem is server-side or client-side.",
+      "encourageCorrect": "Perfect! Network tab + DevTools state inspection lets you pinpoint whether the data never arrived or is not being rendered.",
+      "encourageIncorrect": "When there is no data and no error, check the Network tab (did the API respond?) and React DevTools (is the data in state?). This helps you find where the data flow broke."
+    }
+  ]
+}
