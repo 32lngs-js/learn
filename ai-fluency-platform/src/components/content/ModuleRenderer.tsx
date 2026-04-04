@@ -20,6 +20,10 @@ import { ProgressBar } from "@/components/progress/ProgressBar";
 import { ModuleComplete } from "@/components/progress/ModuleComplete";
 import { useProgress } from "@/lib/store/use-progress";
 import { celebrateInteraction, celebrateModule, celebrateDrillPass } from "@/lib/celebrations";
+import { addSparks } from "@/lib/sparks/store";
+import { syncSparkEarn } from "@/lib/sparks/db-sync";
+import { generateIdempotencyKey } from "@/lib/sparks/idempotency";
+import { SPARK_CONFIG } from "@/lib/sparks/config";
 import ReactMarkdown, { Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
@@ -99,7 +103,16 @@ export function ModuleRenderer({
   const handleModuleComplete = useCallback(() => {
     markModuleComplete();
     celebrateModule(levelColor);
-  }, [markModuleComplete, levelColor]);
+
+    // Award sparks for lesson completion
+    const key = generateIdempotencyKey(
+      "anon",
+      "lesson_completed",
+      `${modulePath}:${new Date().toISOString().slice(0, 10)}`
+    );
+    addSparks(SPARK_CONFIG.lessonReward, "lesson_completed", key, { modulePath });
+    syncSparkEarn("lesson_completed", SPARK_CONFIG.lessonReward, key, { modulePath });
+  }, [markModuleComplete, levelColor, modulePath]);
 
   // Collect all drill keys for auto-completion logic
   // interactionIndex increments for every interactive block, so drill keys

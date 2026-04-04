@@ -9,6 +9,7 @@ import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/s
 import { Menu, LogIn, LogOut, LayoutDashboard, BookOpen, User } from "lucide-react";
 import { Sidebar } from "./Sidebar";
 import { XpBadge } from "@/components/review/XpBadge";
+import { SparksBadge } from "@/components/sparks/SparksBadge";
 
 export function Header() {
   const { user } = useAuth();
@@ -62,6 +63,7 @@ export function Header() {
         </nav>
 
         <div className="ml-auto flex items-center gap-2">
+          <SparksBadge />
           <XpBadge />
           {user ? (
             <>

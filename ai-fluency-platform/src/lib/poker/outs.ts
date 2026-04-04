@@ -1,4 +1,4 @@
-import { FULL_DECK } from "./cards";
+import { FULL_DECK, rankValue, cardRank } from "./cards";
 import { evaluateHand, compareHands } from "./hand-evaluator";
 
 /**
@@ -25,6 +25,18 @@ export function getOutCards(hand: string[], board: string[]): string[] {
   }
 
   return outs;
+}
+
+/**
+ * Count outs specifically from overcards (cards in hand that rank above all board cards).
+ * Each overcard has 3 outs (the other 3 cards of that rank in the deck).
+ */
+export function countOvercardOuts(hand: string[], board: string[]): number {
+  const boardRanks = board.map(c => rankValue(cardRank(c)));
+  const maxBoardRank = Math.max(...boardRanks);
+  const handRanks = hand.map(c => rankValue(cardRank(c)));
+  const overcardCount = handRanks.filter(r => r > maxBoardRank).length;
+  return overcardCount * 3;
 }
 
 export interface DrawInfo {
@@ -115,13 +127,22 @@ export function identifyDrawTypes(hand: string[], board: string[]): DrawInfo[] {
     }
   }
 
-  // If no specific draws found but there are outs, label generically
+  // If no specific draws found but there are outs, check for overcards first
   if (draws.length === 0 && totalOuts > 0) {
-    draws.push({
-      type: "overcards",
-      outs: totalOuts,
-      description: `Overcards/improvement (${totalOuts} outs)`,
-    });
+    const overcardOuts = countOvercardOuts(hand, board);
+    if (overcardOuts > 0) {
+      draws.push({
+        type: "overcards",
+        outs: overcardOuts,
+        description: `Overcards (${overcardOuts} outs)`,
+      });
+    } else {
+      draws.push({
+        type: "overcards",
+        outs: totalOuts,
+        description: `Overcards/improvement (${totalOuts} outs)`,
+      });
+    }
   }
 
   return draws;

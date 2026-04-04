@@ -22,6 +22,10 @@ import {
 } from "@/lib/store/xp";
 import { recordAnswer } from "@/lib/store/quiz-history";
 import { celebrateInteraction } from "@/lib/celebrations";
+import { addSparks } from "@/lib/sparks/store";
+import { syncSparkEarn } from "@/lib/sparks/db-sync";
+import { generateIdempotencyKey } from "@/lib/sparks/idempotency";
+import { SPARK_CONFIG } from "@/lib/sparks/config";
 import type { ReviewQuestion } from "@/types/review";
 
 type QuizState = "intro" | "question" | "summary";
@@ -90,6 +94,26 @@ export function DailyQuizModal({
             questionsAnswered: questions.length,
             correctCount: correctCount + (correct ? 1 : 0),
             xpEarned: sessionXp + xp + bonusTotal,
+          });
+
+          // Award sparks for quiz completion
+          const finalCorrect = correctCount + (correct ? 1 : 0);
+          const isPerfect = finalCorrect === questions.length;
+          const quizSparks =
+            SPARK_CONFIG.quizBaseReward +
+            finalCorrect * SPARK_CONFIG.quizPerCorrectBonus +
+            (isPerfect ? SPARK_CONFIG.quizPerfectBonus : 0);
+          const today = new Date().toISOString().slice(0, 10);
+          const sparkKey = generateIdempotencyKey("anon", "quiz_completed", today);
+          addSparks(quizSparks, "quiz_completed", sparkKey, {
+            correctCount: finalCorrect,
+            totalQuestions: questions.length,
+            isPerfect,
+          });
+          syncSparkEarn("quiz_completed", quizSparks, sparkKey, {
+            correctCount: finalCorrect,
+            totalQuestions: questions.length,
+            isPerfect,
           });
 
           refresh();

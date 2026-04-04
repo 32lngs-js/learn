@@ -6,6 +6,7 @@ import {
   randomInt,
   SUITS,
   RANKS,
+  FULL_DECK,
   rankValue,
   cardRank,
   cardSuit,
@@ -16,7 +17,7 @@ import {
   HandRank,
   HAND_NAMES,
 } from "./hand-evaluator";
-import { countOuts, getOutCards } from "./outs";
+import { countOuts, getOutCards, countOvercardOuts } from "./outs";
 import { ruleOfTwo, ruleOfFour, potOdds, expectedValueCall, expectedValueBluff } from "./odds";
 import {
   classifyHand,
@@ -147,6 +148,18 @@ function generateDiverseRankHandsProblems(count: number): DrillProblem[] {
  * This ensures diversity instead of random dealing (which gives 80%+ high card / one pair).
  */
 function constructHandForRank(target: HandRank): { hand: string[]; board: string[] } {
+  for (let attempt = 0; attempt < 10; attempt++) {
+    const result = constructHandForRankOnce(target);
+    const evaluated = evaluateHand([...result.hand, ...result.board]);
+    if (evaluated.rank === target) {
+      return result;
+    }
+  }
+  // Last resort: return whatever we get
+  return constructHandForRankOnce(target);
+}
+
+function constructHandForRankOnce(target: HandRank): { hand: string[]; board: string[] } {
   const suits = shuffleArray([...SUITS]);
   const ranks = shuffleArray([...RANKS]);
 
@@ -372,6 +385,7 @@ function generateCountOutsProblem(): DrillProblem {
     generateFlushDrawOuts,
     generateStraightDrawOuts,
     generateOvercardOuts,
+    generateGutShotOuts,
   ])();
 }
 
@@ -420,6 +434,31 @@ function generateStraightDrawOuts(): DrillProblem {
   return makeOutsProblem(hand, board, outs, "open-ended straight draw", "intermediate");
 }
 
+function generateGutShotOuts(): DrillProblem {
+  // Gutshot straight draw: 4 of 5 consecutive ranks with a gap in the middle
+  // e.g., 5-6-_-8-9 (missing the 7) = 4 outs
+  const startIdx = randomInt(0, 8); // Starting rank index for a 5-card straight
+  const straightRanks = RANKS.slice(startIdx, startIdx + 5);
+  // Remove one of the middle cards (index 1, 2, or 3) to create the gap
+  const gapIdx = randomInt(1, 3);
+  const gapRank = straightRanks[gapIdx];
+  const keptRanks = straightRanks.filter((_, i) => i !== gapIdx);
+
+  // Assign different suits to avoid flush draw
+  const cards = keptRanks.map((r, i) => `${r}${SUITS[i % 4]}`);
+
+  const hand = [cards[0], cards[1]];
+  // Add an off-card that doesn't complete any straight
+  const offRank = pickRandom(
+    RANKS.filter((r) => !straightRanks.includes(r) && Math.abs(RANKS.indexOf(r) - startIdx) > 5)
+  );
+  const board = [cards[2], cards[3], `${offRank}${pickRandom([...SUITS])}`];
+
+  const outs = 4; // Gutshot = 4 outs (4 cards of the missing rank)
+
+  return makeOutsProblem(hand, board, outs, "gutshot straight draw", "intermediate");
+}
+
 function generateOvercardOuts(): DrillProblem {
   // Two overcards (e.g., AK on a low board)
   const deck = createDeck();
@@ -438,7 +477,7 @@ function generateOvercardOuts(): DrillProblem {
   const board = lowRanks.slice(0, 3).map((r, i) => `${r}${boardSuits[i % 4]}`);
 
   // Overcards = 6 outs (3 per overcard)
-  const actualOuts = countOuts(hand, board);
+  const actualOuts = countOvercardOuts(hand, board);
 
   return makeOutsProblem(hand, board, actualOuts, "overcards", "basic");
 }
@@ -450,19 +489,25 @@ function makeOutsProblem(
   drawType: string,
   difficulty: "basic" | "intermediate" | "advanced"
 ): DrillProblem {
-  // Generate plausible wrong answers
-  const wrongOuts = new Set<number>();
-  wrongOuts.add(Math.max(1, correctOuts - randomInt(2, 4)));
-  wrongOuts.add(correctOuts + randomInt(2, 4));
-  wrongOuts.add(correctOuts + randomInt(5, 8));
-  // Remove correct if accidentally added
-  wrongOuts.delete(correctOuts);
-
-  const wrongArray = [...wrongOuts].slice(0, 3);
-  while (wrongArray.length < 3) {
-    wrongArray.push(correctOuts + wrongArray.length + 3);
+  // Generate plausible wrong answers, ensuring all 4 options are unique
+  const wrongSet = new Set<number>();
+  const candidates = [
+    Math.max(1, correctOuts - randomInt(2, 4)),
+    correctOuts + randomInt(2, 4),
+    correctOuts + randomInt(5, 8),
+  ];
+  for (const c of candidates) {
+    if (c !== correctOuts) wrongSet.add(c);
+  }
+  // Fill until we have 3 unique wrong answers
+  let offset = 1;
+  while (wrongSet.size < 3) {
+    const candidate = correctOuts + offset * 3 + 2;
+    if (candidate !== correctOuts && candidate > 0) wrongSet.add(candidate);
+    offset++;
   }
 
+  const wrongArray = [...wrongSet].slice(0, 3);
   const allOptions = shuffleArray([correctOuts, ...wrongArray]);
   const correctIdx = allOptions.indexOf(correctOuts);
   const correctLetter = String.fromCharCode(65 + correctIdx);
@@ -502,7 +547,18 @@ function generateComboOutsProblem(): DrillProblem {
     `${pickRandom(["3", "4", "5"])}${pickRandom([...otherSuits])}`,
   ];
 
-  const actualOuts = countOuts(hand, board);
+  // Flush outs: remaining cards of the flush suit
+  const known = new Set([...hand, ...board]);
+  const flushOuts = FULL_DECK.filter(
+    (c) => cardSuit(c) === suit && !known.has(c)
+  ).length;
+
+  // Overcard outs: cards that rank above all board cards (in other suits)
+  const overcardOuts = countOvercardOuts(hand, board);
+
+  // Both hole cards are in the flush suit, so remaining overcard-rank cards
+  // are always in other suits — no overlap with flush outs
+  const actualOuts = flushOuts + overcardOuts;
 
   return makeOutsProblem(hand, board, actualOuts, "combo draw (flush + overcards)", "advanced");
 }
