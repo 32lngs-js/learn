@@ -139,6 +139,7 @@ export interface SparkEconConfig {
   freeLessonsPerDay: number;
   cooldownSkipCost: number;
   streakFreezeCost: number;
+  startingBalance: number;
   coursePrices: Record<string, number>;
   freeCourses: string[];
   diminishingReturnsThreshold: number;

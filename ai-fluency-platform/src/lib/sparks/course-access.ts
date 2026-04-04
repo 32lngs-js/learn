@@ -33,25 +33,9 @@ export function getUnlockedCourses(): CourseUnlock[] {
   return getUnlocks();
 }
 
-export function canAccessCourse(courseId: string): boolean {
-  // Free courses are always accessible
-  if (SPARK_CONFIG.freeCourses.includes(courseId)) return true;
-
-  // Subscriber status is checked via a separate flag in localStorage
-  // (synced from DB wallet state). SparkStore doesn't carry it directly,
-  // so we read a dedicated key.
-  if (typeof window !== "undefined") {
-    try {
-      const raw = localStorage.getItem("aif_subscriber");
-      if (raw === "true") return true;
-    } catch {
-      // ignore
-    }
-  }
-
-  // Check if unlocked
-  const unlocks = getUnlocks();
-  return unlocks.some((u) => u.courseId === courseId);
+export function canAccessCourse(_courseId: string): boolean {
+  // All courses are free — nothing is restricted
+  return true;
 }
 
 export function unlockCourse(

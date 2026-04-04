@@ -7,11 +7,10 @@ import { cn } from "@/lib/utils";
 
 const BENEFITS = [
   "2x Spark earning on all activities",
-  "No cooldowns between lessons",
   "Daily bonus Sparks",
-  "Unlock all courses",
   "Exclusive achievements",
   "Priority support",
+  "Support the platform",
 ];
 
 const PLANS = {

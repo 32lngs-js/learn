@@ -23,8 +23,8 @@ CREATE TYPE spark_tx_type AS ENUM (
 -- ============================================================
 CREATE TABLE spark_wallets (
   user_id UUID PRIMARY KEY REFERENCES profiles(id) ON DELETE CASCADE,
-  balance INTEGER NOT NULL DEFAULT 0 CHECK (balance >= 0),
-  lifetime_earned INTEGER NOT NULL DEFAULT 0,
+  balance INTEGER NOT NULL DEFAULT 1000 CHECK (balance >= 0),
+  lifetime_earned INTEGER NOT NULL DEFAULT 1000,
   lifetime_spent INTEGER NOT NULL DEFAULT 0,
   is_subscriber BOOLEAN NOT NULL DEFAULT false,
   subscriber_since TIMESTAMPTZ,
@@ -513,3 +513,34 @@ INSERT INTO achievement_definitions (id, name, description, icon, spark_reward, 
   ('quiz_streak_7', 'Quiz Machine', 'Complete quizzes 7 days in a row', 'target', 40, 'quiz', '{"type": "quiz_streak", "days": 7}', 12),
   ('first_purchase', 'First Investment', 'Make your first Sparks purchase', 'shopping-bag', 10, 'economy', '{"type": "purchase"}', 13),
   ('creator_first', 'Course Creator', 'Publish your first community course', 'pen-tool', 75, 'creator', '{"type": "courses_created", "count": 1}', 14);
+
+-- ============================================================
+-- Grant all existing users 5000 sparks
+-- ============================================================
+INSERT INTO spark_wallets (user_id, balance, lifetime_earned)
+SELECT id, 5000, 5000 FROM profiles
+ON CONFLICT (user_id) DO UPDATE SET
+  balance = GREATEST(spark_wallets.balance, 5000),
+  lifetime_earned = GREATEST(spark_wallets.lifetime_earned, 5000),
+  updated_at = now();
+
+-- ============================================================
+-- Grant full access to Barbara (barbara.stevenson78@gmail.com)
+-- ============================================================
+DO $$
+DECLARE
+  v_uid UUID;
+BEGIN
+  SELECT id INTO v_uid FROM auth.users WHERE email = 'barbara.stevenson78@gmail.com';
+  IF v_uid IS NOT NULL THEN
+    -- Give generous spark balance + subscriber status
+    INSERT INTO spark_wallets (user_id, balance, lifetime_earned, is_subscriber, subscriber_since)
+    VALUES (v_uid, 10000, 10000, true, now())
+    ON CONFLICT (user_id) DO UPDATE SET
+      balance = 10000,
+      lifetime_earned = GREATEST(spark_wallets.lifetime_earned, 10000),
+      is_subscriber = true,
+      subscriber_since = now(),
+      updated_at = now();
+  END IF;
+END $$;

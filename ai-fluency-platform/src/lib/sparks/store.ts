@@ -5,8 +5,8 @@ import type { SparkStore, SparkTxType, PendingSparkTx } from "@/types/sparks";
 const SPARKS_KEY = "aif_sparks";
 
 const DEFAULT_STORE: SparkStore = {
-  balance: 0,
-  lifetimeEarned: 0,
+  balance: 1000,
+  lifetimeEarned: 1000,
   lifetimeSpent: 0,
   pendingTransactions: [],
 };
