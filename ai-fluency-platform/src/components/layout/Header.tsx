@@ -82,8 +82,15 @@ export function Header() {
           </SheetContent>
         </Sheet>
 
-        <Link href={user ? "/dashboard" : "/"} className="font-bold text-lg">
-          Palestra
+        <Link href={user ? "/dashboard" : "/"} className="flex items-center gap-2 font-bold text-lg">
+          <svg viewBox="0 0 100 100" className="h-7 w-7 shrink-0" aria-hidden="true">
+            <g transform="translate(5, 5)">
+              <path d="M 0 90 L 0 0 L 58 0 C 78 0 90 14 90 30 C 90 46 78 60 58 60 L 20 60 L 20 90 Z" fill="currentColor"/>
+              <path d="M 20 12 L 54 12 C 68 12 76 20 76 30 C 76 40 68 48 54 48 L 20 48 Z" className="fill-background"/>
+              <polygon points="30,46 47,-4 64,46" fill="#4F46E5"/>
+            </g>
+          </svg>
+          <span className="hidden sm:inline">Palestra</span>
         </Link>
 
         <nav className="hidden md:flex items-center gap-4 ml-6">
