@@ -15,6 +15,10 @@ const PROGRESS_KEY = "aif_progress";
 const XP_KEY = "aif_xp";
 const QUIZ_HISTORY_KEY = "aif_quiz_history";
 const PROVIDER_KEY = "aif_provider";
+const SPARKS_KEY = "aif_sparks";
+const STREAK_KEY = "aif_streak_v2";
+const ACHIEVEMENTS_KEY = "aif_achievements";
+const COURSE_UNLOCKS_KEY = "aif_course_unlocks";
 
 export function SyncProvider({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
@@ -85,6 +89,140 @@ export function SyncProvider({ children }: { children: React.ReactNode }) {
             provider: localProvider || dbData.provider || "claude-code",
           }),
         }).catch(() => {});
+
+        // ── Restore Sparks economy data from server on fresh install ──
+
+        // Sparks balance
+        try {
+          const localSparks = safeJsonParse(localStorage.getItem(SPARKS_KEY));
+          const isFreshSparks =
+            !localSparks || localSparks.balance === 1000;
+
+          if (isFreshSparks) {
+            const sparksRes = await fetch("/api/sparks/balance");
+            if (sparksRes.ok) {
+              const sparksData = await sparksRes.json();
+              // Only restore if server has non-default data
+              if (
+                sparksData.balance !== undefined &&
+                (sparksData.lifetimeEarned > 1000 ||
+                  sparksData.lifetimeSpent > 0 ||
+                  sparksData.balance !== 1000)
+              ) {
+                localStorage.setItem(
+                  SPARKS_KEY,
+                  JSON.stringify({
+                    balance: sparksData.balance ?? 1000,
+                    lifetimeEarned: sparksData.lifetimeEarned ?? 1000,
+                    lifetimeSpent: sparksData.lifetimeSpent ?? 0,
+                    pendingTransactions: [],
+                  })
+                );
+              }
+            }
+          }
+        } catch {
+          // Best-effort
+        }
+
+        // Streak state
+        try {
+          const localStreak = safeJsonParse(localStorage.getItem(STREAK_KEY));
+          const isFreshStreak =
+            !localStreak || localStreak.currentStreak === 0;
+
+          if (isFreshStreak) {
+            const streakRes = await fetch("/api/sparks/streak");
+            if (streakRes.ok) {
+              const streakData = await streakRes.json();
+              if (
+                streakData.currentStreak > 0 ||
+                streakData.longestStreak > 0
+              ) {
+                localStorage.setItem(
+                  STREAK_KEY,
+                  JSON.stringify({
+                    currentStreak: streakData.currentStreak ?? 0,
+                    longestStreak: streakData.longestStreak ?? 0,
+                    lastActivityDate: streakData.lastActivityDate ?? null,
+                    freezesRemaining: streakData.freezesRemaining ?? 0,
+                    graceDaysUsed: streakData.graceDaysUsed ?? 0,
+                    streakAtGraceStart: 0,
+                  })
+                );
+              }
+            }
+          }
+        } catch {
+          // Best-effort
+        }
+
+        // Achievements
+        try {
+          const localAchievements = safeJsonParse(
+            localStorage.getItem(ACHIEVEMENTS_KEY)
+          );
+          const isFreshAchievements =
+            !localAchievements ||
+            (Array.isArray(localAchievements)
+              ? localAchievements.length === 0
+              : true);
+
+          if (isFreshAchievements) {
+            const achievementsRes = await fetch("/api/sparks/achievements");
+            if (achievementsRes.ok) {
+              const achievementsData = await achievementsRes.json();
+              const earned = (achievementsData.achievements ?? [])
+                .filter(
+                  (a: { earned: boolean }) => a.earned
+                )
+                .map(
+                  (a: { id: string; earnedAt: string | null }) => ({
+                    achievementId: a.id,
+                    earnedAt: a.earnedAt ?? new Date().toISOString(),
+                  })
+                );
+
+              if (earned.length > 0) {
+                localStorage.setItem(
+                  ACHIEVEMENTS_KEY,
+                  JSON.stringify(earned)
+                );
+              }
+            }
+          }
+        } catch {
+          // Best-effort
+        }
+
+        // Course unlocks
+        try {
+          const localUnlocks = safeJsonParse(
+            localStorage.getItem(COURSE_UNLOCKS_KEY)
+          );
+          const isFreshUnlocks =
+            !localUnlocks ||
+            (Array.isArray(localUnlocks)
+              ? localUnlocks.length === 0
+              : true);
+
+          if (isFreshUnlocks) {
+            const unlocksRes = await fetch("/api/sparks/unlock-course");
+            if (unlocksRes.ok) {
+              const unlocksData = await unlocksRes.json();
+              const unlocks = unlocksData.unlocks ?? [];
+
+              if (unlocks.length > 0) {
+                localStorage.setItem(
+                  COURSE_UNLOCKS_KEY,
+                  JSON.stringify(unlocks)
+                );
+              }
+            }
+          }
+        } catch {
+          // Best-effort
+        }
 
         localStorage.setItem(SYNCED_KEY, "true");
 

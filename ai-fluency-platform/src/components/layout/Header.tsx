@@ -90,7 +90,7 @@ export function Header() {
               <polygon points="30,46 47,-4 64,46" fill="#4F46E5"/>
             </g>
           </svg>
-          <span className="hidden sm:inline">Palestra</span>
+          <span className="inline">Palestra</span>
         </Link>
 
         <nav className="hidden md:flex items-center gap-4 ml-6">
