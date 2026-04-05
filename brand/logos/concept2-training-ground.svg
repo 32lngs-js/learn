@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 100" width="700" height="100">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@700&amp;display=swap');
+  </style>
+  <!-- Icon: Three-sided courtyard with central column -->
+  <g transform="translate(10, 10)">
+    <!-- Three walls (open top) -->
+    <path d="M 0 0 L 0 80 L 80 80 L 80 0" fill="none" stroke="#18181B" stroke-width="8" stroke-linecap="square" stroke-linejoin="miter"/>
+    <!-- Central column -->
+    <line x1="40" y1="80" x2="40" y2="28" stroke="#18181B" stroke-width="8" stroke-linecap="square"/>
+  </g>
+  <!-- Wordmark -->
+  <text x="120" y="76" font-family="'Inter', sans-serif" font-weight="700" font-size="64" letter-spacing="5" fill="#18181B">PALESTRA</text>
+</svg>

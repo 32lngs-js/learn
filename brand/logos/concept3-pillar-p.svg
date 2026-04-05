@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 100" width="720" height="100">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@600&amp;display=swap');
+  </style>
+  <!-- Pillar P lettermark -->
+  <g transform="translate(10, 5)">
+    <!-- Column stem + angular bowl as single path -->
+    <path d="
+      M 0 90
+      L 0 0
+      L 60 0
+      L 60 8
+      L 52 8
+      L 42 42
+      L 16 42
+      L 16 90
+      Z
+    " fill="#0F172A" fill-rule="evenodd"/>
+    <!-- Inner negative space (doorway/arch) -->
+    <path d="
+      M 16 8
+      L 48 8
+      L 40 36
+      L 16 36
+      Z
+    " fill="#FAFAFA"/>
+  </g>
+  <!-- Wordmark: ALESTRA (P is the icon) -->
+  <text x="88" y="76" font-family="'Inter', sans-serif" font-weight="600" font-size="60" letter-spacing="4" fill="#0F172A">ALESTRA</text>
+</svg>

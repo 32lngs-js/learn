@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 100">
+  <!-- P monogram: geometric, thick, modern -->
+  <!-- Vertical stem -->
+  <rect x="10" y="8" width="14" height="84" rx="2" fill="#18181B"/>
+  <!-- Bowl of P -->
+  <path d="M24 8 H52 C70 8 80 19 80 33 C80 47 70 58 52 58 H24 V46 H50 C60 46 66 41 66 33 C66 25 60 20 50 20 H24 Z" fill="#18181B"/>
+  <!-- Spark: 4-point star burst, clearly visible -->
+  <polygon points="84,0 86,7 93,4 87,9 92,15 86,11 84,18 82,11 76,15 81,9 75,4 82,7" fill="#4F46E5"/>
+  <!-- Wordmark: ALESTRA -->
+  <text x="104" y="72" font-family="Inter, system-ui, sans-serif" font-weight="700" font-size="50" fill="#18181B" letter-spacing="4">ALESTRA</text>
+</svg>

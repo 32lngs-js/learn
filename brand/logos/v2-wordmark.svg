@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 80">
+  <!-- Pure wordmark -->
+  <text x="30" y="52" font-family="Inter, system-ui, sans-serif" font-weight="700" font-size="46" fill="#18181B" letter-spacing="5">PALESTRA</text>
+  <!-- Accent: short indigo underline, tightly under text -->
+  <rect x="30" y="60" width="240" height="3" rx="1.5" fill="#4F46E5"/>
+</svg>
