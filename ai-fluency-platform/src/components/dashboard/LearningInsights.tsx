@@ -27,6 +27,7 @@ export function LearningInsights({
   curricula,
 }: LearningInsightsProps) {
   const [lessonsCompleted, setLessonsCompleted] = useState(0);
+  const [skillsMastered, setSkillsMastered] = useState(0);
   const [currentStreak, setCurrentStreak] = useState(0);
   const [sparksBalance, setSparksBalance] = useState(0);
   const [courseProgress, setCourseProgress] = useState<CourseProgress[]>([]);
@@ -37,6 +38,18 @@ export function LearningInsights({
     setLessonsCompleted(completed);
     setCurrentStreak(getStreakState().currentStreak);
     setSparksBalance(getBalance());
+
+    // Count mastered drill skills
+    let mastered = 0;
+    for (const mod of modules) {
+      const passed = (mod as unknown as Record<string, unknown>).drillPassed as
+        | Record<string, boolean>
+        | undefined;
+      if (passed) {
+        mastered += Object.values(passed).filter(Boolean).length;
+      }
+    }
+    setSkillsMastered(mastered);
 
     // Compute per-course progress
     const cp: CourseProgress[] = [];
@@ -72,7 +85,7 @@ export function LearningInsights({
   }, [progress, courses, curricula]);
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
       {/* Radial course progress chart */}
       <Card className="py-4 row-span-2 col-span-2 sm:col-span-1">
         <CardContent className="flex flex-col items-center justify-center h-full gap-2">
@@ -103,6 +116,13 @@ export function LearningInsights({
             {sparksBalance.toLocaleString()}
           </span>
           <span className="text-xs text-muted-foreground">Sparks</span>
+        </CardContent>
+      </Card>
+      <Card className="py-4">
+        <CardContent className="flex flex-col items-center gap-1 text-center">
+          <span className="text-2xl">{"\u{1F3AF}"}</span>
+          <span className="text-xl font-bold">{skillsMastered}</span>
+          <span className="text-xs text-muted-foreground">Skills Mastered</span>
         </CardContent>
       </Card>
     </div>
