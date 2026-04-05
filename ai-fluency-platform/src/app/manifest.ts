@@ -2,10 +2,10 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "AI Fluency Platform",
-    short_name: "AI Fluency",
+    name: "Palestra",
+    short_name: "Palestra",
     description:
-      "Master AI fluency through evidence-based learning — from foundational concepts to pioneering research.",
+      "Earned mastery through active practice, spaced repetition, and AI-powered drills. Learn skills that stick.",
     start_url: "/",
     display: "standalone",
     background_color: "#ffffff",

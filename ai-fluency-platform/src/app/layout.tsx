@@ -25,13 +25,13 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Learning Platform",
+  title: "Palestra",
   description:
-    "Evidence-based learning with interactive exercises, AI-powered feedback, and structured progression.",
+    "Earned mastery through active practice, spaced repetition, and AI-powered drills. Learn skills that stick.",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "Learning Platform",
+    title: "Palestra",
   },
 };
 

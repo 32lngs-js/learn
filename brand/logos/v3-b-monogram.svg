@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 100">
+  <!-- Concept B: Bold geometric P with an upward-pointing notch in the bowl -->
+  <!-- The negative space in the bowl forms an upward arrow/chevron -->
+  <g transform="translate(10, 5)">
+    <!-- Outer P shape -->
+    <path d="
+      M 0 90
+      L 0 0
+      L 55 0
+      C 72 0 82 12 82 28
+      C 82 44 72 56 55 56
+      L 18 56
+      L 18 90
+      Z
+    " fill="#18181B"/>
+    <!-- Inner bowl cutout with upward chevron -->
+    <path d="
+      M 18 14
+      L 50 14
+      C 60 14 66 20 66 28
+      C 66 36 60 42 50 42
+      L 18 42
+      Z
+    " fill="#FAFAFA"/>
+    <!-- Accent: small indigo triangle/chevron pointing up inside the bowl -->
+    <polygon points="34,38 42,22 50,38" fill="#4F46E5"/>
+  </g>
+  <!-- Wordmark -->
+  <text x="105" y="74" font-family="Inter, system-ui, sans-serif" font-weight="700" font-size="52" fill="#18181B" letter-spacing="4">PALESTRA</text>
+</svg>

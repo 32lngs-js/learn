@@ -1,4 +1,4 @@
-# Learning Platform
+# Palestra
 
 ## Build & Dev
 

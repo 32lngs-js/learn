@@ -83,7 +83,7 @@ export function Header() {
         </Sheet>
 
         <Link href={user ? "/dashboard" : "/"} className="font-bold text-lg">
-          Learning Platform
+          Palestra
         </Link>
 
         <nav className="hidden md:flex items-center gap-4 ml-6">

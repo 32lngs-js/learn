@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 100">
+  <!-- PALESTRA v4: Bold P monogram with upward chevron inside bowl -->
+  <!-- The indigo upward triangle is the focal point of the mark -->
+  <g transform="translate(8, 5)">
+    <!-- P body: stem + bowl, solid dark -->
+    <path d="
+      M 0 90 L 0 0 L 58 0
+      C 78 0 90 14 90 30
+      C 90 46 78 60 58 60
+      L 20 60 L 20 90 Z
+    " fill="#18181B"/>
+    <!-- Bowl counter: white opening -->
+    <path d="
+      M 20 12 L 54 12
+      C 68 12 76 20 76 30
+      C 76 40 68 48 54 48
+      L 20 48 Z
+    " fill="#FAFAFA"/>
+    <!-- Indigo chevron: large, prominent, centered in the bowl -->
+    <polygon points="30,46 47,18 64,46" fill="#4F46E5"/>
+  </g>
+  <!-- Wordmark -->
+  <text x="116" y="74" font-family="Inter, system-ui, sans-serif" font-weight="700" font-size="52" fill="#18181B" letter-spacing="4">PALESTRA</text>
+</svg>

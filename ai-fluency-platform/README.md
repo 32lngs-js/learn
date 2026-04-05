@@ -1,4 +1,4 @@
-# Learning Platform
+# Palestra
 
 An AI-powered education platform that teaches through active practice, spaced repetition, and drill-based mastery — not passive video consumption.
 

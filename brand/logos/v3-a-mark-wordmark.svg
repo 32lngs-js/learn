@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 100">
+  <!-- Concept A: Stacked ascending steps forming a "P" silhouette -->
+  <!-- 4 horizontal bars, right-aligned, ascending in width from top to bottom -->
+  <!-- Creates a stepped shape that suggests both progression and the letter P -->
+  <g transform="translate(12, 8)">
+    <!-- Step 4 (top, shortest) -->
+    <rect x="0" y="0" width="20" height="12" rx="2" fill="#4F46E5"/>
+    <!-- Step 3 -->
+    <rect x="0" y="18" width="32" height="12" rx="2" fill="#18181B"/>
+    <!-- Step 2 -->
+    <rect x="0" y="36" width="44" height="12" rx="2" fill="#18181B"/>
+    <!-- Step 1 (bottom, longest = full stem) -->
+    <rect x="0" y="54" width="12" height="30" rx="2" fill="#18181B"/>
+  </g>
+  <!-- Wordmark -->
+  <text x="90" y="74" font-family="Inter, system-ui, sans-serif" font-weight="700" font-size="54" fill="#18181B" letter-spacing="4">PALESTRA</text>
+</svg>

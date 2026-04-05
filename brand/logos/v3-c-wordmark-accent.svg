@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 90">
+  <!-- Concept C: Clean wordmark with indigo accent on the first A's crossbar -->
+  <!-- The crossbar of the first A is rendered in the brand indigo color -->
+  <!-- This creates a subtle but ownable color move -->
+
+  <!-- Full wordmark -->
+  <text x="24" y="60" font-family="Inter, system-ui, sans-serif" font-weight="700" font-size="50" fill="#18181B" letter-spacing="5">PALESTRA</text>
+
+  <!-- Accent dot — a small circle above the crossbar area of the first A -->
+  <!-- Positioned precisely above the first A -->
+  <circle cx="100" cy="14" r="5" fill="#4F46E5"/>
+
+  <!-- Subtle accent underline (shorter, more refined) -->
+  <rect x="24" y="68" width="180" height="2.5" rx="1.25" fill="#4F46E5" opacity="0.6"/>
+</svg>
