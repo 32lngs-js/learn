@@ -20,6 +20,7 @@ import systemDesignCurriculum from "../../../content/system-design/curriculum.js
 import webFundCurriculum from "../../../content/web-fundamentals/curriculum.json";
 import reactLitCurriculum from "../../../content/react-literacy/curriculum.json";
 import texasHoldemCurriculum from "../../../content/texas-holdem/curriculum.json";
+import contractBridgeCurriculum from "../../../content/contract-bridge/curriculum.json";
 import coursesData from "../../../content/courses.json";
 
 const courses = coursesData as {
@@ -39,6 +40,7 @@ const curricula: Record<string, CurriculumData> = {
   "web-fundamentals": webFundCurriculum as CurriculumData,
   "react-literacy": reactLitCurriculum as CurriculumData,
   "texas-holdem": texasHoldemCurriculum as CurriculumData,
+  "contract-bridge": contractBridgeCurriculum as CurriculumData,
 };
 
 function isEnrolled(courseId: string, progress: ProgressStore): boolean {

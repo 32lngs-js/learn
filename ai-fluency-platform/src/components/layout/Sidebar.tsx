@@ -18,6 +18,7 @@ import systemDesignCurriculum from "../../../content/system-design/curriculum.js
 import webFundamentalsCurriculum from "../../../content/web-fundamentals/curriculum.json";
 import reactLiteracyCurriculum from "../../../content/react-literacy/curriculum.json";
 import texasHoldemCurriculum from "../../../content/texas-holdem/curriculum.json";
+import contractBridgeCurriculum from "../../../content/contract-bridge/curriculum.json";
 import coursesData from "../../../content/courses.json";
 import type { CourseInfo } from "@/types/content";
 
@@ -32,6 +33,7 @@ const curricula: Record<string, CurriculumData> = {
   "web-fundamentals": webFundamentalsCurriculum as CurriculumData,
   "react-literacy": reactLiteracyCurriculum as CurriculumData,
   "texas-holdem": texasHoldemCurriculum as CurriculumData,
+  "contract-bridge": contractBridgeCurriculum as CurriculumData,
 };
 
 function getLevelOrder(curriculum: CurriculumData): string[] {
