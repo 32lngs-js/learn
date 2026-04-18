@@ -31,6 +31,7 @@ const COURSES = [
   "react-literacy",
   "texas-holdem",
   "contract-bridge",
+  "make-pm",
 ];
 
 function findLessonFiles(courseDir: string): string[] {

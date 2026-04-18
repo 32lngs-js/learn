@@ -64,5 +64,680 @@
       "description": "Platforms become durable through extensibility and strategic sequencing. Master APIs, SDKs, and plugin systems; the platform-product boundary; cross-product leverage; velocity versus platform health; GA readiness; multi-quarter roadmapping; and B2A API design for a world where AI agents are the primary consumers.",
       "moduleCount": 9
     }
-  ]
+  ],
+  "modules": {
+    "foundations": [
+      {
+        "title": "Foundations",
+        "description": "Build the mental model for how modern web applications actually run. Master the browser rendering pipeline, frontend frameworks, build systems, container and sandbox technologies, and the networking stack from DNS to edge.",
+        "level": "foundations",
+        "slug": "index",
+        "order": 0,
+        "isCheckpoint": false,
+        "isIndex": true
+      },
+      {
+        "title": "F.1 How Browsers Execute Code",
+        "description": "Those two seconds contain one of the most complex pipelines in software. Understanding it is not optional for a Platform PM — every performance complaint, every \"why is preview slow,\" every decision a",
+        "level": "foundations",
+        "slug": "how-browsers-execute-code",
+        "order": 1,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "F.2 Modern Frontend Frameworks",
+        "description": "Raw HTML/CSS/JS works fine for a landing page. It breaks down the moment you have state — data that changes and a UI that must reflect that change. Without a framework, keeping the DOM synchronized wi",
+        "level": "foundations",
+        "slug": "modern-frontend-frameworks",
+        "order": 2,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "F.3 Build Systems & Bundlers",
+        "description": "The gap between \"code an AI wrote\" and \"code a browser can run\" is not small. Browsers speak ES5-compatible JavaScript and standard CSS. AI-generated code is written in TypeScript, JSX, modern ES2022+",
+        "level": "foundations",
+        "slug": "build-systems-bundlers",
+        "order": 3,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "F.4 Containers, VMs, and Sandboxes",
+        "description": "This is the defining infrastructure problem of the AI code-gen product category. The answer you choose determines your cost structure, your startup latency, your language support, your security postur",
+        "level": "foundations",
+        "slug": "containers-vms-and-sandboxes",
+        "order": 4,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "F.5 DNS, CDNs, and Edge Networks",
+        "description": "Deployment is the moment Make's output becomes real. Before deployment, it's a preview — isolated, ephemeral, forgiving. After deployment, it's a product with a URL, with users, with latency expectati",
+        "level": "foundations",
+        "slug": "dns-cdns-and-edge-networks",
+        "order": 5,
+        "isCheckpoint": false,
+        "isIndex": false
+      }
+    ],
+    "level-1": [
+      {
+        "title": "The AI Code-Gen Landscape",
+        "description": "Orient yourself in the prompt-to-code market. Understand the competitive architecture of v0, Lovable, Bolt, and Replit Agent; the prototype-to-production gap; and where Figma Make sits in the ecosystem.",
+        "level": "level-1",
+        "slug": "index",
+        "order": 0,
+        "isCheckpoint": false,
+        "isIndex": true
+      },
+      {
+        "title": "1.1 The Prompt-to-Code Product Category",
+        "description": "The AI coding market is genuinely confusing because the output of many products looks similar — you type a prompt, you get code — while the architecture, user intent, and business model underneath dif",
+        "level": "level-1",
+        "slug": "the-prompt-to-code-product-category",
+        "order": 1,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "1.2 Competitive Architecture Map",
+        "description": "The surface similarity of these products obscures completely different bets on runtime architecture, isolation model, deployment target, and agent design. A Platform PM who cannot articulate these dif",
+        "level": "level-1",
+        "slug": "competitive-architecture-map",
+        "order": 2,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "1.3 The Prototype-to-Production Gap",
+        "description": "This is the core tension of the Platform PM role. Make's demo magic is real — the speed, the quality, the \"I can't believe I built that\" moment. But the distance between that demo and a production app",
+        "level": "level-1",
+        "slug": "the-prototype-to-production-gap",
+        "order": 3,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "1.4 User Segments and Their Failure Modes",
+        "description": "The hardest product design challenge in platform work is serving multiple user segments simultaneously without degrading the experience for any of them. Make's three segments have incompatible mental ",
+        "level": "level-1",
+        "slug": "user-segments-and-their-failure-modes",
+        "order": 4,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "1.5 Figma Make's Position",
+        "description": "Positioning is not marketing — it is a statement of where you are structurally advantaged and where you are structurally behind. Make's Platform PM must hold both sides of this analysis simultaneously",
+        "level": "level-1",
+        "slug": "figma-make-s-position",
+        "order": 5,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "1.6 Level 1 Checkpoint",
+        "description": "---",
+        "level": "level-1",
+        "slug": "level-1-checkpoint",
+        "order": 6,
+        "isCheckpoint": true,
+        "isIndex": false
+      }
+    ],
+    "level-2": [
+      {
+        "title": "Code Execution & Runtimes",
+        "description": "The runtime is the foundational platform decision. Master the tradeoffs between server-side containers, browser-based execution, serverless and edge runtimes, and sandboxing mechanisms.",
+        "level": "level-2",
+        "slug": "index",
+        "order": 0,
+        "isCheckpoint": false,
+        "isIndex": true
+      },
+      {
+        "title": "2.1 What a Runtime Actually Is",
+        "description": "You write `const x = 2 + 2`. Something has to actually do that addition. That something is the **runtime**.",
+        "level": "level-2",
+        "slug": "what-a-runtime-actually-is",
+        "order": 1,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "2.2 Server-Side Containers (Docker)",
+        "description": "Docker became the default because it solved a real, persistent problem: \"it works on my machine.\" Before containers, deploying software meant managing operating system dependencies, runtime versions, ",
+        "level": "level-2",
+        "slug": "server-side-containers-docker",
+        "order": 2,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "2.3 Browser-Based Execution (WebContainers)",
+        "description": "StackBlitz's WebContainers technology is one of the more impressive pieces of systems engineering in the modern web tooling ecosystem. Understanding how it works is essential for any PM evaluating pre",
+        "level": "level-2",
+        "slug": "browser-based-execution-webcontainers",
+        "order": 3,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "2.4 Serverless Functions & Edge Runtimes",
+        "description": "The term \"serverless\" is a marketing euphemism that obscures a genuinely important architectural shift. The server exists. What's different is who manages it, how it's billed, and — most importantly f",
+        "level": "level-2",
+        "slug": "serverless-functions-edge-runtimes",
+        "order": 4,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "2.5 Sandboxing and Isolation",
+        "description": "When you run a platform that executes AI-generated code, you are operating on a threat model equivalent to public code execution infrastructure. The code is untrusted. Not because your users are malic",
+        "level": "level-2",
+        "slug": "sandboxing-and-isolation",
+        "order": 5,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "2.6 Cold Starts, Warm Pools, and Latency Budgets",
+        "description": "Latency is not a single number. It's a pipeline, and each stage has a budget. The PM's job is to understand that pipeline well enough to know where investment buys the most user-visible improvement — ",
+        "level": "level-2",
+        "slug": "cold-starts-warm-pools-and-latency-budgets",
+        "order": 6,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "2.7 Framework Support as a Platform Decision",
+        "description": "\"Should we support this framework?\" feels like a product question — survey your users, see what they use, add support if there's demand. It's actually a runtime and infrastructure question with produc",
+        "level": "level-2",
+        "slug": "framework-support-as-a-platform-decision",
+        "order": 7,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "2.8 Level 2 Checkpoint",
+        "description": "Scenario: The WebContainers Migration Proposal",
+        "level": "level-2",
+        "slug": "level-2-checkpoint",
+        "order": 8,
+        "isCheckpoint": true,
+        "isIndex": false
+      }
+    ],
+    "level-3": [
+      {
+        "title": "Preview Environments & Deployment",
+        "description": "Preview environments are where generated code meets reality. Master tenant isolation at scale, hot module replacement, dependency management, the preview-to-production pipeline, custom domains, and rollback as a safety primitive.",
+        "level": "level-3",
+        "slug": "index",
+        "order": 0,
+        "isCheckpoint": false,
+        "isIndex": true
+      },
+      {
+        "title": "3.1 Anatomy of a Preview Environment",
+        "description": "When a user clicks Preview in Make, a cascade of infrastructure events happens in the background — and if any part of that cascade takes too long, the user sees a spinner, loses trust, and the product",
+        "level": "level-3",
+        "slug": "anatomy-of-a-preview-environment",
+        "order": 1,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "3.2 Tenant Isolation at Scale",
+        "description": "Multi-tenancy is the central infrastructure problem for any platform product. It is also the area where Platform PMs most frequently have to defend engineering investment to skeptical stakeholders who",
+        "level": "level-3",
+        "slug": "tenant-isolation-at-scale",
+        "order": 2,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "3.3 Hot Reloading and Incremental Updates",
+        "description": "Hot reloading is the mechanism that makes AI-assisted development feel interactive rather than batch. Without it, every agent edit triggers an 8-second wait — and in a world where agents make dozens o",
+        "level": "level-3",
+        "slug": "hot-reloading-and-incremental-updates",
+        "order": 3,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "3.4 Dependency Management in Ephemeral Environments",
+        "description": "Dependency installation is the single most common source of preview latency spikes and the area where the gap between \"good enough\" and \"production-ready\" infrastructure is largest. A Platform PM who ",
+        "level": "level-3",
+        "slug": "dependency-management-in-ephemeral-environments",
+        "order": 4,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "3.5 From Preview to Production Deployment",
+        "description": "The transition from preview to production is where platform strategy becomes product strategy. Every decision here — static vs. dynamic, managed vs. DIY, instant vs. careful — shapes what kinds of app",
+        "level": "level-3",
+        "slug": "from-preview-to-production-deployment",
+        "order": 5,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "3.6 Custom Domains, SSL, and the Edge",
+        "description": "Custom domain support is a capability that signals \"this is a real product\" to users. It is also a moderate engineering investment with significant customer retention implications — users who deploy t",
+        "level": "level-3",
+        "slug": "custom-domains-ssl-and-the-edge",
+        "order": 6,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "3.7 Rollback, Versioning, and Deployment Safety",
+        "description": "Deployment safety is the area where platforms earn or lose trust. Users will tolerate a broken deploy — what they will not tolerate is being unable to recover. Rollback is an insurance policy, and lik",
+        "level": "level-3",
+        "slug": "rollback-versioning-and-deployment-safety",
+        "order": 7,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "3.8 Level 3 Checkpoint",
+        "description": "Interview Scenario",
+        "level": "level-3",
+        "slug": "level-3-checkpoint",
+        "order": 8,
+        "isCheckpoint": true,
+        "isIndex": false
+      }
+    ],
+    "level-4": [
+      {
+        "title": "Agent Infrastructure",
+        "description": "Master the Observe-Think-Act-Evaluate loop, tool use and function calling, context management, multi-step reasoning, error recovery, build-fork-integrate decisions, agent memory, multi-agent orchestration, and prompt architecture.",
+        "level": "level-4",
+        "slug": "index",
+        "order": 0,
+        "isCheckpoint": false,
+        "isIndex": true
+      },
+      {
+        "title": "4.1 What a Coding Agent Actually Is",
+        "description": "The difference is not the model. It is the loop.",
+        "level": "level-4",
+        "slug": "what-a-coding-agent-actually-is",
+        "order": 1,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "4.2 Tool Use and Function Calling",
+        "description": "Tool use is the mechanism by which a language model crosses the boundary from text to action. Understanding it at the protocol level is not optional for a Platform PM — because every product decision ",
+        "level": "level-4",
+        "slug": "tool-use-and-function-calling",
+        "order": 2,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "4.3 Context Management and Retrieval",
+        "description": "Context management is the highest-leverage platform engineering problem in agent infrastructure. Model capability matters; context engineering matters more. A weaker model with excellent context wins ",
+        "level": "level-4",
+        "slug": "context-management-and-retrieval",
+        "order": 3,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "4.4 Multi-Step Reasoning and Planning",
+        "description": "Planning is the capability that separates a coding agent from a code-writing assistant. The assistant writes the code you ask for. The agent figures out what code to write, in what order, and verifies",
+        "level": "level-4",
+        "slug": "multi-step-reasoning-and-planning",
+        "order": 4,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "4.5 Error Recovery and Graceful Degradation",
+        "description": "Error recovery is where the difference between a demo and a production system becomes visible. Every agent demo shows the happy path. Production systems fail at step 7 of 12, and the quality of recove",
+        "level": "level-4",
+        "slug": "error-recovery-and-graceful-degradation",
+        "order": 5,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "4.6 Build, Fork, or Integrate?",
+        "description": "The build-vs-buy decision for agent infrastructure is one of the most consequential calls a Platform PM makes. Get it wrong and you have either built something a vendor does better for free, or ceded ",
+        "level": "level-4",
+        "slug": "build-fork-or-integrate",
+        "order": 6,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "4.7 Agentic Workflows in a Design Tool",
+        "description": "The canonical coding agent lives in a terminal or an IDE. Its context is text: file contents, shell output, error messages, documentation. Make's agent lives in a design tool. Its context includes a v",
+        "level": "level-4",
+        "slug": "agentic-workflows-in-a-design-tool",
+        "order": 7,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "4.8 Cost, Latency, and Token Economics",
+        "description": "Token economics is where agent platform strategy meets business model. A Platform PM who cannot do this math is flying blind on one of the most important constraints in the product.",
+        "level": "level-4",
+        "slug": "cost-latency-and-token-economics",
+        "order": 8,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "4.9 Level 4 Checkpoint",
+        "description": "---",
+        "level": "level-4",
+        "slug": "level-4-checkpoint",
+        "order": 9,
+        "isCheckpoint": true,
+        "isIndex": false
+      },
+      {
+        "title": "4.10 Agent Memory & Persistent State",
+        "description": "Memory Is Not Context",
+        "level": "level-4",
+        "slug": "agent-memory-persistent-state",
+        "order": 10,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "4.11 Multi-Agent Orchestration & Handoff",
+        "description": "The Specialization Temptation",
+        "level": "level-4",
+        "slug": "multi-agent-orchestration-handoff",
+        "order": 11,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "4.12 Prompt Architecture as a Discipline",
+        "description": "The System Prompt Is the Product",
+        "level": "level-4",
+        "slug": "prompt-architecture-as-a-discipline",
+        "order": 12,
+        "isCheckpoint": false,
+        "isIndex": false
+      }
+    ],
+    "level-5": [
+      {
+        "title": "Eval Systems & Quality Gates",
+        "description": "Master execution-based evaluation, visual regression, regression detection, LLM-as-judge with human calibration, eval infrastructure as a product, drift detection, and pre-deployment gates.",
+        "level": "level-5",
+        "slug": "index",
+        "order": 0,
+        "isCheckpoint": false,
+        "isIndex": true
+      },
+      {
+        "title": "5.1 Why Code-Gen Evals Are Uniquely Hard",
+        "description": "Evaluation is the discipline that separates AI products that improve reliably from those that drift unpredictably. For a Platform PM owning Make, understanding why code-gen evals are structurally diff",
+        "level": "level-5",
+        "slug": "why-code-gen-evals-are-uniquely-hard",
+        "order": 1,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "5.2 Execution-Based Evaluation",
+        "description": "Execution-based evaluation is the only reliable way to determine if AI-generated code actually functions. Static analysis catches some problems (syntax errors, type errors), but a surprising amount of",
+        "level": "level-5",
+        "slug": "execution-based-evaluation",
+        "order": 2,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "5.3 Visual Regression Testing",
+        "description": "Visual regression testing is one of the most underinvested areas in AI code generation product infrastructure — and one of the areas where Make has a structural advantage over competitors. Because Mak",
+        "level": "level-5",
+        "slug": "visual-regression-testing",
+        "order": 3,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "5.4 Regression Detection Across Releases",
+        "description": "Regression detection across releases is the discipline of ensuring that improvements in one area of a system do not silently degrade other areas. For an AI code generation platform, this is particular",
+        "level": "level-5",
+        "slug": "regression-detection-across-releases",
+        "order": 4,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "5.5 LLM-as-Judge and Human-in-the-Loop",
+        "description": "LLM-as-judge is now a standard technique in AI evaluation, but using it well requires understanding its failure modes, the critical importance of rubric design, and how to calibrate it against human j",
+        "level": "level-5",
+        "slug": "llm-as-judge-and-human-in-the-loop",
+        "order": 5,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "5.6 Eval Infrastructure as a Product",
+        "description": "The eval system is infrastructure — and like all infrastructure, it has users with different needs. Treating the eval system as a product, with its own roadmap and user requirements, is the difference",
+        "level": "level-5",
+        "slug": "eval-infrastructure-as-a-product",
+        "order": 6,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "5.7 The Eval-Driven Development Loop",
+        "description": "Eval data is a compass, not just a report card. The most valuable use of a mature eval system is not confirming that quality is maintained — it is revealing where to invest next. Understanding how to ",
+        "level": "level-5",
+        "slug": "the-eval-driven-development-loop",
+        "order": 7,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "5.8 Level 5 Checkpoint",
+        "description": "Interview Scenario",
+        "level": "level-5",
+        "slug": "level-5-checkpoint",
+        "order": 8,
+        "isCheckpoint": true,
+        "isIndex": false
+      },
+      {
+        "title": "5.9 Model Drift Detection",
+        "description": "The Silent Degradation Problem",
+        "level": "level-5",
+        "slug": "model-drift-detection",
+        "order": 9,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "5.10 Pre-Deployment Gates",
+        "description": "The Gap Between \"Eval Passed\" and \"Production Ready\"",
+        "level": "level-5",
+        "slug": "pre-deployment-gates",
+        "order": 10,
+        "isCheckpoint": false,
+        "isIndex": false
+      }
+    ],
+    "level-6": [
+      {
+        "title": "Observability & Platform Health",
+        "description": "Master observability for probabilistic systems — the three pillars, user-facing observability, platform-level monitoring with SLOs, cost observability and showback, and incident response patterns unique to AI.",
+        "level": "level-6",
+        "slug": "index",
+        "order": 0,
+        "isCheckpoint": false,
+        "isIndex": true
+      },
+      {
+        "title": "6.1 Observability for AI-Powered Platforms",
+        "description": "Traditional observability answers three questions: Is the system **up**? Is it **fast**? Is it returning **correct** responses? These questions assume the system is deterministic — given the same inpu",
+        "level": "level-6",
+        "slug": "observability-for-ai-powered-platforms",
+        "order": 1,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "6.2 Logs, Metrics, Traces — The Three Pillars",
+        "description": "Every observability system is built on three primitives. They are complementary, not redundant. Conflating them leads to either massive log storage costs or alert systems that can't localize problems.",
+        "level": "level-6",
+        "slug": "logs-metrics-traces-the-three-pillars",
+        "order": 2,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "6.3 User-Facing Observability",
+        "description": "Most observability infrastructure is built for engineers. Log pipelines, trace viewers, and metrics dashboards assume the reader understands what a p99 is and why a stack trace points to the root caus",
+        "level": "level-6",
+        "slug": "user-facing-observability",
+        "order": 3,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "6.4 Platform-Level Monitoring",
+        "description": "Platform-level monitoring is the view from altitude: not \"what happened to user u_8842's session\" but \"how did the platform perform across all 50,000 sessions this weekend.\" This is the PM's primary i",
+        "level": "level-6",
+        "slug": "platform-level-monitoring",
+        "order": 4,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "6.5 Cost Observability and Showback",
+        "description": "Cost observability is the least glamorous observability domain and the one most likely to matter in your first 90 days as a Platform PM. AI infrastructure costs are high, variable, and opaque by defau",
+        "level": "level-6",
+        "slug": "cost-observability-and-showback",
+        "order": 5,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "6.6 Incident Response for AI Systems",
+        "description": "Incident response for AI platforms differs from traditional incident response in three important ways: failures are often gradual rather than binary, the root cause is frequently external and opaque, ",
+        "level": "level-6",
+        "slug": "incident-response-for-ai-systems",
+        "order": 6,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "6.7 Level 6 Checkpoint",
+        "description": "---",
+        "level": "level-6",
+        "slug": "level-6-checkpoint",
+        "order": 7,
+        "isCheckpoint": true,
+        "isIndex": false
+      }
+    ],
+    "level-7": [
+      {
+        "title": "Extensibility & Platform Strategy",
+        "description": "Master APIs, SDKs, and plugin systems; the platform-product boundary; cross-product leverage; velocity versus platform health; GA readiness; multi-quarter roadmapping; and B2A API design.",
+        "level": "level-7",
+        "slug": "index",
+        "order": 0,
+        "isCheckpoint": false,
+        "isIndex": true
+      },
+      {
+        "title": "7.9 B2A — Agents as API Consumers",
+        "description": "The Interface Assumption Shift",
+        "level": "level-7",
+        "slug": "b2a-agents-as-api-consumers",
+        "order": 1,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "7.1 Extensibility as Platform Strategy",
+        "description": "Extensibility is not a feature. It is a strategic posture — a decision about who gets to build value on your platform and on what terms. The platforms that become durable competitive moats are almost ",
+        "level": "level-7",
+        "slug": "extensibility-as-platform-strategy",
+        "order": 2,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "7.2 APIs, SDKs, and Plugin Systems",
+        "description": "Extensibility is a category, not a single thing. \"Make is extensible\" can mean many different things, and the implementation decisions have large downstream consequences for developer experience, main",
+        "level": "level-7",
+        "slug": "apis-sdks-and-plugin-systems",
+        "order": 3,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "7.3 The Platform-Product Boundary",
+        "description": "The tension between product teams who want features fast and platform teams who want abstractions that scale is one of the defining organizational dynamics of any platform company. It's not a dysfunct",
+        "level": "level-7",
+        "slug": "the-platform-product-boundary",
+        "order": 4,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "7.4 Cross-Product Platform Leverage",
+        "description": "Cross-product platform leverage is the strongest justification for platform investment. \"Build it once, use it everywhere\" makes a compelling ROI case. But the reality of serving multiple products sim",
+        "level": "level-7",
+        "slug": "cross-product-platform-leverage",
+        "order": 5,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "7.5 Velocity vs. Platform Health",
+        "description": "The velocity-versus-platform-health tension is the most common and most consequential tradeoff in platform product management. Every engineering organization eventually faces this: the platform that w",
+        "level": "level-7",
+        "slug": "velocity-vs-platform-health",
+        "order": 6,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "7.6 GA Readiness — From Beta to Production",
+        "description": "Going Generally Available is a product milestone with a very specific meaning: you are making a public, binding commitment to reliability, support, and backward compatibility. GA is not \"this works mo",
+        "level": "level-7",
+        "slug": "ga-readiness-from-beta-to-production",
+        "order": 7,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "7.7 Multi-Quarter Platform Roadmapping",
+        "description": "Multi-quarter roadmapping for a platform team is primarily a dependency analysis problem. Unlike feature roadmapping — where items are often parallel and can be resequenced based on user demand — plat",
+        "level": "level-7",
+        "slug": "multi-quarter-platform-roadmapping",
+        "order": 8,
+        "isCheckpoint": false,
+        "isIndex": false
+      },
+      {
+        "title": "7.8 Level 7 Checkpoint",
+        "description": "---",
+        "level": "level-7",
+        "slug": "level-7-checkpoint",
+        "order": 9,
+        "isCheckpoint": true,
+        "isIndex": false
+      }
+    ]
+  }
 }

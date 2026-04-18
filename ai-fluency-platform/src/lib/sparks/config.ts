@@ -28,6 +28,7 @@ export const SPARK_CONFIG: SparkEconConfig = {
     "cfa-2": 0,
     "cfa-3": 0,
     "contract-bridge": 0,
+    "make-pm": 0,
   },
   freeCourses: [
     "ai-fluency",
@@ -40,6 +41,7 @@ export const SPARK_CONFIG: SparkEconConfig = {
     "cfa-2",
     "cfa-3",
     "contract-bridge",
+    "make-pm",
   ],
   diminishingReturnsThreshold: 3,
   diminishingReturnsMultiplier: 0.5,
@@ -57,6 +59,7 @@ const BEN_CONFIG_OVERRIDES: Partial<SparkEconConfig> = {
     "cfa-2": 1000,
     "cfa-3": 1000,
     "contract-bridge": 750,
+    "make-pm": 750,
   },
   freeCourses: ["ai-fluency", "texas-holdem"],
 };

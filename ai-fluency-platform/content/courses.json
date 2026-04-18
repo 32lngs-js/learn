@@ -59,5 +59,11 @@
     "title": "Contract Bridge",
     "description": "From your first trick to your first squeeze. Learn the world's greatest card game through interactive lessons, AI-powered feedback, and rapid-fire drills — building from fundamentals to advanced play and competitive strategy.",
     "color": "#0d7c66"
+  },
+  {
+    "id": "make-pm",
+    "title": "Make Platform PM",
+    "description": "A technical curriculum for Product Managers working on AI code-generation platforms — runtimes, preview environments, agent infrastructure, evals, observability, and extensibility.",
+    "color": "#8b5cf6"
   }
 ]

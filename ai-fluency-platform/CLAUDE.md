@@ -1,18 +1,105 @@
 # Palestra
 
+This is the onboarding contract for authoring and integrating courses on this platform. Read the relevant section before making changes.
+
 ## Build & Dev
 
 ```bash
 npm run dev          # Start dev server
-npm run build        # Production build
+npm run build        # Production build (also type-checks)
 npm run build:review # Extract review questions from content → public/review-questions.json
 ```
 
-## Content Authoring
+Run `npm run build:review` after any lesson edit. Never hand-edit `public/review-questions.json`.
 
-Lessons are JSON files at `content/{course}/{level}/{slug}.json`. When **creating or modifying** any lesson file, you **must** include a `reviewQuestions` array. These questions power the daily review quiz that reinforces learning.
+## Learning framework
 
-### Review Questions Schema
+The curricula are evidence-based; see `../AI Enabled Learning Patterns.md` and `../AI Fluency Curriculum Development.md` for the source research. Authoring choices should follow from four principles:
+
+1. **Prevent false mastery.** Force generation before exposition (predict → learn), force articulation after (explain back), and test delayed retention (review questions).
+2. **AI as tutor, not answer engine.** Interactive blocks prompt reasoning and self-assessment rather than deliver solutions.
+3. **Self-regulated learning scaffolding.** Each lesson follows a plan → act → reflect arc.
+4. **Epistemic vigilance.** Learners must evaluate claims and calibrate confidence — baked into `calibrationCheck` and `reflectPrompt`.
+
+**Canonical lesson arc:** `predict → learn (markdown) → calibrationCheck → tryItYourself → explainBack → reflectPrompt → keyTakeaway → connectPrompt`. Not every lesson uses every block, but deviations should be deliberate. For course-wide competency frameworks (e.g., AI Fluency's Delegation / Description / Discernment / Diligence), expose them via `competencies.json` and `competency-map.json`.
+
+## Lesson block types
+
+The full `ContentBlock` union lives in `src/types/content.ts:71-106`. Authoring reference:
+
+| Block | Purpose | Mechanism |
+|---|---|---|
+| `markdown` | Primary narrative | — |
+| `predictPrompt` | Activate prior knowledge before reading | Generation effect |
+| `calibrationCheck` | Mid-module Q&A against a model answer | Retrieval practice |
+| `tryItYourself` | Applied task with worked solution | Transfer |
+| `explainBack` | Articulate in learner's own words | Self-explanation |
+| `reflectPrompt` | Array of metacognitive questions | SRL scaffolding |
+| `connectPrompt` | Connect lesson to learner's context | Elaboration |
+| `keyTakeaway` | One-sentence crystallization | Consolidation |
+| `practiceSet` | MCQ drill using `PracticeProblem[]` (`correctAnswer: string`) | Retrieval |
+| `drillSet` | Timed drill with `passThreshold` + `timeLimitSeconds`; `DrillProblem[]` or `generator` + `problemCount` | Overlearning to automaticity |
+| `pixelAgentTeam` | Interactive agent UI | — |
+| `providerContent` | Provider-specific branching (claude-code / codex / cline / gemini) | — |
+
+Note the schema split: `PracticeProblem` uses `correctAnswer: string` (`src/types/content.ts:15-24`). `reviewQuestions` uses `correctIndex: number` (`src/types/content.ts:56-63`). They are not interchangeable.
+
+## Per-course content checklist
+
+Layout: `content/<course>/...`
+
+| File | Required | Purpose |
+|---|---|---|
+| `index.json` | yes | Course landing; `meta.level: "root"`, `meta.slug: "index"` |
+| `curriculum.json` | yes | Both `levels: LevelInfo[]` **and** `modules: Record<string, ModuleMeta[]>` keyed by level slug (`"foundations"`, `"level-1"`, …). The sidebar renders empty dropdowns if `modules` is missing — see `src/components/layout/Sidebar.tsx:133-136`. |
+| `getting-started.json` | optional | Orientation page; auto-resolved by slug in `src/lib/content.ts:47-53` |
+| `glossary.json` | optional | Markdown term reference |
+| `competencies.json` | optional | `Competency[]` per `src/types/content.ts:125-132` |
+| `competency-map.json` | optional | Framework overview page |
+| `resources.json` | optional | `Resource[]` per `src/types/content.ts:134-143` |
+| `<level>/index.json` | yes per level | Level intro; `meta.isIndex: true` |
+| `<level>/<slug>.json` | per lesson | Lesson (see schema) |
+| `<level>/<...>-checkpoint.json` | recommended last in level | Interview-style synthesis; `meta.isCheckpoint: true` |
+
+**Required `meta` fields on every lesson:** `title`, `description`, `level`, `slug`, `order`, `isCheckpoint`, `isIndex`. Optional flags: `isPracticeOnly`, `isExamBank`, `cfaTopic`, `cfaLOS`.
+
+**Every level needs `modules` entries in `curriculum.json`.** When adding a lesson, also add a matching entry in `curriculum.json` → `modules[<levelSlug>]` with `{title, description, level, slug, order, isCheckpoint, isIndex}`, sorted by `order`. `contract-bridge/curriculum.json:84-852` is the canonical template.
+
+## Code integration checklist for a new course
+
+Seven touchpoints. Missing any one leaves the course partially broken. Cross-check with `grep -R "<some-existing-course>\b" ai-fluency-platform/` — your new course ID should appear in the same places.
+
+| # | File | Change |
+|---|---|---|
+| 1 | `content/courses.json` | Append `{id, title, description, color, isDrillCourse?}` |
+| 2 | `content/<course>/curriculum.json` | Must have both `levels` and `modules` |
+| 3 | `src/components/layout/Sidebar.tsx` | Import `curriculum.json` + entry in `curricula` map |
+| 4 | `src/app/dashboard/page.tsx` | Import `curriculum.json` + entry in `curricula` map |
+| 5 | `src/lib/sparks/config.ts` | Add course ID to `SPARK_CONFIG.coursePrices` (0) and `freeCourses`; add to `BEN_CONFIG_OVERRIDES.coursePrices` with a price tier (500 / 750 / 1000) |
+| 6 | `scripts/build-review-questions.ts` | Add course ID to `COURSES` array |
+| 7 | `public/review-questions.json` | Regenerate with `npm run build:review` |
+
+No Supabase migration needed. `course_id` is `TEXT` in `supabase/migrations/003_sparks_economy.sql:92`. No union/enum of course IDs exists in `src/types/content.ts` — course IDs are strings everywhere.
+
+## Sparks economy
+
+Config lives in `src/lib/sparks/config.ts`. Key knobs:
+
+- `lessonReward: 10` — sparks per lesson completion.
+- `quizBaseReward: 5` + `quizPerCorrectBonus: 2` — sparks per daily quiz.
+- `coursePrices[courseId]` — sparks needed to unlock. `0` + presence in `freeCourses` = free.
+- `BEN_CONFIG_OVERRIDES` — despite the name, `isSparkGatingEnabled` in `src/lib/sparks/feature-flags.ts:1-3` returns `true` for all users, so this override is the live config. Price tiers in use:
+  - `500` — lightweight literacy courses (web-fundamentals, react-literacy)
+  - `750` — standard depth (claude-code, system-design, cfa-1, contract-bridge, make-pm)
+  - `1000` — premium (cfa-2, cfa-3)
+
+`ai-fluency` and `texas-holdem` are the only permanently free courses (in `BEN_CONFIG_OVERRIDES.freeCourses`).
+
+## Review questions
+
+Every regular lesson **must** include a `reviewQuestions` array. The build script at `scripts/build-review-questions.ts:75-76` and the validator at `scripts/validate-lesson.ts:25-26` auto-skip lessons marked `isIndex`, `isCheckpoint`, `isPracticeOnly`, or `isExamBank`. Regular lessons with zero questions still render but are silently dropped from the daily quiz pool.
+
+Schema:
 
 ```json
 {
@@ -31,25 +118,26 @@ Lessons are JSON files at `content/{course}/{level}/{slug}.json`. When **creatin
 }
 ```
 
-### Review Questions Rules
+Rules:
 
-1. **2-3 questions per lesson** — enough to reinforce, not overwhelm
-2. **Very easy** — basic recall from the lesson's key points, not trick questions
-3. **3 options each** — keep it simple and fast
+1. **2-3 questions per lesson** — enough to reinforce, not overwhelm.
+2. **Very easy** — basic recall from the lesson, not trick questions.
+3. **3 options each** — fast to answer.
 4. **Test specific knowledge** — "How many seconds in a day?" not "What is a key takeaway?"
-5. **Warm, encouraging tone** — both `encourageCorrect` and `encourageIncorrect` should feel supportive
-6. **Vary encouragement messages** — don't repeat the same phrases across questions
-7. **No LaTeX or complex formatting** — questions appear in a simple modal
-8. **For math/formula content** — test concepts, not computation (e.g., "What does 2^30 approximately equal?" not "Calculate 2^30")
-9. **Skip index.json, checkpoint.json, and isPracticeOnly files** — these don't need review questions
+5. **Warm, encouraging tone** in both `encourageCorrect` and `encourageIncorrect`.
+6. **Vary encouragement messages** — no repeating phrases across questions.
+7. **No LaTeX or complex formatting** — questions render in a simple modal.
+8. **For math/formula content** — test concepts, not computation (e.g., "What does 2^30 approximately equal?" not "Calculate 2^30").
+9. **Skip** `isIndex`, `isCheckpoint`, `isPracticeOnly`, and `isExamBank` lessons — they're auto-excluded from the build.
 
-After modifying content, run `npm run build:review` to regenerate `public/review-questions.json`.
+Run `npm run build:review` after modifying content.
 
-## Project Structure
+## Project structure
 
-- `content/` — Course content as JSON (courses.json, curriculum.json, lesson files)
-- `src/app/` — Next.js App Router pages and API routes
-- `src/components/` — React components (learning/, content/, review/, ui/, layout/, progress/)
-- `src/lib/` — Content loading, utilities, stores
-- `src/types/` — TypeScript type definitions
-- `scripts/` — Build and validation scripts
+- `content/` — Course content as JSON (`courses.json`, per-course `curriculum.json`, lesson files).
+- `src/app/` — Next.js App Router pages and API routes.
+- `src/components/` — React components (learning/, content/, review/, ui/, layout/, progress/, dashboard/).
+- `src/lib/` — Content loading, utilities, stores, sparks economy.
+- `src/types/` — TypeScript type definitions.
+- `scripts/` — Build and validation scripts (`build-review-questions.ts`, `validate-lesson.ts`).
+- `supabase/` — Migrations and edge functions.
