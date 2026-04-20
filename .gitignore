@@ -16,3 +16,6 @@ presentations/id-lunch-and-learn/remotion/
 
 # Personal talk prep — keep local
 presentations/id-lunch-and-learn/synthesis.md
+
+# Machine-specific symlink to local Claude skills dir
+skills
