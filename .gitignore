@@ -1,1 +1,18 @@
 .env
+
+# macOS
+.DS_Store
+
+# Talk / agent workflow artifacts — keep local, don't commit
+.claude/agents/presentation-architect.md
+.claude/commands/slide-zen.md
+.claude/commands/talk-architect.md
+.claude/commands/talk-discovery.md
+.claude/agent-memory/
+
+# Remotion build project for the ID lunch-and-learn demo.
+# The rendered output (assets/demo.mp4) is committed instead.
+presentations/id-lunch-and-learn/remotion/
+
+# Personal talk prep — keep local
+presentations/id-lunch-and-learn/synthesis.md

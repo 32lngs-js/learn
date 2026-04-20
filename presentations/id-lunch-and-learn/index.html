@@ -1,0 +1,1838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What One Engineer Learned About Instructional Design</title>
+  <style>
+    /* ============================================================
+       DESIGN TOKENS
+       ============================================================ */
+    :root {
+      --bg-primary: #0f1729;
+      --bg-slide: #141d33;
+      --bg-card: #1c2847;
+      --bg-card-hover: #243156;
+      --text-primary: #f0f2f8;
+      --text-secondary: #8b95b0;
+      --text-muted: #5a6580;
+      --accent: #e8925a;
+      --accent-light: #f0a876;
+      --accent-glow: rgba(232, 146, 90, 0.15);
+      --red-soft: #e06070;
+      --green-soft: #5ec49e;
+      --teal: #4fc1c9;
+      --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --transition-slide: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ============================================================
+       RESET & BASE
+       ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ============================================================
+       SLIDE CONTAINER
+       ============================================================ */
+    .deck {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 60px 80px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity var(--transition-slide), transform var(--transition-slide);
+      transform: translateX(40px);
+      background: var(--bg-primary);
+    }
+
+    .slide.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(0);
+      z-index: 2;
+    }
+
+    .slide.exiting-left {
+      opacity: 0;
+      visibility: visible;
+      transform: translateX(-40px);
+      z-index: 1;
+    }
+
+    .slide-inner {
+      max-width: 1100px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 48px;
+    }
+
+    /* ============================================================
+       TYPOGRAPHY
+       ============================================================ */
+    .headline {
+      font-family: var(--font-heading);
+      font-size: clamp(1.6rem, 3.2vw, 2.6rem);
+      font-weight: 700;
+      line-height: 1.25;
+      text-align: center;
+      max-width: 900px;
+      letter-spacing: -0.02em;
+    }
+
+    .headline em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    /* ============================================================
+       SLIDE 1 — TITLE
+       ============================================================ */
+    .title-slide .headline {
+      font-size: clamp(1.8rem, 3.6vw, 2.9rem);
+      margin-bottom: 8px;
+    }
+
+    .title-meta {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-secondary);
+      font-size: 1rem;
+    }
+
+    .title-meta .speaker {
+      font-size: 1.15rem;
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    .title-divider {
+      width: 60px;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 1px;
+      margin: 12px 0;
+    }
+
+    /* ============================================================
+       SLIDE 2 — COURSE GRID
+       ============================================================ */
+    .curriculum-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 14px;
+      width: 100%;
+      max-width: 1050px;
+    }
+
+    .curriculum-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 10px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .curriculum-card:hover {
+      background: var(--bg-card-hover);
+      transform: translateY(-2px);
+    }
+
+    .curriculum-card .stripe {
+      height: 4px;
+      width: 100%;
+    }
+
+    .curriculum-card .body {
+      padding: 14px 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex: 1;
+    }
+
+    .curriculum-card .title {
+      font-size: 0.82rem;
+      font-weight: 600;
+      line-height: 1.25;
+      color: var(--text-primary);
+    }
+
+    .curriculum-card .meta {
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      opacity: 0.85;
+    }
+
+    /* ============================================================
+       SLIDE 4 — STATE MACHINE
+       ============================================================ */
+    .state-machine {
+      width: 100%;
+      max-width: 1200px;
+      display: block;
+    }
+
+    .sm-box {
+      fill: var(--bg-card);
+      stroke: rgba(255,255,255,0.1);
+      stroke-width: 1;
+    }
+
+    .sm-box-top {
+      fill: var(--accent);
+    }
+
+    .sm-num {
+      fill: var(--accent);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      font-family: var(--font-heading);
+    }
+
+    .sm-label {
+      fill: var(--text-primary);
+      font-size: 15px;
+      font-weight: 600;
+      font-family: var(--font-heading);
+    }
+
+    .sm-sublabel {
+      fill: var(--text-secondary);
+      font-size: 11px;
+      font-family: var(--font-body);
+    }
+
+    .sm-forward {
+      stroke: var(--accent);
+      stroke-width: 2;
+      fill: none;
+    }
+
+    .sm-self-loop {
+      stroke: var(--accent);
+      stroke-width: 1.5;
+      fill: none;
+      opacity: 0.75;
+    }
+
+    .sm-loop-revise {
+      stroke: var(--teal);
+      stroke-width: 2;
+      fill: none;
+    }
+
+    .sm-loop-observe {
+      stroke: var(--green-soft);
+      stroke-width: 2;
+      fill: none;
+    }
+
+    .sm-loop-label {
+      font-size: 13px;
+      font-style: italic;
+      font-family: var(--font-body);
+      letter-spacing: 0.02em;
+    }
+
+    .sm-loop-label.revise { fill: var(--teal); }
+    .sm-loop-label.observe { fill: var(--green-soft); }
+
+    .sm-arrow-head-orange { fill: var(--accent); }
+    .sm-arrow-head-teal { fill: var(--teal); }
+    .sm-arrow-head-green { fill: var(--green-soft); }
+
+    /* ============================================================
+       SLIDE 5 — ANALOGIES TABLE
+       ============================================================ */
+    .analogies {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      width: 100%;
+      max-width: 1100px;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      overflow: hidden;
+      background: var(--bg-card);
+    }
+
+    .analogies .col-header {
+      padding: 14px 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .analogies .col-header.mine {
+      color: var(--accent);
+      background: rgba(232,146,90,0.06);
+    }
+
+    .analogies .col-header.theirs {
+      color: var(--teal);
+      background: rgba(79,193,201,0.06);
+      border-left: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .analogies .cell {
+      padding: 12px 20px;
+      font-size: 0.92rem;
+      color: var(--text-primary);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      line-height: 1.35;
+    }
+
+    .analogies .cell.theirs {
+      border-left: 1px solid rgba(255,255,255,0.08);
+      color: var(--text-secondary);
+    }
+
+    .analogies .row:last-child .cell {
+      border-bottom: none;
+    }
+
+    .analogies-caption {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      text-align: center;
+      max-width: 900px;
+      margin-top: 16px;
+    }
+
+    .analogies-caption em {
+      color: var(--accent);
+      font-style: italic;
+    }
+
+    /* ============================================================
+       SLIDE 6 — AI CAPABILITIES
+       ============================================================ */
+    .ai-caps {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      width: 100%;
+      max-width: 1100px;
+    }
+
+    .ai-col {
+      border-radius: 12px;
+      padding: 24px 22px;
+      border: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .ai-col.bad {
+      background: rgba(224,96,112,0.05);
+      border-color: rgba(224,96,112,0.25);
+    }
+
+    .ai-col.good {
+      background: rgba(94,196,158,0.05);
+      border-color: rgba(94,196,158,0.25);
+    }
+
+    .ai-col .col-title {
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .ai-col.bad .col-title { color: var(--red-soft); }
+    .ai-col.good .col-title { color: var(--green-soft); }
+
+    .ai-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .ai-item .marker {
+      font-size: 1rem;
+      line-height: 1.4;
+      flex-shrink: 0;
+      width: 18px;
+      text-align: center;
+    }
+
+    .ai-col.bad .marker { color: var(--red-soft); }
+    .ai-col.good .marker { color: var(--green-soft); }
+
+    .ai-item .text {
+      font-size: 0.92rem;
+      line-height: 1.4;
+      color: var(--text-primary);
+    }
+
+    .ai-item .text b {
+      font-weight: 600;
+    }
+
+    .ai-item .text .muted {
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+    }
+
+    .ai-caps-footer {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      text-align: center;
+      max-width: 900px;
+      margin-top: 18px;
+      line-height: 1.55;
+    }
+
+    .ai-caps-footer em {
+      color: var(--accent);
+      font-style: italic;
+    }
+
+    /* ============================================================
+       SLIDE 7 — AI × PATH INVOLVEMENT
+       ============================================================ */
+    .ai-path-table {
+      display: grid;
+      grid-template-columns: 230px 1fr;
+      width: 100%;
+      max-width: 1150px;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      overflow: hidden;
+      background: var(--bg-card);
+    }
+
+    .ai-path-table .col-header {
+      padding: 12px 20px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .ai-path-table .col-header.path {
+      color: var(--accent);
+      background: rgba(232,146,90,0.06);
+    }
+
+    .ai-path-table .col-header.ai {
+      color: var(--text-primary);
+      border-left: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.02);
+    }
+
+    .ai-path-table .step {
+      padding: 12px 20px;
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      align-items: center;
+    }
+
+    .ai-path-table .uses {
+      padding: 10px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      border-left: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .ai-path-table .row:last-child .step,
+    .ai-path-table .row:last-child .uses {
+      border-bottom: none;
+    }
+
+    .ai-path-table .use {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 0.84rem;
+      line-height: 1.4;
+    }
+
+    .ai-path-table .use .mark {
+      flex-shrink: 0;
+      width: 16px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    .ai-path-table .use.good .mark { color: var(--green-soft); }
+    .ai-path-table .use.bad .mark { color: var(--red-soft); }
+    .ai-path-table .use.good .text { color: var(--text-primary); }
+    .ai-path-table .use.bad .text { color: var(--text-secondary); }
+
+    /* ============================================================
+       SLIDE 3 — BEFORE / AFTER
+       ============================================================ */
+    .comparison {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 32px;
+      align-items: center;
+      width: 100%;
+      max-width: 900px;
+    }
+
+    .comparison-side {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .comparison-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 4px;
+    }
+
+    .comparison-label.before { color: var(--red-soft); }
+    .comparison-label.after { color: var(--green-soft); }
+
+    .text-line {
+      height: 10px;
+      border-radius: 5px;
+      background: rgba(255,255,255,0.08);
+    }
+
+    .text-line:nth-child(2) { width: 100%; }
+    .text-line:nth-child(3) { width: 92%; }
+    .text-line:nth-child(4) { width: 88%; }
+    .text-line:nth-child(5) { width: 95%; }
+    .text-line:nth-child(6) { width: 80%; }
+    .text-line:nth-child(7) { width: 85%; }
+    .text-line:nth-child(8) { width: 90%; }
+    .text-line:nth-child(9) { width: 75%; }
+    .text-line:nth-child(10) { width: 88%; }
+    .text-line:nth-child(11) { width: 70%; }
+    .text-line:nth-child(12) { width: 82%; }
+    .text-line:nth-child(13) { width: 60%; }
+
+    .comparison-arrow {
+      font-size: 2rem;
+      color: var(--accent);
+      opacity: 0.6;
+    }
+
+    .design-block {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 14px 18px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .design-block .block-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green-soft);
+      flex-shrink: 0;
+    }
+
+    /* ============================================================
+       SLIDE 4 — PARALLEL DIAGRAM
+       ============================================================ */
+    .parallel {
+      display: grid;
+      grid-template-columns: 1fr 60px 1fr;
+      gap: 0;
+      align-items: start;
+      width: 100%;
+      max-width: 860px;
+    }
+
+    .parallel-column {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .parallel-header {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 16px 20px;
+      border-bottom: 2px solid var(--accent);
+      margin-bottom: 4px;
+    }
+
+    .parallel-header.left { color: var(--teal); border-color: var(--teal); }
+    .parallel-header.right { color: var(--accent); border-color: var(--accent); }
+
+    .parallel-item {
+      font-size: 0.95rem;
+      padding: 16px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      line-height: 1.4;
+      opacity: 1;
+      transition: opacity 0.4s;
+    }
+
+    .parallel-connectors {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 58px;
+      gap: 0;
+    }
+
+    .connector-line {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 53px;
+      color: var(--accent);
+      opacity: 0.4;
+      font-size: 1.1rem;
+    }
+
+    /* Right column reveal animation */
+    .parallel-column.right-col .parallel-item,
+    .parallel-column.right-col .parallel-header {
+      opacity: 0;
+      transform: translateX(15px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    .parallel-column.right-col.revealed .parallel-item,
+    .parallel-column.right-col.revealed .parallel-header {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .parallel-column.right-col.revealed .parallel-header { transition-delay: 0.1s; }
+    .parallel-column.right-col.revealed .parallel-item:nth-child(2) { transition-delay: 0.2s; }
+    .parallel-column.right-col.revealed .parallel-item:nth-child(3) { transition-delay: 0.35s; }
+    .parallel-column.right-col.revealed .parallel-item:nth-child(4) { transition-delay: 0.5s; }
+    .parallel-column.right-col.revealed .parallel-item:nth-child(5) { transition-delay: 0.65s; }
+
+    .parallel-connectors .connector-line {
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .parallel-connectors.revealed .connector-line { opacity: 0.4; }
+    .parallel-connectors.revealed .connector-line:nth-child(1) { transition-delay: 0.2s; }
+    .parallel-connectors.revealed .connector-line:nth-child(2) { transition-delay: 0.35s; }
+    .parallel-connectors.revealed .connector-line:nth-child(3) { transition-delay: 0.5s; }
+    .parallel-connectors.revealed .connector-line:nth-child(4) { transition-delay: 0.65s; }
+
+    /* ============================================================
+       SLIDE 5 — FEATURE PANELS
+       ============================================================ */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      width: 100%;
+      max-width: 960px;
+    }
+
+    .feature-panel {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px;
+      padding: 28px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .feature-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+    }
+
+    .feature-icon.predict { background: rgba(78, 193, 201, 0.15); color: var(--teal); }
+    .feature-icon.explain { background: rgba(232, 146, 90, 0.15); color: var(--accent); }
+    .feature-icon.review { background: rgba(94, 196, 158, 0.15); color: var(--green-soft); }
+    .feature-icon.practice { background: rgba(160, 130, 240, 0.15); color: #a082f0; }
+
+    .feature-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    .feature-desc {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* ============================================================
+       SLIDE 5 — DEMO VIDEO
+       ============================================================ */
+    .demo-slide .slide-inner {
+      max-width: 1400px;
+      gap: 28px;
+    }
+
+    .demo-video-wrap {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 14px;
+      overflow: hidden;
+      background: #000;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.08);
+    }
+
+    .demo-video-wrap video {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    .demo-caption {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      text-align: center;
+      max-width: 800px;
+      line-height: 1.55;
+    }
+
+    .demo-caption em {
+      color: var(--accent);
+      font-style: italic;
+      font-weight: 500;
+    }
+
+    /* ============================================================
+       SLIDE 7 — DIVERGING ARROWS
+       ============================================================ */
+    .landscape-visual {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+      width: 100%;
+      max-width: 700px;
+    }
+
+    .era-comparison {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 30px;
+      align-items: center;
+      width: 100%;
+    }
+
+    .era-box {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px;
+      padding: 28px 24px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .era-year {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+    }
+
+    .era-detail {
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: var(--text-secondary);
+    }
+
+    .era-detail strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .era-arrow {
+      font-size: 2rem;
+      color: var(--accent);
+      opacity: 0.5;
+    }
+
+    .landscape-question {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-align: center;
+    }
+
+    /* ============================================================
+       SLIDE 7 — CLOSE
+       ============================================================ */
+    .close-slide .headline {
+      font-size: clamp(1.5rem, 3vw, 2.4rem);
+      max-width: 800px;
+    }
+
+    .close-contact {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .close-contact .name {
+      font-size: 1.1rem;
+      font-weight: 500;
+    }
+
+    .close-contact .email {
+      font-size: 0.95rem;
+      color: var(--accent);
+    }
+
+    .close-collab {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-style: italic;
+      margin-top: 4px;
+    }
+
+    /* ============================================================
+       NAVIGATION / CHROME
+       ============================================================ */
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+      z-index: 100;
+      background: rgba(15, 23, 41, 0.85);
+      backdrop-filter: blur(8px);
+      border-top: 1px solid rgba(255,255,255,0.04);
+    }
+
+    .nav-counter {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .nav-progress {
+      flex: 1;
+      max-width: 200px;
+      height: 3px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 2px;
+      margin: 0 20px;
+      overflow: hidden;
+    }
+
+    .nav-progress-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 2px;
+      transition: width 0.4s ease;
+    }
+
+    .nav-hint {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      opacity: 0.6;
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 8px;
+    }
+
+    .nav-btn {
+      width: 32px;
+      height: 32px;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 6px;
+      background: transparent;
+      color: var(--text-secondary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .nav-btn:hover {
+      background: rgba(255,255,255,0.06);
+      color: var(--text-primary);
+    }
+
+    .nav-btn:disabled {
+      opacity: 0.3;
+      cursor: default;
+    }
+
+    /* ============================================================
+       SPEAKER NOTES PANEL
+       ============================================================ */
+    .notes-panel {
+      position: fixed;
+      bottom: 48px;
+      left: 0;
+      right: 0;
+      max-height: 40vh;
+      background: rgba(10, 15, 30, 0.96);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid rgba(232, 146, 90, 0.3);
+      padding: 24px 40px;
+      overflow-y: auto;
+      z-index: 90;
+      transform: translateY(100%);
+      transition: transform 0.3s ease;
+    }
+
+    .notes-panel.visible {
+      transform: translateY(0);
+    }
+
+    .notes-panel h3 {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .notes-panel p {
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      max-width: 800px;
+    }
+
+    .notes-panel p + p {
+      margin-top: 10px;
+    }
+
+    .notes-panel .pacing {
+      color: var(--accent-light);
+      font-style: italic;
+      font-size: 0.8rem;
+      margin-top: 10px;
+    }
+
+    .notes-panel ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      max-width: 820px;
+    }
+
+    .notes-panel li {
+      position: relative;
+      padding-left: 18px;
+      font-size: 0.9rem;
+      line-height: 1.55;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+    }
+
+    .notes-panel li::before {
+      content: "";
+      position: absolute;
+      left: 4px;
+      top: 10px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      opacity: 0.65;
+    }
+
+    .notes-panel li b, .notes-panel li strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .notes-panel li ul {
+      margin-top: 4px;
+      margin-bottom: 4px;
+    }
+
+    .notes-panel li li::before {
+      background: var(--teal);
+      opacity: 0.6;
+    }
+
+    /* ============================================================
+       OVERVIEW MODE
+       ============================================================ */
+    .overview-grid {
+      position: fixed;
+      inset: 0;
+      background: var(--bg-primary);
+      z-index: 200;
+      display: none;
+      padding: 40px;
+      overflow-y: auto;
+    }
+
+    .overview-grid.visible {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+      align-content: start;
+    }
+
+    .overview-thumb {
+      aspect-ratio: 16/9;
+      background: var(--bg-slide);
+      border: 2px solid rgba(255,255,255,0.06);
+      border-radius: 10px;
+      cursor: pointer;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      transition: border-color 0.2s, transform 0.2s;
+      overflow: hidden;
+    }
+
+    .overview-thumb:hover {
+      border-color: var(--accent);
+      transform: scale(1.03);
+    }
+
+    .overview-thumb.current {
+      border-color: var(--accent);
+    }
+
+    .overview-thumb .thumb-num {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .overview-thumb .thumb-title {
+      font-size: 0.75rem;
+      font-weight: 600;
+      line-height: 1.3;
+      color: var(--text-primary);
+    }
+
+    /* ============================================================
+       FULLSCREEN BUTTON HINT
+       ============================================================ */
+    .fullscreen-hint {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      opacity: 0.4;
+      z-index: 50;
+      pointer-events: none;
+    }
+
+    /* ============================================================
+       RESPONSIVE
+       ============================================================ */
+    @media (max-width: 768px) {
+      .slide { padding: 40px 28px; }
+      .course-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+      .course-card { padding: 14px 10px; font-size: 0.75rem; }
+      .comparison { grid-template-columns: 1fr; gap: 24px; }
+      .comparison-arrow { transform: rotate(90deg); }
+      .parallel { grid-template-columns: 1fr; gap: 24px; }
+      .parallel-connectors { display: none; }
+      .feature-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+      .era-comparison { grid-template-columns: 1fr; gap: 16px; }
+      .era-arrow { transform: rotate(90deg); }
+    }
+
+    @media (max-width: 480px) {
+      .course-grid { grid-template-columns: repeat(2, 1fr); }
+      .feature-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+  <!-- ====== SLIDE 1: TITLE ====== -->
+  <section class="slide title-slide active" data-slide="0">
+    <div class="slide-inner">
+      <h1 class="headline">What one engineer learned about instructional design by <em>accidentally doing it wrong</em></h1>
+      <div class="title-divider"></div>
+      <div class="title-meta">
+        <span class="speaker">Ben Grady</span>
+        <span>Lunch &amp; Learn &middot; April 2026</span>
+      </div>
+    </div>
+    <div class="speaker-notes" hidden>
+      <ul>
+        <li>Hi, I'm Ben Grady &mdash; senior software developer</li>
+        <li>Recently worked on a project that taught me a lot about modern educational practices</li>
+        <li>Not an expert by any means &mdash; sharing what I learned, what worked, what didn't</li>
+        <li>Not an expert in designing courses, but hopefully pretty OK at using AI</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ====== SLIDE 2: THE SCALE ====== -->
+  <section class="slide" data-slide="1">
+    <div class="slide-inner">
+      <h2 class="headline">A single person can now build a complete learning experience &mdash; but <em>"complete" and "good"</em> are not the same thing</h2>
+      <div class="curriculum-grid">
+        <div class="curriculum-card"><div class="stripe" style="background:#6366f1"></div><div class="body"><div class="meta" style="color:#6366f1">Course</div><div class="title">AI Fluency</div></div></div>
+        <div class="curriculum-card"><div class="stripe" style="background:#059669"></div><div class="body"><div class="meta" style="color:#059669">Course</div><div class="title">CFA Level I</div></div></div>
+        <div class="curriculum-card"><div class="stripe" style="background:#0891b2"></div><div class="body"><div class="meta" style="color:#0891b2">Course</div><div class="title">CFA Level II</div></div></div>
+        <div class="curriculum-card"><div class="stripe" style="background:#7c3aed"></div><div class="body"><div class="meta" style="color:#7c3aed">Course</div><div class="title">CFA Level III</div></div></div>
+        <div class="curriculum-card"><div class="stripe" style="background:#f97316"></div><div class="body"><div class="meta" style="color:#f97316">Course</div><div class="title">Claude Code Mastery</div></div></div>
+        <div class="curriculum-card"><div class="stripe" style="background:#0ea5e9"></div><div class="body"><div class="meta" style="color:#0ea5e9">Course</div><div class="title">System Design Mastery</div></div></div>
+        <div class="curriculum-card"><div class="stripe" style="background:#e11d48"></div><div class="body"><div class="meta" style="color:#e11d48">Course</div><div class="title">Web Fundamentals</div></div></div>
+        <div class="curriculum-card"><div class="stripe" style="background:#0ea5e9"></div><div class="body"><div class="meta" style="color:#0ea5e9">Course</div><div class="title">React Literacy</div></div></div>
+        <div class="curriculum-card"><div class="stripe" style="background:#dc2626"></div><div class="body"><div class="meta" style="color:#dc2626">Drill Course</div><div class="title">Texas Hold'em Poker</div></div></div>
+        <div class="curriculum-card"><div class="stripe" style="background:#0d7c66"></div><div class="body"><div class="meta" style="color:#0d7c66">Course</div><div class="title">Contract Bridge</div></div></div>
+      </div>
+    </div>
+    <div class="speaker-notes" hidden>
+      <ul>
+        <li>Started as a single-day one-off &mdash; I'm a professional who wanted to learn about AI</li>
+        <li>Problem: AI changes all the time. How can I trust any course will stay up-to-date?</li>
+        <li>I do know data pipelines &mdash; so I built a little AI Fluency course with Claude Code that I could maintain myself</li>
+        <li>Broadened to the CFA &mdash; my brother is studying for it, it's in-depth, a good test of the platform</li>
+        <li>Then skills-based education &mdash; poker, contract bridge</li>
+        <li>Now sitting at about 10 courses</li>
+        <li>Learned a lot about what works and what doesn't</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ====== SLIDE 3: THE PROBLEM ====== -->
+  <section class="slide" data-slide="2">
+    <div class="slide-inner">
+      <h2 class="headline">Without clear learning objectives, AI generates <em>confident, comprehensive, useless</em> content</h2>
+      <div class="comparison">
+        <div class="comparison-side">
+          <div class="comparison-label before">Without design</div>
+          <div class="text-line" style="width:100%"></div>
+          <div class="text-line" style="width:92%"></div>
+          <div class="text-line" style="width:88%"></div>
+          <div class="text-line" style="width:95%"></div>
+          <div class="text-line" style="width:80%"></div>
+          <div class="text-line" style="width:85%"></div>
+          <div class="text-line" style="width:90%"></div>
+          <div class="text-line" style="width:75%"></div>
+          <div class="text-line" style="width:88%"></div>
+          <div class="text-line" style="width:70%"></div>
+          <div class="text-line" style="width:82%"></div>
+          <div class="text-line" style="width:60%"></div>
+        </div>
+        <div class="comparison-arrow">&rarr;</div>
+        <div class="comparison-side">
+          <div class="comparison-label after">With design</div>
+          <div class="design-block"><span class="block-dot"></span> Predict</div>
+          <div class="design-block"><span class="block-dot"></span> Explain Back</div>
+          <div class="design-block"><span class="block-dot"></span> Practice</div>
+          <div class="design-block"><span class="block-dot"></span> Calibrate</div>
+        </div>
+      </div>
+    </div>
+    <div class="speaker-notes" hidden>
+      <ul>
+        <li>You've all heard this &mdash; with AI, it's garbage in, garbage out</li>
+        <li>Tell it exactly what you want, it's good</li>
+        <li>Vague on the requirements, the quality really suffers</li>
+        <li>Which is why this is such an exciting opportunity for people who are experts in clear, concise, precise instructions that drive specific results</li>
+      </ul>
+      <p class="pacing">SLOW DOWN on &ldquo;confident, comprehensive, useless.&rdquo; Let the triad land.</p>
+    </div>
+  </section>
+
+  <!-- ====== SLIDE 4: STATE MACHINE ====== -->
+  <section class="slide" data-slide="3">
+    <div class="slide-inner">
+      <h2 class="headline">Strip away the tools and frameworks &mdash; <em>this is how I plan software</em></h2>
+      <svg class="state-machine" viewBox="0 0 1200 380" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="ah-orange" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 Z" class="sm-arrow-head-orange"/>
+          </marker>
+          <marker id="ah-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 Z" class="sm-arrow-head-teal"/>
+          </marker>
+          <marker id="ah-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 Z" class="sm-arrow-head-green"/>
+          </marker>
+        </defs>
+
+        <!-- Revise loop label -->
+        <text x="600" y="48" text-anchor="middle" class="sm-loop-label revise">revise the spec when reality disagrees</text>
+
+        <!-- Revise loop arrow: Build top → Spec top -->
+        <path class="sm-loop-revise" d="M 880,150 C 880,65 295,65 295,150" marker-end="url(#ah-teal)"/>
+
+        <!-- Local spec/research loop: Research → Spec -->
+        <path class="sm-loop-revise" d="M 490,230 C 490,262 295,262 295,230" marker-end="url(#ah-teal)"/>
+        <text x="392" y="254" text-anchor="middle" class="sm-loop-label revise">sharpen</text>
+
+        <!-- State nodes (boxes with number + label) -->
+        <g>
+          <rect x="15" y="150" width="170" height="80" rx="10" class="sm-box"/>
+          <rect x="15" y="150" width="170" height="3" class="sm-box-top"/>
+          <text x="100" y="180" text-anchor="middle" class="sm-num">01</text>
+          <text x="100" y="204" text-anchor="middle" class="sm-label">Frame</text>
+        </g>
+        <g>
+          <rect x="210" y="150" width="170" height="80" rx="10" class="sm-box"/>
+          <rect x="210" y="150" width="170" height="3" class="sm-box-top"/>
+          <text x="295" y="180" text-anchor="middle" class="sm-num">02</text>
+          <text x="295" y="204" text-anchor="middle" class="sm-label">Spec</text>
+        </g>
+        <g>
+          <rect x="405" y="150" width="170" height="80" rx="10" class="sm-box"/>
+          <rect x="405" y="150" width="170" height="3" class="sm-box-top"/>
+          <text x="490" y="180" text-anchor="middle" class="sm-num">03</text>
+          <text x="490" y="204" text-anchor="middle" class="sm-label">Research</text>
+        </g>
+        <g>
+          <rect x="600" y="150" width="170" height="80" rx="10" class="sm-box"/>
+          <rect x="600" y="150" width="170" height="3" class="sm-box-top"/>
+          <text x="685" y="180" text-anchor="middle" class="sm-num">04</text>
+          <text x="685" y="204" text-anchor="middle" class="sm-label">Sequence</text>
+        </g>
+        <g>
+          <rect x="795" y="150" width="170" height="80" rx="10" class="sm-box"/>
+          <rect x="795" y="150" width="170" height="3" class="sm-box-top"/>
+          <text x="880" y="180" text-anchor="middle" class="sm-num">05</text>
+          <text x="880" y="204" text-anchor="middle" class="sm-label">Build &amp; review</text>
+          <!-- Self-loop indicator (tight build loop) -->
+          <path class="sm-self-loop" d="M 858,150 C 858,128 902,128 902,150" marker-end="url(#ah-orange)"/>
+        </g>
+        <g>
+          <rect x="990" y="150" width="195" height="80" rx="10" class="sm-box"/>
+          <rect x="990" y="150" width="195" height="3" class="sm-box-top"/>
+          <text x="1087" y="180" text-anchor="middle" class="sm-num">06</text>
+          <text x="1087" y="204" text-anchor="middle" class="sm-label">Ship &amp; observe</text>
+        </g>
+
+        <!-- Forward transitions (arrows along y=190) -->
+        <line class="sm-forward" x1="187" y1="190" x2="207" y2="190" marker-end="url(#ah-orange)"/>
+        <line class="sm-forward" x1="382" y1="190" x2="402" y2="190" marker-end="url(#ah-orange)"/>
+        <line class="sm-forward" x1="577" y1="190" x2="597" y2="190" marker-end="url(#ah-orange)"/>
+        <line class="sm-forward" x1="772" y1="190" x2="792" y2="190" marker-end="url(#ah-orange)"/>
+        <line class="sm-forward" x1="967" y1="190" x2="987" y2="190" marker-end="url(#ah-orange)"/>
+
+        <!-- Observe loop arrow: Ship bottom → Frame bottom -->
+        <path class="sm-loop-observe" d="M 1087,230 C 1087,320 100,320 100,230" marker-end="url(#ah-green)"/>
+
+        <!-- Observe loop label -->
+        <text x="600" y="345" text-anchor="middle" class="sm-loop-label observe">observe &rarr; re-frame when production teaches you something</text>
+      </svg>
+    </div>
+    <div class="speaker-notes" hidden>
+      <ul>
+        <li>High-level view of my process</li>
+        <li><b>Frame</b> &mdash; identify the problem and the context. Is this even a problem that can or needs to be solved?</li>
+        <li><b>Spec</b> &mdash; the objectives</li>
+        <li><b>Research</b> &mdash; dive into the code, run experiments</li>
+        <li><b>Sequence</b> &mdash; what comes first, what comes next</li>
+        <li><b>Build</b> the thing</li>
+        <li><b>Ship &amp; observe</b> &mdash; see how it did</li>
+        <li>Sharpen loop: research keeps sending me back to tighten the spec</li>
+        <li>Revise loop: building reveals where the spec was wrong</li>
+        <li>Observe loop: production always teaches you something you missed</li>
+      </ul>
+      <p class="pacing">Quick slide. 45 seconds. The payoff is the next two slides.</p>
+    </div>
+  </section>
+
+  <!-- ====== SLIDE 5: ANALOGIES TABLE ====== -->
+  <section class="slide" data-slide="4">
+    <div class="slide-inner">
+      <h2 class="headline">Every step of my path maps to <em>something an ID already does</em></h2>
+      <div class="analogies">
+        <div class="row" style="display:contents">
+          <div class="col-header mine">My software path</div>
+          <div class="col-header theirs">What an ID does</div>
+        </div>
+        <div class="row" style="display:contents">
+          <div class="cell">Frame the problem</div>
+          <div class="cell theirs">Needs analysis &middot; decide whether to build the course at all</div>
+        </div>
+        <div class="row" style="display:contents">
+          <div class="cell">Write the spec</div>
+          <div class="cell theirs">Learning objectives &middot; observable, at a specific Bloom's level</div>
+        </div>
+        <div class="row" style="display:contents">
+          <div class="cell">Read the system / prior code</div>
+          <div class="cell theirs">Learner analysis &middot; SME extraction</div>
+        </div>
+        <div class="row" style="display:contents">
+          <div class="cell">Sequence the work</div>
+          <div class="cell theirs">Scaffolding &middot; prerequisite design</div>
+        </div>
+        <div class="row" style="display:contents">
+          <div class="cell">Build &middot; review &middot; revise</div>
+          <div class="cell theirs">Formative feedback &middot; pilot testing</div>
+        </div>
+        <div class="row" style="display:contents">
+          <div class="cell">Ship &middot; observe production</div>
+          <div class="cell theirs">Kirkpatrick evaluation &middot; did behavior change?</div>
+        </div>
+      </div>
+      <div class="analogies-caption">You've been practicing this for your entire careers. <em>You already have the skill most people using AI are missing.</em></div>
+    </div>
+    <div class="speaker-notes" hidden>
+      <ul>
+        <li>I don't know exactly what you do &mdash; but from my research, hopefully this overlaps</li>
+        <li>Frame the problem &harr; needs analysis</li>
+        <li>Write the spec &harr; learning objectives</li>
+        <li>Read the system / prior code &harr; learner analysis &mdash; understanding the system and how it'll react to the changes</li>
+        <li>Sequence &harr; scaffolding</li>
+        <li>Build &amp; review &harr; formative feedback</li>
+        <li>Ship &amp; observe &harr; Kirkpatrick evaluation</li>
+        <li>Honest caveat I'll say out loud: I don't know exactly what Kirkpatrick is &mdash; happy to be taught</li>
+      </ul>
+      <p class="pacing">SLOW. Make eye contact when you name the parallel. This is the recognition moment.</p>
+    </div>
+  </section>
+
+  <!-- ====== SLIDE 6: AI CAPABILITIES ====== -->
+  <section class="slide" data-slide="5">
+    <div class="slide-inner">
+      <h2 class="headline">Set the analogy down for a second &mdash; <em>here's what actually makes the path work</em></h2>
+      <div class="ai-caps">
+        <div class="ai-col bad">
+          <div class="col-title">AI is bad at</div>
+          <div class="ai-item"><div class="marker">&times;</div><div class="text"><b>Judgment calls.</b> <span class="muted">&ldquo;Is this good?&rdquo; gets you whatever sounds plausible.</span></div></div>
+          <div class="ai-item"><div class="marker">&times;</div><div class="text"><b>Knowing things.</b> <span class="muted">It predicts the next word. Facts are a by-product of training data.</span></div></div>
+          <div class="ai-item"><div class="marker">&times;</div><div class="text"><b>Owning outcomes.</b> <span class="muted">It can't care whether learners learn.</span></div></div>
+        </div>
+        <div class="ai-col good">
+          <div class="col-title">AI is good at</div>
+          <div class="ai-item"><div class="marker">&#10003;</div><div class="text"><b>Executing against specific criteria.</b> <span class="muted">Give it a rubric and it'll loop until the lesson meets every row.</span></div></div>
+          <div class="ai-item"><div class="marker">&#10003;</div><div class="text"><b>Using tools to find information.</b> <span class="muted">It's an open-book test. Hand it the book and the prediction gets easy.</span></div></div>
+          <div class="ai-item"><div class="marker">&#10003;</div><div class="text"><b>Trying things fast.</b> <span class="muted">Three prototypes in an hour, not three weeks.</span></div></div>
+        </div>
+      </div>
+      <div class="ai-caps-footer">The craft &mdash; the judgment, the objectives, the rubric &mdash; still has to come from a person. That's why <em>I'm excited to be in a room of IDs</em>: writing specific criteria is already your job.</div>
+    </div>
+    <div class="speaker-notes" hidden>
+      <ul>
+        <li>Setting the analogy aside for a second</li>
+        <li><b>Bad at judgment calls.</b> Ask AI if it's confident, it says yes. Huge bias to being confidently wrong</li>
+        <li>Why: AI predicts the next word you want to hear. It's read thousands of sentences, keeps predicting, checks how right it was. Doesn't actually know or understand &mdash; just predicts</li>
+        <li><b>Bad at knowing things.</b> Because it doesn't know, the information can be very wrong. Often it's right, but who knows really</li>
+        <li><b>Bad at owning outcomes.</b> Can't care whether learners learn</li>
+        <li><b>Good at executing against specific criteria.</b> This is the superpower &mdash; give it the info and it does things</li>
+        <li>Example: pull up a full paper on bridge, tell it to read, ask a question. The answer is in the article, so prediction is easy and accurate</li>
+        <li><b>Good at using tools</b> to gather information &mdash; Google, docs, files. It can research and synthesize for you</li>
+        <li><b>Good at doing things fast.</b> Much faster than I can type &mdash; I can try, fail, learn, try again</li>
+        <li>Why this is exciting for you: we now have tools for enhanced research &mdash; as long as we don't use them to <em>replace</em> research</li>
+        <li>Practical move: have it Google things, but tell it to source its resources and audit everything</li>
+        <li>On criteria: a very clear rubric makes it work well &mdash; describe what success looks like</li>
+      </ul>
+      <p class="pacing">Bridge to next slide: &ldquo;So how does this look in my process &mdash; hopefully you can take this and extrapolate it to your own.&rdquo;</p>
+    </div>
+  </section>
+
+  <!-- ====== SLIDE 7: AI × PATH ====== -->
+  <section class="slide" data-slide="6">
+    <div class="slide-inner">
+      <h2 class="headline">Mapping AI to the path &mdash; <em>where it belongs, where it doesn't</em></h2>
+      <div class="ai-path-table">
+        <div class="row" style="display:contents">
+          <div class="col-header path">My path</div>
+          <div class="col-header ai">Where AI belongs (&#10003;) &middot; where it fails (&times;)</div>
+        </div>
+        <div class="row" style="display:contents">
+          <div class="step">Frame the problem</div>
+          <div class="uses">
+            <div class="use good"><div class="mark">&#10003;</div><div class="text">Summarize user reports or SME interviews to surface themes</div></div>
+            <div class="use bad"><div class="mark">&times;</div><div class="text">Deciding whether the problem is worth solving</div></div>
+          </div>
+        </div>
+        <div class="row" style="display:contents">
+          <div class="step">Write the spec</div>
+          <div class="uses">
+            <div class="use good"><div class="mark">&#10003;</div><div class="text">Draft candidate acceptance criteria from your problem statement</div></div>
+            <div class="use bad"><div class="mark">&times;</div><div class="text">Writing the spec from scratch without your framing</div></div>
+          </div>
+        </div>
+        <div class="row" style="display:contents">
+          <div class="step">Research</div>
+          <div class="uses">
+            <div class="use good"><div class="mark">&#10003;</div><div class="text">Send it ahead with web &amp; file tools to gather prior art</div></div>
+            <div class="use bad"><div class="mark">&times;</div><div class="text">Trusting it to &ldquo;know&rdquo; things from training data alone</div></div>
+          </div>
+        </div>
+        <div class="row" style="display:contents">
+          <div class="step">Sequence</div>
+          <div class="uses">
+            <div class="use good"><div class="mark">&#10003;</div><div class="text">Dependency check: &ldquo;does this order violate any constraint?&rdquo;</div></div>
+            <div class="use bad"><div class="mark">&times;</div><div class="text">Asking &ldquo;what should I build first&rdquo; &mdash; that's judgment</div></div>
+          </div>
+        </div>
+        <div class="row" style="display:contents">
+          <div class="step">Build &amp; review</div>
+          <div class="uses">
+            <div class="use good"><div class="mark">&#10003;</div><div class="text">Execute against tests or a rubric &mdash; loop until every row passes</div></div>
+            <div class="use bad"><div class="mark">&times;</div><div class="text">Asking &ldquo;is this good?&rdquo; without explicit criteria</div></div>
+          </div>
+        </div>
+        <div class="row" style="display:contents">
+          <div class="step">Ship &amp; observe</div>
+          <div class="uses">
+            <div class="use good"><div class="mark">&#10003;</div><div class="text">Parse logs, summarize metrics, cluster user reports</div></div>
+            <div class="use bad"><div class="mark">&times;</div><div class="text">Deciding &ldquo;was this launch successful?&rdquo;</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="speaker-notes" hidden>
+      <ul>
+        <li>Extrapolate this to your own process</li>
+        <li><b>Frame:</b> can't ask AI if an idea is good or bad. But you <em>can</em> have it summarize user reports &mdash; review sites, Reddit &mdash; for what people are actually asking about</li>
+        <li><b>Spec:</b> pretty good at this, but requires multiple iterations. Close collaboration, not outsource</li>
+        <li><b>Research:</b> great for synthesis and speed. Accuracy isn't great. Always ask &ldquo;where did you get this from?&rdquo; &mdash; that prompt is very helpful</li>
+        <li><b>Sequence:</b> avoid judgment calls, but good for bouncing ideas off</li>
+        <li><b>Build &amp; review:</b> super-fast implementation. Specificity matters &mdash; clear criteria for success (in code that's tests; otherwise, a checklist) makes it work</li>
+        <li><b>Ship &amp; observe:</b> parse logs, cluster reports, summarize metrics &mdash; strong. Judgment on &ldquo;did it succeed?&rdquo; stays with you</li>
+      </ul>
+      <p class="pacing">Bridge to demo: &ldquo;Here's what that looks like inside an actual lesson.&rdquo;</p>
+    </div>
+  </section>
+
+  <!-- ====== SLIDE 8: DEMO ====== -->
+  <section class="slide demo-slide" data-slide="7">
+    <div class="slide-inner">
+      <h2 class="headline">Here's what that looks like <em>running</em></h2>
+      <div class="demo-video-wrap">
+        <video id="demoVideo" src="assets/demo.mp4" muted playsinline preload="metadata" loop></video>
+      </div>
+      <div class="demo-caption">
+        Predict &middot; Socratic feedback &middot; Adaptive interview &mdash; <em>every response only works because the lesson design is solid</em>.
+      </div>
+    </div>
+    <div class="speaker-notes" hidden>
+      <ul>
+        <li>Three things this demo shows &mdash; jumping through fast</li>
+        <li>We broaden the type of problems, questions, and feedback the learner gets &mdash; AI lets them express freely before we respond, and we can give rich feedback</li>
+        <li>If they have questions, they can ask them specifically &mdash; we don't have to catch every edge case in the course. Learners find their own information</li>
+        <li>We take a temperature of what the learner actually knows &mdash; by asking them to explain, AI dynamically identifies the gaps</li>
+      </ul>
+      <p class="pacing">Let the first 10s land silently. Start narrating over the predict response.</p>
+    </div>
+  </section>
+
+  <!-- ====== SLIDE 9: EVIDENCE ====== -->
+  <section class="slide" data-slide="8">
+    <div class="slide-inner">
+      <h2 class="headline">Spaced repetition, retrieval practice, and AI feedback &mdash; <em>built from research, powered by objectives</em></h2>
+      <div class="feature-grid">
+        <div class="feature-panel">
+          <div class="feature-icon predict">
+            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          </div>
+          <div class="feature-title">Predict Before You Read</div>
+          <div class="feature-desc">Learners guess what they think is true before seeing the content, activating prior knowledge.</div>
+        </div>
+        <div class="feature-panel">
+          <div class="feature-icon explain">
+            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          </div>
+          <div class="feature-title">Explain Back</div>
+          <div class="feature-desc">Learners explain the concept in their own words. AI gives Socratic feedback on gaps.</div>
+        </div>
+        <div class="feature-panel">
+          <div class="feature-icon review">
+            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M4 10h16M10 4v16"/></svg>
+          </div>
+          <div class="feature-title">Daily Review</div>
+          <div class="feature-desc">Spaced repetition quiz surfaces past material at optimal intervals for retention.</div>
+        </div>
+        <div class="feature-panel">
+          <div class="feature-icon practice">
+            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <div class="feature-title">Practice &amp; Master</div>
+          <div class="feature-desc">Drill sets with mastery gates ensure learners demonstrate understanding before advancing.</div>
+        </div>
+      </div>
+    </div>
+    <div class="speaker-notes" hidden>
+      <ul>
+        <li>These are the core concepts I've built into the platform</li>
+        <li><b>Predict before you read</b> &mdash; every lesson asks the learner to engage with the existing information they have</li>
+        <li><b>Explain back</b> &mdash; more engagement. Puts things in their own words</li>
+        <li><b>Daily review</b> &mdash; spaced repetition. Things that are important to remember, not just have exposure to, keep getting exposure. Questions are designed to be fairly easy and encouraging</li>
+        <li><b>Practice &amp; master (interview)</b> &mdash; lets someone really hone their skills and knowledge</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ====== SLIDE 10: CLOSE ====== -->
+  <section class="slide close-slide" data-slide="9">
+    <div class="slide-inner">
+      <h2 class="headline">"The skills that make someone a great instructional designer are <em>the same skills</em> that make someone great at directing AI"</h2>
+      <div class="title-divider"></div>
+      <div class="close-contact">
+        <span class="name">Ben Grady</span>
+        <span class="email">b.grady@method.me</span>
+      </div>
+      <div class="close-collab">Looking for collaborators &middot; try building your own course from the repo</div>
+    </div>
+    <div class="speaker-notes" hidden>
+      <ul>
+        <li>Built something that works &mdash; but built it as an engineer solving design problems by trial and error</li>
+        <li>There's an entire discipline that already has the answers &mdash; that's you</li>
+        <li>One invitation: try building a course of your own. Repo is public. My slides and the Claude skills I use are in it. Clone it, point it at a topic, see what the loop feels like from the inside</li>
+        <li>Collaborators I'd love to hear from:
+          <ul>
+            <li>Co-design a course in a domain where AI is currently embarrassing itself</li>
+            <li>Help build an authoring layer so IDs can drive Palestra without touching JSON</li>
+            <li>Or: look under the hood and tell me what I'm doing wrong</li>
+          </ul>
+        </li>
+        <li>Email is on the slide. What questions do you have?</li>
+      </ul>
+    </div>
+  </section>
+
+</div>
+
+<!-- Navigation bar -->
+<div class="nav-bar">
+  <div class="nav-buttons">
+    <button class="nav-btn" id="prevBtn" disabled aria-label="Previous slide">&larr;</button>
+    <button class="nav-btn" id="nextBtn" aria-label="Next slide">&rarr;</button>
+  </div>
+  <div class="nav-progress">
+    <div class="nav-progress-fill" id="progressFill" style="width: 10%"></div>
+  </div>
+  <div class="nav-counter" id="navCounter">1 / 10</div>
+  <div class="nav-hint">N: notes &middot; O: overview &middot; F: fullscreen</div>
+</div>
+
+<!-- Speaker Notes Panel -->
+<div class="notes-panel" id="notesPanel">
+  <h3>Speaker Notes</h3>
+  <div id="notesContent"></div>
+</div>
+
+<!-- Overview Grid -->
+<div class="overview-grid" id="overviewGrid"></div>
+
+<div class="fullscreen-hint">F: fullscreen</div>
+
+<script>
+(function() {
+  'use strict';
+
+  const TOTAL_SLIDES = 10;
+  const DEMO_SLIDE_INDEX = 7;
+  let current = 0;
+  let notesVisible = false;
+  let overviewVisible = false;
+
+  const slides = document.querySelectorAll('.slide');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const progressFill = document.getElementById('progressFill');
+  const navCounter = document.getElementById('navCounter');
+  const notesPanel = document.getElementById('notesPanel');
+  const notesContent = document.getElementById('notesContent');
+  const overviewGrid = document.getElementById('overviewGrid');
+
+  // Read hash on load
+  function readHash() {
+    const match = window.location.hash.match(/^#\/(\d+)$/);
+    if (match) {
+      const idx = parseInt(match[1], 10) - 1;
+      if (idx >= 0 && idx < TOTAL_SLIDES) {
+        current = idx;
+      }
+    }
+  }
+
+  function goTo(idx) {
+    if (idx < 0 || idx >= TOTAL_SLIDES || idx === current) return;
+
+    const oldIdx = current;
+    slides[oldIdx].classList.remove('active');
+    slides[oldIdx].classList.add('exiting-left');
+
+    setTimeout(() => {
+      slides[oldIdx].classList.remove('exiting-left');
+    }, 600);
+
+    current = idx;
+    slides[current].classList.add('active');
+    update();
+    triggerSlideAnimations(current);
+  }
+
+  function update() {
+    window.location.hash = '#/' + (current + 1);
+    progressFill.style.width = ((current + 1) / TOTAL_SLIDES * 100) + '%';
+    navCounter.textContent = (current + 1) + ' / ' + TOTAL_SLIDES;
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === TOTAL_SLIDES - 1;
+    updateNotes();
+  }
+
+  function next() { goTo(current + 1); }
+  function prev() { goTo(current - 1); }
+
+  function updateNotes() {
+    const noteEl = slides[current].querySelector('.speaker-notes');
+    if (noteEl) {
+      notesContent.innerHTML = noteEl.innerHTML;
+    } else {
+      notesContent.innerHTML = '<p>No notes for this slide.</p>';
+    }
+  }
+
+  function toggleNotes() {
+    notesVisible = !notesVisible;
+    notesPanel.classList.toggle('visible', notesVisible);
+    if (notesVisible) updateNotes();
+  }
+
+  function toggleOverview() {
+    overviewVisible = !overviewVisible;
+    if (overviewVisible) {
+      buildOverview();
+    }
+    overviewGrid.classList.toggle('visible', overviewVisible);
+  }
+
+  function buildOverview() {
+    overviewGrid.innerHTML = '';
+    slides.forEach((slide, i) => {
+      const thumb = document.createElement('div');
+      thumb.className = 'overview-thumb' + (i === current ? ' current' : '');
+
+      const num = document.createElement('div');
+      num.className = 'thumb-num';
+      num.textContent = 'Slide ' + (i + 1);
+
+      const title = document.createElement('div');
+      title.className = 'thumb-title';
+      const h = slide.querySelector('.headline');
+      title.textContent = h ? h.textContent.substring(0, 80) + (h.textContent.length > 80 ? '...' : '') : 'Slide ' + (i + 1);
+
+      thumb.appendChild(num);
+      thumb.appendChild(title);
+
+      thumb.addEventListener('click', () => {
+        overviewVisible = false;
+        overviewGrid.classList.remove('visible');
+        slides[current].classList.remove('active');
+        current = i;
+        slides[current].classList.add('active');
+        update();
+        triggerSlideAnimations(current);
+      });
+
+      overviewGrid.appendChild(thumb);
+    });
+  }
+
+  function toggleFullscreen() {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(() => {});
+    } else {
+      document.exitFullscreen();
+    }
+  }
+
+  // Slide-specific animations
+  function triggerSlideAnimations(idx) {
+    // Demo slide: play video from start on entry, pause on exit
+    const demoVideo = document.getElementById('demoVideo');
+    if (demoVideo) {
+      if (idx === DEMO_SLIDE_INDEX) {
+        try {
+          demoVideo.currentTime = 0;
+          const p = demoVideo.play();
+          if (p && typeof p.catch === 'function') p.catch(() => {});
+        } catch (_) {}
+      } else {
+        try { demoVideo.pause(); } catch (_) {}
+      }
+    }
+  }
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (overviewVisible && e.key === 'Escape') {
+      toggleOverview();
+      return;
+    }
+
+    switch (e.key) {
+      case 'ArrowRight':
+      case 'ArrowDown':
+      case ' ':
+      case 'PageDown':
+        e.preventDefault();
+        next();
+        break;
+      case 'ArrowLeft':
+      case 'ArrowUp':
+      case 'PageUp':
+        e.preventDefault();
+        prev();
+        break;
+      case 'n':
+      case 'N':
+      case 's':
+      case 'S':
+        toggleNotes();
+        break;
+      case 'o':
+      case 'O':
+      case 'Escape':
+        toggleOverview();
+        break;
+      case 'f':
+      case 'F':
+        toggleFullscreen();
+        break;
+      case 'Home':
+        e.preventDefault();
+        goTo(0);
+        break;
+      case 'End':
+        e.preventDefault();
+        goTo(TOTAL_SLIDES - 1);
+        break;
+    }
+  });
+
+  // Button navigation
+  prevBtn.addEventListener('click', prev);
+  nextBtn.addEventListener('click', next);
+
+  // Click to advance (on slide area, not nav)
+  document.querySelector('.deck').addEventListener('click', (e) => {
+    if (overviewVisible) return;
+    if (e.target.closest('.nav-bar, .notes-panel, .nav-btn')) return;
+    const x = e.clientX / window.innerWidth;
+    if (x > 0.5) next(); else prev();
+  });
+
+  // Touch/swipe support
+  let touchStartX = 0;
+  let touchStartY = 0;
+  document.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+
+  document.addEventListener('touchend', (e) => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) {
+      if (dx < 0) next(); else prev();
+    }
+  }, { passive: true });
+
+  // Hash change
+  window.addEventListener('hashchange', () => {
+    const match = window.location.hash.match(/^#\/(\d+)$/);
+    if (match) {
+      const idx = parseInt(match[1], 10) - 1;
+      if (idx >= 0 && idx < TOTAL_SLIDES && idx !== current) {
+        slides[current].classList.remove('active');
+        current = idx;
+        slides[current].classList.add('active');
+        update();
+        triggerSlideAnimations(current);
+      }
+    }
+  });
+
+  // Init
+  readHash();
+  slides.forEach((s, i) => {
+    s.classList.remove('active');
+    if (i === current) s.classList.add('active');
+  });
+  update();
+  triggerSlideAnimations(current);
+
+})();
+</script>
+
+</body>
+</html>
